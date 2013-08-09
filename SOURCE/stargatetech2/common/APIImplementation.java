@@ -1,12 +1,13 @@
-package stargatetech2.common.util;
+package stargatetech2.common;
 
 import stargatetech2.api.StargateTechAPI;
+import stargatetech2.common.util.StargateLogger;
 
 public final class APIImplementation extends StargateTechAPI {
 	private static final int VERSION_MAJOR	= 0;
-	private static final int VERSION_MINOR	= 0;
+	private static final int VERSION_MINOR	= 1;
 	private static final int VERSION_MNT	= 0;
-	private static final int VERSION_REV	= 2;
+	private static final int VERSION_REV	= 3;
 	private static final String API_STATUS	= "draft";
 	
 	public void enableExternalAccess(){

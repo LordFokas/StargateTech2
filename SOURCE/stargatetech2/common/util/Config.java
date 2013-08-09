@@ -4,12 +4,15 @@ import java.util.HashMap;
 
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.reference.ConfigReference;
+import stargatetech2.common.reference.ItemReference;
 import net.minecraftforge.common.Configuration;
 
 public class Config {
 	private Configuration cfg;
 	private HashMap<String, Integer> blocks = new HashMap<String, Integer>();
+	private HashMap<String, Integer> items  = new HashMap<String, Integer>();
 	private int blockIDs = 1000;
+	private int itemIDs = 25000;
 	
 	public Config(Configuration cfg){
 		this.cfg = cfg;
@@ -23,6 +26,10 @@ public class Config {
 		for(String block : BlockReference.ALL_BLOCKS){
 			addBlock(cfg, block);
 		}
+		
+		for(String item : ItemReference.ALL_ITEMS){
+			addItem(cfg, item);
+		}
 	}
 	
 	public void save(){
@@ -34,7 +41,16 @@ public class Config {
 		blockIDs++;
 	}
 	
+	private void addItem(Configuration cfg, String name){
+		items.put(name, cfg.get(ConfigReference.KEY_IDS_ITEMS, name, itemIDs).getInt());
+		itemIDs++;
+	}
+	
 	public int getBlockID(String name){
 		return blocks.get(name);
+	}
+	
+	public int getItemID(String name){
+		return items.get(name);
 	}
 }

@@ -9,7 +9,7 @@ public class ConfigReference {
 	public static final String KEY_IDS_BLOCKS		= "ids.blocks";
 	public static final String KEY_IDS_ITEMS		= "ids.items";
 	public static final String KEY_PLUGINS			= "plugins";
-	public static final String KEY_PLUGINS_BC3		= "plugins.buildcraft3";
+	public static final String KEY_PLUGINS_BC3		= "plugins.buildcraft3"; // is now a dependency. Probably.
 	public static final String KEY_PLUGINS_CC		= "plugins.computercraft";
 	public static final String KEY_PLUGINS_FORESTRY	= "plugins.forestry";
 	public static final String KEY_PLUGINS_IC2		= "plugins.industrialcraft2";
