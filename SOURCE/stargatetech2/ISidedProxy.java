@@ -1,5 +1,7 @@
 package stargatetech2;
 
-public interface ISidedProxy {
+import stargatetech2.common.base.BaseISBRH;
 
+public interface ISidedProxy {
+	public void registerRenderer(BaseISBRH renderer);
 }

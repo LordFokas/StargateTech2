@@ -8,12 +8,13 @@ import net.minecraft.world.World;
 import stargatetech2.api.ITabletAccess;
 import stargatetech2.common.base.BaseItem;
 import stargatetech2.common.reference.ItemReference;
+import stargatetech2.common.util.StargateTab;
 
 public class ItemTabletPC extends BaseItem {
 
 	public ItemTabletPC() {
 		super(ItemReference.TABLET_PC);
-		this.setCreativeTab(CreativeTabs.tabTools);
+		StargateTab.tabletID = itemID;
 	}
 	
 	@Override

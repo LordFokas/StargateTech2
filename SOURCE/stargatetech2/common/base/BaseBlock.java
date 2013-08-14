@@ -1,13 +1,16 @@
 package stargatetech2.common.base;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.Icon;
 import stargatetech2.StargateTech2;
 import stargatetech2.common.reference.ModReference;
 import stargatetech2.common.util.MaterialNaquadah;
+import stargatetech2.common.util.StargateTab;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BaseBlock extends Block{
+	protected Icon[] iconOverride;
+	protected boolean isOverride = false;
 	
 	public BaseBlock(String uName){
 		this(uName, false, true);
@@ -21,7 +24,7 @@ public class BaseBlock extends Block{
 			this.setBlockUnbreakable();
 			this.setResistance(20000000F);
 		}
-		this.setCreativeTab(CreativeTabs.tabBlock);
+		this.setCreativeTab(StargateTab.instance);
 	}
 	
 	@Override
@@ -29,7 +32,29 @@ public class BaseBlock extends Block{
 		return 2;
 	}
 	
-	public final void registerBlock(){
+	public void registerBlock(){
 		GameRegistry.registerBlock(this, getUnlocalizedName());
+	}
+	
+	public void setOverride(Icon[] icons){
+		iconOverride = icons;
+		isOverride = true;
+	}
+	
+	public void restoreTextures(){
+		isOverride = false;
+	}
+	
+	@Override
+	public final Icon getIcon(int side, int meta){
+		if(isOverride){
+			return iconOverride[side];
+		}else{
+			return getBaseIcon(side, meta);
+		}
+	}
+	
+	public Icon getBaseIcon(int side, int meta){
+		return blockIcon;
 	}
 }

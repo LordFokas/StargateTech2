@@ -9,7 +9,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import stargatetech2.common.base.BaseTileEntity;
-import stargatetech2.core.IonizedParticles;
+import stargatetech2.core.util.IonizedParticles;
 
 public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler{
 	IFluidTank tank = new FluidTank(IonizedParticles.fluid, 120000, 120000);

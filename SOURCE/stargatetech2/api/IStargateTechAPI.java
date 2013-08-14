@@ -1,5 +1,7 @@
 package stargatetech2.api;
 
+import net.minecraftforge.fluids.Fluid;
+
 public interface IStargateTechAPI {
 	
 	/**
@@ -18,4 +20,9 @@ public interface IStargateTechAPI {
 	 * @return An array with the 4 version numbers.
 	 */
 	public int[] getVersionNumbers();
+	
+	/**
+	 * @return The Fluid instance corresponding to Ionized Particles.
+	 */
+	public Fluid getIonizedParticlesFluidInstance();
 }

@@ -1,4 +1,4 @@
-package stargatetech2.core;
+package stargatetech2.core.util;
 
 import net.minecraftforge.fluids.Fluid;
 
@@ -11,7 +11,7 @@ public class IonizedParticles extends Fluid{
 		setDensity(0);
 		setGaseous(true);
 		setLuminosity(15);
-		setViscosity(0);
+		// setViscosity(1000); // Unable to determine a good value.
 		setTemperature(800); // 800ºK ~= 525ºC
 	}
 }

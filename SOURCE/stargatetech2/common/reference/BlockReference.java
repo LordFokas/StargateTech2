@@ -7,9 +7,11 @@ public class BlockReference {
 	
 	public static final String SHIELD_EMITTER = "shieldEmitter";
 	public static final String PARTICLE_IONIZER = "particleIonizer";
+	public static final String SHIELD = "shield";
 	
 	static{
 		ALL_BLOCKS.add(SHIELD_EMITTER);
 		ALL_BLOCKS.add(PARTICLE_IONIZER);
+		ALL_BLOCKS.add(SHIELD);
 	}
 }

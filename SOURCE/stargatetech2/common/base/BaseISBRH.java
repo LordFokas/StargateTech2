@@ -1,4 +1,4 @@
-package stargatetech2.common.rendering;
+package stargatetech2.common.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;

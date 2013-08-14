@@ -2,18 +2,33 @@ package stargatetech2.common.reference;
 
 import java.util.ArrayList;
 
+import net.minecraft.util.ResourceLocation;
+
 public class TextureReference {
-	public static final ArrayList<String> BLOCKS = new ArrayList<String>(10);
-	public static final ArrayList<String> ITEMS  = new ArrayList<String>(10);
+	public static final ArrayList<String> TERRAIN_TEXTURES = new ArrayList<String>(10);
 	
 	public static final String IONIZED_PARTICLES = "ionizedParticles";
 	
+	public static final String MACHINE_SIDE = "machineSide";
+	public static final String MACHINE_TOP = "machineTop";
+	public static final String MACHINE_BOTTOM = "machineBottom";
+	
+	public static final String FACE_SHIELD_EMITTER = "faceShieldEmitter";
+	public static final String GLOW_SHIELD_EMITTER = "glowShieldEmitter";
+	
 	static{
-		for(String block : BlockReference.ALL_BLOCKS){
-			BLOCKS.add(block);
-		}
-		for(String item : ItemReference.ALL_ITEMS){
-			ITEMS.add(item);
-		}
+		TERRAIN_TEXTURES.add(IONIZED_PARTICLES);
+		TERRAIN_TEXTURES.add(MACHINE_SIDE);
+		TERRAIN_TEXTURES.add(MACHINE_TOP);
+		TERRAIN_TEXTURES.add(MACHINE_BOTTOM);
+		TERRAIN_TEXTURES.add(FACE_SHIELD_EMITTER);
+		TERRAIN_TEXTURES.add(GLOW_SHIELD_EMITTER);
+	}
+	
+	public static final ResourceLocation GUI_BASE = getTexture("gui/base.png");
+	public static final ResourceLocation GUI_SHIELD_EMITTER = getTexture("gui/shieldEmitter.png");
+	
+	public static ResourceLocation getTexture(String texture){
+		return new ResourceLocation(ModReference.MOD_ID + ":" + "textures/" + texture);
 	}
 }
