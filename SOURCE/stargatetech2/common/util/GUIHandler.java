@@ -6,7 +6,9 @@ import net.minecraft.world.World;
 import stargatetech2.common.base.BaseContainer;
 import stargatetech2.common.base.BaseGUI;
 import stargatetech2.core.gui.ContainerShieldEmitter;
+import stargatetech2.core.gui.GUIParticleIonizer;
 import stargatetech2.core.gui.GUIShieldEmitter;
+import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.tileentity.TileShieldEmitter;
 import cpw.mods.fml.common.network.IGuiHandler;
 
@@ -19,15 +21,17 @@ public class GUIHandler implements IGuiHandler {
 	public BaseContainer getContainer(int ID, EntityPlayer player, World world, int x, int y, int z){
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		BaseContainer container = null;
-		if(te instanceof TileShieldEmitter){
-			switch(Screen.values()[ID]){
-				case SHIELD_EMITTER:
+		switch(Screen.values()[ID]){
+			case SHIELD_EMITTER:
+				if(te instanceof TileShieldEmitter)
 					container = new ContainerShieldEmitter((TileShieldEmitter)te);
-				case PARTICLE_IONIZER:
-					break;
-				default:
-					break;
-			}
+				break;
+			case PARTICLE_IONIZER:
+				if(te instanceof TileParticleIonizer)
+					container = new BaseContainer((TileParticleIonizer)te);
+				break;
+			default:
+				break;
 		}
 		return container;
 	}
@@ -48,6 +52,7 @@ public class GUIHandler implements IGuiHandler {
 				gui = new GUIShieldEmitter(container);
 				break;
 			case PARTICLE_IONIZER:
+				gui = new GUIParticleIonizer(container);
 				break;
 			default:
 				break;

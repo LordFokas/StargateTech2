@@ -4,12 +4,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
+import stargatetech2.common.machine.RenderBlockMachine;
 import stargatetech2.common.reference.TileEntityReference;
 import stargatetech2.core.block.BlockParticleIonizer;
 import stargatetech2.core.block.BlockShield;
 import stargatetech2.core.block.BlockShieldEmitter;
 import stargatetech2.core.item.ItemTabletPC;
-import stargatetech2.core.rendering.RenderShieldEmitter;
 import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.tileentity.TileShield;
 import stargatetech2.core.tileentity.TileShieldEmitter;
@@ -57,7 +57,7 @@ public final class ModuleCore implements IContentModule{
 		
 		LanguageRegistry.addName(tabletPC, "Tablet PC");
 		
-		StargateTech2.instance.proxy.registerRenderer(RenderShieldEmitter.instance());
+		StargateTech2.instance.proxy.registerRenderer(RenderBlockMachine.instance());
 	}
 
 	@Override
