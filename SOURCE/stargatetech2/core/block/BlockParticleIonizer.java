@@ -4,7 +4,7 @@ import net.minecraft.util.Icon;
 import stargatetech2.common.machine.BlockMachine;
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.reference.TextureReference;
-import stargatetech2.common.registry.IconRegistry;
+import stargatetech2.common.util.IconRegistry;
 import stargatetech2.common.util.GUIHandler.Screen;
 import stargatetech2.core.tileentity.TileParticleIonizer;
 

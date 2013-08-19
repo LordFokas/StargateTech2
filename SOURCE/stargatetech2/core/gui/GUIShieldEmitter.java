@@ -2,25 +2,22 @@ package stargatetech2.core.gui;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.Icon;
-
 import org.lwjgl.opengl.GL11;
 
 import stargatetech2.common.base.BaseContainer;
 import stargatetech2.common.base.BaseGUI;
+import stargatetech2.common.base.BaseGauge.TankGauge;
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.reference.TextureReference;
 import stargatetech2.core.packet.PacketExceptionsUpdate;
 import stargatetech2.core.packet.PacketPermissionsUpdate;
 import stargatetech2.core.tileentity.TileShieldEmitter;
-import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ShieldPermissions;
 
 // TODO: add scrolling for the exception list. To be done later.
 public class GUIShieldEmitter extends BaseGUI {
 	private TileShieldEmitter shieldEmitter;
-	private TankHoverHandler gauge = new TankHoverHandler();
+	private TankGauge ionTank;
 	private TextHandler textHandler = new TextHandler();
 	private ExceptionList exceptions = new ExceptionList();
 	private ExceptionClickHandler addException;
@@ -114,23 +111,7 @@ public class GUIShieldEmitter extends BaseGUI {
 		}
 	}
 	
-	private class TankHoverHandler implements IHoverHandler{
-		public boolean isHover = false;
-		public int hoverX, hoverY;
-		
-		@Override
-		public void onHover(int x, int y) {
-			isHover = true;
-			hoverX = x;
-			hoverY = y;
-		}
-
-		@Override
-		public void onLeave() {
-			isHover = false;
-		}
-		
-	}
+	
 	
 	public GUIShieldEmitter(BaseContainer container) {
 		super(container, 200, 100);
@@ -158,7 +139,8 @@ public class GUIShieldEmitter extends BaseGUI {
 		addClickHandler(remove2, 101, 55, 8, 8);
 		addClickHandler(remove3, 101, 67, 8, 8);
 		addClickHandler(remove4, 101, 79, 8, 8);
-		addHoverHandler(gauge, 8, 28, 16, 64);
+		ionTank = new TankGauge(8, 28, 64000);
+		addGauge(ionTank);
 	}
 	
 	@Override
@@ -180,43 +162,21 @@ public class GUIShieldEmitter extends BaseGUI {
 			drawLeft(player, 111, eY, 0x444444);
 			bindImage(bgImage);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			drawLocalQuad(101, eY, 248, 256, 72, 80, 8, 8);
+			drawLocalQuad(101, eY, 248, 256, 8, 16, 8, 8);
 			eY += 12;
 		}
-		
-		float ions = (float) shieldEmitter.getIonAmount();
-		float total = shieldEmitter.getTankInfo(null)[0].capacity;
-		float fill = ions / total;
-		Icon f = IonizedParticles.fluid.getIcon();
-		bindImage(TextureMap.field_110575_b);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		if(fill > 0.75F) drawQuad(8, 28, f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);
-		if(fill > 0.50F) drawQuad(8, 44, f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);
-		if(fill > 0.25F) drawQuad(8, 60, f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);
-		if(fill > 0.00F) drawQuad(8, 76, f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);
-		fill = 1F - fill;
 		bindImage(bgImage);
-		drawLocalQuad(8, 28, 8, 24, 28, 28 + (64F * fill), 16, 64F*fill);
-		drawLocalQuad(8, 28, 240, 256, 0, 64, 16, 64);
 		ShieldPermissions perm = shieldEmitter.getPermissions();
-		if(perm.hasBit(ShieldPermissions.PERM_PLAYER))
-			drawLocalQuad(32, 28, 248, 256, 64, 72, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_VILLAGER))
-			drawLocalQuad(32, 42, 248, 256, 64, 72, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_ANIMAL))
-			drawLocalQuad(32, 56, 248, 256, 64, 72, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_MONSTER))
-			drawLocalQuad(32, 70, 248, 256, 64, 72, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_MINECART))
-			drawLocalQuad(32, 84, 248, 256, 64, 72, 8, 8);
-		if(gauge.isHover){
-			int baseX = gauge.hoverX+2;
-			int baseY = gauge.hoverY-26;
-			String str = String.format("%d / %d", (int)ions, (int)total);
-			drawLocalQuad(baseX, baseY, 0, 96, 100, 124, 96, 24);
-			drawLeft("Ionized Particles", baseX+4, baseY+3, 0x0044FF);
-			drawLeft(str, baseX+4, baseY+14, 0x0044FF);
-		}
+		if(perm.hasBit(ShieldPermissions.PERM_PLAYER))		drawLocalQuad(32, 28, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_VILLAGER))	drawLocalQuad(32, 42, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_ANIMAL))		drawLocalQuad(32, 56, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_MONSTER))		drawLocalQuad(32, 70, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_MINECART))	drawLocalQuad(32, 84, 248, 256, 0, 8, 8, 8);
+	}
+	
+	@Override
+	protected void updateGauges(){
+		ionTank.setCurrentValue(shieldEmitter.getIonAmount());
 	}
 	
 	@Override

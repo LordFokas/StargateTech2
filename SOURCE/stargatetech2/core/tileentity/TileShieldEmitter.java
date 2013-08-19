@@ -11,13 +11,13 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import stargatetech2.api.IShieldable;
 import stargatetech2.common.base.BaseTileEntity;
-import stargatetech2.common.registry.ShieldRegistry;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.block.BlockShield;
 import stargatetech2.core.block.BlockShieldEmitter;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ShieldPermissions;
+import stargatetech2.core.util.ShieldRegistry;
 
 public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler {
 	// NBT DATA

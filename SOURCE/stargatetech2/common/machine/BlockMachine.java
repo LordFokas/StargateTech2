@@ -10,8 +10,8 @@ import stargatetech2.StargateTech2;
 import stargatetech2.api.ITabletAccess;
 import stargatetech2.common.base.BaseBlockContainer;
 import stargatetech2.common.reference.TextureReference;
-import stargatetech2.common.registry.IconRegistry;
 import stargatetech2.common.util.Helper;
+import stargatetech2.common.util.IconRegistry;
 import stargatetech2.common.util.GUIHandler.Screen;
 
 public abstract class BlockMachine extends BaseBlockContainer implements ITabletAccess{

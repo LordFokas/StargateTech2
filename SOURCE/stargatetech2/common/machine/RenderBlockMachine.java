@@ -8,7 +8,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.common.base.BaseISBRH;
 import stargatetech2.common.reference.TextureReference;
-import stargatetech2.common.registry.IconRegistry;
+import stargatetech2.common.util.IconRegistry;
 import stargatetech2.core.block.BlockParticleIonizer;
 
 public class RenderBlockMachine extends BaseISBRH {

@@ -1,4 +1,4 @@
-package stargatetech2.common.registry;
+package stargatetech2.common.util;
 
 import java.util.HashMap;
 

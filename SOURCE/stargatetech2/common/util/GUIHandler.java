@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import stargatetech2.common.base.BaseContainer;
 import stargatetech2.common.base.BaseGUI;
+import stargatetech2.core.gui.ContainerParticleIonizer;
 import stargatetech2.core.gui.ContainerShieldEmitter;
 import stargatetech2.core.gui.GUIParticleIonizer;
 import stargatetech2.core.gui.GUIShieldEmitter;
@@ -28,7 +29,7 @@ public class GUIHandler implements IGuiHandler {
 				break;
 			case PARTICLE_IONIZER:
 				if(te instanceof TileParticleIonizer)
-					container = new BaseContainer((TileParticleIonizer)te);
+					container = new ContainerParticleIonizer((TileParticleIonizer)te, player);
 				break;
 			default:
 				break;

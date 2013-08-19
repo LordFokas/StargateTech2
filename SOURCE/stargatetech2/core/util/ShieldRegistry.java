@@ -1,4 +1,4 @@
-package stargatetech2.common.registry;
+package stargatetech2.core.util;
 
 import java.util.ArrayList;
 

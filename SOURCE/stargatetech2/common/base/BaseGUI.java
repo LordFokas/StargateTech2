@@ -16,8 +16,15 @@ public abstract class BaseGUI extends GuiContainer {
 	private boolean isNativeRender;
 	protected ResourceLocation bgImage = null;
 	
+	private ArrayList<IGauge> gauges = new ArrayList<IGauge>();
 	private ArrayList<HandlerWrapper<IClickHandler>> clickHandlers = new ArrayList<HandlerWrapper<IClickHandler>>();
 	private ArrayList<HandlerWrapper<IHoverHandler>> hoverHandlers = new ArrayList<HandlerWrapper<IHoverHandler>>();
+	
+	public static interface IGauge{
+		public void register(BaseGUI gui);
+		public void renderGauge();
+		public void renderTooltip();
+	}
 	
 	public static interface IClickHandler{
 		public void onClick(int x, int y);
@@ -81,6 +88,11 @@ public abstract class BaseGUI extends GuiContainer {
 		hoverHandlers.add(new HandlerWrapper<IHoverHandler>(handler, x, y, x+xS, y+yS));
 	}
 	
+	protected void addGauge(IGauge gauge){
+		gauge.register(this);
+		gauges.add(gauge);
+	}
+	
 	@Override
 	protected final void mouseClicked(int x, int y, int btn){
 		super.mouseClicked(x, y, btn);
@@ -127,14 +139,13 @@ public abstract class BaseGUI extends GuiContainer {
 	@Override
 	protected final void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 		onBackground = true;
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		if(bgImage != null){
 			bindImage(bgImage);
 			int x = xSize - 18;
 			int y = ySize - 18;
 			drawLocalQuad(0, 0, 0, x, 0, y, x, y);
 		}
-		bindImage(TextureReference.GUI_BASE);
+		bindBaseImage();
 		isNativeRender = true;
 		drawLocalQuad(0, 0, 0, 24, 0, 24, 24, 24);
 		drawLocalQuad(xSize-24, 0, 40, 64, 0, 24, 24, 24);
@@ -145,25 +156,31 @@ public abstract class BaseGUI extends GuiContainer {
 		drawLocalQuad(0, 24, 0, 9, 24, 40, 9, ySize-48);
 		drawLocalQuad(xSize-9, 24, 55, 64, 24, 40, 9, ySize-48);
 		isNativeRender = false;
+		updateGauges();
+		for(IGauge gauge : gauges){
+			gauge.renderGauge();
+		}
 		drawBackground();
 		onBackground = false;
 	}
 	
-	protected void drawBackground(){}
-	
 	@Override
 	protected final void drawGuiContainerForegroundLayer(int par1, int par2){
-		// there's more stuff to add here, but it'll stay like this for now.
 		drawForeground();
+		for(IGauge gauge : gauges){
+			gauge.renderTooltip();
+		}
 	}
 	
+	protected void updateGauges(){}
+	protected void drawBackground(){}
 	protected void drawForeground(){}
 	
-	protected void drawLocalQuad(float x, float y, float xMin, float xMax, float yMin, float yMax, float xStep, float yStep){
+	public final void drawLocalQuad(float x, float y, float xMin, float xMax, float yMin, float yMax, float xStep, float yStep){
 		drawQuad(x, y, xMin / 256F, xMax / 256F, yMin / 256F, yMax / 256F, xStep, yStep);
 	}
 	
-	protected void drawQuad(float x, float y, float xMin, float xMax, float yMin, float yMax, float xStep, float yStep){
+	public final void drawQuad(float x, float y, float xMin, float xMax, float yMin, float yMax, float xStep, float yStep){
 		if(!isNativeRender){
 			x += 9;
 			y += 9;
@@ -172,6 +189,7 @@ public abstract class BaseGUI extends GuiContainer {
 			x += guiLeft;
 			y += guiTop;
 		}
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
 		GL11.glTexCoord3f(xMin, yMin, zLevel);
@@ -190,13 +208,22 @@ public abstract class BaseGUI extends GuiContainer {
 		mc.renderEngine.func_110577_a(rl);
 	}
 	
-	protected void drawLeft(String s, int x, int y, int color){
+	public void bindBaseImage(){
+		bindImage(TextureReference.GUI_BASE);
+	}
+	
+	public void bindBGImage(){
+		if(bgImage != null)
+			bindImage(bgImage);
+	}
+	
+	public final void drawLeft(String s, int x, int y, int color){
 		x += 9;
 		y += 9;
 		fontRenderer.drawString(s, x, y, color);
 	}
 	
-	protected void drawCentered(String s, int xMid, int y, int color){
+	public final void drawCentered(String s, int xMid, int y, int color){
 		drawLeft(s, xMid - fontRenderer.getStringWidth(s) / 2, y, color);
 	}
 }
