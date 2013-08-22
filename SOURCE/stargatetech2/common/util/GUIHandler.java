@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 import stargatetech2.common.base.BaseContainer;
 import stargatetech2.common.base.BaseGUI;
 import stargatetech2.core.gui.ContainerParticleIonizer;
-import stargatetech2.core.gui.ContainerShieldEmitter;
 import stargatetech2.core.gui.GUIParticleIonizer;
 import stargatetech2.core.gui.GUIShieldEmitter;
 import stargatetech2.core.tileentity.TileParticleIonizer;
@@ -19,44 +18,37 @@ public class GUIHandler implements IGuiHandler {
 		PARTICLE_IONIZER
 	}
 	
-	public BaseContainer getContainer(int ID, EntityPlayer player, World world, int x, int y, int z){
+	@Override
+	public BaseContainer getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		BaseContainer container = null;
 		switch(Screen.values()[ID]){
-			case SHIELD_EMITTER:
-				if(te instanceof TileShieldEmitter)
-					container = new ContainerShieldEmitter((TileShieldEmitter)te);
-				break;
+			case SHIELD_EMITTER: break;
 			case PARTICLE_IONIZER:
 				if(te instanceof TileParticleIonizer)
 					container = new ContainerParticleIonizer((TileParticleIonizer)te, player);
 				break;
-			default:
-				break;
+			default: break;
 		}
-		return container;
-	}
-	
-	@Override
-	public BaseContainer getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		BaseContainer container = getContainer(ID, player, world, x, y, z);
-		container.forceClientUpdate();
+		if(container != null)
+			container.forceClientUpdate();
 		return container;
 	}
 	
 	@Override
 	public BaseGUI getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		BaseContainer container = getContainer(ID, player, world, x, y, z);
+		TileEntity te = world.getBlockTileEntity(x, y, z);
 		BaseGUI gui = null;
 		switch(Screen.values()[ID]){
 			case SHIELD_EMITTER:
-				gui = new GUIShieldEmitter(container);
+				if(te instanceof TileShieldEmitter)
+					gui = new GUIShieldEmitter((TileShieldEmitter)te);
 				break;
 			case PARTICLE_IONIZER:
-				gui = new GUIParticleIonizer(container);
+				if(te instanceof TileParticleIonizer)
+					gui = new GUIParticleIonizer(new ContainerParticleIonizer((TileParticleIonizer)te, player));
 				break;
-			default:
-				break;
+			default: break;
 		}
 		return gui;
 	}

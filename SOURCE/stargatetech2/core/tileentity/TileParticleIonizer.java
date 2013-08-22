@@ -113,10 +113,21 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
-		ItemStack removed = inventory[slot].copy();
-		inventory[slot].stackSize -= amount;
-		removed.stackSize = amount;
-		return removed;
+		if(inventory[slot] != null){
+			ItemStack stack;
+			if(inventory[slot].stackSize <= amount){
+				stack = inventory[slot];
+				inventory[slot] = null;
+			}else{
+				stack = inventory[slot].splitStack(amount);
+				if(inventory[slot].stackSize == 0){
+					inventory[slot] = null;
+				}
+			}
+			return stack;
+		}else{
+			return null;
+		}
 	}
 	
 	@Override

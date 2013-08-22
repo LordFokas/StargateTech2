@@ -113,9 +113,9 @@ public class GUIShieldEmitter extends BaseGUI {
 	
 	
 	
-	public GUIShieldEmitter(BaseContainer container) {
-		super(container, 200, 100);
-		shieldEmitter = (TileShieldEmitter) container.getTileEntity();
+	public GUIShieldEmitter(TileShieldEmitter emitter) {
+		super(null, 200, 100);
+		shieldEmitter = emitter;
 		bgImage = TextureReference.GUI_SHIELD_EMITTER;
 		PermissionClickHandler player	= new PermissionClickHandler(shieldEmitter, ShieldPermissions.PERM_PLAYER);
 		PermissionClickHandler villager = new PermissionClickHandler(shieldEmitter, ShieldPermissions.PERM_VILLAGER);

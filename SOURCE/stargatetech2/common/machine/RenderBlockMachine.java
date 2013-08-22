@@ -27,8 +27,8 @@ public class RenderBlockMachine extends BaseISBRH {
 		Icon mside = IconRegistry.icons.get(TextureReference.MACHINE_SIDE);
 		Icon mtop = IconRegistry.icons.get(TextureReference.MACHINE_TOP);
 		Icon mbot = IconRegistry.icons.get(TextureReference.MACHINE_BOTTOM);
-		Icon face = IconRegistry.icons.get(machine.getFace());
-		Icon glow = IconRegistry.icons.get(machine.getGlow());
+		Icon face = IconRegistry.icons.get(machine.getFace(world, x, y, z));
+		Icon glow = IconRegistry.icons.get(machine.getGlow(world, x, y, z));
 		Icon[] tmap = new Icon[]{mbot, mtop, mside, mside, mside, mside, mside};
 		if(direction != -1){
 			tmap[direction] = face;

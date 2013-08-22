@@ -75,7 +75,7 @@ public abstract class BaseGUI extends GuiContainer {
 	}
 	
 	protected BaseGUI(BaseContainer container, int x, int y) {
-		super(container);
+		super(container != null ? container : new BaseContainer(null));
 		xSize = x + 18;
 		ySize = y + 18;
 	}

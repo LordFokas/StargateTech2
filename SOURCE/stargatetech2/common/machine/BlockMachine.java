@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.StargateTech2;
@@ -52,6 +53,6 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 		return RenderBlockMachine.instance().renderID;
 	}
 	
-	public abstract String getFace();
-	public abstract String getGlow();
+	public abstract String getFace(IBlockAccess world, int x, int y, int z);
+	public abstract String getGlow(IBlockAccess world, int x, int y, int z);
 }
