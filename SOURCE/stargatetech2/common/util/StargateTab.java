@@ -5,7 +5,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class StargateTab extends CreativeTabs {
 	public static final StargateTab instance = new StargateTab();
-	public static int tabletID;
+	public static int iconID;
 	
 	public StargateTab(){
 		super("StargateTech 2");
@@ -13,7 +13,7 @@ public class StargateTab extends CreativeTabs {
 	
 	@Override
 	public int getTabIconItemIndex(){
-		return tabletID;
+		return iconID;
 	}
 	
 	@Override

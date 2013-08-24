@@ -27,6 +27,6 @@ public class PacketExceptionsUpdate extends BasePacket {
 		isSetting = input.readBoolean();
 		playerName = input.readUTF();
 		emitter = (TileShieldEmitter) player.worldObj.getBlockTileEntity(x, y, z);
-		emitter.updatePermissions(isSetting, playerName);
+		emitter.updateExceptions(isSetting, playerName);
 	}
 }

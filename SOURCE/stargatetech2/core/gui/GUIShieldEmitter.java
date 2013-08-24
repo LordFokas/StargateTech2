@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
+import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.common.base.BaseContainer;
 import stargatetech2.common.base.BaseGUI;
 import stargatetech2.common.base.BaseGauge.TankGauge;
@@ -12,7 +13,6 @@ import stargatetech2.common.reference.TextureReference;
 import stargatetech2.core.packet.PacketExceptionsUpdate;
 import stargatetech2.core.packet.PacketPermissionsUpdate;
 import stargatetech2.core.tileentity.TileShieldEmitter;
-import stargatetech2.core.util.ShieldPermissions;
 
 // TODO: add scrolling for the exception list. To be done later.
 public class GUIShieldEmitter extends BaseGUI {

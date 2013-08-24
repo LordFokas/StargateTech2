@@ -2,22 +2,21 @@ package stargatetech2.core.block;
 
 import java.util.List;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import stargatetech2.api.ITabletAccess;
+import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.common.base.BaseBlockContainer;
 import stargatetech2.common.reference.BlockReference;
-import stargatetech2.core.item.ItemBlockShield;
 import stargatetech2.core.tileentity.TileShield;
-import stargatetech2.core.tileentity.TileShieldEmitter;
-import stargatetech2.core.util.ShieldPermissions;
 
-public class BlockShield extends BaseBlockContainer { 
+public class BlockShield extends BaseBlockContainer implements ITabletAccess { 
 	public BlockShield() {
 		super(BlockReference.SHIELD);
 		setCreativeTab(null);
@@ -49,19 +48,30 @@ public class BlockShield extends BaseBlockContainer {
 		TileEntity te = w.getBlockTileEntity(x, y, z);
 		if(te instanceof TileShield){
 			ShieldPermissions permissions = ((TileShield)te).getPermissions();
-			if(!permissions.isEntityAllowed(e)){
+			if(!permissions.isEntityAllowed(e, true)){
 				super.addCollisionBoxesToList(w, x, y, z, aabb, l, e);
 			}
 		}
 	}
 	
 	@Override
-	public void registerBlock(){
-		GameRegistry.registerBlock(this, ItemBlockShield.class, getUnlocalizedName());
-	}
-	
-	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z){
 		return null;
+	}
+
+	@Override
+	public boolean onTabletAccess(EntityPlayer player, World world, int x, int y, int z) {
+		TileEntity te = world.getBlockTileEntity(x, y, z);
+		if(te instanceof TileShield){
+			ShieldPermissions permissions = ((TileShield)te).getPermissions();
+			String message;
+			if(permissions.isEntityAllowed(player, false)){
+				message = "\u00A79 A field of Ionized Particles. It seems to invite you through.";
+			}else{
+				message = "\u00A79 A field of Ionized Particles. It seems to refuse your passage.";
+			}
+			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(message);
+		}
+		return true;
 	}
 }

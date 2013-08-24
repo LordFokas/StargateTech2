@@ -9,17 +9,18 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import stargatetech2.api.IShieldable;
+import stargatetech2.api.shields.IShieldable;
+import stargatetech2.api.shields.ITileShieldEmitter;
+import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.block.BlockShield;
 import stargatetech2.core.block.BlockShieldEmitter;
 import stargatetech2.core.util.IonizedParticles;
-import stargatetech2.core.util.ShieldPermissions;
 import stargatetech2.core.util.ShieldRegistry;
 
-public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler {
+public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, ITileShieldEmitter {
 	// NBT DATA
 	private TileShieldEmitter pair = null;
 	private FluidTank tank = new FluidTank(64000);
@@ -73,7 +74,11 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler {
 	}
 
 	public ShieldPermissions getPermissions(){
-		return permissions;
+		return permissions.deepClone();
+	}
+	
+	public boolean isShieldOn(){
+		return shieldOn;
 	}
 	
 	private int useIons(int ions){
@@ -94,6 +99,8 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler {
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			if(Block.blocksList[bid] instanceof BlockShield){
 				worldObj.setBlock(pos.x, pos.y, pos.z, 0, 0, 2);
+			}else if(Block.blocksList[bid] instanceof IShieldable){
+				((IShieldable)Block.blocksList[bid]).onUnshield(worldObj, pos.x, pos.y, pos.z);
 			}else if(Block.blocksList[bid] instanceof BlockShieldEmitter){
 				break;
 			}
@@ -120,6 +127,8 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler {
 				if(te instanceof TileShield){
 					((TileShield)te).setEmitter(emitter);
 				}
+			}else if(Block.blocksList[bid] instanceof IShieldable){
+				((IShieldable)Block.blocksList[bid]).onShield(worldObj, pos.x, pos.y, pos.z, xCoord, yCoord, zCoord);
 			}else if(Block.blocksList[bid] instanceof BlockShieldEmitter){
 				break;
 			}
@@ -157,6 +166,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler {
 					TileShieldEmitter tse = (TileShieldEmitter) te;
 					if(meta == target.ordinal()){
 						pair = tse;
+						pair.permissions = permissions.deepClone();
 						tse.pair = this;
 						updateClients();
 						tse.updateClients();
@@ -172,21 +182,15 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler {
 		}
 	}
 	
-	public void updatePermissions(boolean set, int flag){
-		doUpdatePermissions(false, set, flag, null);
-		if(pair != null){
-			pair.doUpdatePermissions(false, set, flag, null);
-		}
+	public void updatePermissions(boolean isAllow, int flag){
+		updatePermissions(false, isAllow, flag, null);
 	}
 	
-	public void updatePermissions(boolean set, String player){
-		doUpdatePermissions(true, set, 0, player);
-		if(pair != null){
-			pair.doUpdatePermissions(true, set, 0, player);
-		}
+	public void updateExceptions(boolean isAdding, String player){
+		updatePermissions(true, isAdding, 0, player);
 	}
 	
-	private void doUpdatePermissions(boolean isException, boolean set, int flag, String player){
+	private void updatePermissions(boolean isException, boolean set, int flag, String player){
 		if(isException){
 			if(set){
 				permissions.setPlayerException(player);
@@ -200,6 +204,31 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler {
 				permissions.disallow(flag);
 			}
 		}
+		if(pair != null){
+			pair.setPermissions(permissions);
+		}
+		updateClients();
+		chainPermissions(1);
+		chainPermissions(-1);
+	}
+	
+	private void chainPermissions(int chainDirection){
+		TileEntity te = worldObj.getBlockTileEntity(xCoord, yCoord + chainDirection, zCoord);
+		if(te instanceof TileShieldEmitter && te.getBlockMetadata() == getBlockMetadata()){
+			((TileShieldEmitter)te).setPermissions(permissions, chainDirection);
+		}
+	}
+	
+	private void setPermissions(ShieldPermissions sp, int chainDirection){
+		setPermissions(sp);
+		if(pair != null){
+			pair.setPermissions(sp);
+		}
+		chainPermissions(chainDirection);
+	}
+	
+	private void setPermissions(ShieldPermissions sp){
+		permissions = sp.deepClone();
 		updateClients();
 	}
 	

@@ -1,20 +1,17 @@
 package stargatetech2.core.item;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import stargatetech2.api.ITabletAccess;
 import stargatetech2.common.base.BaseItem;
 import stargatetech2.common.reference.ItemReference;
-import stargatetech2.common.util.StargateTab;
 
 public class ItemTabletPC extends BaseItem {
 
 	public ItemTabletPC() {
 		super(ItemReference.TABLET_PC);
-		StargateTab.tabletID = itemID;
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package stargatetech2.api;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fluids.Fluid;
 
 public interface IStargateTechAPI {
@@ -25,4 +26,9 @@ public interface IStargateTechAPI {
 	 * @return The Fluid instance corresponding to Ionized Particles.
 	 */
 	public Fluid getIonizedParticlesFluidInstance();
+	
+	/**
+	 * @return The creative inventory tab used by StargateTech 2.
+	 */
+	public CreativeTabs getStargateTab();
 }

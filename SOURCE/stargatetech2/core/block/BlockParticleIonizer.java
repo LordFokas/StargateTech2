@@ -1,11 +1,9 @@
 package stargatetech2.core.block;
 
-import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import stargatetech2.common.machine.BlockMachine;
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.reference.TextureReference;
-import stargatetech2.common.util.IconRegistry;
 import stargatetech2.common.util.GUIHandler.Screen;
 import stargatetech2.core.tileentity.TileParticleIonizer;
 

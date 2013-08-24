@@ -1,15 +1,18 @@
 package stargatetech2.common;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fluids.Fluid;
+import stargatetech2.StargateTech2;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.common.util.StargateLogger;
+import stargatetech2.common.util.StargateTab;
 import stargatetech2.core.util.IonizedParticles;
 
 public final class APIImplementation extends StargateTechAPI {
 	private static final int VERSION_MAJOR	= 0;
-	private static final int VERSION_MINOR	= 1;
+	private static final int VERSION_MINOR	= 2;
 	private static final int VERSION_MNT	= 0;
-	private static final int VERSION_REV	= 4;
+	private static final int VERSION_REV	= 6;
 	private static final String API_STATUS	= "dev";
 	
 	public void enableExternalAccess(){
@@ -31,5 +34,10 @@ public final class APIImplementation extends StargateTechAPI {
 	@Override
 	public Fluid getIonizedParticlesFluidInstance() {
 		return IonizedParticles.fluid;
+	}
+
+	@Override
+	public CreativeTabs getStargateTab() {
+		return StargateTab.instance;
 	}
 }
