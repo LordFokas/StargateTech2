@@ -1,5 +1,8 @@
 package stargatetech2.core;
 
+import buildcraft.BuildCraftTransport;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -20,6 +23,7 @@ import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.tileentity.TileShield;
 import stargatetech2.core.tileentity.TileShieldEmitter;
 import stargatetech2.core.util.CoreEventHandler;
+import stargatetech2.core.util.CoreWorldGenerator;
 import stargatetech2.core.util.IonizedParticles;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -56,8 +60,6 @@ public final class ModuleCore implements IContentModule{
 		naquadahRail.registerBlock();
 		naquadahOre.registerBlock();
 		
-		GameRegistry.addSmelting(naquadahOre.blockID, new ItemStack(naquadahIngot, 1), 0);
-		
 		GameRegistry.registerTileEntity(TileShieldEmitter.class, TileEntityReference.TILE_SHIELD_EMITTER);
 		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);
 		GameRegistry.registerTileEntity(TileShield.class, TileEntityReference.TILE_SHIELD);
@@ -79,6 +81,10 @@ public final class ModuleCore implements IContentModule{
 		StargateTech2.instance.proxy.registerRenderer(RenderBlockMachine.instance());
 		StargateTech2.instance.proxy.registerRenderer(RenderNaquadahRail.instance());
 		StargateTech2.instance.proxy.registerRenderer(RenderNaquadahOre.instance());
+		
+		GameRegistry.registerWorldGenerator(new CoreWorldGenerator());
+		
+		addCoreRecipes();
 	}
 
 	@Override
@@ -90,5 +96,23 @@ public final class ModuleCore implements IContentModule{
 	@Override
 	public String getModuleName() {
 		return "Core";
+	}
+	
+	private void addCoreRecipes(){
+		ItemStack naquadah = new ItemStack(naquadahIngot);
+		ItemStack glass = new ItemStack(Block.thinGlass);
+		ItemStack stone = new ItemStack(Block.stone);
+		ItemStack fPipe = new ItemStack(BuildCraftTransport.pipeFluidsGold);
+		ItemStack kPipe = new ItemStack(BuildCraftTransport.pipePowerGold);
+		ItemStack cauldron = new ItemStack(Item.cauldron);
+		ItemStack stick = new ItemStack(Item.stick);
+		ItemStack redstone = new ItemStack(Item.redstone);
+		
+		GameRegistry.addSmelting(naquadahOre.blockID, naquadah, 0);
+		
+		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "SNS", "NGN", "SPS", 'S', stone, 'N', naquadah, 'G', glass, 'P', fPipe);
+		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "SKS", "NCN", "SFS", 'S', stone, 'K', kPipe, 'N', naquadah, 'C', cauldron, 'F', fPipe);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail), "NSN", "NSN", "NSN", 'N', naquadah, 'S', stick);
+		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', naquadah, 'R', redstone, 'G', glass);
 	}
 }

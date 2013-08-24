@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
@@ -67,7 +68,8 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int s, float hx, float hy, float hz){
-		Item item = p.inventory.getCurrentItem().getItem();
+		ItemStack stack = p.inventory.getCurrentItem();
+		Item item = stack != null ? stack.getItem() : null;
 		if(item instanceof IToolWrench){
 			IToolWrench wrench = (IToolWrench) item;
 			boolean isShielded = (w.getBlockMetadata(x,y,z) & 8) != 0;
@@ -119,7 +121,7 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	
 	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World w, int x, int y, int z){
-		return AxisAlignedBB.getAABBPool().getAABB( x, y, z, x+1, y+1, z+1);
+		return AxisAlignedBB.getAABBPool().getAABB(x, y, z, x+1, y+1, z+1);
 	}
 	
 	@Override

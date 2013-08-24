@@ -21,6 +21,8 @@ import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ShieldRegistry;
 
 public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, ITileShieldEmitter {
+	private static final int MAX_EMITTER_RANGE = 5;
+	
 	// NBT DATA
 	private TileShieldEmitter pair = null;
 	private FluidTank tank = new FluidTank(64000);
@@ -42,32 +44,39 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	
 	@Override
 	public void updateEntity(){
-		if(worldObj.isRemote == false && worldObj.getWorldTime() % 20 == 0){
-			if(nbtPair != null){
-				TileEntity te = worldObj.getBlockTileEntity(nbtPair.x, nbtPair.y, nbtPair.z);
-				if(te instanceof TileShieldEmitter){
-					pair = (TileShieldEmitter) te;
-				}
-				nbtPair = null;
-			}
-			if(pair == null){
-				if(shieldOn){
-					destroyShield();
-				}
-				searchPair();
-			}
-			if(pair != null){
-				int used = useIonsFromPair(ionCost);
-				if(used != 0){
-					if(!shieldOn){
-						createShield();
+		if(worldObj.getWorldTime() % 20 == 0){
+			if(worldObj.isRemote == false){
+				if(nbtPair != null){
+					TileEntity te = worldObj.getBlockTileEntity(nbtPair.x, nbtPair.y, nbtPair.z);
+					if(te instanceof TileShieldEmitter){
+						pair = (TileShieldEmitter) te;
 					}
-					// TODO: fix this temporary workaround.
-					updateClients();
-				}else{
+					nbtPair = null;
+				}
+				if(pair == null){
 					if(shieldOn){
 						destroyShield();
 					}
+					searchPair();
+				}
+				if(pair != null){
+					int used = useIonsFromPair(ionCost);
+					if(used != 0){
+						if(!shieldOn){
+							createShield();
+						}
+					}else{
+						if(shieldOn){
+							destroyShield();
+						}
+					}
+				}
+			}else{
+				if(pair == null){
+					searchPair();
+				}
+				if(shieldOn){
+					useIonsFromPair(ionCost);
 				}
 			}
 		}
@@ -94,7 +103,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	private void destroyShield(){
 		ForgeDirection dir = ForgeDirection.getOrientation(getBlockMetadata());
 		Vec3Int pos = new Vec3Int(xCoord, yCoord, zCoord);
-		for(int i = 0; i <= 5; i++){
+		for(int i = 0; i <= MAX_EMITTER_RANGE; i++){
 			pos = pos.offset(dir);
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			if(Block.blocksList[bid] instanceof BlockShield){
@@ -117,7 +126,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		ForgeDirection dir = ForgeDirection.getOrientation(getBlockMetadata());
 		Vec3Int emitter = new Vec3Int(xCoord, yCoord, zCoord);
 		Vec3Int pos = new Vec3Int(xCoord, yCoord, zCoord);
-		for(int i = 0; i <= 5; i++){
+		for(int i = 0; i <= MAX_EMITTER_RANGE; i++){
 			pos = pos.offset(dir);
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			int meta = worldObj.getBlockMetadata(pos.x, pos.y, pos.z);
@@ -154,11 +163,12 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		ForgeDirection dir = ForgeDirection.getOrientation(getBlockMetadata());
 		ForgeDirection target = dir.getOpposite();
 		Vec3Int pos = new Vec3Int(xCoord, yCoord, zCoord);
-		for(int i = 0; i <= 5; i++){
+		for(int i = 0; i <= MAX_EMITTER_RANGE; i++){
 			pos = pos.offset(dir);
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			int meta = worldObj.getBlockMetadata(pos.x, pos.y, pos.z);
-			if(ShieldRegistry.isRemovable(bid, meta) || Block.blocksList[bid] instanceof IShieldable){
+			Block block = Block.blocksList[bid];
+			if(ShieldRegistry.isRemovable(bid, meta) || block instanceof IShieldable || block instanceof BlockShield){
 				continue;
 			}else if(Block.blocksList[bid] instanceof BlockShieldEmitter){
 				TileEntity te = worldObj.getBlockTileEntity(pos.x, pos.y, pos.z);
