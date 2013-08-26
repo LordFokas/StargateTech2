@@ -3,6 +3,7 @@ package stargatetech2.core.gui;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
@@ -14,6 +15,8 @@ import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.reference.TextureReference;
 import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.util.IonizedParticles;
+import stargatetech2.core.util.ParticleIonizerRecipes;
+import stargatetech2.core.util.ParticleIonizerRecipes.Recipe;
 
 public class GUIParticleIonizer extends BaseGUI {
 	private TileParticleIonizer ionizer;
@@ -21,7 +24,7 @@ public class GUIParticleIonizer extends BaseGUI {
 	private PowerGauge power;
 	
 	public GUIParticleIonizer(ContainerParticleIonizer container) {
-		super(container, 174, 184);
+		super(container, 174, 184, false);
 		ionizer = container.ionizer;
 		bgImage = TextureReference.GUI_PARTICLE_IONIZER;
 		ionTank = new TankGauge(127, 16, ionizer.getTankInfo(null)[0].capacity);
@@ -39,6 +42,20 @@ public class GUIParticleIonizer extends BaseGUI {
 		drawQuad(4, 3.5F, 0, 1, 0, 1, 8, 8);
 		drawLeft("Particle Ionizer", 16, 4, 0x444444);
 		drawLeft("Inventory", 16, 85, 0x444444);
+		ItemStack consuming = ionizer.getConsuming();
+		if(consuming != null){
+			Recipe recipe = ParticleIonizerRecipes.getRecipe(consuming);
+			itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, consuming, 94, 31);
+			drawLeft("" + recipe.ions + " mB/s", 77, 52, 0x444444);
+			drawLeft("" + recipe.power + " MJ/s", 77, 64, 0x444444);
+			
+			float finish = 1F - ((float)ionizer.getWorkTicksLeft()) / ((float)recipe.ticks);
+			bindImage(bgImage);
+			drawLocalQuad(67, 43, 204, 204F + (52F * finish), 0, 4, 52F * finish, 4);
+		}else{
+			drawLeft("--", 77, 52, 0x444444);
+			drawLeft("--", 77, 64, 0x444444);
+		}
 	}
 	
 	@Override

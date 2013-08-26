@@ -19,11 +19,16 @@ import net.minecraftforge.fluids.IFluidHandler;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ParticleIonizerRecipes;
+import stargatetech2.core.util.ParticleIonizerRecipes.Recipe;
 
 public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler, IPowerReceptor, IInventory{
-	private FluidTank tank = new FluidTank(IonizedParticles.fluid, 120000, 120000);
+	private FluidTank tank = new FluidTank(12000);
 	private ItemStack[] inventory = new ItemStack[9];
 	private PowerHandler powerHandler = new PowerHandler(this, Type.MACHINE);
+	private ItemStack consuming = null;
+	private int workTicks;
+	
+	private Recipe recipe;
 	
 	public TileParticleIonizer(){
 		powerHandler.configure(50, 100, 5, 16000);
@@ -33,8 +38,35 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	@Override
 	public void updateEntity(){
 		if(worldObj.isRemote == false && worldObj.getWorldTime() % 20 == 0){
-			// Add work here.
-			updateClients();
+			if(consuming == null){
+				for(int slot = 0; slot < inventory.length; slot++){
+					ItemStack item = inventory[slot];
+					recipe = ParticleIonizerRecipes.getRecipe(item);
+					if(item != null && recipe != null){
+						consuming = item.copy();
+						item.stackSize--;
+						consuming.stackSize = 1;
+						if(item.stackSize == 0){
+							inventory[slot] = null;
+						}
+						workTicks = recipe.ticks;
+						break;
+					}
+				}
+			}else{
+				FluidStack fs = new FluidStack(IonizedParticles.fluid, recipe.ions);
+				int fill = tank.fill(fs, false);
+				if(fill < fs.amount || powerHandler.useEnergy(recipe.power, recipe.power, false) < recipe.power){
+					return;
+				}
+				powerHandler.useEnergy(recipe.power, recipe.power, true);
+				tank.fill(fs, true);
+				workTicks--;
+				if(workTicks == 0){
+					consuming = null;
+				}
+				updateClients();
+			}
 		}
 	}
 	
@@ -43,11 +75,18 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 		return (fs == null) ? 0 : fs.amount;
 	}
 	
+	public ItemStack getConsuming(){
+		return consuming;
+	}
+	
+	public int getWorkTicksLeft(){
+		return workTicks;
+	}
+	
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
 		tank.readFromNBT(nbt);
 		powerHandler.readFromNBT(nbt.getCompoundTag("powerHandler"));
-		
 		for(int slot = 0; slot < inventory.length; slot++){
 			if(nbt.hasKey("stack" + slot)){
 				inventory[slot] = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("stack" + slot));
@@ -55,6 +94,12 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 				inventory[slot] = null;
 			}
 		}
+		if(nbt.hasKey("consuming")){
+			consuming = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("consuming"));
+			recipe = ParticleIonizerRecipes.getRecipe(consuming);
+			if(recipe == null) consuming = null;
+		}
+		workTicks = nbt.getInteger("workTicks");
 	}
 	
 	@Override
@@ -70,6 +115,12 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 			}
 			nbt.setCompoundTag("stack" + slot, stack);
 		}
+		if(consuming != null){
+			NBTTagCompound stack = new NBTTagCompound();
+			consuming.writeToNBT(stack);
+			nbt.setCompoundTag("consuming", stack);
+		}
+		nbt.setInteger("workTicks", workTicks);
 	}
 	
 	//##################################################################################

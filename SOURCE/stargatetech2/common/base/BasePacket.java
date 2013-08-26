@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import stargatetech2.common.packet.PacketOpenGUI;
 import stargatetech2.common.util.ByteUtil;
 import stargatetech2.common.util.PacketHandler;
 import stargatetech2.core.packet.PacketExceptionsUpdate;
@@ -33,6 +34,7 @@ public abstract class BasePacket{
 	static{
 		packetMap.add(PacketPermissionsUpdate.class);
 		packetMap.add(PacketExceptionsUpdate.class);
+		packetMap.add(PacketOpenGUI.class);
 	}
 	
 	private ByteArrayOutputStream baos = new ByteArrayOutputStream();

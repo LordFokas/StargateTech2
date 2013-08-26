@@ -14,6 +14,7 @@ import stargatetech2.common.reference.TextureReference;
 public abstract class BaseGUI extends GuiContainer {
 	private boolean onBackground;
 	private boolean isNativeRender;
+	private boolean usesTextHandler = false;
 	protected ResourceLocation bgImage = null;
 	
 	private ArrayList<IGauge> gauges = new ArrayList<IGauge>();
@@ -74,10 +75,11 @@ public abstract class BaseGUI extends GuiContainer {
 		}
 	}
 	
-	protected BaseGUI(BaseContainer container, int x, int y) {
+	protected BaseGUI(BaseContainer container, int x, int y, boolean useText) {
 		super(container != null ? container : new BaseContainer());
 		xSize = x + 18;
 		ySize = y + 18;
+		usesTextHandler = useText;
 	}
 	
 	protected void addClickHandler(IClickHandler handler, int x, int y, int xS, int yS){
@@ -127,10 +129,14 @@ public abstract class BaseGUI extends GuiContainer {
 	
 	@Override
 	protected final void keyTyped(char key, int code){
-		if(code == 1){
+		if(usesTextHandler){
+			if(code == 1){
+				this.mc.thePlayer.closeScreen();
+			}else{
+				onKeyTyped(key, code);
+			}
+		}else if(code == 1 || code == mc.gameSettings.keyBindInventory.keyCode){
 			this.mc.thePlayer.closeScreen();
-		}else{
-			onKeyTyped(key, code);
 		}
 	}
 	

@@ -12,6 +12,7 @@ import stargatetech2.StargateTech2;
 import stargatetech2.api.ITabletAccess;
 import stargatetech2.common.base.BaseBlockContainer;
 import stargatetech2.common.base.BaseTileEntity;
+import stargatetech2.common.packet.PacketOpenGUI;
 import stargatetech2.common.reference.TextureReference;
 import stargatetech2.common.util.Helper;
 import stargatetech2.common.util.IconRegistry;
@@ -44,7 +45,12 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 	@Override
 	public boolean onTabletAccess(EntityPlayer player, World world, int x, int y, int z) {
 		if(screen != null){
-			player.openGui(StargateTech2.instance, screen.ordinal(), world, x, y, z);
+			PacketOpenGUI packet = new PacketOpenGUI();
+			packet.guiID = screen.ordinal();
+			packet.x = x;
+			packet.y = y;
+			packet.z = z;
+			packet.sendToServer();
 			TileEntity te = world.getBlockTileEntity(x, y, z);
 			if(te instanceof BaseTileEntity){
 				((BaseTileEntity)te).updateClients();
