@@ -20,9 +20,9 @@ public class GUIParticleIonizer extends BaseGUI {
 	private TankGauge ionTank;
 	private PowerGauge power;
 	
-	public GUIParticleIonizer(BaseContainer container) {
+	public GUIParticleIonizer(ContainerParticleIonizer container) {
 		super(container, 174, 184);
-		ionizer = (TileParticleIonizer) container.getTileEntity();
+		ionizer = container.ionizer;
 		bgImage = TextureReference.GUI_PARTICLE_IONIZER;
 		ionTank = new TankGauge(127, 16, ionizer.getTankInfo(null)[0].capacity);
 		power = new PowerGauge(151, 16, ionizer.getPowerReceiver(null).getMaxEnergyStored());

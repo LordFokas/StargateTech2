@@ -30,8 +30,6 @@ public class GUIHandler implements IGuiHandler {
 				break;
 			default: break;
 		}
-		if(container != null)
-			container.forceClientUpdate();
 		return container;
 	}
 	

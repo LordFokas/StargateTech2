@@ -9,6 +9,8 @@ public class BlockNaquadahOre extends BaseBlock {
 	
 	public BlockNaquadahOre(){
 		super(BlockReference.NAQUADAH_ORE, true, true);
+		this.setHardness(3.0F);
+		this.setResistance(5.0F);
 		MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
 	}
 	

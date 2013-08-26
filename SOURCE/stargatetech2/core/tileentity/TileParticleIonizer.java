@@ -33,7 +33,7 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	@Override
 	public void updateEntity(){
 		if(worldObj.isRemote == false && worldObj.getWorldTime() % 20 == 0){
-			
+			// Add work here.
 			updateClients();
 		}
 	}
@@ -47,6 +47,14 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	protected void readNBT(NBTTagCompound nbt) {
 		tank.readFromNBT(nbt);
 		powerHandler.readFromNBT(nbt.getCompoundTag("powerHandler"));
+		
+		for(int slot = 0; slot < inventory.length; slot++){
+			if(nbt.hasKey("stack" + slot)){
+				inventory[slot] = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("stack" + slot));
+			}else{
+				inventory[slot] = null;
+			}
+		}
 	}
 	
 	@Override
@@ -55,6 +63,13 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 		NBTTagCompound ph = new NBTTagCompound();
 		powerHandler.writeToNBT(ph);
 		nbt.setCompoundTag("powerHandler", ph);
+		for(int slot = 0; slot < inventory.length; slot++){
+			NBTTagCompound stack = new NBTTagCompound();
+			if(inventory[slot] != null){
+				inventory[slot].writeToNBT(stack);
+			}
+			nbt.setCompoundTag("stack" + slot, stack);
+		}
 	}
 	
 	//##################################################################################
@@ -140,12 +155,18 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 		return ParticleIonizerRecipes.getRecipe(stack) != null;
 	}
 	
-	@Override public ItemStack getStackInSlotOnClosing(int i){ return null; }
+	@Override
+	public ItemStack getStackInSlotOnClosing(int slot){
+		ItemStack stack = inventory[slot];
+		inventory[slot] = null;
+		return stack;
+	}
+	
 	@Override public String getInvName(){ return "Particle Ionizer"; }
 	@Override public boolean isInvNameLocalized(){ return true; }
 	@Override public int getInventoryStackLimit(){ return 64; }
 	@Override public boolean isUseableByPlayer(EntityPlayer entityplayer){ return true; }
-	@Override public int getSizeInventory(){ return 9; }
+	@Override public int getSizeInventory(){ return inventory.length; }
 	@Override public void openChest(){}
 	@Override public void closeChest(){}
 }
