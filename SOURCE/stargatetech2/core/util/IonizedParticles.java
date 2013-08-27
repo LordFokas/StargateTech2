@@ -12,6 +12,6 @@ public class IonizedParticles extends Fluid{
 		setGaseous(true);
 		setLuminosity(15);
 		// setViscosity(1000); // Unable to determine a good value.
-		setTemperature(800); // 800ºK ~= 525ºC
+		setTemperature(800); // 800K ~= 525C
 	}
 }
