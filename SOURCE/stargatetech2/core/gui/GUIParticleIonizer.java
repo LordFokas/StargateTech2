@@ -42,14 +42,13 @@ public class GUIParticleIonizer extends BaseGUI {
 		drawQuad(4, 3.5F, 0, 1, 0, 1, 8, 8);
 		drawLeft("Particle Ionizer", 16, 4, 0x444444);
 		drawLeft("Inventory", 16, 85, 0x444444);
-		ItemStack consuming = ionizer.getConsuming();
-		if(consuming != null){
-			Recipe recipe = ParticleIonizerRecipes.getRecipe(consuming);
-			itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, consuming, 94, 31);
+		if(ionizer.consuming != null && ionizer.workTicks > 0){
+			Recipe recipe = ParticleIonizerRecipes.getRecipe(ionizer.consuming);
+			itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, ionizer.consuming, 94, 31);
 			drawLeft("" + recipe.ions + " mB/s", 77, 52, 0x444444);
 			drawLeft("" + recipe.power + " MJ/s", 77, 64, 0x444444);
 			
-			float finish = 1F - ((float)ionizer.getWorkTicksLeft()) / ((float)recipe.ticks);
+			float finish = 1F - ((float)ionizer.workTicks) / ((float)recipe.ticks);
 			bindImage(bgImage);
 			drawLocalQuad(67, 43, 204, 204F + (52F * finish), 0, 4, 52F * finish, 4);
 		}else{

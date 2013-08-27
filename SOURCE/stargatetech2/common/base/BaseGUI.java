@@ -125,7 +125,10 @@ public abstract class BaseGUI extends GuiContainer {
 				}
 			}
 		}
+		processMouseEvents();
 	}
+	
+	protected void processMouseEvents(){}
 	
 	@Override
 	protected final void keyTyped(char key, int code){

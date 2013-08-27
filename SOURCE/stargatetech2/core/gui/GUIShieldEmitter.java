@@ -2,6 +2,7 @@ package stargatetech2.core.gui;
 
 import java.util.ArrayList;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import stargatetech2.api.shields.ShieldPermissions;
@@ -14,7 +15,6 @@ import stargatetech2.core.packet.PacketExceptionsUpdate;
 import stargatetech2.core.packet.PacketPermissionsUpdate;
 import stargatetech2.core.tileentity.TileShieldEmitter;
 
-// TODO: add scrolling for the exception list. To be done later.
 public class GUIShieldEmitter extends BaseGUI {
 	private TileShieldEmitter shieldEmitter;
 	private TankGauge ionTank;
@@ -183,8 +183,22 @@ public class GUIShieldEmitter extends BaseGUI {
 	protected void onKeyTyped(char key, int code){
 		if(code == 28){
 			addException.onClick(-1, -1);
+		}else if(code == 200){
+			exceptions.lastDec();
+		}else if(code == 208){
+			exceptions.lastInc();
 		}else{
 			textHandler.onKey(key, code);
+		}
+	}
+	
+	@Override
+	protected void processMouseEvents(){
+		int wheel = Mouse.getDWheel();
+		if(wheel < 0){
+			exceptions.lastInc();
+		}else if(wheel > 0){
+			exceptions.lastDec();
 		}
 	}
 }

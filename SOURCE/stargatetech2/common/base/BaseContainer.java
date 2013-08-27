@@ -2,6 +2,7 @@ package stargatetech2.common.base;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 
@@ -20,6 +21,12 @@ public class BaseContainer extends Container {
 		}
 		for (int i = 0; i < 9; i++) {
 			addSlotToContainer(new Slot(inventoryPlayer, i, xOffset + i * 18, 58 + yOffset));
+		}
+	}
+	
+	protected void sendUpdate(int key, int value){
+		for(int i = 0; i < crafters.size(); i++){
+			((ICrafting)crafters.get(i)).sendProgressBarUpdate(this, key, value);
 		}
 	}
 }

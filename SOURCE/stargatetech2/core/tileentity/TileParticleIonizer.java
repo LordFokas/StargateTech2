@@ -25,10 +25,10 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	private FluidTank tank = new FluidTank(12000);
 	private ItemStack[] inventory = new ItemStack[9];
 	private PowerHandler powerHandler = new PowerHandler(this, Type.MACHINE);
-	private ItemStack consuming = null;
-	private int workTicks;
+	public ItemStack consuming = null;
+	public int workTicks;
 	
-	private Recipe recipe;
+	public Recipe recipe;
 	
 	public TileParticleIonizer(){
 		powerHandler.configure(50, 100, 5, 16000);
@@ -65,7 +65,6 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 				if(workTicks == 0){
 					consuming = null;
 				}
-				updateClients();
 			}
 		}
 	}
@@ -75,12 +74,12 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 		return (fs == null) ? 0 : fs.amount;
 	}
 	
-	public ItemStack getConsuming(){
-		return consuming;
+	public void setIonAmount(int value){
+		tank.setFluid(new FluidStack(IonizedParticles.fluid, value));
 	}
 	
-	public int getWorkTicksLeft(){
-		return workTicks;
+	public void setPower(int value){
+		powerHandler.setEnergy(value);
 	}
 	
 	@Override

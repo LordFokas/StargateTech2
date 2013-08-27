@@ -47,6 +47,14 @@ public class ParticleIonizerRecipes{
 		if(!recipes.contains(recipe)) recipes.add(recipe);
 	}
 	
+	public static int getRecipeID(Recipe recipe){
+		return recipes.indexOf(recipe);
+	}
+	
+	public static Recipe getRecipe(int recipeID){
+		return recipes.get(recipeID);
+	}
+	
 	static{
 		addRecipe(new ItemStack(Item.glowstone), 300, 5, 2);
 	}

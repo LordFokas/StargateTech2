@@ -44,39 +44,30 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	
 	@Override
 	public void updateEntity(){
-		if(worldObj.getWorldTime() % 20 == 0){
-			if(worldObj.isRemote == false){
-				if(nbtPair != null){
-					TileEntity te = worldObj.getBlockTileEntity(nbtPair.x, nbtPair.y, nbtPair.z);
-					if(te instanceof TileShieldEmitter){
-						pair = (TileShieldEmitter) te;
-					}
-					nbtPair = null;
+		if(worldObj.isRemote == false && worldObj.getWorldTime() % 20 == 0){
+			if(nbtPair != null){
+				TileEntity te = worldObj.getBlockTileEntity(nbtPair.x, nbtPair.y, nbtPair.z);
+				if(te instanceof TileShieldEmitter){
+					pair = (TileShieldEmitter) te;
 				}
-				if(pair == null){
+				nbtPair = null;
+			}
+			if(pair == null){
+				if(shieldOn){
+					destroyShield();
+				}
+				searchPair();
+			}
+			if(pair != null){
+				int used = useIonsFromPair(ionCost);
+				if(used != 0){
+					if(!shieldOn){
+						createShield();
+					}
+				}else{
 					if(shieldOn){
 						destroyShield();
 					}
-					searchPair();
-				}
-				if(pair != null){
-					int used = useIonsFromPair(ionCost);
-					if(used != 0){
-						if(!shieldOn){
-							createShield();
-						}
-					}else{
-						if(shieldOn){
-							destroyShield();
-						}
-					}
-				}
-			}else{
-				if(pair == null){
-					searchPair();
-				}
-				if(shieldOn){
-					useIonsFromPair(ionCost);
 				}
 			}
 		}
@@ -117,9 +108,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		shieldOn = false;
 		if(pair != null){
 			pair.shieldOn = false;
-			pair.updateClients();
 		}
-		updateClients();
 	}
 	
 	private void createShield(){
@@ -145,9 +134,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		shieldOn = true;
 		if(pair != null){
 			pair.shieldOn = true;
-			pair.updateClients();
 		}
-		updateClients();
 	}
 	
 	public int getIonAmount(){
@@ -178,8 +165,6 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 						pair = tse;
 						pair.permissions = permissions.deepClone();
 						tse.pair = this;
-						updateClients();
-						tse.updateClients();
 						return;
 					}
 				}
@@ -271,9 +256,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	@Override
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 		if(resource.fluidID == IonizedParticles.fluid.getID()){
-			int f = tank.fill(resource, doFill);
-			updateClients();
-			return f;
+			return tank.fill(resource, doFill);
 		}
 		return 0;
 	}
