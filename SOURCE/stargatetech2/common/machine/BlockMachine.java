@@ -1,7 +1,9 @@
 package stargatetech2.common.machine;
 
+import buildcraft.api.tools.IToolWrench;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
@@ -63,6 +65,22 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 	@Override
 	public int getRenderType(){
 		return RenderBlockMachine.instance().renderID;
+	}
+	
+	@Override
+	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int s, float hx, float hy, float hz){
+		ItemStack stack = p.inventory.getCurrentItem();
+		Item item = stack != null ? stack.getItem() : null;
+		if(item instanceof IToolWrench){
+			IToolWrench wrench = (IToolWrench) item;
+			if(wrench.canWrench(p, x, y, z)){
+				dropBlockAsItem(w, x, y, z, 0, 0);
+				w.setBlock(x, y, z, 0, 0, 3);
+				wrench.wrenchUsed(p, x, y, z);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public abstract String getFace(IBlockAccess world, int x, int y, int z);

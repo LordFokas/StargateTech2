@@ -4,6 +4,7 @@ import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
 import buildcraft.api.power.PowerHandler.Type;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -33,6 +34,21 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	public TileParticleIonizer(){
 		powerHandler.configure(50, 100, 5, 16000);
 		powerHandler.configurePowerPerdition(0, 0);
+	}
+	
+	@Override
+	public void invalidate(){
+		super.invalidate();
+		if(worldObj.isRemote == false){
+			double x = ((double)xCoord) + 0.5D;
+			double y = ((double)yCoord) + 0.5D;
+			double z = ((double)zCoord) + 0.5D;
+			for(ItemStack stack : inventory){
+				if(stack != null){
+					worldObj.spawnEntityInWorld(new EntityItem(worldObj, x, y, z,stack));
+				}
+			}
+		}
 	}
 	
 	@Override
