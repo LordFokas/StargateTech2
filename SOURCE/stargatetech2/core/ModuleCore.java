@@ -87,11 +87,8 @@ public final class ModuleCore implements IContentModule{
 		addCoreRecipes();
 	}
 
-	@Override
-	public void onServerStart(){}
-
-	@Override
-	public void onServerStop(){}
+	@Override public void onServerStart(){}
+	@Override public void onServerStop(){}
 
 	@Override
 	public String getModuleName() {

@@ -14,6 +14,7 @@ import stargatetech2.common.util.IconRegistry;
 import stargatetech2.common.util.PacketHandler;
 import stargatetech2.common.util.StargateLogger;
 import stargatetech2.core.ModuleCore;
+import stargatetech2.integration.ModuleIntegration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -41,13 +42,11 @@ public class StargateTech2 {
 	public Config config;
 	public APIImplementation apiImplementation;
 	
-	public ModuleCore core;
-	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
 		config = new Config(new Configuration(event.getSuggestedConfigurationFile()));
-		core = new ModuleCore();
-		modules.add(core);
+		modules.add(new ModuleCore());
+		modules.add(new ModuleIntegration());
 		StargateLogger.init();
 		apiImplementation = new APIImplementation();
 		MinecraftForge.EVENT_BUS.register(this);
