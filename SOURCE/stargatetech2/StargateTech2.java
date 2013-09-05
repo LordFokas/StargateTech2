@@ -9,7 +9,6 @@ import net.minecraftforge.event.ForgeSubscribe;
 import stargatetech2.common.APIImplementation;
 import stargatetech2.common.reference.ModReference;
 import stargatetech2.common.util.Config;
-import stargatetech2.common.util.GUIHandler;
 import stargatetech2.common.util.IconRegistry;
 import stargatetech2.common.util.PacketHandler;
 import stargatetech2.common.util.StargateLogger;
@@ -25,7 +24,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -50,7 +48,7 @@ public class StargateTech2 {
 		StargateLogger.init();
 		apiImplementation = new APIImplementation();
 		MinecraftForge.EVENT_BUS.register(this);
-		NetworkRegistry.instance().registerGuiHandler(this, new GUIHandler());
+		proxy.registerGUIHandler();
 		PacketHandler.server.register();
 		PacketHandler.client.register();
 		

@@ -78,9 +78,7 @@ public final class ModuleCore implements IContentModule{
 		LanguageRegistry.addName(tabletPC, "Tablet PC");
 		LanguageRegistry.addName(naquadahIngot, "Naquadah Ingot");
 		
-		StargateTech2.instance.proxy.registerRenderer(RenderBlockMachine.instance());
-		StargateTech2.instance.proxy.registerRenderer(RenderNaquadahRail.instance());
-		StargateTech2.instance.proxy.registerRenderer(RenderNaquadahOre.instance());
+		StargateTech2.proxy.registerRenderers(Module.CORE);
 		
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator());
 		

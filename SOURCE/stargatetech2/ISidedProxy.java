@@ -1,7 +1,8 @@
 package stargatetech2;
 
-import stargatetech2.common.base.BaseISBRH;
+import stargatetech2.IContentModule.Module;
 
 public interface ISidedProxy {
-	public void registerRenderer(BaseISBRH renderer);
+	public void registerRenderers(Module module);
+	public void registerGUIHandler();
 }
