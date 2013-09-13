@@ -1,8 +1,12 @@
 package stargatetech2.core.tileentity;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.util.Vec3Int;
@@ -15,11 +19,10 @@ public class TileTransportRing extends BaseTileEntity {
 	@ClientLogic public final static int SEQ_TIME = 10 * RING_MOV + PAUSE;
 	@ClientLogic public final static int HLF_TIME = SEQ_TIME / 2;
 	@ClientLogic public final RingRenderData renderData = new RingRenderData();
-	
 	@ServerLogic private static final ArrayList<Vec3Int> RING_BLOCKS = new ArrayList<Vec3Int>(36);
 	@ServerLogic private Vec3Int pairUp;
 	@ServerLogic private Vec3Int pairDn;
-	
+	@ServerLogic private int yOffset;
 	private int teleportCooldown = 0;
 	private boolean isTeleporting = false;
 	private int teleportCountdown = 0;
@@ -39,7 +42,7 @@ public class TileTransportRing extends BaseTileEntity {
 	@ServerLogic
 	private void serverTick(){
 		if(worldObj.getWorldTime() % 150 == 0){
-			startTeleportSequence();
+			startTeleportSequence(15);
 		}
 		if(teleportCountdown == HLF_TIME){
 			doTeleport();
@@ -52,7 +55,25 @@ public class TileTransportRing extends BaseTileEntity {
 	}
 	
 	@ServerLogic
-	private void startTeleportSequence(){
+	public void teleport(boolean up){
+		if(teleportCooldown == 0 && !isTeleporting){
+			Vec3Int pair = up ? pairUp : pairDn;
+			if(pair == null) return;
+			TileEntity te = worldObj.getBlockTileEntity(pair.x, pair.y, pair.z);
+			if(te instanceof TileTransportRing){
+				TileTransportRing dest = (TileTransportRing) te;
+				if(dest.teleportCooldown == 0 && !dest.isTeleporting){
+					int off = pair.y - yCoord;
+					this.startTeleportSequence( off);
+					dest.startTeleportSequence(-off);
+				}
+			}
+		}
+	}
+	
+	@ServerLogic
+	private void startTeleportSequence(int offset){
+		yOffset = offset;
 		isTeleporting = true;
 		teleportCountdown = SEQ_TIME;
 		updateClients();
@@ -65,7 +86,16 @@ public class TileTransportRing extends BaseTileEntity {
 	
 	@ServerLogic
 	private void doTeleport(){
-		// do something.
+		AxisAlignedBB area = AxisAlignedBB.getAABBPool().getAABB(xCoord - 1, yCoord + 2, zCoord - 1, xCoord + 2, yCoord + 5, zCoord + 2);
+		List<Entity> entities = worldObj.getEntitiesWithinAABB(Entity.class, area);
+		for(Entity entity : entities){
+			System.out.println("Found Entity: " + entity.getClass().getName());
+			if(entity instanceof EntityPlayerMP){
+				((EntityPlayerMP)entity).setPositionAndUpdate(entity.posX, entity.posY + yOffset, entity.posZ);
+			}else{
+				entity.setPosition(entity.posX, entity.posY + yOffset, entity.posZ);
+			}
+		}
 	}
 	
 	@ServerLogic
@@ -127,8 +157,6 @@ public class TileTransportRing extends BaseTileEntity {
 	
 	@ClientLogic
 	public class RingRenderData{
-		public static final int MAX_RING_POS = 10;
-		
 		public boolean isRendering = false;
 		public int movingRing;
 		public int ringPos[];
