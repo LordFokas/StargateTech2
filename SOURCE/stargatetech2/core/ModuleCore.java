@@ -10,6 +10,8 @@ import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
 import stargatetech2.common.machine.RenderBlockMachine;
 import stargatetech2.common.reference.TileEntityReference;
+import stargatetech2.core.block.BlockInvisible;
+import stargatetech2.core.block.BlockTransportRing;
 import stargatetech2.core.block.BlockNaquadahOre;
 import stargatetech2.core.block.BlockNaquadahRail;
 import stargatetech2.core.block.BlockParticleIonizer;
@@ -22,6 +24,7 @@ import stargatetech2.core.rendering.RenderNaquadahRail;
 import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.tileentity.TileShield;
 import stargatetech2.core.tileentity.TileShieldEmitter;
+import stargatetech2.core.tileentity.TileTransportRing;
 import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.CoreWorldGenerator;
 import stargatetech2.core.util.IonizedParticles;
@@ -34,6 +37,8 @@ public final class ModuleCore implements IContentModule{
 	public static BlockShield shield;
 	public static BlockNaquadahRail naquadahRail;
 	public static BlockNaquadahOre naquadahOre;
+	public static BlockTransportRing transportRing;
+	public static BlockInvisible invisible;
 	
 	public static ItemTabletPC tabletPC;
 	public static ItemNaquadahIngot naquadahIngot;
@@ -45,6 +50,8 @@ public final class ModuleCore implements IContentModule{
 		shield = new BlockShield();
 		naquadahRail = new BlockNaquadahRail();
 		naquadahOre = new BlockNaquadahOre();
+		transportRing = new BlockTransportRing();
+		invisible = new BlockInvisible();
 		
 		tabletPC = new ItemTabletPC();
 		naquadahIngot = new ItemNaquadahIngot();
@@ -59,10 +66,13 @@ public final class ModuleCore implements IContentModule{
 		shield.registerBlock();
 		naquadahRail.registerBlock();
 		naquadahOre.registerBlock();
+		transportRing.registerBlock();
+		invisible.registerBlock();
 		
 		GameRegistry.registerTileEntity(TileShieldEmitter.class, TileEntityReference.TILE_SHIELD_EMITTER);
 		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);
 		GameRegistry.registerTileEntity(TileShield.class, TileEntityReference.TILE_SHIELD);
+		GameRegistry.registerTileEntity(TileTransportRing.class, TileEntityReference.TILE_TRANSPORT_RING);
 	}
 
 	@Override
@@ -74,6 +84,8 @@ public final class ModuleCore implements IContentModule{
 		LanguageRegistry.addName(shield, "Shield");
 		LanguageRegistry.addName(naquadahRail, "Naquadah Rail");
 		LanguageRegistry.addName(naquadahOre, "Naquadah Ore");
+		LanguageRegistry.addName(transportRing, "Transport Ring");
+		LanguageRegistry.addName(invisible, "Invisible Block");
 		
 		LanguageRegistry.addName(tabletPC, "Tablet PC");
 		LanguageRegistry.addName(naquadahIngot, "Naquadah Ingot");

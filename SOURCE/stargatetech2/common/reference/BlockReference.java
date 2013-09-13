@@ -10,6 +10,8 @@ public class BlockReference {
 	public static final String SHIELD = "shield";
 	public static final String NAQUADAH_RAIL = "naquadahRail";
 	public static final String NAQUADAH_ORE = "naquadahOre";
+	public static final String TRANSPORT_RING = "transportRing";
+	public static final String INVISIBLE = "invisible";
 	
 	static{
 		ALL_BLOCKS.add(SHIELD_EMITTER);
@@ -17,5 +19,7 @@ public class BlockReference {
 		ALL_BLOCKS.add(SHIELD);
 		ALL_BLOCKS.add(NAQUADAH_RAIL);
 		ALL_BLOCKS.add(NAQUADAH_ORE);
+		ALL_BLOCKS.add(TRANSPORT_RING);
+		ALL_BLOCKS.add(INVISIBLE);
 	}
 }

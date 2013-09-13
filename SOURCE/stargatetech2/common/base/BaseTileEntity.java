@@ -1,5 +1,10 @@
 package stargatetech2.common.base;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
@@ -7,6 +12,26 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 
 public abstract class BaseTileEntity extends TileEntity {
+	
+	/**
+	 * Marks things that belong to the server logic
+	 * and aren't used anywhere else.
+	 * 
+	 * @author LordFokas
+	 */
+	@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
+	@Retention(RetentionPolicy.SOURCE)
+	public @interface ServerLogic{}
+	
+	/**
+	 * Marks things that belong to the client logic
+	 * and aren't used anywhere else.
+	 * 
+	 * @author LordFokas
+	 */
+	@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
+	@Retention(RetentionPolicy.SOURCE)
+	public @interface ClientLogic{}
 	
 	public final Packet132TileEntityData getDescriptionPacket(){
         NBTTagCompound nbt = new NBTTagCompound();

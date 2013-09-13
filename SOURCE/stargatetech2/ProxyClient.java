@@ -6,6 +6,9 @@ import stargatetech2.common.machine.RenderBlockMachine;
 import stargatetech2.common.util.GUIHandlerClient;
 import stargatetech2.core.rendering.RenderNaquadahOre;
 import stargatetech2.core.rendering.RenderNaquadahRail;
+import stargatetech2.core.rendering.RenderTransportRing;
+import stargatetech2.core.tileentity.TileTransportRing;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
@@ -14,13 +17,14 @@ public class ProxyClient implements ISidedProxy{
 	@Override
 	public void registerRenderers(Module module){
 		switch(module){
-		case CORE:
-			registerRenderer(RenderBlockMachine.instance());
-			registerRenderer(RenderNaquadahRail.instance());
-			registerRenderer(RenderNaquadahOre.instance());
-			break;
-		case INTEGRATION:
-			break;
+			case CORE:
+				registerRenderer(RenderBlockMachine.instance());
+				registerRenderer(RenderNaquadahRail.instance());
+				registerRenderer(RenderNaquadahOre.instance());
+				ClientRegistry.bindTileEntitySpecialRenderer(TileTransportRing.class, new RenderTransportRing());
+				break;
+			case INTEGRATION:
+				break;
 		}
 	}
 

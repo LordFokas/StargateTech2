@@ -44,6 +44,7 @@ public class TextureReference {
 	public static final ResourceLocation GUI_BASE = getTexture("gui/base.png");
 	public static final ResourceLocation GUI_SHIELD_EMITTER = getTexture("gui/shieldEmitter.png");
 	public static final ResourceLocation GUI_PARTICLE_IONIZER = getTexture("gui/particleIonizer.png");
+	public static final ResourceLocation TESR_TRANSPORT_RING = getTexture("special/transportRing.png");
 	
 	public static ResourceLocation getTexture(String texture){
 		return new ResourceLocation(ModReference.MOD_ID + ":" + "textures/" + texture);
