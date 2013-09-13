@@ -1,14 +1,17 @@
 package stargatetech2.core.block;
 
 import buildcraft.api.tools.IToolWrench;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.common.base.BaseBlockContainer;
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.reference.TextureReference;
+import stargatetech2.common.util.Helper;
 import stargatetech2.common.util.IconRegistry;
 import stargatetech2.core.tileentity.TileTransportRing;
 
@@ -47,7 +50,14 @@ public class BlockTransportRing extends BaseBlockContainer{
 		}
 		return false;
 	}
-
+	
+	@Override
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase living, ItemStack stack){
+		if(w.isRemote) return;
+		TileTransportRing ring = (TileTransportRing) w.getBlockTileEntity(x, y, z);
+		ring.link();
+	}
+	
 	@Override
 	protected TileTransportRing createTileEntity(int metadata) {
 		return new TileTransportRing();

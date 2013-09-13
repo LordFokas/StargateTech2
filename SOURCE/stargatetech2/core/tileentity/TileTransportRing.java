@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
@@ -23,6 +24,7 @@ public class TileTransportRing extends BaseTileEntity {
 	@ServerLogic private Vec3Int pairUp;
 	@ServerLogic private Vec3Int pairDn;
 	@ServerLogic private int yOffset;
+	@ServerLogic private List<Entity> targets;
 	private int teleportCooldown = 0;
 	private boolean isTeleporting = false;
 	private int teleportCountdown = 0;
@@ -31,6 +33,9 @@ public class TileTransportRing extends BaseTileEntity {
 	public void updateEntity(){
 		if(isTeleporting){
 			teleportCountdown--;
+		}
+		if(teleportCooldown > 0){
+			teleportCooldown--;
 		}
 		if(worldObj.isRemote){
 			clientTick();
@@ -42,15 +47,16 @@ public class TileTransportRing extends BaseTileEntity {
 	@ServerLogic
 	private void serverTick(){
 		if(worldObj.getWorldTime() % 150 == 0){
-			startTeleportSequence(15);
+			teleport(true);
 		}
-		if(teleportCountdown == HLF_TIME){
-			doTeleport();
-		} else if(teleportCountdown == 0){
-			finishTeleportSequence();
-		}
-		if(teleportCooldown > 0){
-			teleportCooldown--;
+		if(isTeleporting){
+			if(teleportCountdown == HLF_TIME +1 ){
+				selectTargets();
+			}else if(teleportCountdown == HLF_TIME){
+				doTeleport();
+			} else if(teleportCountdown == 0){
+				finishTeleportSequence();
+			}
 		}
 	}
 	
@@ -85,15 +91,21 @@ public class TileTransportRing extends BaseTileEntity {
 	}
 	
 	@ServerLogic
-	private void doTeleport(){
+	private void selectTargets(){
 		AxisAlignedBB area = AxisAlignedBB.getAABBPool().getAABB(xCoord - 1, yCoord + 2, zCoord - 1, xCoord + 2, yCoord + 5, zCoord + 2);
-		List<Entity> entities = worldObj.getEntitiesWithinAABB(Entity.class, area);
-		for(Entity entity : entities){
-			System.out.println("Found Entity: " + entity.getClass().getName());
-			if(entity instanceof EntityPlayerMP){
-				((EntityPlayerMP)entity).setPositionAndUpdate(entity.posX, entity.posY + yOffset, entity.posZ);
-			}else{
-				entity.setPosition(entity.posX, entity.posY + yOffset, entity.posZ);
+		targets = worldObj.getEntitiesWithinAABB(Entity.class, area);
+	}
+	
+	@ServerLogic
+	private void doTeleport(){
+		if(targets == null) return;
+		for(Entity entity : targets){
+			if(!entity.isDead){
+				if(entity instanceof EntityPlayerMP){
+					((EntityPlayerMP)entity).setPositionAndUpdate(entity.posX, entity.posY + yOffset, entity.posZ);
+				}else{
+					entity.setPosition(entity.posX, entity.posY + yOffset, entity.posZ);
+				}
 			}
 		}
 	}
@@ -108,6 +120,38 @@ public class TileTransportRing extends BaseTileEntity {
 				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, 0);
 			}
 		}
+	}
+	
+	@ServerLogic
+	public void link(){
+		Vec3Int me0 = new Vec3Int(xCoord, yCoord, zCoord);
+		Vec3Int me1 = me0.offset(ForgeDirection.UNKNOWN);
+		for(int y = yCoord - 10; y > 0; y--){
+			if(findPair(me0, y, false)){
+				y = 0;
+			}
+		}
+		int max = worldObj.getHeight();
+		for(int y = yCoord + 10; y < max; y++){
+			if(findPair(me1, y, true)){
+				y = max;
+			}
+		}
+	}
+	
+	private boolean findPair(Vec3Int me, int y, boolean dirUp){
+		TileEntity te = worldObj.getBlockTileEntity(xCoord, y, zCoord);
+		if(te instanceof TileTransportRing){
+			if(dirUp){
+				((TileTransportRing)te).pairDn = me;
+				pairUp = new Vec3Int(xCoord, y, zCoord);
+			}else{
+				((TileTransportRing)te).pairUp = me;
+				pairDn = new Vec3Int(xCoord, y, zCoord);
+			}
+			return true;
+		}
+		return false;
 	}
 	
 	@ClientLogic
@@ -131,7 +175,7 @@ public class TileTransportRing extends BaseTileEntity {
 	
 	@Override
 	public AxisAlignedBB getRenderBoundingBox(){
-		return AxisAlignedBB.getAABBPool().getAABB(xCoord-2, yCoord, zCoord-2, xCoord+3, yCoord+4, zCoord+3);
+		return AxisAlignedBB.getAABBPool().getAABB(xCoord-2, yCoord, zCoord-2, xCoord+3, yCoord+5, zCoord+3);
 	}
 	
 	@Override
@@ -143,6 +187,18 @@ public class TileTransportRing extends BaseTileEntity {
 	protected void readNBT(NBTTagCompound nbt) {
 		renderData.isRendering = isTeleporting = nbt.getBoolean("isTeleporting");
 		teleportCountdown = nbt.getInteger("teleportCountdown");
+		teleportCooldown = nbt.getInteger("teleportCooldown");
+		yOffset = nbt.getInteger("yOffset");
+		if(nbt.hasKey("pairUp")){
+			pairUp = Vec3Int.fromNBT(nbt.getCompoundTag("pairUp"));
+		}else{
+			pairUp = null;
+		}
+		if(nbt.hasKey("pairDn")){
+			pairDn = Vec3Int.fromNBT(nbt.getCompoundTag("pairDn"));
+		}else{
+			pairDn = null;
+		}
 		if(isTeleporting){
 			renderData.movingRing = 4;
 			renderData.ringPos = new int[5];
@@ -153,6 +209,14 @@ public class TileTransportRing extends BaseTileEntity {
 	protected void writeNBT(NBTTagCompound nbt) {
 		nbt.setBoolean("isTeleporting", isTeleporting);
 		nbt.setInteger("teleportCountdown", teleportCountdown);
+		nbt.setInteger("teleportCooldown", teleportCooldown);
+		nbt.setInteger("yOffset", yOffset);
+		if(pairUp != null){
+			nbt.setCompoundTag("pairUp", pairUp.toNBT());
+		}
+		if(pairDn != null){
+			nbt.setCompoundTag("pairDn", pairDn.toNBT());
+		}
 	}
 	
 	@ClientLogic
