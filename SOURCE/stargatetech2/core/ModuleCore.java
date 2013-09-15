@@ -116,6 +116,8 @@ public final class ModuleCore implements IContentModule{
 		ItemStack cauldron = new ItemStack(Item.cauldron);
 		ItemStack stick = new ItemStack(Item.stick);
 		ItemStack redstone = new ItemStack(Item.redstone);
+		ItemStack pearl = new ItemStack(Item.enderPearl);
+		ItemStack ironBlock = new ItemStack(Block.blockIron);
 		
 		GameRegistry.addSmelting(naquadahOre.blockID, naquadah, 0);
 		
@@ -123,5 +125,6 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "SKS", "NCN", "SFS", 'S', stone, 'K', kPipe, 'N', naquadah, 'C', cauldron, 'F', fPipe);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail), "NSN", "NSN", "NSN", 'N', naquadah, 'S', stick);
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', naquadah, 'R', redstone, 'G', glass);
+		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "NPN", "NBN", "NPN", 'N', naquadah, 'P', pearl, 'B', ironBlock);
 	}
 }

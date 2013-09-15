@@ -23,6 +23,7 @@ public class TileTransportRing extends BaseTileEntity {
 	@ClientLogic public final static int SEQ_TIME = 10 * RING_MOV + PAUSE;
 	@ClientLogic public final static int HLF_TIME = SEQ_TIME / 2;
 	@ClientLogic public final RingRenderData renderData = new RingRenderData();
+	@ServerLogic public static final int TP_COOLDOWN = 100;
 	@ServerLogic private static final ArrayList<Vec3Int> RING_BLOCKS = new ArrayList<Vec3Int>(36);
 	@ServerLogic private Vec3Int pairUp;
 	@ServerLogic private Vec3Int pairDn;
@@ -36,7 +37,7 @@ public class TileTransportRing extends BaseTileEntity {
 	@ClientLogic
 	public static TileTransportRing getRingsInRange(World world){
 		TileTransportRing rings = null;
-		if(LAST_IN_RANGE != null){
+		if(world != null && LAST_IN_RANGE != null){
 			TileEntity te = world.getBlockTileEntity(LAST_IN_RANGE.x, LAST_IN_RANGE.y, LAST_IN_RANGE.z);
 			if(te instanceof TileTransportRing){
 				if(((TileTransportRing)te).isLocalPlayerInRange()){
@@ -107,14 +108,19 @@ public class TileTransportRing extends BaseTileEntity {
 	}
 	
 	@ServerLogic
+	public boolean canActivate(){
+		return teleportCooldown == 0 && !isTeleporting;
+	}
+	
+	@ServerLogic
 	public void teleport(boolean up){
-		if(teleportCooldown == 0 && !isTeleporting){
+		if(canActivate()){
 			Vec3Int pair = up ? pairUp : pairDn;
 			if(pair == null) return;
 			TileEntity te = worldObj.getBlockTileEntity(pair.x, pair.y, pair.z);
 			if(te instanceof TileTransportRing){
 				TileTransportRing dest = (TileTransportRing) te;
-				if(dest.teleportCooldown == 0 && !dest.isTeleporting){
+				if(dest.canActivate()){
 					int off = pair.y - yCoord;
 					this.startTeleportSequence( off);
 					dest.startTeleportSequence(-off);
@@ -158,7 +164,7 @@ public class TileTransportRing extends BaseTileEntity {
 	@ServerLogic
 	private void finishTeleportSequence(){
 		isTeleporting = false;
-		teleportCooldown = 120;
+		teleportCooldown = TP_COOLDOWN;
 		updateClients();
 		for(Vec3Int b : RING_BLOCKS){
 			if(worldObj.getBlockId(xCoord + b.x, yCoord + b.y, zCoord + b.z) == ModuleCore.invisible.blockID){
