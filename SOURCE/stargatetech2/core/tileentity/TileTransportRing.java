@@ -8,12 +8,15 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import stargatetech2.StargateTech2;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 
 public class TileTransportRing extends BaseTileEntity {
+	@ClientLogic private static Vec3Int LAST_IN_RANGE;
 	@ClientLogic public final static int RING_MOV = 5;
 	@ClientLogic public final static int PAUSE = 30;
 	@ClientLogic public final static int HLF_PAUSE = PAUSE / 2;
@@ -25,9 +28,55 @@ public class TileTransportRing extends BaseTileEntity {
 	@ServerLogic private Vec3Int pairDn;
 	@ServerLogic private int yOffset;
 	@ServerLogic private List<Entity> targets;
+	private AxisAlignedBB myAABB;
 	private int teleportCooldown = 0;
 	private boolean isTeleporting = false;
 	private int teleportCountdown = 0;
+	
+	@ClientLogic
+	public static TileTransportRing getRingsInRange(World world){
+		TileTransportRing rings = null;
+		if(LAST_IN_RANGE != null){
+			TileEntity te = world.getBlockTileEntity(LAST_IN_RANGE.x, LAST_IN_RANGE.y, LAST_IN_RANGE.z);
+			if(te instanceof TileTransportRing){
+				if(((TileTransportRing)te).isLocalPlayerInRange()){
+					return (TileTransportRing)te;
+				}
+			}
+		}
+		return rings;
+	}
+	
+	@Override
+	public void validate(){
+		super.validate();
+		refreshAABB();
+	}
+	
+	@Override
+	public void invalidate(){
+		super.invalidate();
+		TileTransportRing up, dn;
+		up = getPair(pairUp);
+		dn = getPair(pairDn);
+		if(up != null){
+			up.pairDn = pairDn;
+		}
+		if(dn != null){
+			dn.pairUp = pairUp;
+		}
+	}
+	
+	@ServerLogic
+	private TileTransportRing getPair(Vec3Int pair){
+		if(pair != null){
+			TileEntity te = worldObj.getBlockTileEntity(pair.x, pair.y, pair.z);
+			if(te instanceof TileTransportRing){
+				return (TileTransportRing)te;
+			}
+		}
+		return null;
+	}
 	
 	@Override
 	public void updateEntity(){
@@ -46,9 +95,6 @@ public class TileTransportRing extends BaseTileEntity {
 	
 	@ServerLogic
 	private void serverTick(){
-		if(worldObj.getWorldTime() % 150 == 0){
-			teleport(true);
-		}
 		if(isTeleporting){
 			if(teleportCountdown == HLF_TIME +1 ){
 				selectTargets();
@@ -92,8 +138,7 @@ public class TileTransportRing extends BaseTileEntity {
 	
 	@ServerLogic
 	private void selectTargets(){
-		AxisAlignedBB area = AxisAlignedBB.getAABBPool().getAABB(xCoord - 1, yCoord + 2, zCoord - 1, xCoord + 2, yCoord + 5, zCoord + 2);
-		targets = worldObj.getEntitiesWithinAABB(Entity.class, area);
+		targets = worldObj.getEntitiesWithinAABB(Entity.class, myAABB);
 	}
 	
 	@ServerLogic
@@ -139,6 +184,7 @@ public class TileTransportRing extends BaseTileEntity {
 		}
 	}
 	
+	@ServerLogic
 	private boolean findPair(Vec3Int me, int y, boolean dirUp){
 		TileEntity te = worldObj.getBlockTileEntity(xCoord, y, zCoord);
 		if(te instanceof TileTransportRing){
@@ -171,6 +217,18 @@ public class TileTransportRing extends BaseTileEntity {
 				renderData.mode = -1.0F;
 			}
 		}
+		if(isLocalPlayerInRange()){
+			LAST_IN_RANGE = new Vec3Int(xCoord, yCoord, zCoord);
+		}
+	}
+	
+	@ClientLogic
+	private boolean isLocalPlayerInRange(){
+		return StargateTech2.proxy.isLocalPlayerInAABB(worldObj, myAABB);
+	}
+	
+	private void refreshAABB(){
+		myAABB = AxisAlignedBB.getBoundingBox(xCoord - 1, yCoord + 2, zCoord - 1, xCoord + 2, yCoord + 5, zCoord + 2);
 	}
 	
 	@Override
@@ -203,6 +261,7 @@ public class TileTransportRing extends BaseTileEntity {
 			renderData.movingRing = 4;
 			renderData.ringPos = new int[5];
 		}
+		refreshAABB();
 	}
 	
 	@Override

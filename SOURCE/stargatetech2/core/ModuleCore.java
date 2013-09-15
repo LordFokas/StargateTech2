@@ -28,6 +28,8 @@ import stargatetech2.core.tileentity.TileTransportRing;
 import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.CoreWorldGenerator;
 import stargatetech2.core.util.IonizedParticles;
+import stargatetech2.core.util.RingKeyHandler;
+import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 

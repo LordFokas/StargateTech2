@@ -12,6 +12,7 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import stargatetech2.common.packet.PacketOpenGUI;
 import stargatetech2.common.util.ByteUtil;
 import stargatetech2.common.util.PacketHandler;
+import stargatetech2.core.packet.PacketActivateRings;
 import stargatetech2.core.packet.PacketExceptionsUpdate;
 import stargatetech2.core.packet.PacketPermissionsUpdate;
 import cpw.mods.fml.common.network.PacketDispatcher;
@@ -35,6 +36,7 @@ public abstract class BasePacket{
 		packetMap.add(PacketPermissionsUpdate.class);
 		packetMap.add(PacketExceptionsUpdate.class);
 		packetMap.add(PacketOpenGUI.class);
+		packetMap.add(PacketActivateRings.class);
 	}
 	
 	private ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -48,7 +48,6 @@ public class StargateTech2 {
 		StargateLogger.init();
 		apiImplementation = new APIImplementation();
 		MinecraftForge.EVENT_BUS.register(this);
-		proxy.registerGUIHandler();
 		PacketHandler.server.register();
 		PacketHandler.client.register();
 		
@@ -67,6 +66,7 @@ public class StargateTech2 {
 	@EventHandler
 	public void init(FMLInitializationEvent event){
 		StargateLogger.info("Initializing Modules");
+		proxy.registerHandlers();
 		for(IContentModule module : modules){
 			try{
 				module.init();
