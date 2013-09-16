@@ -36,6 +36,9 @@ public class RenderTransportRing extends BaseTESR{
 	private static final float Y_BEGIN2 = 22.0F / TEXTURE_SIZE;
 	private static final float Y_FINAL2 = 32.0F / TEXTURE_SIZE;
 	
+	private int displayList;
+	private boolean compiled = false;
+	
 	@Override
 	protected void setLightCoordinates(TileEntity te, Vec3Int light){
 		light.y += 2;
@@ -68,7 +71,15 @@ public class RenderTransportRing extends BaseTESR{
 	private void renderRing(){
 		for(int i = 0; i < 9; i++){
 			GL11.glRotated(ANGLE * 360D, 0, 360, 0);
-			renderSegment();
+			if(!compiled){
+				displayList = GLAllocation.generateDisplayLists(1);
+				GL11.glNewList(displayList, GL11.GL_COMPILE_AND_EXECUTE);
+				renderSegment();
+				GL11.glEndList();
+				compiled = true;
+			}else{
+				GL11.glCallList(displayList);
+			}
 		}
 	}
 	
