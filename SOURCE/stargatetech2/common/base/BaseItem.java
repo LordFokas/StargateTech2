@@ -10,7 +10,7 @@ public abstract class BaseItem extends Item {
 	public BaseItem(String uName) {
 		super(StargateTech2.instance.config.getItemID(uName));
 		this.setUnlocalizedName(uName);
-		this.func_111206_d(ModReference.MOD_ID + ":" + uName);
+		this.setTextureName(ModReference.MOD_ID + ":" + uName);
 		this.setCreativeTab(StargateTab.instance);
 	}
 }

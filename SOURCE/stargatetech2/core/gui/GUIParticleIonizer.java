@@ -36,7 +36,7 @@ public class GUIParticleIonizer extends BaseGUI {
 	
 	@Override
 	protected void drawForeground(){
-		bindImage(mc.thePlayer.func_110306_p());
+		bindImage(mc.thePlayer.getLocationSkin());
 		drawQuad(4, 84.5F, 8F/64F, 16F/64F, 8F/32F, 16F/32F, 8, 8);
 		bindImage(TextureReference.getTexture("blocks/" + BlockReference.PARTICLE_IONIZER + ".png"));
 		drawQuad(4, 3.5F, 0, 1, 0, 1, 8, 8);

@@ -40,7 +40,7 @@ public abstract class BaseTileEntity extends TileEntity {
     }
 	
 	public final void onDataPacket(INetworkManager net, Packet132TileEntityData packet){
-		NBTTagCompound nbt = packet.customParam1;
+		NBTTagCompound nbt = packet.data;
 		if(nbt != null){
 			this.readFromNBT(nbt);
 		}

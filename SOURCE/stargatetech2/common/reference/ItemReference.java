@@ -7,9 +7,11 @@ public class ItemReference {
 	
 	public static final String TABLET_PC = "tabletPC";
 	public static final String NAQUADAH_INGOT = "naquadahIngot";
+	public static final String PERSONAL_SHIELD = "personalShield";
 	
 	static{
 		ALL_ITEMS.add(TABLET_PC);
 		ALL_ITEMS.add(NAQUADAH_INGOT);
+		ALL_ITEMS.add(PERSONAL_SHIELD);
 	}
 }

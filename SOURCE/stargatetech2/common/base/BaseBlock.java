@@ -19,7 +19,7 @@ public class BaseBlock extends Block{
 	public BaseBlock(String uName, boolean breakable, boolean requiresTool) {
 		super(StargateTech2.instance.config.getBlockID(uName), requiresTool ? MaterialNaquadah.unbreakable : MaterialNaquadah.breakable);
 		this.setUnlocalizedName(uName);
-		this.func_111022_d(ModReference.MOD_ID + ":" + uName);
+		this.setTextureName(ModReference.MOD_ID + ":" + uName);
 		if(!breakable){
 			this.setBlockUnbreakable();
 			this.setResistance(20000000F);

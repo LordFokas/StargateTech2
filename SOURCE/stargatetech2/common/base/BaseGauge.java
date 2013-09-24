@@ -36,7 +36,7 @@ public abstract class BaseGauge implements IGauge{
 	}
 	
 	protected void bindImage(ResourceLocation rl){
-		Minecraft.getMinecraft().renderEngine.func_110577_a(rl);
+		Minecraft.getMinecraft().renderEngine.bindTexture(rl);;
 	}
 	
 	public BaseGauge(int x, int y, float maxValue){
@@ -66,7 +66,7 @@ public abstract class BaseGauge implements IGauge{
 		public void renderGauge() {
 			float fill = cVal / mVal;
 			Icon f = IonizedParticles.fluid.getIcon();
-			bindImage(TextureMap.field_110575_b);
+			bindImage(TextureMap.locationBlocksTexture);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			if(fill > 0.75F) master.drawQuad(xPos, yPos,	f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);
 			if(fill > 0.50F) master.drawQuad(xPos, yPos+16, f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);

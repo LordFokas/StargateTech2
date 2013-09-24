@@ -40,10 +40,6 @@ public abstract class BaseTESR extends TileEntitySpecialRenderer {
 		GL11.glPopMatrix();
 	}
 	
-	protected final void bindTexture(ResourceLocation texture){
-		func_110628_a(texture);
-	}
-	
 	protected void setLightCoordinates(TileEntity te, Vec3Int light){}
 	
 	public abstract void render(TileEntity te, Block block, World w, Vec3Int pos, float partialTicks);

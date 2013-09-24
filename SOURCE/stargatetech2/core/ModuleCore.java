@@ -18,6 +18,7 @@ import stargatetech2.core.block.BlockParticleIonizer;
 import stargatetech2.core.block.BlockShield;
 import stargatetech2.core.block.BlockShieldEmitter;
 import stargatetech2.core.item.ItemNaquadahIngot;
+import stargatetech2.core.item.ItemPersonalShield;
 import stargatetech2.core.item.ItemTabletPC;
 import stargatetech2.core.rendering.RenderNaquadahOre;
 import stargatetech2.core.rendering.RenderNaquadahRail;
@@ -44,6 +45,7 @@ public final class ModuleCore implements IContentModule{
 	
 	public static ItemTabletPC tabletPC;
 	public static ItemNaquadahIngot naquadahIngot;
+	public static ItemPersonalShield personalShield;
 	
 	@Override
 	public void preInit(){
@@ -57,6 +59,7 @@ public final class ModuleCore implements IContentModule{
 		
 		tabletPC = new ItemTabletPC();
 		naquadahIngot = new ItemNaquadahIngot();
+		personalShield = new ItemPersonalShield();
 	}
 
 	@Override
@@ -91,6 +94,7 @@ public final class ModuleCore implements IContentModule{
 		
 		LanguageRegistry.addName(tabletPC, "Tablet PC");
 		LanguageRegistry.addName(naquadahIngot, "Naquadah Ingot");
+		LanguageRegistry.addName(personalShield, "Personal Shield");
 		
 		StargateTech2.proxy.registerRenderers(Module.CORE);
 		

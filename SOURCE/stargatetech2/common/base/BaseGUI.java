@@ -214,7 +214,7 @@ public abstract class BaseGUI extends GuiContainer {
 	}
 	
 	protected void bindImage(ResourceLocation rl){
-		mc.renderEngine.func_110577_a(rl);
+		mc.renderEngine.bindTexture(rl);
 	}
 	
 	public void bindBaseImage(){
