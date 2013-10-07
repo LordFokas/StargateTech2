@@ -1,4 +1,4 @@
-package stargatetech2.core.util;
+package stargatetech2.core.worldgen;
 
 import java.util.Random;
 
@@ -13,6 +13,8 @@ public class CoreWorldGenerator implements IWorldGenerator {
 	@Override
 	public void generate(Random random, int cX, int cZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
 		generateOres(world, random, cX, cZ);
+		AncientWorldGenerator.generateLootPod(random, cX, cZ, world, chunkGenerator, chunkProvider);
+		AncientWorldGenerator.generateSkyBase(random, cX, cZ, world, chunkGenerator, chunkProvider);
 	}
 	
 	private void generateOres(World world, Random random, int cX, int cZ){

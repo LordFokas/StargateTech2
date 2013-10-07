@@ -40,8 +40,8 @@ public class RenderTransportRing extends BaseTESR{
 	private boolean compiled = false;
 	
 	@Override
-	protected void setLightCoordinates(TileEntity te, Vec3Int light){
-		light.y += 2;
+	protected Vec3Int getLightCoordinates(TileEntity te, Vec3Int light){
+		return new Vec3Int(light.x, light.y + 2, light.z);
 	}
 	
 	@Override
