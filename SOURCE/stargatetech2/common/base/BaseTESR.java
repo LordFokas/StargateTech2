@@ -29,7 +29,7 @@ public abstract class BaseTESR extends TileEntitySpecialRenderer {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x+0.5D, y, z+0.5D);
 		Vec3Int light = pos.offset(ForgeDirection.UNKNOWN);
-		setLightCoordinates(te, light);
+		light = getLightCoordinates(te, light);
 		float b = block.getBlockBrightness(w, light.x, light.y, light.z);
 		int sky = w.getLightBrightnessForSkyBlocks(light.x, light.y, light.z, 0);
 		int sky0 = sky % SKY_LIGHT_CONST;
@@ -40,7 +40,7 @@ public abstract class BaseTESR extends TileEntitySpecialRenderer {
 		GL11.glPopMatrix();
 	}
 	
-	protected void setLightCoordinates(TileEntity te, Vec3Int light){}
+	protected Vec3Int getLightCoordinates(TileEntity te, Vec3Int light){ return light; }
 	
 	public abstract void render(TileEntity te, Block block, World w, Vec3Int pos, float partialTicks);
 }

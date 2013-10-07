@@ -4,7 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 
 public class Vec3Int {
-	public int x, y, z;
+	public final int x, y, z;
 	
 	public Vec3Int(int x, int y, int z){
 		this.x = x;
