@@ -8,6 +8,7 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
+import stargatetech2.common.util.Color;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -41,6 +42,7 @@ public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 	}
 	
 	protected void setBlockBoundsForItemRender(Block block, int metadata){}
+	protected Color getRenderColor(int metadata){ return null; }
 
 	@Override
 	public abstract boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer);
@@ -73,6 +75,11 @@ public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 		Tessellator tessellator = Tessellator.instance;
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		tessellator.startDrawingQuads();
+		
+		Color color = getRenderColor(meta);
+		if(color != null){
+			tessellator.setColorOpaque(color.r, color.g, color.b);
+		}
 		
 		tessellator.setNormal(0.0F, -1F, 0.0F);
 		renderer.renderFaceYNeg(block, 0, 0, 0, tmap[0]);

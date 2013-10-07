@@ -10,7 +10,9 @@ import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
 import stargatetech2.common.machine.RenderBlockMachine;
 import stargatetech2.common.reference.TileEntityReference;
+import stargatetech2.common.util.Color;
 import stargatetech2.core.block.BlockInvisible;
+import stargatetech2.core.block.BlockLanteanWall;
 import stargatetech2.core.block.BlockTransportRing;
 import stargatetech2.core.block.BlockNaquadahOre;
 import stargatetech2.core.block.BlockNaquadahRail;
@@ -42,6 +44,7 @@ public final class ModuleCore implements IContentModule{
 	public static BlockNaquadahOre naquadahOre;
 	public static BlockTransportRing transportRing;
 	public static BlockInvisible invisible;
+	public static BlockLanteanWall lanteanWall;
 	
 	public static ItemTabletPC tabletPC;
 	public static ItemNaquadahIngot naquadahIngot;
@@ -56,6 +59,7 @@ public final class ModuleCore implements IContentModule{
 		naquadahOre = new BlockNaquadahOre();
 		transportRing = new BlockTransportRing();
 		invisible = new BlockInvisible();
+		lanteanWall = new BlockLanteanWall();
 		
 		tabletPC = new ItemTabletPC();
 		naquadahIngot = new ItemNaquadahIngot();
@@ -73,6 +77,7 @@ public final class ModuleCore implements IContentModule{
 		naquadahOre.registerBlock();
 		transportRing.registerBlock();
 		invisible.registerBlock();
+		lanteanWall.registerBlock();
 		
 		GameRegistry.registerTileEntity(TileShieldEmitter.class, TileEntityReference.TILE_SHIELD_EMITTER);
 		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);
@@ -92,6 +97,10 @@ public final class ModuleCore implements IContentModule{
 		LanguageRegistry.addName(transportRing, "Transport Ring");
 		LanguageRegistry.addName(invisible, "Invisible Block");
 		
+		for(int i = 0; i < 16; i++){
+			LanguageRegistry.addName(new ItemStack(lanteanWall, 1, i), Color.COLORS[i].name + " Lantean Wall");
+		}
+		
 		LanguageRegistry.addName(tabletPC, "Tablet PC");
 		LanguageRegistry.addName(naquadahIngot, "Naquadah Ingot");
 		LanguageRegistry.addName(personalShield, "Personal Shield");
@@ -101,6 +110,7 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator());
 		
 		addCoreRecipes();
+		
 	}
 
 	@Override public void onServerStart(){}
@@ -130,5 +140,13 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail), "NSN", "NSN", "NSN", 'N', naquadah, 'S', stick);
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', naquadah, 'R', redstone, 'G', glass);
 		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "NPN", "NBN", "NPN", 'N', naquadah, 'P', pearl, 'B', ironBlock);
+		
+		for(Color color : Color.COLORS){
+			for(int i = 0; i < 16; i++){
+				if(i != color.id){
+					GameRegistry.addShapelessRecipe(new ItemStack(lanteanWall, 1, color.id), new ItemStack(lanteanWall, 1, i), color.getDye());
+				}
+			}
+		}
 	}
 }
