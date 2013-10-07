@@ -140,6 +140,7 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail), "NSN", "NSN", "NSN", 'N', naquadah, 'S', stick);
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', naquadah, 'R', redstone, 'G', glass);
 		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "NPN", "NBN", "NPN", 'N', naquadah, 'P', pearl, 'B', ironBlock);
+		GameRegistry.addShapedRecipe(new ItemStack(lanteanWall, 8, Color.LIGHT_GRAY.id), "SSS", "SNS", "SSS", 'S', stone, 'N', naquadah);
 		
 		for(Color color : Color.COLORS){
 			for(int i = 0; i < 16; i++){
