@@ -22,6 +22,8 @@ public class TextureReference {
 	public static final String FACE_NAQUADAH_ORE = "faceNaquadahOre";
 	public static final String GLOW_NAQUADAH_ORE = "glowNaquadahOre";
 	
+	public static final String LANTEAN_BLOCK_CLEAN = "lanteanBlockClean";
+	
 	static{
 		TERRAIN_TEXTURES.add(IONIZED_PARTICLES);
 		TERRAIN_TEXTURES.add(MACHINE_SIDE);
@@ -39,6 +41,7 @@ public class TextureReference {
 		TERRAIN_TEXTURES.add(GLOW_SHIELD_EMITTER + "_T");
 		TERRAIN_TEXTURES.add(FACE_NAQUADAH_ORE);
 		TERRAIN_TEXTURES.add(GLOW_NAQUADAH_ORE);
+		TERRAIN_TEXTURES.add(LANTEAN_BLOCK_CLEAN);
 	}
 	
 	public static final ResourceLocation GUI_BASE = getTexture("gui/base.png");

@@ -12,6 +12,10 @@ public class CoreWorldGenerator implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int cX, int cZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
+		generateOres(world, random, cX, cZ);
+	}
+	
+	private void generateOres(World world, Random random, int cX, int cZ){
 		WorldGenMinable wgm = new WorldGenMinable(ModuleCore.naquadahOre.blockID, 20);
 		wgm.generate(world, random, (cX * 16) + (random.nextInt() % 16), 16 + (random.nextInt() % 20), (cZ * 16) + (random.nextInt() % 16));
 	}
