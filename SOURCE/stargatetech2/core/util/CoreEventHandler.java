@@ -27,24 +27,26 @@ public class CoreEventHandler {
 	
 	@ForgeSubscribe
 	public void onPlayerDamaged(LivingHurtEvent evt){
-		ItemPersonalShield shield = ModuleCore.personalShield;
-		EntityLivingBase living = evt.entityLiving;
-		if(living instanceof EntityPlayer && shield.blocksDamage(evt.source)){
-			EntityPlayer player = (EntityPlayer) living;
-			if(player.inventory.hasItem(shield.itemID)){
-				ItemStack shieldStack = null;
-				for(int slot = 0; slot < player.inventory.getSizeInventory(); slot++){
-					ItemStack stack = player.inventory.getStackInSlot(slot);
-					if(stack != null && stack.itemID == shield.itemID){
-						stack.damageItem(1, player);
-						evt.setCanceled(true);
-						if(stack.stackSize == 0){
-							player.inventory.setInventorySlotContents(slot, null);
+		try{
+			ItemPersonalShield shield = ModuleCore.personalShield;
+			EntityLivingBase living = evt.entityLiving;
+			if(living instanceof EntityPlayer && shield.blocksDamage(evt.source)){
+				EntityPlayer player = (EntityPlayer) living;
+				if(player.inventory.hasItem(shield.itemID)){
+					ItemStack shieldStack = null;
+					for(int slot = 0; slot < player.inventory.getSizeInventory(); slot++){
+						ItemStack stack = player.inventory.getStackInSlot(slot);
+						if(stack != null && stack.itemID == shield.itemID){
+							stack.damageItem(1, player);
+							evt.setCanceled(true);
+							if(stack.stackSize == 0){
+								player.inventory.setInventorySlotContents(slot, null);
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}
-		}
+		}catch(Exception ignored){}
 	}
 }

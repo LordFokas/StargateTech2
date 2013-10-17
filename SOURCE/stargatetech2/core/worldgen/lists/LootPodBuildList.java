@@ -2,6 +2,8 @@ package stargatetech2.core.worldgen.lists;
 
 import java.util.Random;
 
+import stargatetech2.common.util.Color;
+import stargatetech2.core.ModuleCore;
 import stargatetech2.core.worldgen.LootGenerator;
 import stargatetech2.core.worldgen.LootGenerator.LootLevel;
 import net.minecraft.block.Block;
@@ -17,6 +19,7 @@ public class LootPodBuildList extends BuildList {
 					new BuildMaterial(Block.stoneBrick.blockID, 0),
 					new BuildMaterial(Block.stoneBrick.blockID, 3),
 					new BuildMaterial(Block.stoneBrick.blockID, 3),
+					new BuildMaterial(ModuleCore.lanteanWall.blockID, Color.LIGHT_GRAY.id),
 					new BuildMaterial(43)
 				};
 		
@@ -24,13 +27,14 @@ public class LootPodBuildList extends BuildList {
 					new BuildMaterial(Block.sandStone.blockID, 0),
 					new BuildMaterial(Block.sandStone.blockID, 2),
 					new BuildMaterial(Block.sandStone.blockID, 1),
+					new BuildMaterial(ModuleCore.lanteanWall.blockID, Color.ORANGE.id),
 					new BuildMaterial(Block.sandStone.blockID, 0)
 				};
 		
 		for(int i = -1; i < 2; i++){
 			for(int j = -1; j < 2; j++){
 				set(i, 5, j, 0);
-				set(i, 0, j, 3);
+				set(i, 0, j, 4);
 				set(i, -1, j, 0);
 			}
 		}
@@ -44,10 +48,11 @@ public class LootPodBuildList extends BuildList {
 			}
 		}
 		for(int i = 1; i < 5; i++){
-			set(-2, i, -2, 2);
-			set( 2, i, -2, 2);
-			set(-2, i,  2, 2);
-			set( 2, i,  2, 2);
+			int m = i == 2 ? 3 : 2;
+			set(-2, i, -2, m);
+			set( 2, i, -2, m);
+			set(-2, i,  2, m);
+			set( 2, i,  2, m);
 		}
 	}
 

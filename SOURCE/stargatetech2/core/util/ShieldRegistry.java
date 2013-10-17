@@ -34,7 +34,6 @@ public class ShieldRegistry{
 	public static final ArrayList<ShieldRemovable> removables = new ArrayList<ShieldRemovable>(10);
 	
 	static{
-		setShieldRemovable(0);
 		setShieldRemovable(Block.deadBush.blockID);
 		setShieldRemovable(Block.fire.blockID);
 		setShieldRemovable(Block.leaves.blockID);

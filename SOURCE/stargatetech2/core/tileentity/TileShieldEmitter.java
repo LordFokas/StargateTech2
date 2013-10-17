@@ -119,7 +119,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 			pos = pos.offset(dir);
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			int meta = worldObj.getBlockMetadata(pos.x, pos.y, pos.z);
-			if(ShieldRegistry.isRemovable(bid, meta)){
+			if(ShieldRegistry.isRemovable(bid, meta) || worldObj.isAirBlock(pos.x, pos.y, pos.z)){
 				worldObj.setBlock(pos.x, pos.y, pos.z, ModuleCore.shield.blockID, 0, 2);
 				TileEntity te = worldObj.getBlockTileEntity(pos.x,  pos.y, pos.z);
 				if(te instanceof TileShield){
@@ -155,7 +155,8 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			int meta = worldObj.getBlockMetadata(pos.x, pos.y, pos.z);
 			Block block = Block.blocksList[bid];
-			if(ShieldRegistry.isRemovable(bid, meta) || block instanceof IShieldable || block instanceof BlockShield){
+			boolean ignorable = block instanceof IShieldable || block instanceof BlockShield;
+			if(ShieldRegistry.isRemovable(bid, meta) || worldObj.isAirBlock(pos.x, pos.y, pos.z) || ignorable){
 				continue;
 			}else if(Block.blocksList[bid] instanceof BlockShieldEmitter){
 				TileEntity te = worldObj.getBlockTileEntity(pos.x, pos.y, pos.z);
