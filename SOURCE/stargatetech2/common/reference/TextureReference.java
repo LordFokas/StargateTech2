@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import net.minecraft.util.ResourceLocation;
 
 public class TextureReference {
-	public static final ArrayList<String> TERRAIN_TEXTURES = new ArrayList<String>(10);
+	public static final ArrayList<String> TERRAIN_TEXTURES = new ArrayList<String>(11);
+	public static final ArrayList<String> ITEM_TEXTURES = new ArrayList<String>(3);
 	
+	//### BLOCKS ###
 	public static final String IONIZED_PARTICLES = "ionizedParticles";
 	
 	public static final String MACHINE_SIDE = "machineSide";
@@ -23,6 +25,12 @@ public class TextureReference {
 	public static final String GLOW_NAQUADAH_ORE = "glowNaquadahOre";
 	
 	public static final String LANTEAN_BLOCK_CLEAN = "lanteanBlockClean";
+	
+	
+	
+	//### ITEMS ###
+	public static final String NAQUADAH_POWER_CRYSTAL = "naquadahPowerCrystal";
+	
 	
 	static{
 		TERRAIN_TEXTURES.add(IONIZED_PARTICLES);
@@ -42,11 +50,15 @@ public class TextureReference {
 		TERRAIN_TEXTURES.add(FACE_NAQUADAH_ORE);
 		TERRAIN_TEXTURES.add(GLOW_NAQUADAH_ORE);
 		TERRAIN_TEXTURES.add(LANTEAN_BLOCK_CLEAN);
+		
+		ITEM_TEXTURES.add(NAQUADAH_POWER_CRYSTAL + "_1");
+		ITEM_TEXTURES.add(NAQUADAH_POWER_CRYSTAL + "_2");
 	}
 	
 	public static final ResourceLocation GUI_BASE = getTexture("gui/base.png");
 	public static final ResourceLocation GUI_SHIELD_EMITTER = getTexture("gui/shieldEmitter.png");
 	public static final ResourceLocation GUI_PARTICLE_IONIZER = getTexture("gui/particleIonizer.png");
+	public static final ResourceLocation GUI_NAQUADAH_CAPACITOR = getTexture("gui/naquadahCapacitor.png");
 	public static final ResourceLocation TESR_TRANSPORT_RING = getTexture("special/transportRing.png");
 	
 	public static ResourceLocation getTexture(String texture){

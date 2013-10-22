@@ -18,6 +18,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import stargatetech2.common.base.BaseTileEntity;
+import stargatetech2.common.machine.NearZeroPerdition;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ParticleIonizerRecipes;
 import stargatetech2.core.util.ParticleIonizerRecipes.Recipe;
@@ -33,7 +34,7 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	
 	public TileParticleIonizer(){
 		powerHandler.configure(50, 100, 5, 16000);
-		powerHandler.configurePowerPerdition(0, 0);
+		powerHandler.setPerdition(new NearZeroPerdition());
 	}
 	
 	@Override

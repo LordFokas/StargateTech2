@@ -18,8 +18,8 @@ public class RenderNaquadahOre extends BaseISBRH {
 	
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer){
-		Icon face = IconRegistry.icons.get(TextureReference.FACE_NAQUADAH_ORE);
-		Icon glow = IconRegistry.icons.get(TextureReference.GLOW_NAQUADAH_ORE);
+		Icon face = IconRegistry.blockIcons.get(TextureReference.FACE_NAQUADAH_ORE);
+		Icon glow = IconRegistry.blockIcons.get(TextureReference.GLOW_NAQUADAH_ORE);
 		renderer.setOverrideBlockTexture(face);
 		renderer.renderStandardBlock(block, x, y, z);
 		renderer.clearOverrideBlockTexture();

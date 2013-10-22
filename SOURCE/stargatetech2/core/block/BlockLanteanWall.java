@@ -51,7 +51,7 @@ public class BlockLanteanWall extends BaseBlock {
 	
 	@Override
 	public Icon getBaseIcon(int side, int meta){
-		return side < 2 ? IconRegistry.icons.get(TextureReference.LANTEAN_BLOCK_CLEAN) : blockIcon;
+		return side < 2 ? IconRegistry.blockIcons.get(TextureReference.LANTEAN_BLOCK_CLEAN) : blockIcon;
 	}
 	
 	@Override

@@ -24,11 +24,11 @@ public class RenderBlockMachine extends BaseISBRH {
 		int direction = -1;
 		int d = world.getBlockMetadata(x, y, z);
 		if(d > 1 && d < 6) direction = d;
-		Icon mside = IconRegistry.icons.get(TextureReference.MACHINE_SIDE);
-		Icon mtop = IconRegistry.icons.get(TextureReference.MACHINE_TOP);
-		Icon mbot = IconRegistry.icons.get(TextureReference.MACHINE_BOTTOM);
-		Icon face = IconRegistry.icons.get(machine.getFace(world, x, y, z));
-		Icon glow = IconRegistry.icons.get(machine.getGlow(world, x, y, z));
+		Icon mside = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
+		Icon mtop = IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP);
+		Icon mbot = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
+		Icon face = IconRegistry.blockIcons.get(machine.getFace(world, x, y, z));
+		Icon glow = IconRegistry.blockIcons.get(machine.getGlow(world, x, y, z));
 		Icon[] tmap = new Icon[]{mbot, mtop, mside, mside, mside, mside, mside};
 		if(direction != -1){
 			tmap[direction] = face;

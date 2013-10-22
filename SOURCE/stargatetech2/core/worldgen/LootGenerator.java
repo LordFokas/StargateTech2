@@ -16,7 +16,7 @@ public class LootGenerator {
 	
 	static{
 		LOOT_COMMON = new ArrayList<ItemStack>();
-		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahIngot, 32));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 32, 0));
 		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahOre, 8));
 		
 		LOOT_RARE = new ArrayList<ItemStack>();

@@ -24,9 +24,9 @@ public class BlockTransportRing extends BaseBlockContainer{
 	@Override
 	public Icon getBaseIcon(int side, int meta){
 		switch(side){
-			case 0: return IconRegistry.icons.get(TextureReference.MACHINE_BOTTOM);
+			case 0: return IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
 			case 1: return blockIcon;
-			default: return IconRegistry.icons.get(TextureReference.MACHINE_SIDE);
+			default: return IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
 		}
 	}
 	

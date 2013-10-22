@@ -37,10 +37,10 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 	@Override
 	public Icon getBaseIcon(int side, int meta){
 		switch(side){
-			case 0: return IconRegistry.icons.get(TextureReference.MACHINE_BOTTOM);
-			case 1: return IconRegistry.icons.get(TextureReference.MACHINE_TOP);
+			case 0: return IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
+			case 1: return IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP);
 			case 3: return blockIcon;
-			default: return IconRegistry.icons.get(TextureReference.MACHINE_SIDE);
+			default: return IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
 		}
 	}
 

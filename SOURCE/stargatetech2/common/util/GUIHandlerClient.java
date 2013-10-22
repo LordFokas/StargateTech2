@@ -5,10 +5,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import stargatetech2.common.base.BaseGUI;
 import stargatetech2.common.util.GUIHandler.Screen;
+import stargatetech2.core.gui.ContainerNaquadahCapacitor;
 import stargatetech2.core.gui.ContainerParticleIonizer;
 import stargatetech2.core.gui.ContainerShieldEmitter;
+import stargatetech2.core.gui.GUINaquadahCapacitor;
 import stargatetech2.core.gui.GUIParticleIonizer;
 import stargatetech2.core.gui.GUIShieldEmitter;
+import stargatetech2.core.tileentity.TileNaquadahCapacitor;
 import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.tileentity.TileShieldEmitter;
 
@@ -27,6 +30,9 @@ public class GUIHandlerClient extends GUIHandler {
 				if(te instanceof TileParticleIonizer)
 					gui = new GUIParticleIonizer(new ContainerParticleIonizer((TileParticleIonizer)te, player));
 				break;
+			case NAQUADAH_CAPACITOR:
+				if(te instanceof TileNaquadahCapacitor)
+					gui = new GUINaquadahCapacitor(new ContainerNaquadahCapacitor((TileNaquadahCapacitor)te));
 			default: break;
 		}
 		return gui;

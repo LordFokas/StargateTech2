@@ -10,7 +10,8 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.Icon;
 
 public class IconRegistry {
-	public static final HashMap<String, Icon> icons = new HashMap<String, Icon>();
+	public static final HashMap<String, Icon> blockIcons = new HashMap<String, Icon>();
+	public static final HashMap<String, Icon> itemIcons = new HashMap<String, Icon>();
 	
 	public static void load(TextureMap map){
 		if(map.textureType == 0){
@@ -22,16 +23,18 @@ public class IconRegistry {
 	
 	private static void loadTerrain(TextureMap map){
 		for(String textureName : TextureReference.TERRAIN_TEXTURES){
-			load(textureName, map);
+			load(textureName, map, blockIcons);
 		}
-		IonizedParticles.fluid.setIcons(icons.get(TextureReference.IONIZED_PARTICLES));
+		IonizedParticles.fluid.setIcons(blockIcons.get(TextureReference.IONIZED_PARTICLES));
 	}
 	
 	private static void loadItems(TextureMap map){
-		
+		for(String textureName : TextureReference.ITEM_TEXTURES){
+			load(textureName, map, itemIcons);
+		}
 	}
 	
-	private static void load(String texture, TextureMap map){
-		icons.put(texture, map.registerIcon(ModReference.MOD_ID + ":" + texture));
+	private static void load(String texture, TextureMap map, HashMap<String, Icon> iconList){
+		iconList.put(texture, map.registerIcon(ModReference.MOD_ID + ":" + texture));
 	}
 }
