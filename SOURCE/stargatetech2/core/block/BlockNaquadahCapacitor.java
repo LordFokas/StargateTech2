@@ -15,7 +15,6 @@ import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.util.GUIHandler.Screen;
 import stargatetech2.core.item.ItemBlockNaquadahCapacitor;
 import stargatetech2.core.item.ItemNaquadah;
-import stargatetech2.core.rendering.RenderNaquadahCapacitor;
 import stargatetech2.core.tileentity.TileNaquadahCapacitor;
 import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -29,11 +28,6 @@ public class BlockNaquadahCapacitor extends BaseBlockContainer implements ITable
 	@Override
 	protected BaseTileEntity createTileEntity(int metadata) {
 		return new TileNaquadahCapacitor(metadata);
-	}
-	
-	@Override
-	public int getRenderType(){
-		return RenderNaquadahCapacitor.instance().getRenderId();
 	}
 	
 	@Override
