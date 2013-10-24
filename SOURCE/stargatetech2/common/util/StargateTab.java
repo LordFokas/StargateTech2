@@ -2,6 +2,7 @@ package stargatetech2.common.util;
 
 import stargatetech2.common.reference.ModReference;
 import stargatetech2.core.ModuleCore;
+import stargatetech2.core.item.ItemNaquadah;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -25,6 +26,6 @@ public class StargateTab extends CreativeTabs {
 	
 	@Override
 	public ItemStack getIconItemStack(){
-		return new ItemStack(ModuleCore.naquadah, 1, 0);
+		return new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.INGOT.ID);
 	}
 }

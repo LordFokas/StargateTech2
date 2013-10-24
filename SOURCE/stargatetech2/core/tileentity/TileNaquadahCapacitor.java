@@ -16,7 +16,7 @@ import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.machine.NearZeroPerdition;
 
 public class TileNaquadahCapacitor extends BaseTileEntity implements IPowerReceptor, IPowerEmitter{
-	private static final Settings[] TIERS = new Settings[]{
+	public static final Settings[] TIERS = new Settings[]{
 		new Settings(  8,   40000, "I"  ),
 		new Settings( 16,  160000, "II" ),
 		new Settings( 80,  800000, "III"),
@@ -26,7 +26,7 @@ public class TileNaquadahCapacitor extends BaseTileEntity implements IPowerRecep
 	private Settings settings;
 	private int tier;
 	
-	private static class Settings{
+	public static class Settings{
 		public final int maxPowerRate;
 		public final int maxPower;
 		public final String name;
@@ -63,6 +63,9 @@ public class TileNaquadahCapacitor extends BaseTileEntity implements IPowerRecep
 	}
 	
 	private void configure(int tier){
+		if(worldObj != null){
+			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, tier, 3);
+		}
 		settings = TIERS[tier];
 		settings.configure(capacitor);
 		this.tier = tier;
@@ -107,6 +110,10 @@ public class TileNaquadahCapacitor extends BaseTileEntity implements IPowerRecep
 	
 	public String getTierName(){
 		return settings.name;
+	}
+	
+	public int getTier(){
+		return tier;
 	}
 	
 	@Override

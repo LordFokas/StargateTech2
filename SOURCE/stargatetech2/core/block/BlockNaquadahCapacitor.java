@@ -86,6 +86,7 @@ public class BlockNaquadahCapacitor extends BaseBlockContainer implements ITable
 			NBTTagCompound nbt = new NBTTagCompound();
 			te.writeToNBT(nbt);
 			ItemStack stack = new ItemStack(this);
+			stack.setItemDamage(((TileNaquadahCapacitor)te).getTier());
 			stack.setTagCompound(nbt);
 			w.spawnEntityInWorld(new EntityItem(w, ((double)x) + 0.5, ((double)y) + 0.5, ((double)z) + 0.5, stack));
 		}else{

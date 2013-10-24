@@ -3,6 +3,7 @@ package stargatetech2.core;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import stargatetech2.IContentModule;
@@ -125,10 +126,16 @@ public final class ModuleCore implements IContentModule{
 	}
 	
 	private void addCoreRecipes(){
-		ItemStack naqIngot = new ItemStack(naquadah, 1, 0);
-		ItemStack naqDust = new ItemStack(naquadah, 1, 1);
-		ItemStack naqBar = new ItemStack(naquadah, 1, 2);
-		ItemStack naqPlate = new ItemStack(naquadah, 1, 3);
+		ItemStack naqIngot = new ItemStack(naquadah, 1, ItemNaquadah.INGOT.ID);
+		ItemStack naqDust = new ItemStack(naquadah, 1, ItemNaquadah.DUST.ID);
+		ItemStack naqBar = new ItemStack(naquadah, 1, ItemNaquadah.BAR.ID);
+		ItemStack naqPlate = new ItemStack(naquadah, 1, ItemNaquadah.PLATE.ID);
+		ItemStack lattice = new ItemStack(naquadah, 1, ItemNaquadah.LATTICE.ID);
+		ItemStack circuit = new ItemStack(naquadah, 1, ItemNaquadah.CIRCUIT.ID);
+		ItemStack crystal1 = new ItemStack(naquadah, 1, ItemNaquadah.PWCR1.ID);
+		ItemStack crystal2 = new ItemStack(naquadah, 1, ItemNaquadah.PWCR2.ID);
+		ItemStack crystal3 = new ItemStack(naquadah, 1, ItemNaquadah.PWCR3.ID);
+		
 		ItemStack glass = new ItemStack(Block.thinGlass);
 		ItemStack stone = new ItemStack(Block.stone);
 		ItemStack fPipe = new ItemStack(BuildCraftTransport.pipeFluidsGold);
@@ -138,8 +145,11 @@ public final class ModuleCore implements IContentModule{
 		ItemStack redstone = new ItemStack(Item.redstone);
 		ItemStack pearl = new ItemStack(Item.enderPearl);
 		ItemStack ironBlock = new ItemStack(Block.blockIron);
+		ItemStack quartz = new ItemStack(Item.netherQuartz);
+		ItemStack diamond = new ItemStack(Item.diamond);
 		
 		GameRegistry.addSmelting(naquadahOre.blockID, naqIngot, 0);
+		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.LATTICE.ID, circuit, 0);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "SNS", "NGN", "SPS", 'S', stone, 'N', naqPlate, 'G', glass, 'P', fPipe);
 		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "SKS", "NCN", "SFS", 'S', stone, 'K', kPipe, 'N', naqPlate, 'C', cauldron, 'F', fPipe);
@@ -147,10 +157,18 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', naqIngot, 'R', redstone, 'G', glass);
 		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "NPN", "NBN", "NPN", 'N', naqPlate, 'P', pearl, 'B', ironBlock);
 		GameRegistry.addShapedRecipe(new ItemStack(lanteanWall, 8, Color.LIGHT_GRAY.id), "SSS", "SNS", "SSS", 'S', stone, 'N', naqIngot);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 4, 2), "--S", "-S-", "S--", 'S', naqIngot);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 2, 3), "SS", "SS", 'S', naqIngot);
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 2, 1), new ItemStack(naquadahOre));
+		GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 2, ItemNaquadah.DUST.ID), new ItemStack(naquadahOre));
+		GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 3, ItemNaquadah.LATTICE.ID), quartz, quartz, naqDust);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 4, ItemNaquadah.BAR.ID), "--S", "-S-", "S--", 'S', naqIngot);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', naqIngot);
+		GameRegistry.addShapedRecipe(crystal1, "GNG", "NNN", "CNC", 'N', naqIngot, 'C', circuit, 'G', Color.GREEN.getDye());
+		GameRegistry.addShapedRecipe(crystal2, "YNY", "NGN", "CDC", 'N', naqIngot, 'C', circuit, 'G', crystal1, 'D', diamond, 'Y', Color.YELLOW.getDye());
+		GameRegistry.addShapedRecipe(crystal3, "RNR", "NYN", "CDC", 'N', naqIngot, 'C', circuit, 'Y', crystal2, 'D', diamond, 'R', Color.RED.getDye());
+		
+		GameRegistry.addShapedRecipe(new ItemStack(naquadahCapacitor, 1, 0), "PPP", "CRC", "PIP", 'P', naqPlate, 'C', circuit, 'R', crystal1, 'I', ironBlock);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadahCapacitor, 1, 1), "PPP", "CRC", "PIP", 'P', naqPlate, 'C', circuit, 'R', crystal2, 'I', ironBlock);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadahCapacitor, 1, 2), "PPP", "CRC", "PIP", 'P', naqPlate, 'C', circuit, 'R', crystal3, 'I', ironBlock);
 		
 		for(Color color : Color.COLORS){
 			for(int i = 0; i < 16; i++){

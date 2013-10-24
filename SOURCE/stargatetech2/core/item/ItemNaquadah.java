@@ -13,17 +13,16 @@ import stargatetech2.common.util.IconRegistry;
 import stargatetech2.common.util.StargateTab;
 
 public class ItemNaquadah extends BaseItem{
-	private static final Metadata[] DATA = new Metadata[]{
-		new Metadata("naquadahIngot",	"Naquadah Ingot",	0),
-		new Metadata("naquadahDust",	"Naquadah Dust",	0),
-		new Metadata("naquadahBar",		"Naquadah Bar",		0),
-		new Metadata("naquadahPlate",	"Naquadah Plate",	0),
-		new Metadata("naquadahPowerCrystal_1", "Naquadah Power Crystal", 1),
-		new Metadata("naquadahPowerCrystal_2", "Naquadah Power Crystal", 2),
-		new Metadata("naquadahPowerCrystal_3", "Naquadah Power Crystal", 3),
-		new Metadata("circuitCrystal",	"Circuit Crystal",	0),
-		new Metadata("lattice",	"Semiconductor Lattice",	0),
-	};
+	private static final Metadata DATA[] = new Metadata[9];
+	public static final Metadata PWCR1 =	new Metadata(0, "naquadahPowerCrystal_1",	"Naquadah Power Crystal", 1);
+	public static final Metadata PWCR2 =	new Metadata(1, "naquadahPowerCrystal_2",	"Naquadah Power Crystal", 2);
+	public static final Metadata PWCR3 =	new Metadata(2, "naquadahPowerCrystal_3",	"Naquadah Power Crystal", 3);
+	public static final Metadata INGOT =	new Metadata(3, "naquadahIngot",			"Naquadah Ingot");
+	public static final Metadata DUST =		new Metadata(4, "naquadahDust",				"Naquadah Dust");
+	public static final Metadata BAR =		new Metadata(5, "naquadahBar",				"Naquadah Bar");
+	public static final Metadata PLATE =	new Metadata(6, "naquadahPlate",			"Naquadah Plate");
+	public static final Metadata LATTICE =	new Metadata(7, "lattice",					"Semiconductor Lattice Blend");
+	public static final Metadata CIRCUIT =	new Metadata(8, "circuitCrystal",			"Circuit Crystal");
 	
 	private final static String TIERS[] = new String[]{
 		"\u00A72Tier I",
@@ -31,12 +30,19 @@ public class ItemNaquadah extends BaseItem{
 		"\u00A74Tier III"
 	};
 	
-	private static class Metadata{
+	public static class Metadata{
+		public final int ID;
 		public final String iconName;
 		public final String itemName;
 		public final int tier;
 		
-		public Metadata(String i, String n, int t){
+		public Metadata(int meta, String i, String n){
+			this(meta, i, n, 0);
+		}
+		
+		public Metadata(int meta, String i, String n, int t){
+			ID = meta;
+			DATA[ID] = this;
 			iconName = i;
 			itemName = n;
 			tier = t > 0 ? t-1 : -1;
@@ -46,7 +52,6 @@ public class ItemNaquadah extends BaseItem{
 	public ItemNaquadah() {
 		super(ItemReference.NAQUADAH);
 		setHasSubtypes(true);
-		StargateTab.iconID = itemID;
 	}
 	
 	@Override
