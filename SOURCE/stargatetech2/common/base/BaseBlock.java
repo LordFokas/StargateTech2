@@ -1,7 +1,11 @@
 package stargatetech2.common.base;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 import stargatetech2.StargateTech2;
 import stargatetech2.common.reference.ModReference;
 import stargatetech2.common.util.MaterialNaquadah;
@@ -56,5 +60,18 @@ public class BaseBlock extends Block{
 	
 	public Icon getBaseIcon(int side, int meta){
 		return blockIcon;
+	}
+	
+	protected void dropItemStack(World w, int x, int y, int z, ItemStack stack){
+		dropStackAt(w, ((double)x)+0.5D, ((double)y)+0.5D, ((double)z)+0.5D, stack);
+	}
+	
+	protected void dropItemStack(World w, EntityPlayer p, ItemStack stack){
+		dropStackAt(w, p.posX, p.posY, p.posZ, stack);
+	}
+	
+	private void dropStackAt(World w, double x, double y, double z, ItemStack stack){
+		if(w.isRemote) return;
+		w.spawnEntityInWorld(new EntityItem(w, x, y, z, stack));
 	}
 }

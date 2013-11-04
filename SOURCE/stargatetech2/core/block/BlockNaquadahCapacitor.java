@@ -13,6 +13,7 @@ import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.packet.PacketOpenGUI;
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.util.GUIHandler.Screen;
+import stargatetech2.core.ModuleCore;
 import stargatetech2.core.item.ItemBlockNaquadahCapacitor;
 import stargatetech2.core.item.ItemNaquadah;
 import stargatetech2.core.tileentity.TileNaquadahCapacitor;
@@ -65,7 +66,11 @@ public class BlockNaquadahCapacitor extends BaseBlockContainer implements ITable
 				if(tier != 0){
 					if(capacitor.canUpgrade(tier)){
 						int newTier = capacitor.upgrade(tier);
-						stack.setItemDamage(ItemNaquadah.getMetaForTier(newTier));
+						stack.stackSize -= 1;
+						if(stack.stackSize == 0){
+							p.inventory.setInventorySlotContents(p.inventory.currentItem, null);
+						}
+						dropItemStack(w, p, new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.getMetaForTier(newTier)));
 					}
 				}
 			}
@@ -82,7 +87,7 @@ public class BlockNaquadahCapacitor extends BaseBlockContainer implements ITable
 			ItemStack stack = new ItemStack(this);
 			stack.setItemDamage(((TileNaquadahCapacitor)te).getTier());
 			stack.setTagCompound(nbt);
-			w.spawnEntityInWorld(new EntityItem(w, ((double)x) + 0.5, ((double)y) + 0.5, ((double)z) + 0.5, stack));
+			dropItemStack(w, x, y, z, stack);
 		}else{
 			dropBlockAsItem(w, x, y, z, 0, 0);
 		}

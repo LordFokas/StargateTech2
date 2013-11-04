@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import stargatetech2.core.ModuleCore;
-
+import stargatetech2.core.item.ItemNaquadah;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -16,17 +16,25 @@ public class LootGenerator {
 	
 	static{
 		LOOT_COMMON = new ArrayList<ItemStack>();
-		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 32, 0));
-		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahOre, 8));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 16, ItemNaquadah.INGOT.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 24, ItemNaquadah.DUST.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 8, ItemNaquadah.BAR.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 8, ItemNaquadah.PLATE.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 12, ItemNaquadah.LATTICE.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 6, ItemNaquadah.CIRCUIT.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.PWCR1.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahOre, 12));
 		
 		LOOT_RARE = new ArrayList<ItemStack>();
 		LOOT_RARE.add(new ItemStack(ModuleCore.naquadahRail, 4));
 		LOOT_RARE.add(new ItemStack(ModuleCore.particleIonizer, 1));
 		LOOT_RARE.add(new ItemStack(ModuleCore.shieldEmitter, 2));
+		LOOT_RARE.add(new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.PWCR2.ID));
 		
 		LOOT_EPIC = new ArrayList<ItemStack>();
 		LOOT_EPIC.add(new ItemStack(ModuleCore.personalShield, 1));
 		LOOT_EPIC.add(new ItemStack(ModuleCore.transportRing, 2));
+		LOOT_EPIC.add(new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.PWCR3.ID));
 	}
 	
 	public enum LootLevel{
