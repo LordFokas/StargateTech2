@@ -1,6 +1,9 @@
 package stargatetech2.core.block;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import stargatetech2.api.ITabletAccess;
 import stargatetech2.common.machine.BlockMachine;
 import stargatetech2.common.reference.BlockReference;
@@ -45,5 +48,14 @@ public class BlockShieldEmitter extends BlockMachine implements ITabletAccess{
 			case 3: return "_D";
 			default: return "";
 		}
+	}
+	
+	@Override
+	protected boolean canAccess(EntityPlayer player, World world, int x, int y, int z){
+		TileEntity te = world.getBlockTileEntity(x, y, z);
+		if(te instanceof TileShieldEmitter){
+			return ((TileShieldEmitter)te).canAccess(player.getDisplayName());
+		}
+		return false;
 	}
 }

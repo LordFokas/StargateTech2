@@ -29,6 +29,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	private ShieldPermissions permissions = ShieldPermissions.getDefault();
 	private boolean shieldOn = false;
 	private int ionCost = 1;
+	private String owner;
 	
 	// NORMAL FIELDS
 	private Vec3Int nbtPair;
@@ -73,10 +74,12 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		}
 	}
 
+	@Override
 	public ShieldPermissions getPermissions(){
 		return permissions.deepClone();
 	}
 	
+	@Override
 	public boolean isShieldOn(){
 		return shieldOn;
 	}
@@ -178,12 +181,29 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		}
 	}
 	
+	@Override
 	public void updatePermissions(boolean isAllow, int flag){
 		updatePermissions(false, isAllow, flag, null);
 	}
 	
+	@Override
 	public void updateExceptions(boolean isAdding, String player){
 		updatePermissions(true, isAdding, 0, player);
+	}
+	
+	@Override
+	public void setOwner(String owner){
+		this.owner = owner;
+	}
+	
+	@Override
+	public String getOwner(){
+		return this.owner;
+	}
+	
+	@Override
+	public boolean canAccess(String player){
+		return owner == null || player.contentEquals(owner);
 	}
 	
 	private void updatePermissions(boolean isException, boolean set, int flag, String player){
@@ -235,6 +255,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		tank.readFromNBT(tankNBT);
 		permissions = ShieldPermissions.readFromNBT(permNBT);
 		shieldOn = nbt.getBoolean("shieldOn");
+		owner = nbt.getString("owner");
 		if(nbt.hasKey("pair")){
 			nbtPair = Vec3Int.fromNBT(nbt.getCompoundTag("pair"));
 		}
@@ -247,6 +268,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		nbt.setCompoundTag("tank", tankNBT);
 		nbt.setCompoundTag("perm", permissions.writeToNBT());
 		nbt.setBoolean("shieldOn", shieldOn);
+		nbt.setString("owner", owner);
 		if(pair != null){
 			Vec3Int p = new Vec3Int(pair.xCoord, pair.yCoord, pair.xCoord);
 			nbt.setCompoundTag("pair", p.toNBT());

@@ -19,6 +19,7 @@ import stargatetech2.common.reference.TextureReference;
 import stargatetech2.common.util.Helper;
 import stargatetech2.common.util.IconRegistry;
 import stargatetech2.common.util.GUIHandler.Screen;
+import stargatetech2.core.tileentity.TileShieldEmitter;
 
 public abstract class BlockMachine extends BaseBlockContainer implements ITabletAccess{
 	private Screen screen;
@@ -32,6 +33,10 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase living, ItemStack stack){
 		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw);
 		w.setBlockMetadataWithNotify(x, y, z, dir.ordinal(), 2);
+		TileEntity te = w.getBlockTileEntity(x, y, z);
+		if(te instanceof TileShieldEmitter && living instanceof EntityPlayer){
+			((TileShieldEmitter)te).setOwner(((EntityPlayer)living).getDisplayName());
+		}
 	}
 	
 	@Override
@@ -46,7 +51,7 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 
 	@Override
 	public boolean onTabletAccess(EntityPlayer player, World world, int x, int y, int z) {
-		if(screen != null){
+		if(screen != null && canAccess(player, world, x, y, z)){
 			PacketOpenGUI packet = new PacketOpenGUI();
 			packet.guiID = screen.ordinal();
 			packet.x = x;
@@ -62,6 +67,10 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 		return false;
 	}
 	
+	protected boolean canAccess(EntityPlayer player, World world, int x, int y, int z){
+		return true;
+	}
+	
 	@Override
 	public int getRenderType(){
 		return RenderBlockMachine.instance().renderID;
@@ -71,7 +80,7 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int s, float hx, float hy, float hz){
 		ItemStack stack = p.inventory.getCurrentItem();
 		Item item = stack != null ? stack.getItem() : null;
-		if(item instanceof IToolWrench){
+		if(item instanceof IToolWrench && canAccess(p, w, x, y, z)){
 			IToolWrench wrench = (IToolWrench) item;
 			if(wrench.canWrench(p, x, y, z)){
 				dropBlockAsItem(w, x, y, z, 0, 0);

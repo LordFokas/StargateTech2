@@ -41,4 +41,25 @@ public interface ITileShieldEmitter {
 	 * @see stargatetech2.api.ShieldPermissions
 	 */
 	public void updateExceptions(boolean isAdding, String player);
+	
+	/**
+	 * Sets the owner of this Shield Emitter.
+	 * An owner has previleges no other players have.
+	 * 
+	 * @param owner The owner's player name.
+	 */
+	public void setOwner(String owner);
+	
+	/**
+	 * @return The player name of this machine's owner.
+	 */
+	public String getOwner();
+	
+	/**
+	 * Checks if a player can access this device.
+	 * 
+	 * @param player The player's name.
+	 * @return Whether or not this player can access this device.
+	 */
+	public boolean canAccess(String player);
 }
