@@ -45,6 +45,11 @@ public class RenderTransportRing extends BaseTESR{
 	}
 	
 	@Override
+	protected boolean useLocalizedLighting(){
+		return true;
+	}
+	
+	@Override
 	public void render(TileEntity te, Block block, World w, Vec3Int pos, float partialTicks) {
 		RingRenderData data = ((TileTransportRing)te).renderData;
 		if(!data.isRendering) return;
