@@ -1,14 +1,17 @@
 package stargatetech2.core.rendering;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import org.lwjgl.opengl.GL11;
+
 import stargatetech2.common.base.BaseTESR;
 import stargatetech2.common.reference.TextureReference;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.tileentity.TileStargate;
+import stargatetech2.core.tileentity.TileStargate.RenderData;
+import stargatetech2.core.tileentity.TileStargate.RenderData.ChevronData;
 
 public class RenderStargateTile extends BaseTESR {
 	private static final int RING_SEGMENTS = 13;
@@ -25,6 +28,15 @@ public class RenderStargateTile extends BaseTESR {
 	private static final float INR_MIN_Y = 2.0F;
 	private static final float INR_THICK = 0.18F;
 	private static final float INR_THIN = 0.12F;
+	private static final float CH_ARM = 0.075F;
+	private static final float CH_Z0 = -0.25F;
+	private static final float CH_Z1 = -0.30F;
+	private static final float CH_YO = 2.5F;
+	private static final float CH_YM = 2.3F;
+	private static final float CH_YI = CH_YM - CH_ARM;
+	private static final float CH_XO = 0.20F;
+	private static final float CH_XM = 0.12F;
+	private static final float CH_XI = 0.06F;
 	
 	private static final float REF_TX_X0 = 0F;
 	private static final float REF_TX_X1 = 1F;
@@ -35,6 +47,12 @@ public class RenderStargateTile extends BaseTESR {
 	private static final float INR_TX_Y0 = 0.5F;
 	private static final float INR_TX_Y1 = 0.75F;
 	private static final float INR_TX_Y2 = 1F;
+	private static final float CHT_X0 = 0F / 3F;
+	private static final float CHT_X1 = 1F / 3F;
+	private static final float CHT_X2 = 2F / 3F;
+	private static final float CHT_X3 = 3F / 3F;
+	private static final float CHT_Y0 = 0;
+	private static final float CHT_Y1 = 1;
 	
 	private static final float SYMBOL_S = 0.2F;
 	private static final float SYMBOL_X = SYMBOL_S / 2F;
@@ -62,17 +80,18 @@ public class RenderStargateTile extends BaseTESR {
 	@Override
 	public void render(TileEntity te, Block block, World w, Vec3Int pos, float partialTicks) {
 		TileStargate stargate = (TileStargate) te;
+		RenderData data = stargate.getRenderData();
 		bindTexture(TextureReference.TESR_STARGATE);
 		GL11.glTranslated(0, 2.5D, 0);
 		renderOuterRing();
 		GL11.glPushMatrix();
-			GL11.glRotatef(stargate.curr_theta + (stargate.dTheta * partialTicks), 0, 0, 1);
+			GL11.glRotatef(data.curr_theta + (data.dTheta * partialTicks), 0, 0, 1);
 			renderInnerRing();
 			bindTexture(TextureReference.SYMBOLS);
 			renderSymbols();
 		GL11.glPopMatrix();
 		bindTexture(TextureReference.CHEVRONS);
-		renderChevrons();
+		renderChevrons(data);
 	}
 	
 	private void renderOuterRing(){
@@ -102,10 +121,10 @@ public class RenderStargateTile extends BaseTESR {
 		GL11.glPopMatrix();
 	}
 	
-	private void renderChevrons(){
+	private void renderChevrons(RenderData data){
 		GL11.glPushMatrix();
 		for(int i = 0; i < CHEVRON_COUNT; i++){
-			renderChevron();
+			renderChevron(data.getChevron(i));
 			GL11.glRotated(ANGLE_CHEV * 360D, 0, 0, 360);
 		}
 		GL11.glPopMatrix();
@@ -239,37 +258,25 @@ public class RenderStargateTile extends BaseTESR {
 		GL11.glEnd();
 	}
 	
-	private static final float CHT_X0 = 0F / 3F;
-	private static final float CHT_X1 = 1F / 3F;
-	private static final float CHT_X2 = 2F / 3F;
-	private static final float CHT_X3 = 3F / 3F;
-	private static final float CHT_Y0 = 0;
-	private static final float CHT_Y1 = 1;
-	private static final float CH_Z0 = -0.25F;
-	private static final float CH_Z1 = -0.30F;
-	
-	private static final float CH_YO = 2.5F;
-	private static final float CH_YM = 2.3F;
-	
-	private static final float CH_XO = 0.12F;
-	private static final float CH_XI = 0.06F;
-	
-	private void renderChevron(){
-		renderChevronLight();
-		renderChevronArm();
+	private void renderChevron(ChevronData chevron){
+		renderChevronLight(chevron.isLit);
+		renderChevronArm(chevron);
 	}
 	
-	private void renderChevronLight(){
+	private void renderChevronLight(boolean lit){
+		float x0 = lit ? CHT_X2 : CHT_X1;
+		float x1 = lit ? CHT_X3 : CHT_X2;
+		
 		//light
 		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
-		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glTexCoord2f(x0, CHT_Y0);
 		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z1);
-		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
-		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z1);
-		GL11.glTexCoord2f(CHT_X2, CHT_Y0);
+		GL11.glTexCoord2f(x0, CHT_Y1);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z1);
+		GL11.glTexCoord2f(x1, CHT_Y0);
 		GL11.glVertex3f(CH_XI, CH_YM, CH_Z1);
-		GL11.glTexCoord2f(CHT_X2, CHT_Y1);
-		GL11.glVertex3f(CH_XO, CH_YO, CH_Z1);
+		GL11.glTexCoord2f(x1, CHT_Y1);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z1);
 		GL11.glEnd();
 		
 		// back
@@ -279,9 +286,9 @@ public class RenderStargateTile extends BaseTESR {
 		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
 		GL11.glVertex3f(CH_XI, CH_YM, CH_Z0);
 		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
-		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z0);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z0);
 		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
-		GL11.glVertex3f(CH_XO, CH_YO, CH_Z0);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z0);
 		GL11.glEnd();
 		
 		//bottom
@@ -299,13 +306,13 @@ public class RenderStargateTile extends BaseTESR {
 		// top
 		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
 		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
-		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z1);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z1);
 		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
-		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z0);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z0);
 		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
-		GL11.glVertex3f(CH_XO, CH_YO, CH_Z1);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z1);
 		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
-		GL11.glVertex3f(CH_XO, CH_YO, CH_Z0);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z0);
 		GL11.glEnd();
 		
 		// right
@@ -313,11 +320,11 @@ public class RenderStargateTile extends BaseTESR {
 		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
 		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z0);
 		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
-		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z0);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z0);
 		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
 		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z1);
 		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
-		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z1);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z1);
 		GL11.glEnd();
 		
 		//left
@@ -327,13 +334,192 @@ public class RenderStargateTile extends BaseTESR {
 		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
 		GL11.glVertex3f(CH_XI, CH_YM, CH_Z1);
 		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z1);
+		GL11.glEnd();
+	}
+	
+	private void renderChevronArm(ChevronData chevron){
+		GL11.glPushMatrix();
+		GL11.glTranslatef(0, -chevron.position, 0);
+			renderArmBottom();
+			renderArmRight();
+			renderArmLeft();
+		GL11.glPopMatrix();
+	}
+	
+	private void renderArmBottom(){
+		// front
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YI, CH_Z1);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YI, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(CH_XI, CH_YM, CH_Z1);
+		GL11.glEnd();
+		
+		//back
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YI, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YI, CH_Z0);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(CH_XI, CH_YM, CH_Z0);
+		GL11.glEnd();
+		
+		//top
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z1);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YM, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(CH_XI, CH_YM, CH_Z0);
+		GL11.glEnd();
+		
+		//bottom
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YI, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YI, CH_Z1);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(-CH_XI, CH_YI, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(CH_XI, CH_YI, CH_Z0);
+		GL11.glEnd();
+	}
+	
+	private void renderArmRight(){
+		// front
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YI, CH_Z1);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z1);
+		GL11.glEnd();
+		
+		//back
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YI, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z0);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z0);
+		GL11.glEnd();
+		
+		//in
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YM, CH_Z1);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z1);
+		GL11.glEnd();
+		
+		//out
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YI, CH_Z0);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(-CH_XI, CH_YI, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z1);
+		GL11.glEnd();
+		
+		//top
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z1);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(-CH_XO, CH_YO, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(-CH_XM, CH_YO, CH_Z0);
+		GL11.glEnd();
+	}
+	
+	private void renderArmLeft(){
+		// front
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YI, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YM, CH_Z1);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(CH_XO, CH_YO, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z1);
+		GL11.glEnd();
+		
+		//back
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YI, CH_Z0);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(CH_XO, CH_YO, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YM, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z0);
+		GL11.glEnd();
+		
+		//in
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YM, CH_Z0);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YM, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z1);
+		GL11.glEnd();
+		
+		//out
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YI, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(CH_XI, CH_YI, CH_Z1);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
 		GL11.glVertex3f(CH_XO, CH_YO, CH_Z0);
 		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
 		GL11.glVertex3f(CH_XO, CH_YO, CH_Z1);
 		GL11.glEnd();
-	}
-	
-	private void renderChevronArm(){
 		
+		//top
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y0);
+		GL11.glVertex3f(CH_XO, CH_YO, CH_Z1);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y0);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z1);
+		GL11.glTexCoord2f(CHT_X0, CHT_Y1);
+		GL11.glVertex3f(CH_XO, CH_YO, CH_Z0);
+		GL11.glTexCoord2f(CHT_X1, CHT_Y1);
+		GL11.glVertex3f(CH_XM, CH_YO, CH_Z0);
+		GL11.glEnd();
 	}
 }
