@@ -23,6 +23,7 @@ import stargatetech2.core.block.BlockTransportRing;
 import stargatetech2.core.item.ItemNaquadah;
 import stargatetech2.core.item.ItemPersonalShield;
 import stargatetech2.core.item.ItemTabletPC;
+import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.tileentity.TileNaquadahCapacitor;
 import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.tileentity.TileShield;
@@ -124,8 +125,13 @@ public final class ModuleCore implements IContentModule{
 		
 	}
 
-	@Override public void onServerStart(){}
-	@Override public void onServerStop(){}
+	@Override public void onServerStart(){
+		StargateNetwork.instance().load();
+	}
+	
+	@Override public void onServerStop(){
+		StargateNetwork.instance().unload();
+	}
 
 	@Override
 	public String getModuleName() {

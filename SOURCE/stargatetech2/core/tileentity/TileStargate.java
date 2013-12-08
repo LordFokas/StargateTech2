@@ -52,7 +52,7 @@ public class TileStargate extends BaseTileEntity {
 	@ClientLogic
 	private void clientTick(){
 		// ring rotation //
-		renderData.curr_theta += renderData.dTheta;
+		/*renderData.curr_theta += renderData.dTheta;
 		if(renderData.curr_theta > 360F){
 			renderData.curr_theta -= 360F;
 		}
@@ -65,7 +65,7 @@ public class TileStargate extends BaseTileEntity {
 			if(worldObj.getWorldTime() % 30 == 0){
 				chevron.isLit = random.nextBoolean();
 			}
-		}
+		}*/
 	}
 	
 	@ClientLogic
