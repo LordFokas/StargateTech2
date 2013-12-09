@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
@@ -23,11 +24,13 @@ import cpw.mods.fml.common.FMLCommonHandler;
 
 public class StargateNetwork implements IStargateNetwork{
 	public static final StargateNetwork INSTANCE = new StargateNetwork();
+	public static final long MIN_SAVE_INTERVAL_MS = 5000;
 	public static final int RANDOM_ADDRESS_LENGTH = 8;
 	
 	private boolean isLoaded;
 	private HashMap<Integer, DimensionPrefix> prefixes;
 	private HashMap<Address, AddressMapping> addresses;
+	private long saveTime;
 	
 	public static StargateNetwork instance(){
 		return INSTANCE;
@@ -36,11 +39,16 @@ public class StargateNetwork implements IStargateNetwork{
 	private StargateNetwork(){
 		MinecraftForge.EVENT_BUS.register(this);
 		isLoaded = false;
+		saveTime = 0;
 	}
 	
 	@ForgeSubscribe
 	public void save(WorldEvent.Save event){
-		writeToFile();
+		long newSaveTime = System.currentTimeMillis();
+		if(newSaveTime > saveTime + MIN_SAVE_INTERVAL_MS){
+			saveTime = newSaveTime;
+			writeToFile();
+		}
 	}
 	
 	public void load(){
@@ -61,7 +69,34 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	@Override
 	public Address parseAddress(String address){
-		return null;
+		try{
+			String[] parts = address.toLowerCase().split(" ");
+			LinkedList<Symbol> symbols = new LinkedList();
+			if(parts.length != 3) throw new Exception("Address too short.");
+			for(String part : parts){
+				boolean finished = false;
+				do{
+					for(int i = 1; i < 40; i++){
+						Symbol s = Symbol.get(i);
+						String name = s.toString().toLowerCase();
+						if(name.length() == part.length()){
+							if(part.contentEquals(name)){
+								symbols.addLast(s);
+								finished = true;
+								break;
+							}
+						}else if(part.startsWith(name)){
+							symbols.addLast(s);
+							part = part.substring(name.length());
+							break;
+						}
+					}
+				}while(finished == false);
+			}
+			return Address.create((Symbol[]) symbols.toArray());
+		}catch(Exception e){
+			return null;
+		}
 	}
 	
 	@Override
@@ -125,6 +160,13 @@ public class StargateNetwork implements IStargateNetwork{
 			addresses.put(address, mapping);
 		}
 		return address;
+	}
+	
+	public void freeMyAddress(World world, int x, int y, int z){
+		Address address = getAddressOf(world, x, y, z);
+		if(address != null){
+			addresses.remove(address);
+		}
 	}
 	
 	private DimensionPrefix generatePrefixForDimension(Integer key){
