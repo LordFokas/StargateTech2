@@ -3,15 +3,6 @@ package stargatetech2.api.stargate;
 public class Address {
 	private Symbol[] symbols;
 	
-	public static Address parse(String address){
-		try{
-			
-			return new Address(null);
-		}catch(Exception e){
-			return null;
-		}
-	}
-	
 	public static Address create(Symbol[] symbols){
 		try{
 			boolean used[] = new boolean[40];

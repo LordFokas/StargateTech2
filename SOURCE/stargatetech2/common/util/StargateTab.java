@@ -14,11 +14,6 @@ public class StargateTab extends CreativeTabs {
 		super("StargateTech 2");
 	}
 	
-	/*@Override
-	public int getTabIconItemIndex(){
-		return iconID;
-	}*/
-	
 	@Override
 	public String getTranslatedTabLabel(){
 		return "StargateTech 2";
@@ -26,6 +21,6 @@ public class StargateTab extends CreativeTabs {
 	
 	@Override
 	public ItemStack getIconItemStack(){
-		return new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.INGOT.ID);
+		return new ItemStack(ModuleCore.stargate, 1);
 	}
 }

@@ -61,7 +61,7 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	@Override
 	public Address parseAddress(String address){
-		return Address.parse(address);
+		return null;
 	}
 	
 	@Override
