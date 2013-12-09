@@ -1,16 +1,16 @@
 package stargatetech2.core.tileentity;
 
-import java.util.Random;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import stargatetech2.api.stargate.Address;
+import stargatetech2.api.stargate.ITileStargateBase;
 import stargatetech2.common.base.BaseTileEntity;
+import stargatetech2.core.network.stargate.StargateNetwork;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileStargate extends BaseTileEntity {
+public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	@ClientLogic private RenderData renderData = new RenderData();
-	Random random = new Random();
 	
 	@ClientLogic
 	public static class RenderData{
@@ -20,7 +20,7 @@ public class TileStargate extends BaseTileEntity {
 			public float dir = 0.0F;
 		}
 		
-		public float dTheta = 1.5F;
+		public float dTheta = 0F;
 		public float curr_theta = 0F;
 		private ChevronData[] chevron;
 		
@@ -38,6 +38,12 @@ public class TileStargate extends BaseTileEntity {
 	}
 	
 	@Override
+	public void validate(){
+		super.validate();
+		getAddress(); // forces the Stargate Network to generate an address for this Stargate.
+	}
+	
+	@Override
 	public void updateEntity(){
 		if(worldObj.isRemote){
 			clientTick();
@@ -49,23 +55,19 @@ public class TileStargate extends BaseTileEntity {
 	@ServerLogic
 	private void serverTick(){}
 	
+	@Override
+	public Address getAddress(){
+		return StargateNetwork.instance().getMyAddress(worldObj, xCoord, yCoord, zCoord);
+	}
+	
+	@Override
+	public boolean dial(Address address){
+		return false;
+	}
+	
 	@ClientLogic
 	private void clientTick(){
-		// ring rotation //
-		/*renderData.curr_theta += renderData.dTheta;
-		if(renderData.curr_theta > 360F){
-			renderData.curr_theta -= 360F;
-		}
-		if(worldObj.getWorldTime() % 80 == 0){
-			renderData.dTheta *= -1;
-		}
-		for(int i = 0; i < 9; i++){
-			RenderData.ChevronData chevron = renderData.getChevron(i);
-			chevron.position = 0.2F * ((float)((worldObj.getWorldTime() + i) % 9) / 9F);
-			if(worldObj.getWorldTime() % 30 == 0){
-				chevron.isLit = random.nextBoolean();
-			}
-		}*/
+		
 	}
 	
 	@ClientLogic

@@ -10,7 +10,7 @@ public enum Symbol {
 	DEH	("Deh"),
 	EC	("Ec"),
 	MIG	("Mig"),
-	ALM	("Alm"),
+	AM	("Am"),
 	RUM	("Rum"),
 	AR	("Ar"),
 	VA	("Va"),

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
+import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -65,15 +66,16 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	@Override
 	public boolean addressExists(Address address){
-		return false;
+		if(isLoaded) return addresses.containsKey(address);
+		else return false;
 	}
 	
-	public Address getRandomAddress(int dimension){
+	private Address getRandomAddress(World world){
 		Random random = new Random();
 		Symbol[] symbols;
 		Address address;
 		DimensionPrefix prefix;
-		Integer key = new Integer(dimension);
+		Integer key = new Integer(world.provider.dimensionId);
 		if(prefixes.containsKey(key)){
 			prefix = prefixes.get(key);
 		}else{
@@ -99,6 +101,29 @@ public class StargateNetwork implements IStargateNetwork{
 			}
 			address = Address.create(symbols);
 		}while(address == null || addressExists(address));
+		return address;
+	}
+	
+	@Override
+	public Address getAddressOf(World world, int x, int y, int z){
+		if(isLoaded){
+			Collection<AddressMapping> mappings = addresses.values();
+			for(AddressMapping m : mappings){
+				if(m.getDimension() == world.provider.dimensionId && m.getXCoord() == x && m.getYCoord() == y && m.getZCoord() == z){
+					return m.getAddress();
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Address getMyAddress(World world, int x, int y, int z){
+		Address address = getAddressOf(world, x, y, z);
+		if(address == null){
+			address = getRandomAddress(world);
+			AddressMapping mapping = new AddressMapping(address, world.provider.dimensionId, x, y, z);
+			addresses.put(address, mapping);
+		}
 		return address;
 	}
 	
