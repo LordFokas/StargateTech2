@@ -29,6 +29,8 @@ import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.tileentity.TileShield;
 import stargatetech2.core.tileentity.TileShieldEmitter;
 import stargatetech2.core.tileentity.TileStargate;
+import stargatetech2.core.tileentity.TileStargateBase;
+import stargatetech2.core.tileentity.TileStargateRing;
 import stargatetech2.core.tileentity.TileTransportRing;
 import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.IonizedParticles;
@@ -92,6 +94,8 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.registerTileEntity(TileTransportRing.class, TileEntityReference.TILE_TRANSPORT_RING);
 		GameRegistry.registerTileEntity(TileNaquadahCapacitor.class, TileEntityReference.TILE_NAQUADAH_CAPACITOR);
 		GameRegistry.registerTileEntity(TileStargate.class, TileEntityReference.TILE_STARGATE);
+		GameRegistry.registerTileEntity(TileStargateRing.class, TileEntityReference.TILE_STARGATE_RING);
+		GameRegistry.registerTileEntity(TileStargateBase.class, TileEntityReference.TILE_STARGATE_BASE);
 	}
 
 	@Override

@@ -57,7 +57,7 @@ public class LootPodBuildList extends BuildList {
 	}
 
 	@Override
-	protected void afterBuild(World w, int x, int y, int z) {
+	protected void afterBuild(World w, int x, int y, int z, Object o) {
 		Random random = new Random();
 		LootLevel level;
 		int rnd = random.nextInt(100);
