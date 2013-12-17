@@ -82,6 +82,7 @@ public class RenderStargateTile extends BaseTESR {
 		TileStargate stargate = (TileStargate) te;
 		RenderData data = stargate.getRenderData();
 		bindTexture(TextureReference.TESR_STARGATE);
+		GL11.glRotated(w.getBlockMetadata(pos.x, pos.y, pos.z) * 90, 0, 1, 0);
 		GL11.glTranslated(0, 2.5D, 0);
 		renderOuterRing();
 		GL11.glPushMatrix();

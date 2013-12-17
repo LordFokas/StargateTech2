@@ -23,7 +23,7 @@ import stargatetech2.common.util.StargateLogger;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class StargateNetwork implements IStargateNetwork{
-	public static final StargateNetwork INSTANCE = new StargateNetwork();
+	private static final StargateNetwork INSTANCE = new StargateNetwork();
 	public static final long MIN_SAVE_INTERVAL_MS = 5000;
 	public static final int RANDOM_ADDRESS_LENGTH = 8;
 	

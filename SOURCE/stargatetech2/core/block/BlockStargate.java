@@ -24,6 +24,8 @@ import stargatetech2.core.worldgen.lists.StargateBuildList;
 public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
 	public static final int META_BASE = 0x0E;
 	public static final int META_RING = 0x0F;
+	
+	private static final int[] ROTATIONS = new int[]{4, 2, 5, 3};
 
 	public BlockStargate() {
 		super(BlockReference.STARGATE);
@@ -62,7 +64,7 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
 	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase living, ItemStack stack){
 		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw);
-		w.setBlockMetadataWithNotify(x, y, z, dir.ordinal(), 2);
+		w.setBlockMetadataWithNotify(x, y, z, ROTATIONS[dir.ordinal() - 2], 2);
 		int xm = dir.offsetZ * dir.offsetZ;
 		int zm = dir.offsetX * dir.offsetX;
 		if(xm == 1){
@@ -70,5 +72,10 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
 		}else if(zm == 1){
 			StargateBuildList.SGZ.buildStargate(w, x, y, z, x, y, z);
 		}
+	}
+	
+	public void dropStargate(World w, int x, int y, int z){
+		w.setBlockToAir(x, y, z);
+		dropItemStack(w, x, y, z, new ItemStack(this));
 	}
 }

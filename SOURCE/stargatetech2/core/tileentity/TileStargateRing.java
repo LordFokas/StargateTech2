@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargate;
 import stargatetech2.common.base.BaseTileEntity;
+import stargatetech2.common.util.Vec3Int;
 
 public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 	protected int sgx, sgy, sgz;
@@ -17,6 +18,15 @@ public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 			address = stargate.getAddress();
 		}
 		return address;
+	}
+	
+	@Override
+	public void invalidate(){
+		super.invalidate();
+		TileStargate sg = getStargate();
+		if(sg != null){
+			sg.destroyStargate();
+		}
 	}
 	
 	protected final TileStargate getStargate(){
@@ -32,6 +42,10 @@ public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 		sgx = x;
 		sgy = y;
 		sgz = z;
+		TileStargate sg = getStargate();
+		if(sg != null){
+			sg.addSegment(new Vec3Int(xCoord, yCoord, zCoord));
+		}
 	}
 	
 	@Override

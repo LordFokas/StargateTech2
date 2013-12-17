@@ -1,15 +1,22 @@
 package stargatetech2.core.tileentity;
 
+import java.util.ArrayList;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargateBase;
 import stargatetech2.common.base.BaseTileEntity;
+import stargatetech2.common.util.Vec3Int;
+import stargatetech2.core.ModuleCore;
 import stargatetech2.core.network.stargate.StargateNetwork;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileStargate extends BaseTileEntity implements ITileStargateBase{
+	@ServerLogic private boolean isInvalidating = false;
+	@ServerLogic private ArrayList<Vec3Int> segments = new ArrayList();
+	
 	@ClientLogic private RenderData renderData = new RenderData();
 	
 	@ClientLogic
@@ -44,6 +51,20 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	}
 	
 	@Override
+	public void invalidate(){
+		isInvalidating = true;
+		super.invalidate();
+		if(!worldObj.isRemote){
+			for(Vec3Int segment : segments){
+				worldObj.setBlockToAir(segment.x, segment.y, segment.z);
+			}
+		}
+		if(StargateNetwork.instance().isLoaded()){
+			StargateNetwork.instance().freeMyAddress(worldObj, xCoord, yCoord, zCoord);
+		}
+	}
+	
+	@Override
 	public void updateEntity(){
 		if(worldObj.isRemote){
 			clientTick();
@@ -52,8 +73,23 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 		}
 	}
 	
+	
 	@ServerLogic
 	private void serverTick(){}
+	
+	@ServerLogic
+	public void destroyStargate(){
+		if(!isInvalidating){
+			isInvalidating = true;
+			ModuleCore.stargate.dropStargate(worldObj, xCoord, yCoord, zCoord);
+		}
+	}
+	
+	@ServerLogic
+	public void addSegment(Vec3Int segment){
+		if(!worldObj.isRemote)
+		segments.add(segment);
+	}
 	
 	@Override
 	public Address getAddress(){
