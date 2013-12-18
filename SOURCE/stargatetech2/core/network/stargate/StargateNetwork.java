@@ -67,6 +67,10 @@ public class StargateNetwork implements IStargateNetwork{
 		return isLoaded;
 	}
 	
+	public void dial(Address source, Address destination){
+		
+	}
+	
 	@Override
 	public Address parseAddress(String address){
 		return parse(address);
@@ -175,9 +179,18 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	private DimensionPrefix generatePrefixForDimension(Integer key){
 		DimensionPrefix prefix;
-		do{
-			prefix = DimensionPrefix.generateRandom();
-		}while(prefixes.containsValue(prefix));
+		switch(key.intValue()){
+			case 0:
+				prefix = new DimensionPrefix(LoreAddresses.OVERWORLD);
+				break;
+			case -1:
+				prefix = new DimensionPrefix(LoreAddresses.NETHER);
+				break;
+			default:
+				do{
+					prefix = DimensionPrefix.generateRandom();
+				}while(prefixes.containsValue(prefix));
+		}
 		prefixes.put(key, prefix);
 		return prefix;
 	}

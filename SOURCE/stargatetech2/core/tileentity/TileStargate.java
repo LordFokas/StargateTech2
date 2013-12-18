@@ -10,12 +10,15 @@ import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.network.stargate.StargateNetwork;
+import stargatetech2.core.network.stargate.Wormhole;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	@ServerLogic private boolean isInvalidating = false;
 	@ServerLogic private ArrayList<Vec3Int> segments = new ArrayList();
+	@ServerLogic private Wormhole wormhole = null;
+	@ServerLogic private boolean isSource = false;
 	
 	@ClientLogic private RenderData renderData = new RenderData();
 	
@@ -75,7 +78,14 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	
 	
 	@ServerLogic
-	private void serverTick(){}
+	private void serverTick(){
+		if(wormhole != null){
+			wormhole.update();
+		}
+		if(wormhole != null && wormhole.isActive()){
+			// do actual wormhole logic
+		}
+	}
 	
 	@ServerLogic
 	public void destroyStargate(){
@@ -97,8 +107,22 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	}
 	
 	@Override
+	@ServerLogic
 	public boolean dial(Address address){
-		return false;
+		if(worldObj.isRemote || wormhole != null) return false;
+		StargateNetwork.instance().dial(getAddress(), address);
+		return wormhole != null;
+	}
+	
+	@ServerLogic
+	public void setWormhole(Wormhole wormhole, boolean isSource){
+		this.wormhole = wormhole;
+		this.isSource = isSource;
+	}
+	
+	@ServerLogic
+	public void onDisconnect(){
+		wormhole = null;
 	}
 	
 	@ClientLogic
