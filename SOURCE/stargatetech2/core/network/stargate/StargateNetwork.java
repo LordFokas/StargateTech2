@@ -69,6 +69,10 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	@Override
 	public Address parseAddress(String address){
+		return parse(address);
+	}
+	
+	public static Address parse(String address){
 		try{
 			String[] parts = address.toLowerCase().split(" ");
 			LinkedList<Symbol> symbols = new LinkedList();

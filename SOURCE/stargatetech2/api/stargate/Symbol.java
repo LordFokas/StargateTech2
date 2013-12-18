@@ -2,45 +2,45 @@ package stargatetech2.api.stargate;
 
 public enum Symbol {
 	VOID(""),
-	AT	("At"),
-	AL	("Al"),
-	CLA	("Cla"),
-	UR	("Ur"),
-	ON	("On"),
-	DEH	("Deh"),
-	EC	("Ec"),
-	MIG	("Mig"),
-	AM	("Am"),
-	RUM	("Rum"),
-	AR	("Ar"),
-	VA	("Va"),
-	COR	("Cor"),
-	PRA	("Pra"),
-	OM	("Om"),
-	ET	("Et"),
-	AS	("As"),
-	US	("Us"),
-	GON	("Gon"),
-	ORM	("Orm"),
-	EM	("Em"),
-	AC	("Ac"),
-	OTH	("Oth"),
-	LOS	("Los"),
-	LAN	("Lan"),
-	EST	("Est"),
-	CRO	("Cro"),
-	SIL	("Sil"),
-	TA	("Ta"),
-	BREI("Brei"),
-	RUSH("Rush"),
-	ERP	("Erp"),
-	SET	("Set"),
-	ULF	("Ulf"),
-	PRO	("Pro"),
-	SAL	("Sal"),
-	TIS	("Tis"),
-	MAC	("Mac"),
-	IRT	("Irt");
+	AT	("At"),		//  1
+	AL	("Al"),		//  2
+	CLA	("Cla"),	//  3
+	UR	("Ur"),		//  4
+	ON	("On"),		//  5
+	DEH	("Deh"),	//  6
+	EC	("Ec"),		//  7
+	MIG	("Mig"),	//  8
+	AM	("Am"),		//  9
+	RUM	("Rum"),	// 10
+	AR	("Ar"),		// 11
+	VA	("Va"),		// 12
+	COR	("Cor"),	// 13
+	PRA	("Pra"),	// 14
+	OM	("Om"),		// 15
+	ET	("Et"),		// 16
+	AS	("As"),		// 17
+	US	("Us"),		// 18
+	GON	("Gon"),	// 19
+	ORM	("Orm"),	// 20
+	EM	("Em"),		// 21
+	AC	("Ac"),		// 22
+	OTH	("Oth"),	// 23
+	LOS	("Los"),	// 24
+	LAN	("Lan"),	// 25
+	EST	("Est"),	// 26
+	CRO	("Cro"),	// 27
+	SIL	("Sil"),	// 28
+	TA	("Ta"),		// 29
+	BREI("Brei"),	// 30
+	RUSH("Rush"),	// 31
+	ERP	("Erp"),	// 32
+	SET	("Set"),	// 33
+	ULF	("Ulf"),	// 34
+	PRO	("Pro"),	// 35
+	SAL	("Sal"),	// 36
+	TIS	("Tis"),	// 37
+	MAC	("Mac"),	// 38
+	IRT	("Irt");	// 39
 	
 	private String name;
 	
