@@ -1,10 +1,12 @@
 package stargatetech2.core.packet;
 
 import net.minecraft.entity.player.EntityPlayer;
-import cpw.mods.fml.relauncher.Side;
 import stargatetech2.common.base.BasePacket;
+import stargatetech2.common.base.BasePacket.ClientToServer;
 import stargatetech2.core.tileentity.TileShieldEmitter;
+import cpw.mods.fml.relauncher.Side;
 
+@ClientToServer
 public class PacketExceptionsUpdate extends BasePacket {
 	public TileShieldEmitter emitter;
 	public boolean isSetting;

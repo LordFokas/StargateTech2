@@ -3,7 +3,6 @@ package stargatetech2.core.worldgen.lists;
 import java.util.ArrayList;
 
 import net.minecraft.world.World;
-
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.util.WeakBlockRegistry;
 

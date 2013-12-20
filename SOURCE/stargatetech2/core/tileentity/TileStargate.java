@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargateBase;
 import stargatetech2.common.base.BaseTileEntity;
@@ -11,6 +12,7 @@ import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.network.stargate.Wormhole;
+import stargatetech2.core.packet.PacketWormhole;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -30,6 +32,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 			public float dir = 0.0F;
 		}
 		
+		public boolean hasWormhole = false;
 		public float dTheta = 0F;
 		public float curr_theta = 0F;
 		private ChevronData[] chevron;
@@ -76,14 +79,13 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 		}
 	}
 	
-	
 	@ServerLogic
 	private void serverTick(){
-		if(wormhole != null){
+		if(hasActiveWormhole() && isSource){
 			wormhole.update();
 		}
-		if(wormhole != null && wormhole.isActive()){
-			// do actual wormhole logic
+		if(hasActiveWormhole() && isSource){
+			
 		}
 	}
 	
@@ -111,18 +113,33 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	public boolean dial(Address address){
 		if(worldObj.isRemote || wormhole != null) return false;
 		StargateNetwork.instance().dial(getAddress(), address);
-		return wormhole != null;
+		return hasActiveWormhole();
+	}
+	
+	@ServerLogic
+	public boolean hasActiveWormhole() {
+		return wormhole != null && wormhole.isActive();
 	}
 	
 	@ServerLogic
 	public void setWormhole(Wormhole wormhole, boolean isSource){
 		this.wormhole = wormhole;
 		this.isSource = isSource;
+		PacketWormhole.sendSync(xCoord, yCoord, zCoord, true).sendToAllInDim(worldObj.provider.dimensionId);
 	}
 	
 	@ServerLogic
 	public void onDisconnect(){
 		wormhole = null;
+		PacketWormhole.sendSync(xCoord, yCoord, zCoord, false).sendToAllInDim(worldObj.provider.dimensionId);
+	}
+	
+	@Override
+	public void setWorldObj(World w){
+		super.setWorldObj(w);
+		if(w.isRemote){
+			PacketWormhole.syncRequest(xCoord, yCoord, zCoord).sendToServer();
+		}
 	}
 	
 	@ClientLogic
@@ -133,6 +150,11 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	@ClientLogic
 	public RenderData getRenderData(){
 		return renderData;
+	}
+	
+	@ClientLogic
+	public void setHasWormhole(boolean hasWormhole){
+		renderData.hasWormhole = hasWormhole;
 	}
 	
 	@Override

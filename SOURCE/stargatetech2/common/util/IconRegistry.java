@@ -2,12 +2,11 @@ package stargatetech2.common.util;
 
 import java.util.HashMap;
 
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.util.Icon;
 import stargatetech2.common.reference.ModReference;
 import stargatetech2.common.reference.TextureReference;
 import stargatetech2.core.util.IonizedParticles;
-
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.Icon;
 
 public class IconRegistry {
 	public static final HashMap<String, Icon> blockIcons = new HashMap<String, Icon>();

@@ -1,15 +1,10 @@
 package stargatetech2.core.tileentity;
 
-import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerHandler;
-import buildcraft.api.power.PowerHandler.PowerReceiver;
-import buildcraft.api.power.PowerHandler.Type;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -22,6 +17,10 @@ import stargatetech2.common.machine.NearZeroPerdition;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ParticleIonizerRecipes;
 import stargatetech2.core.util.ParticleIonizerRecipes.Recipe;
+import buildcraft.api.power.IPowerReceptor;
+import buildcraft.api.power.PowerHandler;
+import buildcraft.api.power.PowerHandler.PowerReceiver;
+import buildcraft.api.power.PowerHandler.Type;
 
 public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler, IPowerReceptor, IInventory{
 	private FluidTank tank = new FluidTank(12000);

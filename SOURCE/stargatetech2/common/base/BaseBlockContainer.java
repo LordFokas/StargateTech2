@@ -1,7 +1,6 @@
 package stargatetech2.common.base;
 
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public abstract class BaseBlockContainer extends BaseBlock implements ITileEntityProvider{

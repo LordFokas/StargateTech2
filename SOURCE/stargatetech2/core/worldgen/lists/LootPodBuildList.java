@@ -2,12 +2,12 @@ package stargatetech2.core.worldgen.lists;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
 import stargatetech2.common.util.Color;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.worldgen.LootGenerator;
 import stargatetech2.core.worldgen.LootGenerator.LootLevel;
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
 
 
 public class LootPodBuildList extends BuildList {

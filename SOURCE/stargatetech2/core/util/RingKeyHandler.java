@@ -2,13 +2,9 @@ package stargatetech2.core.util;
 
 import java.util.EnumSet;
 
-import stargatetech2.common.util.Vec3Int;
+import net.minecraft.client.settings.KeyBinding;
 import stargatetech2.core.packet.PacketActivateRings;
 import stargatetech2.core.tileentity.TileTransportRing;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;

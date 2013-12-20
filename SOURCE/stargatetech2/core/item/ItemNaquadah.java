@@ -10,7 +10,6 @@ import stargatetech2.common.base.BaseItem;
 import stargatetech2.common.reference.ItemReference;
 import stargatetech2.common.reference.TextureReference;
 import stargatetech2.common.util.IconRegistry;
-import stargatetech2.common.util.StargateTab;
 
 public class ItemNaquadah extends BaseItem{
 	private static final Metadata DATA[] = new Metadata[9];

@@ -1,8 +1,8 @@
 package stargatetech2.api;
 
-import stargatetech2.api.stargate.IStargateNetwork;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fluids.Fluid;
+import stargatetech2.api.stargate.IStargateNetwork;
 
 public interface IStargateTechAPI {
 	

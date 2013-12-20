@@ -5,13 +5,17 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -20,6 +24,7 @@ import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.api.stargate.Symbol;
 import stargatetech2.common.util.StargateLogger;
+import stargatetech2.core.tileentity.TileStargate;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class StargateNetwork implements IStargateNetwork{
@@ -30,6 +35,7 @@ public class StargateNetwork implements IStargateNetwork{
 	private boolean isLoaded;
 	private HashMap<Integer, DimensionPrefix> prefixes;
 	private HashMap<Address, AddressMapping> addresses;
+	private ArrayList<Wormhole> activeWormholes;
 	private long saveTime;
 	
 	public static StargateNetwork instance(){
@@ -54,6 +60,7 @@ public class StargateNetwork implements IStargateNetwork{
 	public void load(){
 		addresses = new HashMap();
 		prefixes = new HashMap();
+		activeWormholes = new ArrayList();
 		readFromFile();
 		isLoaded = true;
 	}
@@ -68,7 +75,27 @@ public class StargateNetwork implements IStargateNetwork{
 	}
 	
 	public void dial(Address source, Address destination){
-		
+		AddressMapping srcmap = addresses.get(source);
+		AddressMapping dstmap = addresses.get(destination);
+		if(srcmap != null && dstmap != null){
+			WorldServer srcworld = MinecraftServer.getServer().worldServerForDimension(srcmap.getDimension());
+			WorldServer dstworld = MinecraftServer.getServer().worldServerForDimension(dstmap.getDimension());
+			if(srcworld != null && dstworld != null){
+				TileEntity srcte = srcworld.getBlockTileEntity(srcmap.getXCoord(), srcmap.getYCoord(), srcmap.getZCoord());
+				TileEntity dstte = srcworld.getBlockTileEntity(dstmap.getXCoord(), dstmap.getYCoord(), dstmap.getZCoord());
+				if(srcte instanceof TileStargate && dstte instanceof TileStargate){
+					TileStargate src = (TileStargate) srcte;
+					TileStargate dst = (TileStargate) dstte;
+					if(!src.hasActiveWormhole() && !dst.hasActiveWormhole()){
+						activeWormholes.add(new Wormhole(src, dst));
+					}
+				}
+			}
+		}
+	}
+	
+	public void removeWormhole(Wormhole wormhole){
+		activeWormholes.remove(wormhole);
 	}
 	
 	@Override

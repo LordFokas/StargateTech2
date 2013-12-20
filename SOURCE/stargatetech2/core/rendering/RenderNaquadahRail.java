@@ -1,10 +1,8 @@
 package stargatetech2.core.rendering;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.client.MinecraftForgeClient;
 import stargatetech2.common.base.BaseISBRH;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.block.BlockNaquadahRail;

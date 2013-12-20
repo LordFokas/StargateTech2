@@ -15,7 +15,6 @@ import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.util.Helper;
 import stargatetech2.core.rendering.RenderStargateBlock;
-import stargatetech2.core.tileentity.TileShieldEmitter;
 import stargatetech2.core.tileentity.TileStargate;
 import stargatetech2.core.tileentity.TileStargateBase;
 import stargatetech2.core.tileentity.TileStargateRing;

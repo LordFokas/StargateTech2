@@ -31,6 +31,7 @@ public final class Wormhole {
 		isWormholeActive = false;
 		source.onDisconnect();
 		destination.onDisconnect();
+		StargateNetwork.instance().removeWormhole(this);
 	}
 	
 	public boolean isActive(){

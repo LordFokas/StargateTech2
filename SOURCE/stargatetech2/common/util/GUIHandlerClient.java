@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import stargatetech2.common.base.BaseGUI;
-import stargatetech2.common.util.GUIHandler.Screen;
 import stargatetech2.core.gui.ContainerNaquadahCapacitor;
 import stargatetech2.core.gui.ContainerParticleIonizer;
 import stargatetech2.core.gui.ContainerShieldEmitter;

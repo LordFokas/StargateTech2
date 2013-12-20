@@ -2,7 +2,6 @@ package stargatetech2.common;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fluids.Fluid;
-import stargatetech2.StargateTech2;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.common.util.StargateLogger;

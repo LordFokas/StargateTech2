@@ -1,10 +1,8 @@
 package stargatetech2.common.util;
 
-import stargatetech2.common.reference.ModReference;
-import stargatetech2.core.ModuleCore;
-import stargatetech2.core.item.ItemNaquadah;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import stargatetech2.core.ModuleCore;
 
 public class StargateTab extends CreativeTabs {
 	public static final StargateTab instance = new StargateTab();
