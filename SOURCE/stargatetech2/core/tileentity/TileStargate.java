@@ -13,14 +13,15 @@ import stargatetech2.core.ModuleCore;
 import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.network.stargate.Wormhole;
 import stargatetech2.core.packet.PacketWormhole;
+import stargatetech2.core.worldgen.lists.StargateBuildList;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	@ServerLogic private boolean isInvalidating = false;
-	@ServerLogic private ArrayList<Vec3Int> segments = new ArrayList();
 	@ServerLogic private Wormhole wormhole = null;
 	@ServerLogic private boolean isSource = false;
+	@ServerLogic private boolean useXBuilder;
 	
 	@ClientLogic private RenderData renderData = new RenderData();
 	
@@ -60,11 +61,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	public void invalidate(){
 		isInvalidating = true;
 		super.invalidate();
-		if(!worldObj.isRemote){
-			for(Vec3Int segment : segments){
-				worldObj.setBlockToAir(segment.x, segment.y, segment.z);
-			}
-		}
+		removeDependencies();
 		if(StargateNetwork.instance().isLoaded()){
 			StargateNetwork.instance().freeMyAddress(worldObj, xCoord, yCoord, zCoord);
 		}
@@ -79,13 +76,30 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 		}
 	}
 	
+	public void setDirectionX(boolean isX){
+		useXBuilder = isX;
+	}
+	
+	@ServerLogic
+	private void removeDependencies(){
+		if(!worldObj.isRemote){
+			StargateBuildList builder;
+			if(useXBuilder){
+				builder = StargateBuildList.SGX;
+			}else{
+				builder = StargateBuildList.SGZ;
+			}
+			builder.delete(worldObj, xCoord, yCoord, zCoord);
+		}
+	}
+	
 	@ServerLogic
 	private void serverTick(){
 		if(hasActiveWormhole() && isSource){
 			wormhole.update();
 		}
 		if(hasActiveWormhole() && isSource){
-			
+			// TODO: send stuff through the wormhole object.
 		}
 	}
 	
@@ -95,12 +109,6 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 			isInvalidating = true;
 			ModuleCore.stargate.dropStargate(worldObj, xCoord, yCoord, zCoord);
 		}
-	}
-	
-	@ServerLogic
-	public void addSegment(Vec3Int segment){
-		if(!worldObj.isRemote)
-		segments.add(segment);
 	}
 	
 	@Override
@@ -171,11 +179,11 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
-		// TODO Auto-generated method stub
+		useXBuilder = nbt.getBoolean("useXBuilder");
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
-		// TODO Auto-generated method stub
+		nbt.setBoolean("useXBuilder", useXBuilder);
 	}
 }

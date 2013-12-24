@@ -6,6 +6,8 @@ import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.block.BlockStargate;
 import stargatetech2.core.tileentity.TileStargateRing;
+import stargatetech2.core.worldgen.lists.BuildList.BuildBlock;
+import stargatetech2.core.worldgen.lists.BuildList.BuildMaterial;
 
 public class StargateBuildList extends BuildList {
 	private static final BuildMaterial[] MATERIAL = new BuildMaterial[]{
@@ -40,6 +42,12 @@ public class StargateBuildList extends BuildList {
 		TileEntity te = w.getBlockTileEntity(x, y, z);
 		if(te instanceof TileStargateRing){
 			((TileStargateRing)te).setSGPosition(sg.x, sg.y, sg.z);
+		}
+	}
+	
+	public void delete(World w, int x, int y, int z){
+		for(BuildBlock block : blocks){
+			w.setBlockToAir(block.x + x, block.y + y, block.z + z);
 		}
 	}
 }

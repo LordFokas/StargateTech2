@@ -25,6 +25,7 @@ public class TextureReference {
 	public static final String GLOW_NAQUADAH_ORE = "glowNaquadahOre";
 	
 	public static final String LANTEAN_BLOCK_CLEAN = "lanteanBlockClean";
+	public static final String STARGATE_BASE_TOP = "stargateBaseTop";
 	
 	
 	
@@ -50,6 +51,7 @@ public class TextureReference {
 		TERRAIN_TEXTURES.add(FACE_NAQUADAH_ORE);
 		TERRAIN_TEXTURES.add(GLOW_NAQUADAH_ORE);
 		TERRAIN_TEXTURES.add(LANTEAN_BLOCK_CLEAN);
+		TERRAIN_TEXTURES.add(STARGATE_BASE_TOP);
 		
 		ITEM_TEXTURES.add(NAQUADAH_POWER_CRYSTAL + "_1");
 		ITEM_TEXTURES.add(NAQUADAH_POWER_CRYSTAL + "_2");

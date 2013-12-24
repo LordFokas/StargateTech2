@@ -2,6 +2,7 @@ package stargatetech2.core.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargate;
 import stargatetech2.common.base.BaseTileEntity;
@@ -29,7 +30,7 @@ public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 		}
 	}
 	
-	protected final TileStargate getStargate(){
+	public final TileStargate getStargate(){
 		TileEntity te = worldObj.getBlockTileEntity(sgx, sgy, sgz);
 		if(te instanceof TileStargate){
 			return (TileStargate) te;
@@ -42,10 +43,6 @@ public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 		sgx = x;
 		sgy = y;
 		sgz = z;
-		TileStargate sg = getStargate();
-		if(sg != null){
-			sg.addSegment(new Vec3Int(xCoord, yCoord, zCoord));
-		}
 	}
 	
 	@Override

@@ -98,6 +98,11 @@ public class StargateNetwork implements IStargateNetwork{
 		activeWormholes.remove(wormhole);
 	}
 	
+	// TODO: finish this.
+	public boolean canPlaceStargateAt(World w, int x, int y, int z){
+		return true;
+	}
+	
 	@Override
 	public Address parseAddress(String address){
 		return parse(address);

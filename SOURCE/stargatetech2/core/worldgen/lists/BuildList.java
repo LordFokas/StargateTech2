@@ -29,7 +29,7 @@ public abstract class BuildList {
 		}
 	}
 	
-	private final ArrayList<BuildBlock> blocks = new ArrayList<BuildBlock>();
+	protected final ArrayList<BuildBlock> blocks = new ArrayList<BuildBlock>();
 	
 	public final boolean checkHasSpace(World w, int x, int y, int z){
 		for(BuildBlock block : blocks){
