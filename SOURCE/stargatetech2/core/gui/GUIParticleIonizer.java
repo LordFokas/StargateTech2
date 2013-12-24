@@ -1,20 +1,11 @@
 package stargatetech2.core.gui;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
-import stargatetech2.common.base.BaseContainer;
 import stargatetech2.common.base.BaseGUI;
 import stargatetech2.common.base.BaseGauge.PowerGauge;
 import stargatetech2.common.base.BaseGauge.TankGauge;
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.reference.TextureReference;
 import stargatetech2.core.tileentity.TileParticleIonizer;
-import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ParticleIonizerRecipes;
 import stargatetech2.core.util.ParticleIonizerRecipes.Recipe;
 

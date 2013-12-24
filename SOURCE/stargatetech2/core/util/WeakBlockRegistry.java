@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 
-public class ShieldRegistry{
-	private static final class ShieldRemovable{
+public class WeakBlockRegistry{
+	private static final class RemovableWeakBlock{
 		private int id, meta;
 		
-		public ShieldRemovable(int id, int meta){
+		public RemovableWeakBlock(int id, int meta){
 			this.id = id;
 			this.meta = meta;
 		}
 		
-		public ShieldRemovable(int id){
+		public RemovableWeakBlock(int id){
 			this(id, -1);
 		}
 		
 		@Override
 		public boolean equals(Object o){
-			if(o instanceof ShieldRemovable){
-				ShieldRemovable sr = (ShieldRemovable) o;
+			if(o instanceof RemovableWeakBlock){
+				RemovableWeakBlock sr = (RemovableWeakBlock) o;
 				if(meta == -1 || sr.meta == -1){
 					return id == sr.id;
 				}else{
@@ -31,7 +31,7 @@ public class ShieldRegistry{
 		}
 	}
 	
-	public static final ArrayList<ShieldRemovable> removables = new ArrayList<ShieldRemovable>(10);
+	public static final ArrayList<RemovableWeakBlock> removables = new ArrayList<RemovableWeakBlock>(10);
 	
 	static{
 		setShieldRemovable(Block.deadBush.blockID);
@@ -50,19 +50,19 @@ public class ShieldRegistry{
 	
 	public static final void setShieldRemovable(int id){
 		if(!isRemovable(id))
-			removables.add(new ShieldRemovable(id));
+			removables.add(new RemovableWeakBlock(id));
 	}
 	
 	public static final void setShieldRemovable(int id, int meta){
 		if(!isRemovable(id, meta))
-			removables.add(new ShieldRemovable(id, meta));
+			removables.add(new RemovableWeakBlock(id, meta));
 	}
 	
 	public static final boolean isRemovable(int id){
-		return removables.contains(new ShieldRemovable(id));
+		return removables.contains(new RemovableWeakBlock(id));
 	}
 	
 	public static final boolean isRemovable(int id, int meta){
-		return removables.contains(new ShieldRemovable(id, meta));
+		return removables.contains(new RemovableWeakBlock(id, meta));
 	}
 }

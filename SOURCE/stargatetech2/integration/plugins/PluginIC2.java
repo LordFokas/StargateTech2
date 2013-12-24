@@ -1,7 +1,7 @@
 package stargatetech2.integration.plugins;
 
-import net.minecraft.item.ItemStack;
 import ic2.api.item.Items;
+import net.minecraft.item.ItemStack;
 import stargatetech2.common.reference.ConfigReference;
 import stargatetech2.core.util.ParticleIonizerRecipes;
 

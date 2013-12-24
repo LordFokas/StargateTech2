@@ -1,6 +1,9 @@
 package stargatetech2.core.rendering;
 
-import java.nio.FloatBuffer;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
@@ -9,12 +12,6 @@ import stargatetech2.common.reference.TextureReference;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.tileentity.TileTransportRing;
 import stargatetech2.core.tileentity.TileTransportRing.RingRenderData;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class RenderTransportRing extends BaseTESR{
 	private static final double ANGLE = 1.0D / 9.0D;
@@ -42,6 +39,11 @@ public class RenderTransportRing extends BaseTESR{
 	@Override
 	protected Vec3Int getLightCoordinates(TileEntity te, Vec3Int light){
 		return new Vec3Int(light.x, light.y + 2, light.z);
+	}
+	
+	@Override
+	protected boolean useLocalizedLighting(){
+		return true;
 	}
 	
 	@Override

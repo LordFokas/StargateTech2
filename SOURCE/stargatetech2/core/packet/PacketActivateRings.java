@@ -2,29 +2,22 @@ package stargatetech2.core.packet;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import cpw.mods.fml.relauncher.Side;
-import stargatetech2.common.base.BasePacket;
+import stargatetech2.common.base.BasePacket.ClientToServer;
+import stargatetech2.common.packet.PacketCoordinates;
 import stargatetech2.core.tileentity.TileTransportRing;
+import cpw.mods.fml.relauncher.Side;
 
-public class PacketActivateRings extends BasePacket {
-	public int x;
-	public int y;
-	public int z;
+@ClientToServer
+public class PacketActivateRings extends PacketCoordinates {
 	public boolean up;
-	
+
 	@Override
-	protected void onBeforeSend() throws Exception{
-		output.writeInt(x);
-		output.writeInt(y);
-		output.writeInt(z);
+	protected void writeData() throws Exception {
 		output.writeBoolean(up);
 	}
 
 	@Override
-	public void onReceive(EntityPlayer player, Side side) throws Exception {
-		x = input.readInt();
-		y = input.readInt();
-		z = input.readInt();
+	protected void readData(EntityPlayer player, Side side) throws Exception {
 		up = input.readBoolean();
 		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
 		if(te instanceof TileTransportRing){

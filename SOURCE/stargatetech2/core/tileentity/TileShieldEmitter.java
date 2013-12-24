@@ -18,7 +18,7 @@ import stargatetech2.core.ModuleCore;
 import stargatetech2.core.block.BlockShield;
 import stargatetech2.core.block.BlockShieldEmitter;
 import stargatetech2.core.util.IonizedParticles;
-import stargatetech2.core.util.ShieldRegistry;
+import stargatetech2.core.util.WeakBlockRegistry;
 
 public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, ITileShieldEmitter {
 	private static final int MAX_EMITTER_RANGE = 5;
@@ -122,7 +122,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 			pos = pos.offset(dir);
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			int meta = worldObj.getBlockMetadata(pos.x, pos.y, pos.z);
-			if(ShieldRegistry.isRemovable(bid, meta) || worldObj.isAirBlock(pos.x, pos.y, pos.z)){
+			if(WeakBlockRegistry.isRemovable(bid, meta) || worldObj.isAirBlock(pos.x, pos.y, pos.z)){
 				worldObj.setBlock(pos.x, pos.y, pos.z, ModuleCore.shield.blockID, 0, 2);
 				TileEntity te = worldObj.getBlockTileEntity(pos.x,  pos.y, pos.z);
 				if(te instanceof TileShield){
@@ -159,7 +159,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 			int meta = worldObj.getBlockMetadata(pos.x, pos.y, pos.z);
 			Block block = Block.blocksList[bid];
 			boolean ignorable = block instanceof IShieldable || block instanceof BlockShield;
-			if(ShieldRegistry.isRemovable(bid, meta) || worldObj.isAirBlock(pos.x, pos.y, pos.z) || ignorable){
+			if(WeakBlockRegistry.isRemovable(bid, meta) || worldObj.isAirBlock(pos.x, pos.y, pos.z) || ignorable){
 				continue;
 			}else if(Block.blocksList[bid] instanceof BlockShieldEmitter){
 				TileEntity te = worldObj.getBlockTileEntity(pos.x, pos.y, pos.z);

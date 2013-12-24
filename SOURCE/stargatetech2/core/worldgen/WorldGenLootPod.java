@@ -3,12 +3,11 @@ package stargatetech2.core.worldgen;
 import java.util.ArrayList;
 import java.util.Random;
 
-import stargatetech2.core.worldgen.lists.BuildList.BuildMaterial;
-import stargatetech2.core.worldgen.lists.LootPodBuildList;
-
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
+import stargatetech2.core.worldgen.lists.BuildList.BuildMaterial;
+import stargatetech2.core.worldgen.lists.LootPodBuildList;
 
 public class WorldGenLootPod {
 	private static final ArrayList<Integer> VALID_GROUND = new ArrayList<Integer>();

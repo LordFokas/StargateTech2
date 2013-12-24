@@ -6,7 +6,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import stargatetech2.api.shields.ShieldPermissions;
-import stargatetech2.common.base.BaseContainer;
 import stargatetech2.common.base.BaseGUI;
 import stargatetech2.common.base.BaseGauge.TankGauge;
 import stargatetech2.common.reference.BlockReference;

@@ -4,7 +4,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import stargatetech2.common.reference.ModReference;
-
 import cpw.mods.fml.common.FMLLog;
 
 public class StargateLogger {

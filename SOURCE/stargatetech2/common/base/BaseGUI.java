@@ -2,7 +2,6 @@ package stargatetech2.common.base;
 
 import java.util.ArrayList;
 
-import net.java.games.input.Keyboard;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 

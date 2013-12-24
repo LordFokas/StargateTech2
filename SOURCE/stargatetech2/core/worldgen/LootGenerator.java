@@ -3,13 +3,13 @@ package stargatetech2.core.worldgen;
 import java.util.ArrayList;
 import java.util.Random;
 
-import stargatetech2.core.ModuleCore;
-import stargatetech2.core.item.ItemNaquadah;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
+import stargatetech2.core.ModuleCore;
+import stargatetech2.core.item.ItemNaquadah;
 
 public class LootGenerator {
 	public static final ArrayList<ItemStack> LOOT_COMMON, LOOT_RARE, LOOT_EPIC;

@@ -1,19 +1,16 @@
 package stargatetech2.core.tileentity;
 
-import buildcraft.api.power.IPowerEmitter;
-import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerHandler;
-import buildcraft.api.power.PowerHandler.PerditionCalculator;
-import buildcraft.api.power.PowerHandler.PowerReceiver;
-import buildcraft.api.power.PowerHandler.Type;
-import buildcraft.api.transport.IPipeConnection;
-import buildcraft.api.transport.IPipeTile.PipeType;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.machine.NearZeroPerdition;
+import buildcraft.api.power.IPowerEmitter;
+import buildcraft.api.power.IPowerReceptor;
+import buildcraft.api.power.PowerHandler;
+import buildcraft.api.power.PowerHandler.PowerReceiver;
+import buildcraft.api.power.PowerHandler.Type;
 
 public class TileNaquadahCapacitor extends BaseTileEntity implements IPowerReceptor, IPowerEmitter{
 	public static final Settings[] TIERS = new Settings[]{

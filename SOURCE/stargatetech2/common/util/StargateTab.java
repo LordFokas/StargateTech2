@@ -1,10 +1,8 @@
 package stargatetech2.common.util;
 
-import stargatetech2.common.reference.ModReference;
-import stargatetech2.core.ModuleCore;
-import stargatetech2.core.item.ItemNaquadah;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import stargatetech2.core.ModuleCore;
 
 public class StargateTab extends CreativeTabs {
 	public static final StargateTab instance = new StargateTab();
@@ -14,11 +12,6 @@ public class StargateTab extends CreativeTabs {
 		super("StargateTech 2");
 	}
 	
-	/*@Override
-	public int getTabIconItemIndex(){
-		return iconID;
-	}*/
-	
 	@Override
 	public String getTranslatedTabLabel(){
 		return "StargateTech 2";
@@ -26,6 +19,6 @@ public class StargateTab extends CreativeTabs {
 	
 	@Override
 	public ItemStack getIconItemStack(){
-		return new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.INGOT.ID);
+		return new ItemStack(ModuleCore.stargate, 1);
 	}
 }

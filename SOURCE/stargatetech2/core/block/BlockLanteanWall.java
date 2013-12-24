@@ -2,14 +2,12 @@ package stargatetech2.core.block;
 
 import java.util.List;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
 import stargatetech2.common.base.BaseBlock;
 import stargatetech2.common.reference.BlockReference;
@@ -18,6 +16,7 @@ import stargatetech2.common.util.Color;
 import stargatetech2.common.util.IconRegistry;
 import stargatetech2.core.item.ItemBlockLanteanWall;
 import stargatetech2.core.rendering.RenderLanteanWall;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockLanteanWall extends BaseBlock {
 	

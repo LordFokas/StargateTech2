@@ -1,16 +1,12 @@
 package stargatetech2.common.util;
 
 import java.util.HashMap;
-import java.util.Map;
 
-import stargatetech2.common.reference.BlockReference;
-import stargatetech2.common.reference.ConfigReference;
-import stargatetech2.common.reference.ItemReference;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ConfigCategory;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
+import stargatetech2.common.reference.ConfigReference;
 
 public class Config {
 	public Configuration cfg;

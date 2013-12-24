@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import net.minecraft.util.ResourceLocation;
 
 public class TextureReference {
-	public static final ArrayList<String> TERRAIN_TEXTURES = new ArrayList<String>(11);
-	public static final ArrayList<String> ITEM_TEXTURES = new ArrayList<String>(3);
+	public static final ArrayList<String> TERRAIN_TEXTURES = new ArrayList<String>();
+	public static final ArrayList<String> ITEM_TEXTURES = new ArrayList<String>();
 	
 	//### BLOCKS ###
 	public static final String IONIZED_PARTICLES = "ionizedParticles";
@@ -25,6 +25,7 @@ public class TextureReference {
 	public static final String GLOW_NAQUADAH_ORE = "glowNaquadahOre";
 	
 	public static final String LANTEAN_BLOCK_CLEAN = "lanteanBlockClean";
+	public static final String STARGATE_BASE_TOP = "stargateBaseTop";
 	
 	
 	
@@ -50,6 +51,7 @@ public class TextureReference {
 		TERRAIN_TEXTURES.add(FACE_NAQUADAH_ORE);
 		TERRAIN_TEXTURES.add(GLOW_NAQUADAH_ORE);
 		TERRAIN_TEXTURES.add(LANTEAN_BLOCK_CLEAN);
+		TERRAIN_TEXTURES.add(STARGATE_BASE_TOP);
 		
 		ITEM_TEXTURES.add(NAQUADAH_POWER_CRYSTAL + "_1");
 		ITEM_TEXTURES.add(NAQUADAH_POWER_CRYSTAL + "_2");
@@ -59,7 +61,11 @@ public class TextureReference {
 	public static final ResourceLocation GUI_SHIELD_EMITTER = getTexture("gui/shieldEmitter.png");
 	public static final ResourceLocation GUI_PARTICLE_IONIZER = getTexture("gui/particleIonizer.png");
 	public static final ResourceLocation GUI_NAQUADAH_CAPACITOR = getTexture("gui/naquadahCapacitor.png");
+	
 	public static final ResourceLocation TESR_TRANSPORT_RING = getTexture("special/transportRing.png");
+	public static final ResourceLocation TESR_STARGATE = getTexture("special/stargate.png");
+	public static final ResourceLocation CHEVRONS = getTexture("special/chevrons.png");
+	public static final ResourceLocation SYMBOLS = getTexture("special/symbols.png");
 	
 	public static ResourceLocation getTexture(String texture){
 		return new ResourceLocation(ModReference.MOD_ID + ":" + "textures/" + texture);

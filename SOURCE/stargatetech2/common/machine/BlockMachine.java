@@ -1,6 +1,5 @@
 package stargatetech2.common.machine;
 
-import buildcraft.api.tools.IToolWrench;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -10,16 +9,16 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import stargatetech2.StargateTech2;
 import stargatetech2.api.ITabletAccess;
 import stargatetech2.common.base.BaseBlockContainer;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.packet.PacketOpenGUI;
 import stargatetech2.common.reference.TextureReference;
+import stargatetech2.common.util.GUIHandler.Screen;
 import stargatetech2.common.util.Helper;
 import stargatetech2.common.util.IconRegistry;
-import stargatetech2.common.util.GUIHandler.Screen;
 import stargatetech2.core.tileentity.TileShieldEmitter;
+import buildcraft.api.tools.IToolWrench;
 
 public abstract class BlockMachine extends BaseBlockContainer implements ITabletAccess{
 	private Screen screen;

@@ -1,12 +1,10 @@
 package stargatetech2.core.gui;
 
-import buildcraft.api.power.PowerHandler.PowerReceiver;
-import stargatetech2.common.base.BaseContainer;
 import stargatetech2.common.base.BaseGUI;
-import stargatetech2.common.base.BaseGauge.PowerGauge;
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.common.reference.TextureReference;
 import stargatetech2.core.tileentity.TileNaquadahCapacitor;
+import buildcraft.api.power.PowerHandler.PowerReceiver;
 
 public class GUINaquadahCapacitor extends BaseGUI {
 	private TileNaquadahCapacitor naquadahCapacitor;

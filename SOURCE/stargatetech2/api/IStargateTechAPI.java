@@ -2,6 +2,7 @@ package stargatetech2.api;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fluids.Fluid;
+import stargatetech2.api.stargate.IStargateNetwork;
 
 public interface IStargateTechAPI {
 	
@@ -31,4 +32,9 @@ public interface IStargateTechAPI {
 	 * @return The creative inventory tab used by StargateTech 2.
 	 */
 	public CreativeTabs getStargateTab();
+	
+	/**
+	 * @return the IStargateNetwork singleton instance.
+	 */
+	public IStargateNetwork getStargateNetwork();
 }

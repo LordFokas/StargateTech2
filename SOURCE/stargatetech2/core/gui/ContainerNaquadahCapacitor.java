@@ -1,9 +1,9 @@
 package stargatetech2.core.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import stargatetech2.common.base.BaseContainer;
 import stargatetech2.core.tileentity.TileNaquadahCapacitor;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ContainerNaquadahCapacitor extends BaseContainer {
 	public TileNaquadahCapacitor nc;

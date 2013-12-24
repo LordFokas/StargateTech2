@@ -1,9 +1,9 @@
 package stargatetech2.core.item;
 
-import stargatetech2.common.util.Color;
-import stargatetech2.core.ModuleCore;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import stargatetech2.common.util.Color;
+import stargatetech2.core.ModuleCore;
 
 public class ItemBlockLanteanWall extends ItemBlock {
 

@@ -18,14 +18,19 @@ import stargatetech2.core.block.BlockNaquadahRail;
 import stargatetech2.core.block.BlockParticleIonizer;
 import stargatetech2.core.block.BlockShield;
 import stargatetech2.core.block.BlockShieldEmitter;
+import stargatetech2.core.block.BlockStargate;
 import stargatetech2.core.block.BlockTransportRing;
 import stargatetech2.core.item.ItemNaquadah;
 import stargatetech2.core.item.ItemPersonalShield;
 import stargatetech2.core.item.ItemTabletPC;
+import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.tileentity.TileNaquadahCapacitor;
 import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.tileentity.TileShield;
 import stargatetech2.core.tileentity.TileShieldEmitter;
+import stargatetech2.core.tileentity.TileStargate;
+import stargatetech2.core.tileentity.TileStargateBase;
+import stargatetech2.core.tileentity.TileStargateRing;
 import stargatetech2.core.tileentity.TileTransportRing;
 import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.IonizedParticles;
@@ -44,6 +49,7 @@ public final class ModuleCore implements IContentModule{
 	public static BlockInvisible invisible;
 	public static BlockLanteanWall lanteanWall;
 	public static BlockNaquadahCapacitor naquadahCapacitor;
+	public static BlockStargate stargate;
 	
 	public static ItemTabletPC tabletPC;
 	public static ItemPersonalShield personalShield;
@@ -60,6 +66,7 @@ public final class ModuleCore implements IContentModule{
 		invisible = new BlockInvisible();
 		lanteanWall = new BlockLanteanWall();
 		naquadahCapacitor = new BlockNaquadahCapacitor();
+		stargate = new BlockStargate();
 		
 		tabletPC = new ItemTabletPC();
 		personalShield = new ItemPersonalShield();
@@ -79,12 +86,16 @@ public final class ModuleCore implements IContentModule{
 		invisible.registerBlock();
 		lanteanWall.registerBlock();
 		naquadahCapacitor.registerBlock();
+		stargate.registerBlock();
 		
 		GameRegistry.registerTileEntity(TileShieldEmitter.class, TileEntityReference.TILE_SHIELD_EMITTER);
 		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);
 		GameRegistry.registerTileEntity(TileShield.class, TileEntityReference.TILE_SHIELD);
 		GameRegistry.registerTileEntity(TileTransportRing.class, TileEntityReference.TILE_TRANSPORT_RING);
 		GameRegistry.registerTileEntity(TileNaquadahCapacitor.class, TileEntityReference.TILE_NAQUADAH_CAPACITOR);
+		GameRegistry.registerTileEntity(TileStargate.class, TileEntityReference.TILE_STARGATE);
+		GameRegistry.registerTileEntity(TileStargateRing.class, TileEntityReference.TILE_STARGATE_RING);
+		GameRegistry.registerTileEntity(TileStargateBase.class, TileEntityReference.TILE_STARGATE_BASE);
 	}
 
 	@Override
@@ -101,6 +112,7 @@ public final class ModuleCore implements IContentModule{
 		for(int i = 0; i < 16; i++)
 			LanguageRegistry.addName(new ItemStack(lanteanWall, 1, i), Color.COLORS[i].name + " Lantean Wall");
 		LanguageRegistry.addName(naquadahCapacitor, "Naquadah Capacitor");
+		LanguageRegistry.addName(stargate, "Stargate");
 		
 		LanguageRegistry.addName(tabletPC, "Tablet PC");
 		LanguageRegistry.addName(personalShield, "Personal Shield");
@@ -117,8 +129,13 @@ public final class ModuleCore implements IContentModule{
 		
 	}
 
-	@Override public void onServerStart(){}
-	@Override public void onServerStop(){}
+	@Override public void onServerStart(){
+		StargateNetwork.instance().load();
+	}
+	
+	@Override public void onServerStop(){
+		StargateNetwork.instance().unload();
+	}
 
 	@Override
 	public String getModuleName() {
