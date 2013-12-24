@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.api.stargate.ITileStargateBase;
 import stargatetech2.common.base.BaseBlockContainer;
 import stargatetech2.common.base.BaseTileEntity;
@@ -95,5 +96,10 @@ public class BlockStargate extends BaseBlockContainer{
 	@Override
 	public void registerBlock(){
 		GameRegistry.registerBlock(this, ItemBlockStargate.class, getUnlocalizedName());
+	}
+	
+	@Override
+	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side){
+		return world.getBlockMetadata(x, y, z) != META_RING;
 	}
 }
