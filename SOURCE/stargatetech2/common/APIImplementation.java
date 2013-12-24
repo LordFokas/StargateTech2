@@ -13,7 +13,7 @@ public final class APIImplementation extends StargateTechAPI {
 	private static final int VERSION_MAJOR	= 0;
 	private static final int VERSION_MINOR	= 3;
 	private static final int VERSION_MNT	= 0;
-	private static final int VERSION_REV	= 8;
+	private static final int VERSION_REV	= 9;
 	private static final String API_STATUS	= "dev";
 	
 	public void enableExternalAccess(){
