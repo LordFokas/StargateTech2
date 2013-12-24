@@ -1,6 +1,7 @@
 package stargatetech2.common.base;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,11 @@ public class BaseBlock extends Block{
 	}
 	
 	public BaseBlock(String uName, boolean breakable, boolean requiresTool) {
-		super(StargateTech2.instance.config.getBlockID(uName), requiresTool ? MaterialNaquadah.unbreakable : MaterialNaquadah.breakable);
+		this(uName, breakable, requiresTool ? MaterialNaquadah.unbreakable : MaterialNaquadah.breakable);
+	}
+	
+	public BaseBlock(String uName, boolean breakable, Material material){
+		super(StargateTech2.instance.config.getBlockID(uName), material);
 		this.setUnlocalizedName(uName);
 		this.setTextureName(ModReference.MOD_ID + ":" + uName);
 		if(!breakable){
