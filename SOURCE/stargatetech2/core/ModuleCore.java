@@ -96,6 +96,8 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.registerTileEntity(TileStargate.class, TileEntityReference.TILE_STARGATE);
 		GameRegistry.registerTileEntity(TileStargateRing.class, TileEntityReference.TILE_STARGATE_RING);
 		GameRegistry.registerTileEntity(TileStargateBase.class, TileEntityReference.TILE_STARGATE_BASE);
+		
+		TileShieldEmitter.MAX_EMITTER_RANGE = StargateTech2.instance.config.getShieldEmitterRange();
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import stargatetech2.StargateTech2;
 import stargatetech2.api.shields.IShieldable;
 import stargatetech2.api.shields.ITileShieldEmitter;
 import stargatetech2.api.shields.ShieldPermissions;
@@ -21,7 +22,7 @@ import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.WeakBlockRegistry;
 
 public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, ITileShieldEmitter {
-	private static final int MAX_EMITTER_RANGE = 5;
+	public static int MAX_EMITTER_RANGE;
 	
 	// NBT DATA
 	private TileShieldEmitter pair = null;

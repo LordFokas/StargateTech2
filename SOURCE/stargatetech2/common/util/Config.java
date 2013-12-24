@@ -67,4 +67,12 @@ public class Config {
 		}
 		return cfg.get(ConfigReference.KEY_IDS_ITEMS, name, itemIDs).getInt();
 	}
+	
+	public int getShieldEmitterRange(){
+		int range = cfg.get(ConfigReference.KEY_CFG_SERVER, "shieldEmitterRange", 5).getInt();
+		if(range < 3) range = 3;
+		if(range > 12)range = 12;
+		cfg.getCategory(ConfigReference.KEY_CFG_SERVER).get("shieldEmitterRange").set(range);
+		return range;
+	}
 }
