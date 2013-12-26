@@ -26,12 +26,24 @@ public class RenderNaquadahOre extends BaseISBRH {
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.setColorOpaque_I(0xFFFFFF);
 		tessellator.setBrightness(220);
-		renderer.renderFaceXNeg(block, x, y, z, glow);
-		renderer.renderFaceYNeg(block, x, y, z, glow);
-		renderer.renderFaceZNeg(block, x, y, z, glow);
-		renderer.renderFaceXPos(block, x, y, z, glow);
-		renderer.renderFaceYPos(block, x, y, z, glow);
-		renderer.renderFaceZPos(block, x, y, z, glow);	
+		if(block.shouldSideBeRendered(world, x - 1, y, z, 4) || renderer.renderAllFaces){
+			renderer.renderFaceXNeg(block, x, y, z, glow);
+		}
+		if(block.shouldSideBeRendered(world, x, y - 1, z, 0) || renderer.renderAllFaces){
+			renderer.renderFaceYNeg(block, x, y, z, glow);
+		}
+		if(block.shouldSideBeRendered(world, x, y, z - 1, 2) || renderer.renderAllFaces){
+			renderer.renderFaceZNeg(block, x, y, z, glow);
+		}
+		if(block.shouldSideBeRendered(world, x + 1, y, z, 5) || renderer.renderAllFaces){
+			renderer.renderFaceXPos(block, x, y, z, glow);
+		}
+		if(block.shouldSideBeRendered(world, x, y + 1, z, 1) || renderer.renderAllFaces){
+			renderer.renderFaceYPos(block, x, y, z, glow);
+		}
+		if(block.shouldSideBeRendered(world, x, y, z + 1, 3) || renderer.renderAllFaces){
+			renderer.renderFaceZPos(block, x, y, z, glow);
+		}
 		return true;
 	}
 }
