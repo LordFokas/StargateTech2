@@ -23,7 +23,7 @@ import buildcraft.api.power.PowerHandler.PowerReceiver;
 import buildcraft.api.power.PowerHandler.Type;
 
 public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler, IPowerReceptor, IInventory{
-	private FluidTank tank = new FluidTank(12000);
+	private FluidTank tank = new FluidTank(4000);
 	private ItemStack[] inventory = new ItemStack[9];
 	private PowerHandler powerHandler = new PowerHandler(this, Type.MACHINE);
 	public ItemStack consuming = null;
@@ -157,9 +157,7 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	@Override
 	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
 		if(resource.fluidID == IonizedParticles.fluid.getID()){
-			FluidStack fs = tank.drain(resource.amount, doDrain);
-			if(doDrain) updateClients();
-			return fs;
+			return tank.drain(resource.amount, doDrain);
 		}else{
 			return null;
 		}
@@ -167,9 +165,7 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	
 	@Override
 	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		FluidStack fs = tank.drain(maxDrain, doDrain);
-		if(doDrain) updateClients();
-		return fs;
+		return tank.drain(maxDrain, doDrain);
 	}
 	
 	@Override

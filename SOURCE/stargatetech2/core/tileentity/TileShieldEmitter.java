@@ -26,7 +26,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	
 	// NBT DATA
 	private TileShieldEmitter pair = null;
-	private FluidTank tank = new FluidTank(64000);
+	private FluidTank tank = new FluidTank(2000);
 	private ShieldPermissions permissions = ShieldPermissions.getDefault();
 	private boolean shieldOn = false;
 	private int ionCost = 1;

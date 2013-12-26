@@ -138,7 +138,7 @@ public class GUIShieldEmitter extends BaseGUI {
 		addClickHandler(remove2, 101, 55, 8, 8);
 		addClickHandler(remove3, 101, 67, 8, 8);
 		addClickHandler(remove4, 101, 79, 8, 8);
-		ionTank = new TankGauge(8, 28, 64000);
+		ionTank = new TankGauge(8, 28, shieldEmitter.getTankInfo(null)[0].capacity);
 		addGauge(ionTank);
 	}
 	
