@@ -113,7 +113,10 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	
 	@Override
 	public Address getAddress(){
-		return StargateNetwork.instance().getMyAddress(worldObj, xCoord, yCoord, zCoord);
+		if(worldObj.isRemote)
+			return null; // this is probably temporary.
+		else
+			return StargateNetwork.instance().getMyAddress(worldObj, xCoord, yCoord, zCoord);
 	}
 	
 	@Override
