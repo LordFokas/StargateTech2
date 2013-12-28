@@ -6,8 +6,6 @@ import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.block.BlockStargate;
 import stargatetech2.core.tileentity.TileStargateRing;
-import stargatetech2.core.worldgen.lists.BuildList.BuildBlock;
-import stargatetech2.core.worldgen.lists.BuildList.BuildMaterial;
 
 public class StargateBuildList extends BuildList {
 	private static final BuildMaterial[] MATERIAL = new BuildMaterial[]{

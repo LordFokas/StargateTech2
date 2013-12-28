@@ -9,7 +9,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import stargatetech2.StargateTech2;
 import stargatetech2.api.shields.IShieldable;
 import stargatetech2.api.shields.ITileShieldEmitter;
 import stargatetech2.api.shields.ShieldPermissions;

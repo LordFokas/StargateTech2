@@ -1,14 +1,11 @@
 package stargatetech2.core.tileentity;
 
-import java.util.ArrayList;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargateBase;
 import stargatetech2.common.base.BaseTileEntity;
-import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.network.stargate.Wormhole;

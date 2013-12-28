@@ -2,6 +2,7 @@ package stargatetech2.common;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fluids.Fluid;
+import stargatetech2.api.IFactory;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.common.util.StargateLogger;
@@ -10,26 +11,11 @@ import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.util.IonizedParticles;
 
 public final class APIImplementation extends StargateTechAPI {
-	private static final int VERSION_MAJOR	= 0;
-	private static final int VERSION_MINOR	= 3;
-	private static final int VERSION_MNT	= 0;
-	private static final int VERSION_REV	= 9;
-	private static final String API_STATUS	= "dev";
+	private final IFactory factory = new Factory();
 	
 	public void enableExternalAccess(){
 		StargateLogger.info("Enabling StargateTech2 API.");
-		StargateLogger.info("API Version: " + getVersionString());
 		apiInstance = this;
-	}
-	
-	@Override
-	public String getVersionString() {
-		return VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_MNT + "." + VERSION_REV + "-" + API_STATUS;
-	}
-
-	@Override
-	public int[] getVersionNumbers() {
-		return new int[]{VERSION_MAJOR, VERSION_MINOR, VERSION_MNT, VERSION_REV};
 	}
 
 	@Override
@@ -45,5 +31,10 @@ public final class APIImplementation extends StargateTechAPI {
 	@Override
 	public IStargateNetwork getStargateNetwork() {
 		return StargateNetwork.instance();
+	}
+
+	@Override
+	public IFactory getFactory() {
+		return factory;
 	}
 }

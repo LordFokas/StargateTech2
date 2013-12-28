@@ -1,6 +1,5 @@
 package stargatetech2.core.block;
 
-import buildcraft.api.tools.IToolWrench;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,6 +18,7 @@ import stargatetech2.core.rendering.RenderStargateBlock;
 import stargatetech2.core.tileentity.TileStargate;
 import stargatetech2.core.tileentity.TileStargateBase;
 import stargatetech2.core.tileentity.TileStargateRing;
+import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockStargate extends BaseBlockContainer{

@@ -2,11 +2,9 @@ package stargatetech2.core.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargate;
 import stargatetech2.common.base.BaseTileEntity;
-import stargatetech2.common.util.Vec3Int;
 
 public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 	protected int sgx, sgy, sgz;

@@ -5,24 +5,6 @@ import net.minecraftforge.fluids.Fluid;
 import stargatetech2.api.stargate.IStargateNetwork;
 
 public interface IStargateTechAPI {
-	
-	/**
-	 * @return A version string in the following format:<br>
-	 * {Major}.{Minor}.{Maintenance}.{RevisionNumber}-{Status}
-	 */
-	public String getVersionString();
-	
-	/**
-	 * Array Indexes:<br>
-	 * 0 - Major<br>
-	 * 1 - Minor<br>
-	 * 2 - Maintenance (Incremented on Bug fixes)<br>
-	 * 3 - Revision Number (Incremented every time there is a change)
-	 * 
-	 * @return An array with the 4 version numbers.
-	 */
-	public int[] getVersionNumbers();
-	
 	/**
 	 * @return The Fluid instance corresponding to Ionized Particles.
 	 */
@@ -34,7 +16,12 @@ public interface IStargateTechAPI {
 	public CreativeTabs getStargateTab();
 	
 	/**
-	 * @return the IStargateNetwork singleton instance.
+	 * @return The IStargateNetwork singleton instance.
 	 */
 	public IStargateNetwork getStargateNetwork();
+	
+	/**
+	 * @return The current IFactory instance.
+	 */
+	public IFactory getFactory();
 }
