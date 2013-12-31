@@ -3,10 +3,15 @@ package stargatetech2.core.tileentity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import stargatetech2.api.StargateTechAPI;
+import stargatetech2.api.bus.IBusDevice;
+import stargatetech2.api.bus.IBusDriver;
+import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargateBase;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.core.ModuleCore;
+import stargatetech2.core.network.bus.BusDriver;
 import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.network.stargate.Wormhole;
 import stargatetech2.core.packet.PacketWormhole;
@@ -14,13 +19,18 @@ import stargatetech2.core.worldgen.lists.StargateBuildList;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileStargate extends BaseTileEntity implements ITileStargateBase{
+public class TileStargate extends BaseTileEntity implements ITileStargateBase, IBusDevice{
 	@ServerLogic private boolean isInvalidating = false;
 	@ServerLogic private Wormhole wormhole = null;
 	@ServerLogic private boolean isSource = false;
 	@ServerLogic private boolean useXBuilder;
 	
 	@ClientLogic private RenderData renderData = new RenderData();
+	
+	private IBusDriver networkDriver = new BusDriver();
+	private IBusInterface[] interfaces = new IBusInterface[]{
+			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
+	};
 	
 	@ClientLogic
 	public static class RenderData{
@@ -185,5 +195,10 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase{
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		nbt.setBoolean("useXBuilder", useXBuilder);
+	}
+
+	@Override
+	public IBusInterface[] getInterfaces(int side) {
+		return side == 1 ? null : interfaces;
 	}
 }

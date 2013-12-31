@@ -14,9 +14,10 @@ public interface IBusDriver {
 	 * 
 	 * @param sender The Bus address of the packet's sender.
 	 * @param protocolID The unique ID of this packet type.
+	 * @param hasLIP whether the packet can be converted to the LIP format or not.
 	 * @return Whether the device will accept this packet or not.
 	 */
-	public boolean canHandlePacket(short sender, int protocolID);
+	public boolean canHandlePacket(short sender, int protocolID, boolean hasLIP);
 	
 	/**
 	 * Called by the network to have this device handle a packet.

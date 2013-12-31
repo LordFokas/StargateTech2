@@ -10,6 +10,7 @@ import stargatetech2.IContentModule.Module;
 import stargatetech2.common.base.BaseISBRH;
 import stargatetech2.common.machine.RenderBlockMachine;
 import stargatetech2.common.util.GUIHandlerClient;
+import stargatetech2.core.rendering.RenderBusCable;
 import stargatetech2.core.rendering.RenderLanteanWall;
 import stargatetech2.core.rendering.RenderNaquadahOre;
 import stargatetech2.core.rendering.RenderNaquadahRail;
@@ -38,6 +39,7 @@ public class ProxyClient implements ISidedProxy{
 				registerRenderer(RenderNaquadahOre.instance());
 				registerRenderer(RenderLanteanWall.instance());
 				registerRenderer(RenderStargateBlock.instance());
+				registerRenderer(RenderBusCable.instance());
 				ClientRegistry.bindTileEntitySpecialRenderer(TileTransportRing.class, new RenderTransportRing());
 				ClientRegistry.bindTileEntitySpecialRenderer(TileStargate.class, new RenderStargateTile());
 				break;

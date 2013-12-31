@@ -11,11 +11,16 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.StargateTech2;
+import stargatetech2.api.StargateTechAPI;
+import stargatetech2.api.bus.IBusDevice;
+import stargatetech2.api.bus.IBusDriver;
+import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
+import stargatetech2.core.network.bus.BusDriver;
 
-public class TileTransportRing extends BaseTileEntity {
+public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	@ClientLogic private static Vec3Int LAST_IN_RANGE;
 	@ClientLogic public final static int RING_MOV = 5;
 	@ClientLogic public final static int PAUSE = 30;
@@ -33,6 +38,10 @@ public class TileTransportRing extends BaseTileEntity {
 	private int teleportCooldown = 0;
 	private boolean isTeleporting = false;
 	private int teleportCountdown = 0;
+	private IBusDriver networkDriver = new BusDriver();
+	private IBusInterface[] interfaces = new IBusInterface[]{
+			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
+	};
 	
 	@ClientLogic
 	public static TileTransportRing getRingsInRange(World world){
@@ -329,5 +338,10 @@ public class TileTransportRing extends BaseTileEntity {
 		RING_BLOCKS.add(new Vec3Int(-1, 4,  2));
 		RING_BLOCKS.add(new Vec3Int( 0, 4,  2));
 		RING_BLOCKS.add(new Vec3Int( 1, 4,  2));
+	}
+
+	@Override
+	public IBusInterface[] getInterfaces(int side) {
+		return interfaces;
 	}
 }

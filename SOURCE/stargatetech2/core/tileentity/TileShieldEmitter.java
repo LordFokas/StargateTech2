@@ -9,6 +9,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import stargatetech2.api.StargateTechAPI;
+import stargatetech2.api.bus.IBusDevice;
+import stargatetech2.api.bus.IBusDriver;
+import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.shields.IShieldable;
 import stargatetech2.api.shields.ITileShieldEmitter;
 import stargatetech2.api.shields.ShieldPermissions;
@@ -17,10 +21,11 @@ import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.block.BlockShield;
 import stargatetech2.core.block.BlockShieldEmitter;
+import stargatetech2.core.network.bus.BusDriver;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.WeakBlockRegistry;
 
-public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, ITileShieldEmitter {
+public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, ITileShieldEmitter, IBusDevice {
 	public static int MAX_EMITTER_RANGE;
 	
 	// NBT DATA
@@ -33,6 +38,10 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	
 	// NORMAL FIELDS
 	private Vec3Int nbtPair;
+	private IBusDriver networkDriver = new BusDriver();
+	private IBusInterface[] interfaces = new IBusInterface[]{
+			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
+	};
 	
 	@Override
 	public void invalidate(){
@@ -307,5 +316,10 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
 		return new FluidTankInfo[]{tank.getInfo()};
+	}
+
+	@Override
+	public IBusInterface[] getInterfaces(int side) {
+		return interfaces;
 	}
 }

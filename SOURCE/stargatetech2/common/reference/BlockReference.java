@@ -15,6 +15,7 @@ public class BlockReference {
 	public static final String LANTEAN_WALL = "lanteanWall";
 	public static final String NAQUADAH_CAPACITOR = "naquadahCapacitor";
 	public static final String STARGATE = "stargate";
+	public static final String BUS_CABLE = "busCable";
 	
 	static{
 		ALL_BLOCKS.add(SHIELD_EMITTER);
@@ -27,5 +28,6 @@ public class BlockReference {
 		ALL_BLOCKS.add(LANTEAN_WALL);
 		ALL_BLOCKS.add(NAQUADAH_CAPACITOR);
 		ALL_BLOCKS.add(STARGATE);
+		ALL_BLOCKS.add(BUS_CABLE);
 	}
 }

@@ -12,8 +12,13 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import stargatetech2.api.StargateTechAPI;
+import stargatetech2.api.bus.IBusDevice;
+import stargatetech2.api.bus.IBusDriver;
+import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.machine.NearZeroPerdition;
+import stargatetech2.core.network.bus.BusDriver;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ParticleIonizerRecipes;
 import stargatetech2.core.util.ParticleIonizerRecipes.Recipe;
@@ -22,14 +27,17 @@ import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
 import buildcraft.api.power.PowerHandler.Type;
 
-public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler, IPowerReceptor, IInventory{
+public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler, IPowerReceptor, IInventory, IBusDevice{
 	private FluidTank tank = new FluidTank(4000);
 	private ItemStack[] inventory = new ItemStack[9];
 	private PowerHandler powerHandler = new PowerHandler(this, Type.MACHINE);
 	public ItemStack consuming = null;
 	public int workTicks;
-	
 	public Recipe recipe;
+	private IBusDriver networkDriver = new BusDriver();
+	private IBusInterface[] interfaces = new IBusInterface[]{
+			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
+	};
 	
 	public TileParticleIonizer(){
 		powerHandler.configure(50, 100, 5, 16000);
@@ -231,4 +239,9 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	@Override public int getSizeInventory(){ return inventory.length; }
 	@Override public void openChest(){}
 	@Override public void closeChest(){}
+
+	@Override
+	public IBusInterface[] getInterfaces(int side) {
+		return interfaces;
+	}
 }

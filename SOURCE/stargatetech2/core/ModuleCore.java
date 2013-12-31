@@ -10,6 +10,7 @@ import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
 import stargatetech2.common.reference.TileEntityReference;
 import stargatetech2.common.util.Color;
+import stargatetech2.core.block.BlockBusCable;
 import stargatetech2.core.block.BlockInvisible;
 import stargatetech2.core.block.BlockLanteanWall;
 import stargatetech2.core.block.BlockNaquadahCapacitor;
@@ -50,6 +51,7 @@ public final class ModuleCore implements IContentModule{
 	public static BlockLanteanWall lanteanWall;
 	public static BlockNaquadahCapacitor naquadahCapacitor;
 	public static BlockStargate stargate;
+	public static BlockBusCable busCable;
 	
 	public static ItemTabletPC tabletPC;
 	public static ItemPersonalShield personalShield;
@@ -67,6 +69,7 @@ public final class ModuleCore implements IContentModule{
 		lanteanWall = new BlockLanteanWall();
 		naquadahCapacitor = new BlockNaquadahCapacitor();
 		stargate = new BlockStargate();
+		busCable = new BlockBusCable();
 		
 		tabletPC = new ItemTabletPC();
 		personalShield = new ItemPersonalShield();
@@ -87,6 +90,7 @@ public final class ModuleCore implements IContentModule{
 		lanteanWall.registerBlock();
 		naquadahCapacitor.registerBlock();
 		stargate.registerBlock();
+		busCable.registerBlock();
 		
 		GameRegistry.registerTileEntity(TileShieldEmitter.class, TileEntityReference.TILE_SHIELD_EMITTER);
 		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);
@@ -115,6 +119,7 @@ public final class ModuleCore implements IContentModule{
 			LanguageRegistry.addName(new ItemStack(lanteanWall, 1, i), Color.COLORS[i].name + " Lantean Wall");
 		LanguageRegistry.addName(naquadahCapacitor, "Naquadah Capacitor");
 		LanguageRegistry.addName(stargate, "Stargate");
+		LanguageRegistry.addName(busCable, "Abstract Bus Cable");
 		
 		LanguageRegistry.addName(tabletPC, "Tablet PC");
 		LanguageRegistry.addName(personalShield, "Personal Shield");

@@ -50,7 +50,7 @@ public final class BusInterface implements IBusInterface{
 		// if addresses match      or it's a broadcast      or we're sniffing
 		if(sendNet  == addrNet  || sendNet  == BROADCAST || addrNet  == PROMISCUOUS)
 		if(sendHost == addrHost || sendHost == BROADCAST || addrHost == PROMISCUOUS){
-			if(driver.canHandlePacket(sender, packet.getProtocolID())){
+			if(driver.canHandlePacket(sender, packet.getProtocolID(), packet.hasPlainText())){
 				driver.handlePacket(packet);
 			}
 		}

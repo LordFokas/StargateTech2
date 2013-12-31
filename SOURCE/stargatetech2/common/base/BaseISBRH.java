@@ -37,11 +37,10 @@ public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 	
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer){
-		setBlockBoundsForItemRender(block, metadata);
+		block.setBlockBoundsForItemRender();
 		renderInventoryCuboid(block, metadata, renderer);
 	}
 	
-	protected void setBlockBoundsForItemRender(Block block, int metadata){}
 	protected Color getRenderColor(int metadata){ return null; }
 
 	@Override
