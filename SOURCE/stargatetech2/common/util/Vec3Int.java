@@ -34,4 +34,13 @@ public class Vec3Int {
 	public Vec3Int offset(ForgeDirection fd){
 		return new Vec3Int(x + fd.offsetX, y + fd.offsetY, z + fd.offsetZ);
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof Vec3Int){
+			Vec3Int v = (Vec3Int) o;
+			return x == v.x && y == v.y && z == v.z;
+		}
+		return false;
+	}
 }

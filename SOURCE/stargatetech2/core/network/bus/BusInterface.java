@@ -21,6 +21,14 @@ public final class BusInterface implements IBusInterface{
 	public void updateHardwareState() {
 		// TODO: remap network data.
 	}
+	
+	public void clearAddressingTable(){
+		// TODO: everything
+	}
+	
+	public void addUnknownAddresses(){
+		// TODO: everything
+	}
 
 	@Override
 	public void sendAllPackets() {

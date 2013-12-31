@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import stargatetech2.IContentModule;
 import stargatetech2.integration.plugins.BasePlugin;
+import stargatetech2.integration.plugins.PluginCC;
 import stargatetech2.integration.plugins.PluginIC2;
 
 public class ModuleIntegration implements IContentModule {
@@ -14,6 +15,7 @@ public class ModuleIntegration implements IContentModule {
 	@Override
 	public void init(){
 		addPlugin(new PluginIC2());
+		addPlugin(new PluginCC());
 	}
 
 	@Override

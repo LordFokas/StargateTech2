@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class BlockReference {
 	public static final ArrayList<String> ALL_BLOCKS = new ArrayList<String>(10);
 	
+	// CORE
 	public static final String SHIELD_EMITTER = "shieldEmitter";
 	public static final String PARTICLE_IONIZER = "particleIonizer";
 	public static final String SHIELD = "shield";
@@ -16,6 +17,9 @@ public class BlockReference {
 	public static final String NAQUADAH_CAPACITOR = "naquadahCapacitor";
 	public static final String STARGATE = "stargate";
 	public static final String BUS_CABLE = "busCable";
+	
+	// INTEGRATION
+	public static final String BUS_ADAPTER = "busAdapter";
 	
 	static{
 		ALL_BLOCKS.add(SHIELD_EMITTER);
@@ -29,5 +33,7 @@ public class BlockReference {
 		ALL_BLOCKS.add(NAQUADAH_CAPACITOR);
 		ALL_BLOCKS.add(STARGATE);
 		ALL_BLOCKS.add(BUS_CABLE);
+		
+		ALL_BLOCKS.add(BUS_ADAPTER);
 	}
 }
