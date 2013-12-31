@@ -242,6 +242,6 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 
 	@Override
 	public IBusInterface[] getInterfaces(int side) {
-		return interfaces;
+		return getBlockMetadata() == side ? null : interfaces;
 	}
 }

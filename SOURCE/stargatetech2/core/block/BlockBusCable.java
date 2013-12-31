@@ -13,6 +13,7 @@ import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.common.base.BaseBlock;
 import stargatetech2.common.reference.BlockReference;
 import stargatetech2.core.network.bus.BusInterface;
+import stargatetech2.core.network.bus.Connection;
 import stargatetech2.core.rendering.RenderBusCable;
 
 public class BlockBusCable extends BaseBlock {
@@ -37,19 +38,19 @@ public class BlockBusCable extends BaseBlock {
 		return false;
 	}
 	
-	public boolean canConnectBus(IBlockAccess world, int x, int y, int z, ForgeDirection d, int f){
-		if(world.getBlockId(x + d.offsetX, y + d.offsetY, z + d.offsetZ) == blockID) return true;
+	public Connection getBusConnection(IBlockAccess world, int x, int y, int z, ForgeDirection d){
+		if(world.getBlockId(x + d.offsetX, y + d.offsetY, z + d.offsetZ) == blockID) return Connection.CABLE;
 		TileEntity te = world.getBlockTileEntity(x + d.offsetX, y + d.offsetY, z + d.offsetZ);
 		if(te instanceof IBusDevice){
-			IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(f);
-			if(interfaces == null || interfaces.length == 0) return false;
+			IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(d.getOpposite().ordinal());
+			if(interfaces == null || interfaces.length == 0) return Connection.DISCONNECTED;
 			for(IBusInterface networkCard : interfaces){
 				if(networkCard instanceof BusInterface){
-					return true;
+					return Connection.DEVICE;
 				}
 			}
 		}
-		return false;
+		return Connection.DISCONNECTED;
 	}
 	
 	@Override
@@ -59,12 +60,12 @@ public class BlockBusCable extends BaseBlock {
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
-		float x0 = canConnectBus(world, x, y, z, ForgeDirection.WEST,	5) ? 0 : 0.3125F;
-		float x1 = canConnectBus(world, x, y, z, ForgeDirection.EAST,	4) ? 1 : 0.6875F;
-		float y0 = canConnectBus(world, x, y, z, ForgeDirection.DOWN,	1) ? 0 : 0.3125F;
-		float y1 = canConnectBus(world, x, y, z, ForgeDirection.UP,		0) ? 1 : 0.6875F;
-		float z0 = canConnectBus(world, x, y, z, ForgeDirection.NORTH,	3) ? 0 : 0.3125F;
-		float z1 = canConnectBus(world, x, y, z, ForgeDirection.SOUTH,	2) ? 1 : 0.6875F;
+		float x0 = getBusConnection(world, x, y, z, ForgeDirection.WEST ).isConnected() ? 0 : 0.3125F;
+		float x1 = getBusConnection(world, x, y, z, ForgeDirection.EAST ).isConnected() ? 1 : 0.6875F;
+		float y0 = getBusConnection(world, x, y, z, ForgeDirection.DOWN ).isConnected() ? 0 : 0.3125F;
+		float y1 = getBusConnection(world, x, y, z, ForgeDirection.UP   ).isConnected() ? 1 : 0.6875F;
+		float z0 = getBusConnection(world, x, y, z, ForgeDirection.NORTH).isConnected() ? 0 : 0.3125F;
+		float z1 = getBusConnection(world, x, y, z, ForgeDirection.SOUTH).isConnected() ? 1 : 0.6875F;
 		setBlockBounds(x0, y0, z0, x1, y1, z1);
 	}
 	

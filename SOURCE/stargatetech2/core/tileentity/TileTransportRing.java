@@ -342,6 +342,6 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 
 	@Override
 	public IBusInterface[] getInterfaces(int side) {
-		return interfaces;
+		return side == 1 ? null : interfaces;
 	}
 }
