@@ -1,5 +1,7 @@
 package stargatetech2.api.bus;
 
+import net.minecraft.world.World;
+
 /**
  * To be implemented by Tile Entities that wish
  * to access the Abstract Bus.
@@ -16,4 +18,24 @@ public interface IBusDevice {
 	 * @return This side's IBusInterface, if any.
 	 */
 	public IBusInterface[] getInterfaces(int side);
+	
+	/**
+	 * @return This device's worldObj.
+	 */
+	public World getWorldObj();
+	
+	/**
+	 * @return This device's X Coordinate.
+	 */
+	public int getXCoord();
+	
+	/**
+	 * @return This device's Y Coordinate.
+	 */
+	public int getYCoord();
+	
+	/**
+	 * @return This device's Z Coordinate.
+	 */
+	public int getZCoord();
 }

@@ -23,4 +23,19 @@ public class TileStargateBase extends TileStargateRing implements ITileStargateB
 		if(stargate == null) return null;
 		return stargate.getInterfaces(side);
 	}
+	
+	@Override
+	public int getXCoord() {
+		return xCoord;
+	}
+
+	@Override
+	public int getYCoord() {
+		return yCoord;
+	}
+
+	@Override
+	public int getZCoord() {
+		return zCoord;
+	}
 }

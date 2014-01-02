@@ -6,10 +6,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import stargatetech2.api.bus.BusEvent;
+import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.item.ItemPersonalShield;
+import stargatetech2.core.network.bus.RecursiveBusRemapper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -48,5 +52,19 @@ public class CoreEventHandler {
 				}
 			}
 		}catch(Exception ignored){}
+	}
+	
+	@ForgeSubscribe
+	public void remapAbstractBus(BusEvent evt){
+		if(!evt.world.isRemote){
+			if(evt instanceof BusEvent.RemoveFromNetwork){
+				Vec3Int position = new Vec3Int(evt.x, evt.y, evt.z);
+				for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS){
+					RecursiveBusRemapper.scan(evt.world, position.offset(dir));
+				}
+			}else if(evt instanceof BusEvent.AddToNetwork){
+				RecursiveBusRemapper.scan(evt.world, new Vec3Int(evt.x, evt.y, evt.z));
+			}
+		}
 	}
 }

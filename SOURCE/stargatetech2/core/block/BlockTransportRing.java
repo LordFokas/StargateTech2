@@ -17,6 +17,7 @@ public class BlockTransportRing extends BaseBlockContainer{
 
 	public BlockTransportRing() {
 		super(BlockReference.TRANSPORT_RING);
+		setIsAbstractBusBlock();
 	}
 	
 	@Override

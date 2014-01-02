@@ -7,7 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import stargatetech2.StargateTech2;
+import stargatetech2.api.bus.BusEvent;
 import stargatetech2.common.reference.ModReference;
 import stargatetech2.common.util.MaterialNaquadah;
 import stargatetech2.common.util.StargateTab;
@@ -16,6 +18,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class BaseBlock extends Block{
 	protected Icon[] iconOverride;
 	protected boolean isOverride = false;
+	private boolean isAbstractBus = false;
 	
 	public BaseBlock(String uName){
 		this(uName, false, true);
@@ -41,6 +44,10 @@ public class BaseBlock extends Block{
 		return 2;
 	}
 	
+	protected void setIsAbstractBusBlock(){
+		isAbstractBus = true;
+	}
+	
 	public void registerBlock(){
 		GameRegistry.registerBlock(this, getUnlocalizedName());
 	}
@@ -52,6 +59,18 @@ public class BaseBlock extends Block{
 	
 	public void restoreTextures(){
 		isOverride = false;
+	}
+	
+	@Override
+	public void onBlockAdded(World w, int x, int y, int z){
+		super.onBlockAdded(w, x, y, z);
+		if(isAbstractBus) MinecraftForge.EVENT_BUS.post(new BusEvent.AddToNetwork(w, x, y, z));
+	}
+	
+	@Override
+	public void breakBlock(World w, int x, int y, int z, int i, int m){
+		super.breakBlock(w, x, y, z, i, m);
+		if(isAbstractBus) MinecraftForge.EVENT_BUS.post(new BusEvent.RemoveFromNetwork(w, x, y, z));
 	}
 	
 	@Override

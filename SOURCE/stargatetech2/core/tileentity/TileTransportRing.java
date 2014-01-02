@@ -344,4 +344,19 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	public IBusInterface[] getInterfaces(int side) {
 		return side == 1 ? null : interfaces;
 	}
+	
+	@Override
+	public int getXCoord() {
+		return xCoord;
+	}
+
+	@Override
+	public int getYCoord() {
+		return yCoord;
+	}
+
+	@Override
+	public int getZCoord() {
+		return zCoord;
+	}
 }

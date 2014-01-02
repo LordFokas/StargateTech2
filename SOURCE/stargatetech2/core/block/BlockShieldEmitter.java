@@ -15,6 +15,7 @@ public class BlockShieldEmitter extends BlockMachine implements ITabletAccess{
 
 	public BlockShieldEmitter() {
 		super(BlockReference.SHIELD_EMITTER, Screen.SHIELD_EMITTER);
+		setIsAbstractBusBlock();
 	}
 
 	@Override

@@ -1,21 +1,23 @@
 package stargatetech2.api.bus;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 /**
- * Do NOT implement this interface. To get an instance use
- * StargateTechAPI.api().getFactory().getIBusInterface();
+ * <b>DO NOT IMPLEMENT THIS INTERFACE!</b> To get an instance use
+ * <i>StargateTechAPI.api().getFactory().getIBusInterface()</i>;
  * 
  * @author LordFokas
  */
 public interface IBusInterface {
 	/**
-	 * You should call this whenever your IBusDevice TileEntity
-	 * adds or removes an IBusInterface from its hardware list.
-	 * This method triggers the network remapping routines that
-	 * allow other devices to find your IBusDevice. The network
-	 * map data is stored in the IBusInterface, which means its
-	 * not lost when your TileEntity is unloaded and reloaded.
+	 * This method is used to make the network remap it's devices.
+	 * Unless you are Sangar from OpenComputers, you probably don't need this.
+	 * 
+	 * Instead, use the BusEvent, to make StargateTech handle that automatically.
+	 * You should use BusEvent.AddToNetwork when the containing block is added and
+	 * BusEvent.RemoveFromNetwork when the containing block is removed from the world.
 	 */
-	public void updateHardwareState();
+	public void updateAddressingTable();
 	
 	/**
 	 * Makes the IBusInterface call its IBusDriver's
@@ -24,4 +26,20 @@ public interface IBusInterface {
 	 * across the network.
 	 */
 	public void sendAllPackets();
+	
+	/**
+	 * Serialize this object.
+	 * 
+	 * @param nbt The tag compound where this object's data is.
+	 * @param tag The name of the tag under which this object's data is stored.
+	 */
+	public void writeToNBT(NBTTagCompound nbt, String tag);
+	
+	/**
+	 * Unserialize this object.
+	 * 
+	 * @param nbt The tag compound where this object's data is.
+	 * @param tag The name of the tag under which this object's data is stored.
+	 */
+	public void readFromNBT(NBTTagCompound nbt, String tag);
 }

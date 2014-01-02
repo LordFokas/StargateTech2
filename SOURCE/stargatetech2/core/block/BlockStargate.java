@@ -7,6 +7,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.MinecraftForge;
+import stargatetech2.api.bus.BusEvent;
 import stargatetech2.api.stargate.ITileStargateBase;
 import stargatetech2.common.base.BaseBlockContainer;
 import stargatetech2.common.base.BaseTileEntity;
@@ -101,5 +103,18 @@ public class BlockStargate extends BaseBlockContainer{
 	@Override
 	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side){
 		return world.getBlockMetadata(x, y, z) != META_RING;
+	}
+	
+	@Override
+	public void onBlockAdded(World w, int x, int y, int z){
+		super.onBlockAdded(w, x, y, z);
+		int m = w.getBlockMetadata(x, y, z);
+		if(m != META_RING) MinecraftForge.EVENT_BUS.post(new BusEvent.AddToNetwork(w, x, y, z));
+	}
+	
+	@Override
+	public void breakBlock(World w, int x, int y, int z, int i, int m){
+		super.breakBlock(w, x, y, z, i, m);
+		if(m != META_RING) MinecraftForge.EVENT_BUS.post(new BusEvent.RemoveFromNetwork(w, x, y, z));
 	}
 }

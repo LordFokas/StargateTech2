@@ -121,10 +121,29 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 		else return outputQueue.removeFirst();
 	}
 	
+	@Override
+	public int getXCoord() {
+		return xCoord;
+	}
+
+	@Override
+	public int getYCoord() {
+		return yCoord;
+	}
+
+	@Override
+	public int getZCoord() {
+		return zCoord;
+	}
+	
 	//############################# NBT STUFF
 	@Override
-	protected void readNBT(NBTTagCompound nbt){}
+	protected void readNBT(NBTTagCompound nbt){
+		interfaces[0].readFromNBT(nbt, "interface");
+	}
 	
 	@Override
-	protected void writeNBT(NBTTagCompound nbt){}
+	protected void writeNBT(NBTTagCompound nbt){
+		interfaces[0].writeToNBT(nbt, "interface");
+	}
 }

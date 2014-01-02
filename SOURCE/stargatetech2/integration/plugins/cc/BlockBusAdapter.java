@@ -8,7 +8,7 @@ public class BlockBusAdapter extends BaseBlockContainer {
 	
 	public BlockBusAdapter() {
 		super(BlockReference.BUS_ADAPTER);
-		
+		setIsAbstractBusBlock();
 	}
 
 	@Override

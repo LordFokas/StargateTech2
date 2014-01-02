@@ -11,6 +11,7 @@ public class BlockParticleIonizer extends BlockMachine{
 
 	public BlockParticleIonizer() {
 		super(BlockReference.PARTICLE_IONIZER, Screen.PARTICLE_IONIZER);
+		setIsAbstractBusBlock();
 	}
 
 	@Override
