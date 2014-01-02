@@ -61,8 +61,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 		ComputerMethod m = ComputerMethod.values()[method];
 		switch(m){
 			case GETADDRESS: // GETS THE CURRENT ADDRESS FROM THE NETWORK DRIVER
-				short address = networkDriver.getInterfaceAddress();
-				return new Object[]{Integer.toHexString(address).substring(4)};
+				return new Object[]{CCAddressHelper.convert(networkDriver.getInterfaceAddress())};
 				
 			case GETRECVCOUNT: // GETS THE NUMBER OF PACKETS IN THE RECEIVE QUEUE
 				return new Object[]{received.size()};
@@ -75,7 +74,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 				
 			case SETADDRESS: // SETS THE SPECIFIED ADDRESS ON THE NETWORK DRIVER
 				if(arguments.length == 1 && arguments[0] instanceof String){
-					networkDriver.setAddress(Short.parseShort((String)arguments[0], 16));
+					networkDriver.setInterfaceAddress(CCAddressHelper.convert((String)arguments[0]));
 					return new Object[]{true};
 				}
 				return new Object[]{false};
@@ -140,10 +139,12 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 	@Override
 	protected void readNBT(NBTTagCompound nbt){
 		interfaces[0].readFromNBT(nbt, "interface");
+		networkDriver.setInterfaceAddress(nbt.getShort("address"));
 	}
 	
 	@Override
 	protected void writeNBT(NBTTagCompound nbt){
 		interfaces[0].writeToNBT(nbt, "interface");
+		nbt.setShort("address", networkDriver.getInterfaceAddress());
 	}
 }

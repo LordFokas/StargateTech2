@@ -18,7 +18,7 @@ public class CCBusDriver implements IBusDriver {
 		this.isEnabled = isEnabled;
 	}
 	
-	public void setAddress(short address){
+	public void setInterfaceAddress(short address){
 		this.address = address;
 	}
 	

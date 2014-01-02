@@ -34,6 +34,7 @@ public class RecursiveBusRemapper {
 		ArrayList<Vec3Int> memory = new ArrayList();
 		ArrayList<Vec4Int> interfaces = new ArrayList();
 		propagateScan(w, start, memory, interfaces);
+		ArrayList ifmemory = new ArrayList();
 		for(Vec4Int device : interfaces){
 			ArrayList<Vec4Int> addressingTable = new ArrayList();
 			for(Vec4Int address : interfaces){
@@ -48,8 +49,9 @@ public class RecursiveBusRemapper {
 			TileEntity te = w.getBlockTileEntity(x, y, z);
 			if(te instanceof IBusDevice){
 				for(IBusInterface b : ((IBusDevice)te).getInterfaces(s)){
-					if(b instanceof BusInterface){
+					if(b instanceof BusInterface && !ifmemory.contains(b)){
 						((BusInterface)b).setAddressingTable(s, addressingTable);
+						ifmemory.add(b);
 					}
 				}
 			}
