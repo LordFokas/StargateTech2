@@ -1,5 +1,6 @@
 package stargatetech2.core.network.stargate;
 
+import stargatetech2.api.stargate.Address;
 import stargatetech2.core.tileentity.TileStargate;
 
 public final class Wormhole {
@@ -15,6 +16,7 @@ public final class Wormhole {
 		this.source = source;
 		this.destination = destination;
 		lastWormholeTime = source.worldObj.getTotalWorldTime();
+		System.out.println("Adding new wormhole");
 		source.setWormhole(this, true);
 		destination.setWormhole(this, false);
 	}
@@ -36,5 +38,13 @@ public final class Wormhole {
 	
 	public boolean isActive(){
 		return isWormholeActive;
+	}
+	
+	public Address getSourceAddress(){
+		return source.getAddress();
+	}
+	
+	public Address getDestinationAddress(){
+		return destination.getAddress();
 	}
 }

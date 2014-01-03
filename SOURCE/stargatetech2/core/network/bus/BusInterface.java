@@ -87,7 +87,7 @@ public final class BusInterface implements IBusInterface{
 		short address = driver.getInterfaceAddress();
 		byte addrNet  = (byte)((address & 0xFF00) >> 8);
 		byte addrHost = (byte) (address & 0x00FF);
-		short sender  = packet.getSender();
+		short sender  = packet.getTarget();
 		byte sendNet  = (byte)((sender & 0xFF00) >> 8);
 		byte sendHost = (byte) (sender & 0x00FF);
 		

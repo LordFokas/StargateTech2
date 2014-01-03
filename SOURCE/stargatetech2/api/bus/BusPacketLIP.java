@@ -47,7 +47,7 @@ public final class BusPacketLIP extends BusPacket {
 		}
 	}
 	
-	protected BusPacketLIP(short sender, short target) {
+	public BusPacketLIP(short sender, short target) {
 		super(sender, target, true);
 	}
 	
@@ -58,6 +58,13 @@ public final class BusPacketLIP extends BusPacket {
 		if(isEditable && this.metadata == null){
 			this.metadata = metadata;
 		}
+	}
+	
+	/**
+	 * @return The LIPMetadata object on this object. May be null.
+	 */
+	public LIPMetadata getMetadata(){
+		return metadata;
 	}
 
 	@Override // We don't need this. At all.

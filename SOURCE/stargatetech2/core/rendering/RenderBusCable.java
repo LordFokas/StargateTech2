@@ -58,7 +58,6 @@ public class RenderBusCable extends BaseISBRH {
 			renderer.renderStandardBlock(cable, x, y, z);
 		}
 		renderer.setOverrideBlockTexture(plug);
-		renderer.flipTexture = true;
 		if(y0.hasPlug()){
 			renderer.setRenderBounds(F04, 0, F04, F12, F02, F12);
 			renderer.renderStandardBlock(cable, x, y, z);

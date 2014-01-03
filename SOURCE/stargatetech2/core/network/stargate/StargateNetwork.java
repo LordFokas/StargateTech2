@@ -80,7 +80,7 @@ public class StargateNetwork implements IStargateNetwork{
 		if(srcmap != null && dstmap != null){
 			WorldServer srcworld = MinecraftServer.getServer().worldServerForDimension(srcmap.getDimension());
 			WorldServer dstworld = MinecraftServer.getServer().worldServerForDimension(dstmap.getDimension());
-			if(srcworld != null && dstworld != null){
+			if(srcworld != null && dstworld != null){ // TODO: check if dims match
 				TileEntity srcte = srcworld.getBlockTileEntity(srcmap.getXCoord(), srcmap.getYCoord(), srcmap.getZCoord());
 				TileEntity dstte = srcworld.getBlockTileEntity(dstmap.getXCoord(), dstmap.getYCoord(), dstmap.getZCoord());
 				if(srcte instanceof TileStargate && dstte instanceof TileStargate){
@@ -114,26 +114,27 @@ public class StargateNetwork implements IStargateNetwork{
 			LinkedList<Symbol> symbols = new LinkedList();
 			if(parts.length != 3) throw new Exception("Address too short.");
 			for(String part : parts){
-				boolean finished = false;
-				do{
-					for(int i = 1; i < 40; i++){
-						Symbol s = Symbol.get(i);
-						String name = s.toString().toLowerCase();
-						if(name.length() == part.length()){
-							if(part.contentEquals(name)){
-								symbols.addLast(s);
-								finished = true;
-								break;
-							}
+				for(int p = 0; p < 3; p++){
+					for(int s = 1; s < Symbol.values().length; s++){
+						Symbol sym = Symbol.get(s);
+						String name = sym.toString().toLowerCase();
+						if(part.contentEquals(name)){
+							symbols.addLast(sym);
+							p = 5;
+							break;
 						}else if(part.startsWith(name)){
-							symbols.addLast(s);
+							symbols.addLast(sym);
 							part = part.substring(name.length());
 							break;
 						}
 					}
-				}while(finished == false);
+				}
 			}
-			return Address.create((Symbol[]) symbols.toArray());
+			Symbol[] sym = new Symbol[symbols.size()];
+			for(int i = 0; i < symbols.size(); i++){
+				sym[i] = symbols.get(i);
+			}
+			return Address.create(sym);
 		}catch(Exception e){
 			return null;
 		}
@@ -312,7 +313,6 @@ public class StargateNetwork implements IStargateNetwork{
 			}
 			writeAddresses(addressFile);
 			writePrefixes(prefixFile);
-			StargateLogger.info("Stargate Network saved successfully.");
 		}catch(Exception e){
 			StargateLogger.severe("There was an error while trying to write Stargate Network files");
 			e.printStackTrace();

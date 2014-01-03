@@ -4,14 +4,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import stargatetech2.api.StargateTechAPI;
+import stargatetech2.api.bus.BusPacketLIP;
+import stargatetech2.api.bus.BusPacketLIP.LIPMetadata;
 import stargatetech2.api.bus.IBusDevice;
-import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargateBase;
 import stargatetech2.common.base.BaseTileEntity;
+import stargatetech2.common.reference.ModReference;
 import stargatetech2.core.ModuleCore;
-import stargatetech2.core.network.bus.BusDriver;
+import stargatetech2.core.network.bus.machines.StargateBusDriver;
 import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.network.stargate.Wormhole;
 import stargatetech2.core.packet.PacketWormhole;
@@ -27,7 +29,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	
 	@ClientLogic private RenderData renderData = new RenderData();
 	
-	private IBusDriver networkDriver = new BusDriver();
+	private StargateBusDriver networkDriver = new StargateBusDriver(this);
 	private IBusInterface[] interfaces = new IBusInterface[]{
 			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
 	};
@@ -121,7 +123,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	@Override
 	public Address getAddress(){
 		if(worldObj.isRemote)
-			return null; // this is probably temporary.
+			return null;
 		else
 			return StargateNetwork.instance().getMyAddress(worldObj, xCoord, yCoord, zCoord);
 	}
@@ -144,6 +146,15 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 		this.wormhole = wormhole;
 		this.isSource = isSource;
 		PacketWormhole.sendSync(xCoord, yCoord, zCoord, true).sendToAllInDim(worldObj.provider.dimensionId);
+		BusPacketLIP packet = new BusPacketLIP(networkDriver.getInterfaceAddress(), (short)0xFFFF);
+		Address address = isSource ? wormhole.getDestinationAddress() : wormhole.getSourceAddress();
+		packet.setMetadata(new LIPMetadata(ModReference.MOD_ID, "Stargate", ""));
+		packet.set("PROTOCOL", "StargateDialingInformation");
+		packet.set("direction", isSource ? "outgoing" : "incoming");
+		packet.set("address", address.toString());
+		packet.finish();
+		networkDriver.addPacket(packet);
+		interfaces[0].sendAllPackets();
 	}
 	
 	@ServerLogic
@@ -189,11 +200,13 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
+		interfaces[0].readFromNBT(nbt, "interface");
 		useXBuilder = nbt.getBoolean("useXBuilder");
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
+		interfaces[0].writeToNBT(nbt, "interface");
 		nbt.setBoolean("useXBuilder", useXBuilder);
 	}
 

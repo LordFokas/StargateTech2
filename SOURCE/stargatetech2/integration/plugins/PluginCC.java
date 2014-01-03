@@ -1,11 +1,11 @@
 package stargatetech2.integration.plugins;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import stargatetech2.common.reference.ConfigReference;
 import stargatetech2.common.reference.TileEntityReference;
 import stargatetech2.integration.plugins.cc.BlockBusAdapter;
 import stargatetech2.integration.plugins.cc.TileBusAdapter;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class PluginCC extends BasePlugin {
 	public static BlockBusAdapter busAdapter;

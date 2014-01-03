@@ -18,6 +18,7 @@ import stargatetech2.common.util.PacketHandler;
 import stargatetech2.core.packet.PacketActivateRings;
 import stargatetech2.core.packet.PacketExceptionsUpdate;
 import stargatetech2.core.packet.PacketPermissionsUpdate;
+import stargatetech2.core.packet.PacketPrintAddress;
 import stargatetech2.core.packet.PacketWormhole;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
@@ -61,6 +62,7 @@ public abstract class BasePacket{
 		packetMap.add(PacketOpenGUI.class);
 		packetMap.add(PacketActivateRings.class);
 		packetMap.add(PacketWormhole.class);
+		packetMap.add(PacketPrintAddress.class);
 	}
 	
 	private ByteArrayOutputStream baos = new ByteArrayOutputStream();

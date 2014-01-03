@@ -12,7 +12,9 @@ public class BusDriver implements IBusDriver{
 	}
 
 	@Override
-	public void handlePacket(BusPacket packet) {}
+	public void handlePacket(BusPacket packet) {
+		
+	}
 
 	@Override
 	public BusPacket getNextPacketToSend() {

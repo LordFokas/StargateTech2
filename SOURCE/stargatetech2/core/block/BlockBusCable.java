@@ -8,16 +8,12 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.common.MinecraftForge;
-import stargatetech2.api.bus.BusEvent;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.common.base.BaseBlock;
 import stargatetech2.common.reference.BlockReference;
-import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.network.bus.BusInterface;
 import stargatetech2.core.network.bus.Connection;
-import stargatetech2.core.network.bus.RecursiveBusRemapper;
 import stargatetech2.core.rendering.RenderBusCable;
 
 public class BlockBusCable extends BaseBlock {
