@@ -204,12 +204,14 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	protected void readNBT(NBTTagCompound nbt) {
 		interfaces[0].readFromNBT(nbt, "interface");
 		useXBuilder = nbt.getBoolean("useXBuilder");
+		renderData.hasWormhole = nbt.getBoolean("hasWormhole");
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		interfaces[0].writeToNBT(nbt, "interface");
 		nbt.setBoolean("useXBuilder", useXBuilder);
+		nbt.setBoolean("hasWormhole", hasActiveWormhole());
 	}
 
 	@Override
