@@ -17,6 +17,7 @@ import stargatetech2.core.network.bus.machines.StargateBusDriver;
 import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.network.stargate.Wormhole;
 import stargatetech2.core.packet.PacketWormhole;
+import stargatetech2.core.util.ChunkLoader;
 import stargatetech2.core.worldgen.lists.StargateBuildList;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -89,6 +90,10 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 		useXBuilder = isX;
 	}
 	
+	public boolean isX(){
+		return useXBuilder;
+	}
+	
 	@ServerLogic
 	private void removeDependencies(){
 		if(!worldObj.isRemote){
@@ -106,9 +111,6 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	private void serverTick(){
 		if(hasActiveWormhole() && isSource){
 			wormhole.update();
-		}
-		if(hasActiveWormhole() && isSource){
-			// TODO: send stuff through the wormhole object.
 		}
 	}
 	

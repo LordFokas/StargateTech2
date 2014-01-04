@@ -66,6 +66,7 @@ public class TextureReference {
 	
 	public static final ResourceLocation TESR_TRANSPORT_RING = getTexture("special/transportRing.png");
 	public static final ResourceLocation TESR_STARGATE = getTexture("special/stargate.png");
+	public static final ResourceLocation EVENT_HORIZON = getTexture("special/eventHorizon.png");
 	public static final ResourceLocation CHEVRONS = getTexture("special/chevrons.png");
 	public static final ResourceLocation SYMBOLS = getTexture("special/symbols.png");
 	

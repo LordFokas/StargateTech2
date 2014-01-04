@@ -28,7 +28,6 @@ public class StargateBusDriver implements IBusDriver{
 		if(dial != null){
 			Address address = StargateNetwork.parse(dial);
 			if(address != null){
-				System.out.println("Attempting to dial " + address.toString());
 				stargate.dial(address);
 			}
 		}

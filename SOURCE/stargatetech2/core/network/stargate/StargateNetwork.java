@@ -14,6 +14,7 @@ import java.util.Set;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
@@ -25,6 +26,7 @@ import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.api.stargate.Symbol;
 import stargatetech2.common.util.StargateLogger;
 import stargatetech2.core.tileentity.TileStargate;
+import stargatetech2.core.util.ChunkLoader;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class StargateNetwork implements IStargateNetwork{
@@ -81,15 +83,27 @@ public class StargateNetwork implements IStargateNetwork{
 			WorldServer srcworld = MinecraftServer.getServer().worldServerForDimension(srcmap.getDimension());
 			WorldServer dstworld = MinecraftServer.getServer().worldServerForDimension(dstmap.getDimension());
 			if(srcworld != null && dstworld != null){ // TODO: check if dims match
+				long srcChunks = ChunkLoader.load9Chunks(srcworld, srcmap.getXCoord() >> 4, srcmap.getZCoord() >> 4);
+				if(srcChunks < 0){
+					return;
+				}
+				long dstChunks = ChunkLoader.load9Chunks(dstworld, dstmap.getXCoord() >> 4, dstmap.getZCoord() >> 4);
+				if(dstChunks < 0){
+					ChunkLoader.release(srcChunks);
+					return;
+				}
 				TileEntity srcte = srcworld.getBlockTileEntity(srcmap.getXCoord(), srcmap.getYCoord(), srcmap.getZCoord());
-				TileEntity dstte = srcworld.getBlockTileEntity(dstmap.getXCoord(), dstmap.getYCoord(), dstmap.getZCoord());
+				TileEntity dstte = dstworld.getBlockTileEntity(dstmap.getXCoord(), dstmap.getYCoord(), dstmap.getZCoord());
 				if(srcte instanceof TileStargate && dstte instanceof TileStargate){
 					TileStargate src = (TileStargate) srcte;
 					TileStargate dst = (TileStargate) dstte;
 					if(!src.hasActiveWormhole() && !dst.hasActiveWormhole()){
-						activeWormholes.add(new Wormhole(src, dst));
+						activeWormholes.add(new Wormhole(src, dst, srcChunks, dstChunks));
+						return;
 					}
 				}
+				ChunkLoader.release(srcChunks);
+				ChunkLoader.release(dstChunks);
 			}
 		}
 	}

@@ -93,6 +93,38 @@ public class RenderStargateTile extends BaseTESR {
 		GL11.glPopMatrix();
 		bindTexture(TextureReference.CHEVRONS);
 		renderChevrons(data);
+		if(data.hasWormhole){
+			GL11.glDisable(GL11.GL_CULL_FACE);
+			bindTexture(TextureReference.EVENT_HORIZON);
+			renderEventHorizon();
+			GL11.glEnable(GL11.GL_CULL_FACE);
+		}
+	}
+	
+	private static final float EH_SIZE = 2.4F;
+	private static final float EH_OFF = 0.10F;
+	
+	private void renderEventHorizon(){
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(0, 0);
+		GL11.glVertex3f(-EH_SIZE, EH_SIZE, -EH_OFF);
+		GL11.glTexCoord2f(1, 0);
+		GL11.glVertex3f(EH_SIZE, EH_SIZE, -EH_OFF);
+		GL11.glTexCoord2f(0, 1);
+		GL11.glVertex3f(-EH_SIZE, -EH_SIZE, -EH_OFF);
+		GL11.glTexCoord2f(1, 1);
+		GL11.glVertex3f(EH_SIZE, -EH_SIZE, -EH_OFF);
+		GL11.glEnd();
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		GL11.glTexCoord2f(0, 0);
+		GL11.glVertex3f(-EH_SIZE, EH_SIZE, EH_OFF);
+		GL11.glTexCoord2f(1, 0);
+		GL11.glVertex3f(EH_SIZE, EH_SIZE, EH_OFF);
+		GL11.glTexCoord2f(0, 1);
+		GL11.glVertex3f(-EH_SIZE, -EH_SIZE, EH_OFF);
+		GL11.glTexCoord2f(1, 1);
+		GL11.glVertex3f(EH_SIZE, -EH_SIZE, EH_OFF);
+		GL11.glEnd();
 	}
 	
 	private void renderOuterRing(){

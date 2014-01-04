@@ -33,6 +33,7 @@ import stargatetech2.core.tileentity.TileStargate;
 import stargatetech2.core.tileentity.TileStargateBase;
 import stargatetech2.core.tileentity.TileStargateRing;
 import stargatetech2.core.tileentity.TileTransportRing;
+import stargatetech2.core.util.ChunkLoader;
 import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.worldgen.CoreWorldGenerator;
@@ -129,19 +130,20 @@ public final class ModuleCore implements IContentModule{
 		}
 		
 		StargateTech2.proxy.registerRenderers(Module.CORE);
-		
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator());
+		ChunkLoader.register();
 		
 		addCoreRecipes();
-		
 	}
 
 	@Override public void onServerStart(){
+		ChunkLoader.load();
 		StargateNetwork.instance().load();
 	}
 	
 	@Override public void onServerStop(){
 		StargateNetwork.instance().unload();
+		ChunkLoader.unload();
 	}
 
 	@Override
