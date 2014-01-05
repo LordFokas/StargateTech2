@@ -14,16 +14,15 @@ import java.util.Set;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.api.stargate.Symbol;
+import stargatetech2.common.util.Helper;
 import stargatetech2.common.util.StargateLogger;
 import stargatetech2.core.tileentity.TileStargate;
 import stargatetech2.core.util.ChunkLoader;
@@ -242,31 +241,55 @@ public class StargateNetwork implements IStargateNetwork{
 		return prefix;
 	}
 	
-	private File getFile(String file){
-		return new File(DimensionManager.getCurrentSaveRootDirectory().getAbsolutePath() + File.separator + "SGTech2_" + file);
+	public void initializeWormholes(){
+		for(Wormhole wormhole : activeWormholes){
+			wormhole.initialize();
+		}
 	}
 	
 	private void readFromFile(){
 		try{
-			File addressFile = getFile("addresses.dat");
-			File prefixFile = getFile("prefixes.dat");
+			File wormholeFile = Helper.getFile("wormholes.dat");
+			File addressFile = Helper.getFile("addresses.dat");
+			File prefixFile = Helper.getFile("prefixes.dat");
+			boolean hasWormhole = wormholeFile.exists();
 			boolean hasAddress = addressFile.exists();
 			boolean hasPrefix = prefixFile.exists();
-			if(hasAddress && hasPrefix){
+			if(hasWormhole && hasAddress && hasPrefix){
+				readWormholes(wormholeFile);
 				readAddresses(addressFile);
 				readPrefixes(prefixFile);
-			}else if(hasAddress || hasPrefix){
-				StargateLogger.severe("Either the Address or Prefix Stargate Network file is missing. This may be a very serious problem!");
+			}else if(hasWormhole || hasAddress || hasPrefix){
+				StargateLogger.severe("Some Stargate Network data files are missing. This may be a very serious problem!");
 				FMLCommonHandler.instance().raiseException(new Exception("StargateTech2 detected save corruption!"), "StargateTech2 detected save corruption!", false);
 			}else{
-				StargateLogger.warning("Both Address and Prefix Stargate Network files are missing. This is normal when saves are first created.");
-				StargateLogger.info("Creating new Address and Prefix files for the Stargate Network.");
+				StargateLogger.warning("All Stargate Network data files are missing. This is normal when saves are first created.");
+				StargateLogger.info("Creating new Wormhole, Address and Prefix files for the Stargate Network.");
+				wormholeFile.createNewFile();
 				addressFile.createNewFile();
 				prefixFile.createNewFile();
 			}
 		}catch(Exception e){
 			StargateLogger.severe("There was an error while trying to read Stargate Network files");
 			e.printStackTrace();
+		}
+	}
+	
+	private void readWormholes(File wormholeFile) throws Exception{
+		FileInputStream fis = null;
+		DataInputStream dis = null;
+		try{
+			fis = new FileInputStream(wormholeFile);
+			dis = new DataInputStream(fis);
+			int count = dis.readInt();
+			for(int i = 0; i < count; i++){
+				activeWormholes.add(Wormhole.readFromStream(dis));
+			}
+			dis.close();
+		}catch(Exception e){
+			try{ dis.close(); }
+			catch(Exception ignored){}
+			throw e;
 		}
 	}
 	
@@ -315,8 +338,13 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	private void writeToFile(){
 		try{
-			File addressFile = getFile("addresses.dat");
-			File prefixFile = getFile("prefixes.dat");
+			File wormholeFile = Helper.getFile("wormholes.dat");
+			File addressFile = Helper.getFile("addresses.dat");
+			File prefixFile = Helper.getFile("prefixes.dat");
+			if(!wormholeFile.exists()){
+				StargateLogger.warning("Stargate Network Wormhole file is missing. A new one is being created.");
+				wormholeFile.createNewFile();
+			}
 			if(!addressFile.exists()){
 				StargateLogger.warning("Stargate Network Address file is missing. A new one is being created.");
 				addressFile.createNewFile();
@@ -325,11 +353,30 @@ public class StargateNetwork implements IStargateNetwork{
 				StargateLogger.warning("Stargate Network Prefix file is missing. A new one is being created.");
 				prefixFile.createNewFile();
 			}
+			writeWormholes(wormholeFile);
 			writeAddresses(addressFile);
 			writePrefixes(prefixFile);
 		}catch(Exception e){
 			StargateLogger.severe("There was an error while trying to write Stargate Network files");
 			e.printStackTrace();
+		}
+	}
+	
+	private void writeWormholes(File wormholeFile) throws Exception{
+		FileOutputStream fos = null;
+		DataOutputStream dos = null;
+		try{
+			fos = new FileOutputStream(wormholeFile, false);
+			dos = new DataOutputStream(fos);
+			dos.writeInt(activeWormholes.size());
+			for(Wormhole wormhole : activeWormholes){
+				wormhole.writeToStream(dos);
+			}
+			dos.close();
+		}catch(Exception e){
+			try{ dos.close(); }
+			catch(Exception ignored){}
+			throw e;
 		}
 	}
 	

@@ -1,6 +1,9 @@
 package stargatetech2.common.util;
 
+import java.io.File;
+
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeDirection;
 
 public class Helper {
@@ -14,5 +17,9 @@ public class Helper {
 			case 4: return ForgeDirection.EAST;
 			default: return ForgeDirection.UNKNOWN;
 		}
+	}
+	
+	public static File getFile(String file){
+		return new File(DimensionManager.getCurrentSaveRootDirectory().getAbsolutePath() + File.separator + "SGTech2_" + file);
 	}
 }

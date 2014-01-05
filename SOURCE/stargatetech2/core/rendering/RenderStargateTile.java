@@ -54,6 +54,9 @@ public class RenderStargateTile extends BaseTESR {
 	private static final float CHT_Y0 = 0;
 	private static final float CHT_Y1 = 1;
 	
+	private static final float EH_SIZE = 2.4F;
+	private static final float EH_OFF = 0.10F;
+	
 	private static final float SYMBOL_S = 0.2F;
 	private static final float SYMBOL_X = SYMBOL_S / 2F;
 	private static final float SYMBOL_Y0 = 2.019F;
@@ -95,14 +98,13 @@ public class RenderStargateTile extends BaseTESR {
 		renderChevrons(data);
 		if(data.hasWormhole){
 			GL11.glDisable(GL11.GL_CULL_FACE);
+			GL11.glDisable(GL11.GL_LIGHTING);
 			bindTexture(TextureReference.EVENT_HORIZON);
 			renderEventHorizon();
+			GL11.glEnable(GL11.GL_LIGHTING);
 			GL11.glEnable(GL11.GL_CULL_FACE);
 		}
 	}
-	
-	private static final float EH_SIZE = 2.4F;
-	private static final float EH_OFF = 0.10F;
 	
 	private void renderEventHorizon(){
 		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);

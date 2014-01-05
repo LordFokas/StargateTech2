@@ -17,7 +17,6 @@ import stargatetech2.core.network.bus.machines.StargateBusDriver;
 import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.network.stargate.Wormhole;
 import stargatetech2.core.packet.PacketWormhole;
-import stargatetech2.core.util.ChunkLoader;
 import stargatetech2.core.worldgen.lists.StargateBuildList;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -144,19 +143,21 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	}
 	
 	@ServerLogic
-	public void setWormhole(Wormhole wormhole, boolean isSource){
+	public void setWormhole(Wormhole wormhole, boolean isSource, boolean broadcast){
 		this.wormhole = wormhole;
 		this.isSource = isSource;
 		PacketWormhole.sendSync(xCoord, yCoord, zCoord, true).sendToAllInDim(worldObj.provider.dimensionId);
-		BusPacketLIP packet = new BusPacketLIP(networkDriver.getInterfaceAddress(), (short)0xFFFF);
 		Address address = isSource ? wormhole.getDestinationAddress() : wormhole.getSourceAddress();
-		packet.setMetadata(new LIPMetadata(ModReference.MOD_ID, "Stargate", ""));
-		packet.set("PROTOCOL", "StargateDialingInformation");
-		packet.set("direction", isSource ? "outgoing" : "incoming");
-		packet.set("address", address.toString());
-		packet.finish();
-		networkDriver.addPacket(packet);
-		interfaces[0].sendAllPackets();
+		if(broadcast){
+			BusPacketLIP packet = new BusPacketLIP(networkDriver.getInterfaceAddress(), (short)0xFFFF);
+			packet.setMetadata(new LIPMetadata(ModReference.MOD_ID, "Stargate", ""));
+			packet.set("PROTOCOL", "StargateDialingInformation");
+			packet.set("direction", isSource ? "outgoing" : "incoming");
+			packet.set("address", address.toString());
+			packet.finish();
+			networkDriver.addPacket(packet);
+			interfaces[0].sendAllPackets();
+		}
 	}
 	
 	@ServerLogic
