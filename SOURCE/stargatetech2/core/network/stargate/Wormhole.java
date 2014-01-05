@@ -34,7 +34,6 @@ public final class Wormhole {
 		this.src = srcChunks;
 		this.dst = dstChunks;
 		lastWormholeTime = source.worldObj.getTotalWorldTime();
-		System.out.println("Adding new wormhole");
 		source.setWormhole(this, true, true);
 		destination.setWormhole(this, false, true);
 	}

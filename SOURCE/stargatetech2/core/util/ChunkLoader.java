@@ -26,8 +26,8 @@ import stargatetech2.core.network.stargate.StargateNetwork;
 public final class ChunkLoader implements LoadingCallback{
 	public static final ChunkLoader instance = new ChunkLoader();
 	
-	private ArrayList<Integer> dims = new ArrayList();
-	private ArrayList<Ticket> tickets = new ArrayList();
+	private ArrayList<Integer> dims;
+	private ArrayList<Ticket> tickets;
 	private long ticketID = 0;
 	
 	private ChunkLoader(){}
@@ -37,6 +37,8 @@ public final class ChunkLoader implements LoadingCallback{
 	}
 	
 	public static void load(){
+		instance.tickets = new ArrayList();
+		instance.dims = new ArrayList();
 		MinecraftForge.EVENT_BUS.register(instance);
 		File file = Helper.getFile("chunks.dat");
 		if(file.exists())
