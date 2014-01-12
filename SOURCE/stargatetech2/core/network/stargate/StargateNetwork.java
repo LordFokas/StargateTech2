@@ -81,7 +81,7 @@ public class StargateNetwork implements IStargateNetwork{
 		if(srcmap != null && dstmap != null){
 			WorldServer srcworld = MinecraftServer.getServer().worldServerForDimension(srcmap.getDimension());
 			WorldServer dstworld = MinecraftServer.getServer().worldServerForDimension(dstmap.getDimension());
-			if(srcworld != null && dstworld != null){ // TODO: check if dims match
+			if(srcworld != null && dstworld != null && srcworld != dstworld){
 				long srcChunks = ChunkLoader.load9Chunks(srcworld, srcmap.getXCoord() >> 4, srcmap.getZCoord() >> 4);
 				if(srcChunks < 0){
 					return;
