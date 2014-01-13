@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 import stargatetech2.core.worldgen.lists.BuildList.BuildMaterial;
 import stargatetech2.core.worldgen.lists.LootPodBuildList;
@@ -36,7 +37,7 @@ public class WorldGenLootPod {
 		y--;
 		
 		int id = w.getBlockId(x, y, z);
-		if(VALID_GROUND.contains(id)){
+		if(VALID_GROUND.contains(id) && w.getBiomeGenForCoords(x, z).biomeID != BiomeGenBase.desert.biomeID){
 			int index = VALID_GROUND.indexOf(id);
 			list = MATERIALS.get(index);
 		}

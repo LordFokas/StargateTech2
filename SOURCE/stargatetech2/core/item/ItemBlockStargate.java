@@ -12,10 +12,12 @@ import stargatetech2.core.tileentity.TileStargate;
 import stargatetech2.core.worldgen.lists.StargateBuildList;
 
 public class ItemBlockStargate extends ItemBlock {
+	public static ItemBlockStargate instance;
 	private static final int[] ROTATIONS = new int[]{4, 2, 5, 3};
 	
 	public ItemBlockStargate(int id) {
 		super(id);
+		instance = this;
 	}
 	
 	@Override
@@ -40,7 +42,7 @@ public class ItemBlockStargate extends ItemBlock {
 		if(!blockWasPlaced){
 			return false;
 		}
-		builder.buildStargate(w, x, y, z, x, y, z);
+		builder.buildStargate(w, x, y, z);
 		w.setBlockMetadataWithNotify(x, y, z, ROTATIONS[dir.ordinal() - 2], 2);
 		TileEntity te = w.getBlockTileEntity(x, y, z);
 		((TileStargate)te).setDirectionX(isX);

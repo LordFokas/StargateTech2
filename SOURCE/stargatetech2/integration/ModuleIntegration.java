@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import stargatetech2.IContentModule;
 import stargatetech2.integration.plugins.BasePlugin;
-import stargatetech2.integration.plugins.PluginCC;
-import stargatetech2.integration.plugins.PluginIC2;
+import stargatetech2.integration.plugins.cc.PluginCC;
+import stargatetech2.integration.plugins.ic2.PluginIC2;
 
 public class ModuleIntegration implements IContentModule {
 	private ArrayList<BasePlugin> plugins = new ArrayList<BasePlugin>();

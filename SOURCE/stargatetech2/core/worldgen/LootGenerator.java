@@ -29,6 +29,8 @@ public class LootGenerator {
 		LOOT_RARE.add(new ItemStack(ModuleCore.naquadahRail, 4));
 		LOOT_RARE.add(new ItemStack(ModuleCore.particleIonizer, 1));
 		LOOT_RARE.add(new ItemStack(ModuleCore.shieldEmitter, 2));
+		LOOT_RARE.add(new ItemStack(ModuleCore.stargate, 1));
+		LOOT_RARE.add(new ItemStack(ModuleCore.stargate, 1)); // I know it's 2x
 		LOOT_RARE.add(new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.PWCR2.ID));
 		
 		LOOT_EPIC = new ArrayList<ItemStack>();

@@ -9,7 +9,6 @@ import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.api.bus.IBusInterface;
-import stargatetech2.common.util.Vec3Int;
 import stargatetech2.common.util.Vec4Int;
 
 public final class BusInterface implements IBusInterface{

@@ -79,6 +79,11 @@ public class Config {
 		ConfigServer.shieldEmitterRange = range;
 		cfg.getCategory(ConfigReference.KEY_CFG_SERVER).get("shieldEmitterRange").set(range);
 		
+		int minDistance = cfg.get(ConfigReference.KEY_CFG_SERVER, "stargateMinDistance", 150).getInt();
+		if(minDistance < 50) minDistance = 50;
+		cfg.getCategory(ConfigReference.KEY_CFG_SERVER).get("stargateMinDistance").set(minDistance);
+		ConfigServer.stargateMinDistance = minDistance * minDistance;
+		
 		// WORLDGEN CONFIGS
 		int podGap = cfg.get(ConfigReference.KEY_CFG_SV_WGEN, "lootPodSpacing", 6).getInt();
 		ConfigServer.wgLootPodGap = podGap < 6 ? 6 : podGap;

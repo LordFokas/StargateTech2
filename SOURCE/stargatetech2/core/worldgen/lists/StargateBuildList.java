@@ -30,8 +30,8 @@ public class StargateBuildList extends BuildList {
 		set( 0, 4,  0, 1);
 	}
 	
-	public void buildStargate(World w, int x, int y, int z, int sgx, int sgy, int sgz){
-		build(w, x, y, z, MATERIAL, new Vec3Int(sgx, sgy, sgz));
+	public void buildStargate(World w, int x, int y, int z){
+		build(w, x, y, z, MATERIAL, new Vec3Int(x, y, z));
 	}
 	
 	@Override

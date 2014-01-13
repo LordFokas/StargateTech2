@@ -1,9 +1,8 @@
-package stargatetech2.integration.plugins;
+package stargatetech2.integration.plugins.cc;
 
 import stargatetech2.common.reference.ConfigReference;
 import stargatetech2.common.reference.TileEntityReference;
-import stargatetech2.integration.plugins.cc.BlockBusAdapter;
-import stargatetech2.integration.plugins.cc.TileBusAdapter;
+import stargatetech2.integration.plugins.BasePlugin;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 

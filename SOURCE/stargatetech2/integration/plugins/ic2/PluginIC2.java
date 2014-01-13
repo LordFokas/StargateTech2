@@ -1,9 +1,10 @@
-package stargatetech2.integration.plugins;
+package stargatetech2.integration.plugins.ic2;
 
 import ic2.api.item.Items;
 import net.minecraft.item.ItemStack;
 import stargatetech2.common.reference.ConfigReference;
 import stargatetech2.core.util.ParticleIonizerRecipes;
+import stargatetech2.integration.plugins.BasePlugin;
 
 public class PluginIC2 extends BasePlugin {
 	public static boolean loaded = false;

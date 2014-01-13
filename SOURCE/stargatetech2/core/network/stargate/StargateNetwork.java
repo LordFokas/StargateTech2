@@ -22,6 +22,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.api.stargate.Symbol;
+import stargatetech2.common.util.ConfigServer;
 import stargatetech2.common.util.Helper;
 import stargatetech2.common.util.StargateLogger;
 import stargatetech2.core.tileentity.TileStargate;
@@ -113,6 +114,18 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	// TODO: finish this.
 	public boolean canPlaceStargateAt(World w, int x, int y, int z){
+		if(!isLoaded) return false;
+		int dim = w.provider.dimensionId;
+		for(AddressMapping map : addresses.values()){
+			if(map.getDimension() == dim){
+				int dx = x - map.getXCoord();
+				int dy = y - map.getYCoord();
+				int dz = z - map.getZCoord();
+				if(dx*dx + dy*dy + dz*dz < ConfigServer.stargateMinDistance){
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 	
