@@ -23,6 +23,7 @@ import stargatetech2.core.ModuleCore;
 import stargatetech2.core.block.BlockShield;
 import stargatetech2.core.block.BlockShieldEmitter;
 import stargatetech2.core.network.bus.BusDriver;
+import stargatetech2.core.network.bus.machines.ShieldEmitterBusDriver;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.WeakBlockRegistry;
 
@@ -34,10 +35,11 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	private boolean shieldOn = false;
 	private int ionCost = 1;
 	private String owner;
+	private boolean canRun = true;
 	
 	// NORMAL FIELDS
 	private Vec3Int nbtPair;
-	private IBusDriver networkDriver = new BusDriver();
+	private ShieldEmitterBusDriver networkDriver = new ShieldEmitterBusDriver(this);
 	private IBusInterface[] interfaces = new IBusInterface[]{
 			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
 	};
@@ -61,13 +63,13 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 				}
 				nbtPair = null;
 			}
-			if(pair == null){
+			if(pair == null || !canRun){
 				if(shieldOn){
 					destroyShield();
 				}
 				searchPair();
 			}
-			if(pair != null){
+			if(pair != null && canRun){
 				int used = useIonsFromPair(ionCost);
 				if(used != 0){
 					if(!shieldOn){
@@ -254,6 +256,11 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	private void setPermissions(ShieldPermissions sp){
 		permissions = sp.deepClone();
 		updateClients();
+	}
+	
+	public void setCanRun(boolean run){
+		this.canRun = run;
+		if(pair != null) pair.canRun = run;
 	}
 	
 	@Override

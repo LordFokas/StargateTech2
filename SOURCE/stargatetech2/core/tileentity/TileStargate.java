@@ -151,7 +151,9 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 		if(broadcast){
 			BusPacketLIP packet = new BusPacketLIP(networkDriver.getInterfaceAddress(), (short)0xFFFF);
 			packet.setMetadata(new LIPMetadata(ModReference.MOD_ID, "Stargate", ""));
-			packet.set("PROTOCOL", "StargateDialingInformation");
+			packet.set(".protocol", "Stargate Protocol");
+			packet.set(".target", "ANY");
+			packet.set("action", "dialing");
 			packet.set("direction", isSource ? "outgoing" : "incoming");
 			packet.set("address", address.toString());
 			packet.finish();

@@ -110,13 +110,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 				packet = null;
 				return new Object[]{changed};
 			case GETFIELDLIST:
-				ArrayList<String> keys = packet.getEntryList();
-				System.out.println("SIZE: " + keys.size());
-				String[] fields = new String[keys.size()];
-				for(int i = 0; i < keys.size(); i++){
-					fields[i] = keys.get(i);
-				}
-				return fields;
+				return packet.getEntryList().toArray();
 			case GETFIELD:
 				return new Object[]{packet.get((String)arguments[0])};
 			default: break;

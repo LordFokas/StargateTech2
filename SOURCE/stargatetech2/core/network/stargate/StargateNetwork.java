@@ -82,7 +82,7 @@ public class StargateNetwork implements IStargateNetwork{
 		if(srcmap != null && dstmap != null){
 			WorldServer srcworld = MinecraftServer.getServer().worldServerForDimension(srcmap.getDimension());
 			WorldServer dstworld = MinecraftServer.getServer().worldServerForDimension(dstmap.getDimension());
-			if(srcworld != null && dstworld != null /*&& srcworld != dstworld*/){
+			if(srcworld != null && dstworld != null && srcworld != dstworld){
 				long srcChunks = ChunkLoader.load9Chunks(srcworld, srcmap.getXCoord() >> 4, srcmap.getZCoord() >> 4);
 				if(srcChunks < 0){
 					return;
@@ -114,7 +114,7 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	// TODO: finish this.
 	public boolean canPlaceStargateAt(World w, int x, int y, int z){
-		/*if(!isLoaded) return false;
+		if(!isLoaded) return false;
 		int dim = w.provider.dimensionId;
 		for(AddressMapping map : addresses.values()){
 			if(map.getDimension() == dim){
@@ -125,7 +125,7 @@ public class StargateNetwork implements IStargateNetwork{
 					return false;
 				}
 			}
-		}*/
+		}
 		return true;
 	}
 	
