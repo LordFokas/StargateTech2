@@ -236,4 +236,9 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	public int getZCoord() {
 		return zCoord;
 	}
+
+	@Override
+	public World getWorld() {
+		return worldObj;
+	}
 }

@@ -1,5 +1,6 @@
 package stargatetech2.core.tileentity;
 
+import net.minecraft.world.World;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.stargate.Address;
@@ -37,5 +38,10 @@ public class TileStargateBase extends TileStargateRing implements ITileStargateB
 	@Override
 	public int getZCoord() {
 		return zCoord;
+	}
+
+	@Override
+	public World getWorld() {
+		return worldObj;
 	}
 }

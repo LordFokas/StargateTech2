@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.BusPacketLIP;
@@ -153,6 +154,11 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 	public BusPacket getNextPacket(){
 		if(outputQueue.isEmpty()) return null;
 		else return outputQueue.removeFirst();
+	}
+	
+	@Override
+	public World getWorld() {
+		return worldObj;
 	}
 	
 	@Override

@@ -58,7 +58,7 @@ public final class BusInterface implements IBusInterface{
 	
 	private void sendPacket(BusPacket packet){
 		ArrayList memory = new ArrayList();
-		World w = device.getWorldObj();
+		World w = device.getWorld();
 		for(Vec4Int addr : addressCache){
 			TileEntity te = w.getBlockTileEntity(addr.x, addr.y, addr.z);
 			if(te instanceof IBusDevice){

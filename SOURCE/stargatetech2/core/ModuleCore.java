@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
 import stargatetech2.common.reference.TileEntityReference;
@@ -193,6 +194,8 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahCapacitor, 1, 0), "PPP", "CRC", "PIP", 'P', naqPlate, 'C', circuit, 'R', crystal1, 'I', ironBlock);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahCapacitor, 1, 1), "PPP", "CRC", "PIP", 'P', naqPlate, 'C', circuit, 'R', crystal2, 'I', ironBlock);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahCapacitor, 1, 2), "PPP", "CRC", "PIP", 'P', naqPlate, 'C', circuit, 'R', crystal3, 'I', ironBlock);
+		
+		GameRegistry.addShapedRecipe(new ItemStack(busCable, 8), "WWW", "NNN", "WWW", 'N', naqIngot, 'W', new ItemStack(Block.cloth, 1, OreDictionary.WILDCARD_VALUE));
 		
 		for(Color color : Color.COLORS){
 			for(int i = 0; i < 16; i++){

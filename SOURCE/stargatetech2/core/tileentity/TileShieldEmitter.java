@@ -3,6 +3,7 @@ package stargatetech2.core.tileentity;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -271,6 +272,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		permissions = ShieldPermissions.readFromNBT(permNBT);
 		shieldOn = nbt.getBoolean("shieldOn");
 		owner = nbt.getString("owner");
+		canRun = nbt.getBoolean("canRun");
 		if(nbt.hasKey("pair")){
 			nbtPair = Vec3Int.fromNBT(nbt.getCompoundTag("pair"));
 		}
@@ -284,6 +286,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		nbt.setCompoundTag("perm", permissions.writeToNBT());
 		nbt.setBoolean("shieldOn", shieldOn);
 		nbt.setString("owner", owner);
+		nbt.setBoolean("canRun", canRun);
 		if(pair != null){
 			Vec3Int p = new Vec3Int(pair.xCoord, pair.yCoord, pair.xCoord);
 			nbt.setCompoundTag("pair", p.toNBT());
@@ -342,5 +345,10 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	@Override
 	public int getZCoord() {
 		return zCoord;
+	}
+
+	@Override
+	public World getWorld() {
+		return worldObj;
 	}
 }

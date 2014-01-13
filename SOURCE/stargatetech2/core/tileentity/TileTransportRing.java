@@ -359,4 +359,9 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	public int getZCoord() {
 		return zCoord;
 	}
+
+	@Override
+	public World getWorld() {
+		return worldObj;
+	}
 }
