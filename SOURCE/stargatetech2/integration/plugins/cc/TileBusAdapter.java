@@ -1,5 +1,6 @@
 package stargatetech2.integration.plugins.cc;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +25,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 	};
 	private int attachedComputers = 0;
 	private IComputerAccess computer;
+	private BusPacketLIP packet;
 	
 	//############################### CC STUFF
 	private static enum ComputerMethod{
@@ -31,7 +33,12 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 		GETADDRESS	("getAddress"),
 		SENDPACKET	("sendPacket"),
 		RECVPACKET	("recvPacket"),
-		GETRECVCOUNT("getRecvCount");
+		GETRECVCOUNT("getRecvCount"),
+		
+		PULLPACKET("pullPacket"),
+		DISPOSEPACKET("disposePacket"),
+		GETFIELDLIST("getFieldList"),
+		GETFIELD("getField");
 		
 		private String name;
 		public static final String[] ALL;
@@ -93,6 +100,25 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 					return new Object[]{true};
 				}
 				return new Object[]{false};
+			// ### PACKET HANDLING ##################################################################
+			case PULLPACKET:
+				boolean hadPacket = !received.isEmpty();
+				if(hadPacket) packet = received.removeFirst();
+				return new Object[]{hadPacket};
+			case DISPOSEPACKET:
+				boolean changed = (packet != null);
+				packet = null;
+				return new Object[]{changed};
+			case GETFIELDLIST:
+				ArrayList<String> keys = packet.getEntryList();
+				System.out.println("SIZE: " + keys.size());
+				String[] fields = new String[keys.size()];
+				for(int i = 0; i < keys.size(); i++){
+					fields[i] = keys.get(i);
+				}
+				return fields;
+			case GETFIELD:
+				return new Object[]{packet.get((String)arguments[0])};
 			default: break;
 		}
 		return null;
