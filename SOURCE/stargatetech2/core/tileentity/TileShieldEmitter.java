@@ -17,6 +17,7 @@ import stargatetech2.api.shields.IShieldable;
 import stargatetech2.api.shields.ITileShieldEmitter;
 import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.common.base.BaseTileEntity;
+import stargatetech2.common.util.ConfigServer;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.block.BlockShield;
@@ -26,8 +27,6 @@ import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.WeakBlockRegistry;
 
 public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, ITileShieldEmitter, IBusDevice {
-	public static int MAX_EMITTER_RANGE;
-	
 	// NBT DATA
 	private TileShieldEmitter pair = null;
 	private FluidTank tank = new FluidTank(2000);
@@ -106,7 +105,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 	private void destroyShield(){
 		ForgeDirection dir = ForgeDirection.getOrientation(getBlockMetadata());
 		Vec3Int pos = new Vec3Int(xCoord, yCoord, zCoord);
-		for(int i = 0; i <= MAX_EMITTER_RANGE; i++){
+		for(int i = 0; i <= ConfigServer.shieldEmitterRange; i++){
 			pos = pos.offset(dir);
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			if(Block.blocksList[bid] instanceof BlockShield){
@@ -127,7 +126,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		ForgeDirection dir = ForgeDirection.getOrientation(getBlockMetadata());
 		Vec3Int emitter = new Vec3Int(xCoord, yCoord, zCoord);
 		Vec3Int pos = new Vec3Int(xCoord, yCoord, zCoord);
-		for(int i = 0; i <= MAX_EMITTER_RANGE; i++){
+		for(int i = 0; i <= ConfigServer.shieldEmitterRange; i++){
 			pos = pos.offset(dir);
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			int meta = worldObj.getBlockMetadata(pos.x, pos.y, pos.z);
@@ -162,7 +161,7 @@ public class TileShieldEmitter extends BaseTileEntity implements IFluidHandler, 
 		ForgeDirection dir = ForgeDirection.getOrientation(getBlockMetadata());
 		ForgeDirection target = dir.getOpposite();
 		Vec3Int pos = new Vec3Int(xCoord, yCoord, zCoord);
-		for(int i = 0; i <= MAX_EMITTER_RANGE; i++){
+		for(int i = 0; i <= ConfigServer.shieldEmitterRange; i++){
 			pos = pos.offset(dir);
 			int bid = worldObj.getBlockId(pos.x, pos.y, pos.z);
 			int meta = worldObj.getBlockMetadata(pos.x, pos.y, pos.z);

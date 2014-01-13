@@ -7,6 +7,7 @@ public class ConfigReference {
 	//****************************************************************************************************
 	// TREE NODES
 	public static final String KEY_CFG_SERVER		= "cfg.server";
+	public static final String KEY_CFG_SV_WGEN		= "cfg.server.worldgen";
 	public static final String KEY_CFG_CLIENT		= "cfg.client";
 	public static final String KEY_IDS_BLOCKS		= "ids.blocks";
 	public static final String KEY_IDS_ITEMS		= "ids.items";

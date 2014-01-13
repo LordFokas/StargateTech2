@@ -27,12 +27,6 @@ public final class BusInterface implements IBusInterface{
 		addressingTable = new ArrayList[6];
 		addressCache = new ArrayList();
 	}
-
-	@Override
-	public void updateAddressingTable(){
-		Vec3Int position = new Vec3Int(device.getXCoord(), device.getYCoord(), device.getZCoord());
-		RecursiveBusRemapper.scan(device.getWorldObj(), position);
-	}
 	
 	public void setAddressingTable(int side, ArrayList<Vec4Int> table){
 		addressingTable[side] = table;

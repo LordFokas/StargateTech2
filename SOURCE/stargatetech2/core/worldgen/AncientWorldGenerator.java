@@ -2,15 +2,15 @@ package stargatetech2.core.worldgen;
 
 import java.util.Random;
 
+import stargatetech2.common.util.ConfigServer;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public class AncientWorldGenerator {
-	private static final FeatureRarity RARITY_LOOT_POD = new FeatureRarity(4, 4, 10);
+	private static final FeatureRarity RARITY_LOOT_POD = new FeatureRarity(ConfigServer.wgLootPodGap, ConfigServer.wgLootPodGap, ConfigServer.wgLootPodOdd);
 	private static final FeatureRarity RARITY_SKY_BASE = new FeatureRarity(16, 16, 1);
 	
 	private static final WorldGenLootPod worldGenLootPod = new WorldGenLootPod();
-	private static final WorldGenSkyBase worldGenSkyBase = new WorldGenSkyBase();
 	
 	private static class FeatureRarity {
 		private final int padX, padZ, odds;
@@ -32,9 +32,7 @@ public class AncientWorldGenerator {
 		}
 	}
 	
-	public static void generateSkyBase(Random r, int cX, int cZ, World w, IChunkProvider chunkGen, IChunkProvider provider){
-		if(RARITY_SKY_BASE.match(cX, cZ, r)){
-			worldGenSkyBase.generate(r, cX, cZ, w, chunkGen, provider);
-		}
+	public static void generateStargate(Random r, int cX, int cZ, World w, IChunkProvider chunkGen, IChunkProvider provider){
+		
 	}
 }
