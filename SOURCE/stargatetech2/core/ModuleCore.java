@@ -14,7 +14,6 @@ import stargatetech2.common.util.Color;
 import stargatetech2.core.block.BlockBusCable;
 import stargatetech2.core.block.BlockInvisible;
 import stargatetech2.core.block.BlockLanteanWall;
-import stargatetech2.core.block.BlockNaquadahCapacitor;
 import stargatetech2.core.block.BlockNaquadahOre;
 import stargatetech2.core.block.BlockNaquadahRail;
 import stargatetech2.core.block.BlockParticleIonizer;
@@ -26,7 +25,6 @@ import stargatetech2.core.item.ItemNaquadah;
 import stargatetech2.core.item.ItemPersonalShield;
 import stargatetech2.core.item.ItemTabletPC;
 import stargatetech2.core.network.stargate.StargateNetwork;
-import stargatetech2.core.tileentity.TileNaquadahCapacitor;
 import stargatetech2.core.tileentity.TileParticleIonizer;
 import stargatetech2.core.tileentity.TileShield;
 import stargatetech2.core.tileentity.TileShieldEmitter;
@@ -51,7 +49,6 @@ public final class ModuleCore implements IContentModule{
 	public static BlockTransportRing transportRing;
 	public static BlockInvisible invisible;
 	public static BlockLanteanWall lanteanWall;
-	public static BlockNaquadahCapacitor naquadahCapacitor;
 	public static BlockStargate stargate;
 	public static BlockBusCable busCable;
 	
@@ -69,7 +66,6 @@ public final class ModuleCore implements IContentModule{
 		transportRing = new BlockTransportRing();
 		invisible = new BlockInvisible();
 		lanteanWall = new BlockLanteanWall();
-		naquadahCapacitor = new BlockNaquadahCapacitor();
 		stargate = new BlockStargate();
 		busCable = new BlockBusCable();
 		
@@ -90,7 +86,6 @@ public final class ModuleCore implements IContentModule{
 		transportRing.registerBlock();
 		invisible.registerBlock();
 		lanteanWall.registerBlock();
-		naquadahCapacitor.registerBlock();
 		stargate.registerBlock();
 		busCable.registerBlock();
 		
@@ -98,7 +93,6 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);
 		GameRegistry.registerTileEntity(TileShield.class, TileEntityReference.TILE_SHIELD);
 		GameRegistry.registerTileEntity(TileTransportRing.class, TileEntityReference.TILE_TRANSPORT_RING);
-		GameRegistry.registerTileEntity(TileNaquadahCapacitor.class, TileEntityReference.TILE_NAQUADAH_CAPACITOR);
 		GameRegistry.registerTileEntity(TileStargate.class, TileEntityReference.TILE_STARGATE);
 		GameRegistry.registerTileEntity(TileStargateRing.class, TileEntityReference.TILE_STARGATE_RING);
 		GameRegistry.registerTileEntity(TileStargateBase.class, TileEntityReference.TILE_STARGATE_BASE);
@@ -117,7 +111,6 @@ public final class ModuleCore implements IContentModule{
 		LanguageRegistry.addName(invisible, "Invisible Block");
 		for(int i = 0; i < 16; i++)
 			LanguageRegistry.addName(new ItemStack(lanteanWall, 1, i), Color.COLORS[i].name + " Lantean Wall");
-		LanguageRegistry.addName(naquadahCapacitor, "Naquadah Capacitor");
 		LanguageRegistry.addName(stargate, "Stargate");
 		LanguageRegistry.addName(busCable, "Abstract Bus Cable");
 		
@@ -190,11 +183,6 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.addShapedRecipe(crystal1, "GNG", "NNN", "CNC", 'N', naqIngot, 'C', circuit, 'G', Color.GREEN.getDye());
 		GameRegistry.addShapedRecipe(crystal2, "YNY", "NGN", "CDC", 'N', naqIngot, 'C', circuit, 'G', crystal1, 'D', diamond, 'Y', Color.YELLOW.getDye());
 		GameRegistry.addShapedRecipe(crystal3, "RNR", "NYN", "CDC", 'N', naqIngot, 'C', circuit, 'Y', crystal2, 'D', diamond, 'R', Color.RED.getDye());
-		
-		GameRegistry.addShapedRecipe(new ItemStack(naquadahCapacitor, 1, 0), "PPP", "CRC", "PIP", 'P', naqPlate, 'C', circuit, 'R', crystal1, 'I', ironBlock);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadahCapacitor, 1, 1), "PPP", "CRC", "PIP", 'P', naqPlate, 'C', circuit, 'R', crystal2, 'I', ironBlock);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadahCapacitor, 1, 2), "PPP", "CRC", "PIP", 'P', naqPlate, 'C', circuit, 'R', crystal3, 'I', ironBlock);
-		
 		GameRegistry.addShapedRecipe(new ItemStack(busCable, 8), "WWW", "NNN", "WWW", 'N', naqIngot, 'W', new ItemStack(Block.cloth, 1, OreDictionary.WILDCARD_VALUE));
 		
 		for(Color color : Color.COLORS){

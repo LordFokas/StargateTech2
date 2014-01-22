@@ -14,7 +14,6 @@ public class BlockReference {
 	public static final String TRANSPORT_RING = "transportRing";
 	public static final String INVISIBLE = "invisible";
 	public static final String LANTEAN_WALL = "lanteanWall";
-	public static final String NAQUADAH_CAPACITOR = "naquadahCapacitor";
 	public static final String STARGATE = "stargate";
 	public static final String BUS_CABLE = "busCable";
 	
@@ -30,7 +29,6 @@ public class BlockReference {
 		ALL_BLOCKS.add(TRANSPORT_RING);
 		ALL_BLOCKS.add(INVISIBLE);
 		ALL_BLOCKS.add(LANTEAN_WALL);
-		ALL_BLOCKS.add(NAQUADAH_CAPACITOR);
 		ALL_BLOCKS.add(STARGATE);
 		ALL_BLOCKS.add(BUS_CABLE);
 		
