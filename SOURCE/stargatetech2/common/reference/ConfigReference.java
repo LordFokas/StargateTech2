@@ -15,8 +15,7 @@ public class ConfigReference {
 	public static final String KEY_PLUGINS_CC		= "plugins.computercraft";
 	public static final String KEY_PLUGINS_FORESTRY	= "plugins.forestry";
 	public static final String KEY_PLUGINS_IC2		= "plugins.industrialcraft2";
-	public static final String KEY_PLUGINS_RC		= "plugins.railcraft";
-	public static final String KEY_PLUGINS_TE		= "plugins.thermalexpansion";
+	public static final String KEY_PLUGINS_TE3		= "plugins.thermalexpansion3";
 	
 	
 	//****************************************************************************************************

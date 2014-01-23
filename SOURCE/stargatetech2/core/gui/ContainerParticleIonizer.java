@@ -62,7 +62,7 @@ public class ContainerParticleIonizer extends BaseContainer{
 			lastParticles = particles;
 			sendUpdate(0, particles);
 		}
-		int power = (int)ionizer.getPowerReceiver(null).getEnergyStored();
+		int power = (int)ionizer.getEnergyStored(null);
 		if(power != lastPower){
 			lastPower = power;
 			sendUpdate(1, power);

@@ -36,7 +36,7 @@ import stargatetech2.core.util.ChunkLoader;
 import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.worldgen.CoreWorldGenerator;
-import buildcraft.BuildCraftTransport;
+import stargatetech2.integration.ModuleIntegration;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -156,8 +156,6 @@ public final class ModuleCore implements IContentModule{
 		
 		ItemStack glass = new ItemStack(Block.thinGlass);
 		ItemStack stone = new ItemStack(Block.stone);
-		ItemStack fPipe = new ItemStack(BuildCraftTransport.pipeFluidsGold);
-		ItemStack kPipe = new ItemStack(BuildCraftTransport.pipePowerGold);
 		ItemStack cauldron = new ItemStack(Item.cauldron);
 		ItemStack stick = new ItemStack(Item.stick);
 		ItemStack redstone = new ItemStack(Item.redstone);
@@ -165,18 +163,19 @@ public final class ModuleCore implements IContentModule{
 		ItemStack ironBlock = new ItemStack(Block.blockIron);
 		ItemStack quartz = new ItemStack(Item.netherQuartz);
 		ItemStack diamond = new ItemStack(Item.diamond);
+		ItemStack bucket = new ItemStack(Item.bucketEmpty);
 		
 		GameRegistry.addSmelting(naquadahOre.blockID, naqIngot, 0);
 		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.LATTICE.ID, circuit, 0);
+		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.DUST.ID, naqIngot, 0);
 		
-		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "SNS", "NGN", "SPS", 'S', stone, 'N', naqPlate, 'G', glass, 'P', fPipe);
-		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "SKS", "NCN", "SFS", 'S', stone, 'K', kPipe, 'N', naqPlate, 'C', cauldron, 'F', fPipe);
+		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "PBP", "CPC", "PCP", 'P', naqPlate, 'C', circuit, 'B', bucket);
+		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "PBP", "CPC", "PYP", 'P', naqPlate, 'C', circuit, 'B', bucket, 'Y', crystal1);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail), "NSN", "NSN", "NSN", 'N', naqBar, 'S', stick);
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', naqIngot, 'R', redstone, 'G', glass);
 		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "NPN", "NBN", "NPN", 'N', naqPlate, 'P', pearl, 'B', ironBlock);
 		GameRegistry.addShapedRecipe(new ItemStack(lanteanWall, 8, Color.LIGHT_GRAY.id), "SSS", "SNS", "SSS", 'S', stone, 'N', naqIngot);
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 2, ItemNaquadah.DUST.ID), new ItemStack(naquadahOre));
 		GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 3, ItemNaquadah.LATTICE.ID), quartz, quartz, naqDust);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 4, ItemNaquadah.BAR.ID), "--S", "-S-", "S--", 'S', naqIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', naqIngot);
@@ -191,6 +190,10 @@ public final class ModuleCore implements IContentModule{
 					GameRegistry.addShapelessRecipe(new ItemStack(lanteanWall, 1, color.id), new ItemStack(lanteanWall, 1, i), color.getDye());
 				}
 			}
+		}
+		
+		if(!ModuleIntegration.naqDustRecipeAdded){
+			GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 1, ItemNaquadah.DUST.ID), new ItemStack(naquadahOre));
 		}
 	}
 }

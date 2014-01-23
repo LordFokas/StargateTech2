@@ -19,7 +19,7 @@ public class GUIParticleIonizer extends BaseGUI {
 		ionizer = container.ionizer;
 		bgImage = TextureReference.GUI_PARTICLE_IONIZER;
 		ionTank = new TankGauge(127, 16, ionizer.getTankInfo(null)[0].capacity);
-		power = new PowerGauge(151, 16, ionizer.getPowerReceiver(null).getMaxEnergyStored());
+		power = new PowerGauge(151, 16, ionizer.getMaxEnergyStored(null));
 		power.setCurrentValue(60000);
 		addGauge(ionTank);
 		addGauge(power);
@@ -37,7 +37,7 @@ public class GUIParticleIonizer extends BaseGUI {
 			Recipe recipe = ParticleIonizerRecipes.getRecipe(ionizer.consuming);
 			itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, ionizer.consuming, 94, 31);
 			drawLeft("" + recipe.ions + " mB/s", 77, 52, 0x444444);
-			drawLeft("" + recipe.power + " MJ/s", 77, 64, 0x444444);
+			drawLeft("" + recipe.power + " RF/s", 77, 64, 0x444444);
 			
 			float finish = 1F - ((float)ionizer.workTicks) / ((float)recipe.ticks);
 			bindImage(bgImage);
@@ -51,6 +51,6 @@ public class GUIParticleIonizer extends BaseGUI {
 	@Override
 	protected void updateGauges(){
 		ionTank.setCurrentValue(ionizer.getIonAmount());
-		power.setCurrentValue(ionizer.getPowerReceiver(null).getEnergyStored());
+		power.setCurrentValue(ionizer.getEnergyStored(null));
 	}
 }

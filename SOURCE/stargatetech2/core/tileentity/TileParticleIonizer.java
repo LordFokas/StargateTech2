@@ -1,5 +1,7 @@
 package stargatetech2.core.tileentity;
 
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -17,32 +19,22 @@ import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.common.base.BaseTileEntity;
-import stargatetech2.common.machine.NearZeroPerdition;
 import stargatetech2.core.network.bus.BusDriver;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ParticleIonizerRecipes;
 import stargatetech2.core.util.ParticleIonizerRecipes.Recipe;
-import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerHandler;
-import buildcraft.api.power.PowerHandler.PowerReceiver;
-import buildcraft.api.power.PowerHandler.Type;
 
-public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler, IPowerReceptor, IInventory, IBusDevice{
+public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler, IEnergyHandler, IInventory, IBusDevice{
 	private FluidTank tank = new FluidTank(4000);
 	private ItemStack[] inventory = new ItemStack[9];
-	private PowerHandler powerHandler = new PowerHandler(this, Type.MACHINE);
 	public ItemStack consuming = null;
+	EnergyStorage capacitor = new EnergyStorage(12000, 40);
 	public int workTicks;
 	public Recipe recipe;
 	private IBusDriver networkDriver = new BusDriver();
 	private IBusInterface[] interfaces = new IBusInterface[]{
 			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
 	};
-	
-	public TileParticleIonizer(){
-		powerHandler.configure(50, 100, 5, 16000);
-		powerHandler.setPerdition(new NearZeroPerdition());
-	}
 	
 	@Override
 	public void invalidate(){
@@ -80,10 +72,10 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 			}else{
 				FluidStack fs = new FluidStack(IonizedParticles.fluid, recipe.ions);
 				int fill = tank.fill(fs, false);
-				if(fill < fs.amount || powerHandler.useEnergy(recipe.power, recipe.power, false) < recipe.power){
+				if(fill < fs.amount || capacitor.extractEnergy(recipe.power, true) < recipe.power){
 					return;
 				}
-				powerHandler.useEnergy(recipe.power, recipe.power, true);
+				capacitor.extractEnergy(recipe.power, false);
 				tank.fill(fs, true);
 				workTicks--;
 				if(workTicks == 0){
@@ -103,13 +95,13 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	}
 	
 	public void setPower(int value){
-		powerHandler.setEnergy(value);
+		capacitor.setEnergyStored(value);
 	}
 	
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
 		tank.readFromNBT(nbt);
-		powerHandler.readFromNBT(nbt.getCompoundTag("powerHandler"));
+		capacitor.readFromNBT(nbt.getCompoundTag("power"));
 		for(int slot = 0; slot < inventory.length; slot++){
 			if(nbt.hasKey("stack" + slot)){
 				inventory[slot] = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("stack" + slot));
@@ -128,9 +120,9 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		tank.writeToNBT(nbt);
-		NBTTagCompound ph = new NBTTagCompound();
-		powerHandler.writeToNBT(ph);
-		nbt.setCompoundTag("powerHandler", ph);
+		NBTTagCompound power = new NBTTagCompound();
+		capacitor.writeToNBT(power);
+		nbt.setCompoundTag("power", power);
 		for(int slot = 0; slot < inventory.length; slot++){
 			NBTTagCompound stack = new NBTTagCompound();
 			if(inventory[slot] != null){
@@ -147,17 +139,31 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	}
 	
 	//##################################################################################
-	// IPowerReceptor
+	// IEnergyHandler
+	
 	@Override
-	public PowerReceiver getPowerReceiver(ForgeDirection side) {
-		return powerHandler.getPowerReceiver();
+	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+		return capacitor.receiveEnergy(maxReceive, simulate);
 	}
 	
-	@Override public void doWork(PowerHandler workProvider) {}
+	@Override
+	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+		return capacitor.extractEnergy(maxExtract, simulate);
+	}
 	
 	@Override
-	public World getWorld() {
-		return worldObj;
+	public boolean canInterface(ForgeDirection from) {
+		return from.ordinal() != getBlockMetadata();
+	}
+	
+	@Override
+	public int getEnergyStored(ForgeDirection from) {
+		return capacitor.getEnergyStored();
+	}
+	
+	@Override
+	public int getMaxEnergyStored(ForgeDirection from) {
+		return capacitor.getMaxEnergyStored();
 	}
 	
 	//##################################################################################
@@ -239,10 +245,18 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	@Override public int getSizeInventory(){ return inventory.length; }
 	@Override public void openChest(){}
 	@Override public void closeChest(){}
-
+	
+	//##################################################################################
+	// IBusDevice
+	
 	@Override
 	public IBusInterface[] getInterfaces(int side) {
 		return getBlockMetadata() == side ? null : interfaces;
+	}
+	
+	@Override
+	public World getWorld(){
+		return worldObj;
 	}
 	
 	@Override
