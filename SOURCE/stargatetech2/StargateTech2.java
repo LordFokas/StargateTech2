@@ -27,7 +27,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid=ModReference.MOD_ID, name=ModReference.MOD_NAME, version=ModReference.MOD_VERSION, dependencies=ModReference.DEPENDENCIES)
+@Mod(modid=ModReference.MOD_ID, name=ModReference.MOD_NAME, version=ModReference.MOD_VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class StargateTech2 {
 	@Instance(ModReference.MOD_ID)

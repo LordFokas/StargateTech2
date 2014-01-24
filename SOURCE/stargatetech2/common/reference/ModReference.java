@@ -4,5 +4,9 @@ public class ModReference {
 	public static final String MOD_ID		= "StargateTech2";
 	public static final String MOD_NAME		= "StargateTech 2";
 	public static final String MOD_VERSION	= "0.6.2-Alpha";
-	public static final String DEPENDENCIES = ""; // StargateTech 2 feels much better now.
+	
+	// Unnecessary at this point.
+	// And the mod is so much better without BC!
+	//
+	// public static final String DEPENDENCIES = "";
 }
