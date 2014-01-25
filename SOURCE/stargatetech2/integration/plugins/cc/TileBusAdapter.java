@@ -1,6 +1,5 @@
 package stargatetech2.integration.plugins.cc;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import net.minecraft.nbt.NBTTagCompound;

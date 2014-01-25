@@ -3,27 +3,40 @@ package stargatetech2.integration;
 import java.util.ArrayList;
 
 import stargatetech2.IContentModule;
+import stargatetech2.common.util.StargateLogger;
 import stargatetech2.integration.plugins.BasePlugin;
 import stargatetech2.integration.plugins.cc.PluginCC;
 import stargatetech2.integration.plugins.ic2.PluginIC2;
 import stargatetech2.integration.plugins.te3.PluginTE3;
 
 public class ModuleIntegration implements IContentModule {
-	public static boolean naqDustRecipeAdded = false;
-	
 	private ArrayList<BasePlugin> plugins = new ArrayList<BasePlugin>();
+	
+	public static BasePlugin te3;
+	public static BasePlugin ic2;
+	public static BasePlugin cc;
 	
 	@Override
 	public void preInit(){
-		addPlugin(new PluginTE3());
-		addPlugin(new PluginIC2());
-		addPlugin(new PluginCC());
+		te3	= new PluginTE3();
+		ic2	= new PluginIC2();
+		cc	= new PluginCC();
+		
+		plugins.add(te3);
+		plugins.add(ic2);
+		plugins.add(cc);
 	}
 
 	@Override
 	public void init(){
 		for(BasePlugin plugin : plugins){
-			plugin.load();
+			try{
+				StargateLogger.info("Loading Integration Plugin: " + plugin.getModID());
+				plugin.run();
+			}catch(Exception exception){
+				StargateLogger.severe("An error ocurred while loading the Integration Plugin.");
+				exception.printStackTrace();
+			}
 		}
 	}
 
@@ -34,10 +47,5 @@ public class ModuleIntegration implements IContentModule {
 	@Override
 	public String getModuleName(){
 		return "Integration";
-	}
-	
-	private void addPlugin(BasePlugin plugin){
-		if(plugin.shouldLoad())
-			plugins.add(plugin);
 	}
 }

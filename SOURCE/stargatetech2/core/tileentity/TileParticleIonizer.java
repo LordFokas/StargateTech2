@@ -1,7 +1,5 @@
 package stargatetech2.core.tileentity;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -23,6 +21,8 @@ import stargatetech2.core.network.bus.BusDriver;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.util.ParticleIonizerRecipes;
 import stargatetech2.core.util.ParticleIonizerRecipes.Recipe;
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 
 public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler, IEnergyHandler, IInventory, IBusDevice{
 	private FluidTank tank = new FluidTank(4000);

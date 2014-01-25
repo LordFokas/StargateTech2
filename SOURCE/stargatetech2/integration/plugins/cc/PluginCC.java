@@ -17,7 +17,7 @@ public class PluginCC extends BasePlugin {
 	}
 
 	@Override
-	public void load() {
+	protected void load() {
 		busAdapter = new BlockBusAdapter();
 		busAdapter.registerBlock();
 		GameRegistry.registerTileEntity(TileBusAdapter.class, TileEntityReference.TILE_BUS_ADAPTER);
@@ -28,4 +28,6 @@ public class PluginCC extends BasePlugin {
 		circuit = new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.CIRCUIT.ID);
 		GameRegistry.addShapedRecipe(new ItemStack(busAdapter), "PBP", "BCB", "PBP", 'P', plate, 'B', cable, 'C', circuit);
 	}
+
+	@Override protected void fallback(){}
 }

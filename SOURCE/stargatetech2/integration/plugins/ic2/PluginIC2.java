@@ -16,7 +16,7 @@ public class PluginIC2 extends BasePlugin {
 	}
 
 	@Override
-	public void load(){
+	protected void load(){
 		scrap = Items.getItem("scrap");
 		scrapBox = Items.getItem("scrapBox");
 		uuMatter = Items.getItem("matter");
@@ -25,4 +25,6 @@ public class PluginIC2 extends BasePlugin {
 		ParticleIonizerRecipes.addRecipe(scrapBox, 1800, 8, 4);
 		ParticleIonizerRecipes.addRecipe(uuMatter, 1800, 40, 1);
 	}
+
+	@Override protected void fallback(){}
 }

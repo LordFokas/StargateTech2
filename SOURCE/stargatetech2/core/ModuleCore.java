@@ -36,7 +36,6 @@ import stargatetech2.core.util.ChunkLoader;
 import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.IonizedParticles;
 import stargatetech2.core.worldgen.CoreWorldGenerator;
-import stargatetech2.integration.ModuleIntegration;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -190,10 +189,6 @@ public final class ModuleCore implements IContentModule{
 					GameRegistry.addShapelessRecipe(new ItemStack(lanteanWall, 1, color.id), new ItemStack(lanteanWall, 1, i), color.getDye());
 				}
 			}
-		}
-		
-		if(!ModuleIntegration.naqDustRecipeAdded){
-			GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 1, ItemNaquadah.DUST.ID), new ItemStack(naquadahOre));
 		}
 	}
 }

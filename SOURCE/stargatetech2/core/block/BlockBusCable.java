@@ -2,7 +2,6 @@ package stargatetech2.core.block;
 
 import java.util.List;
 
-import buildcraft.api.tools.IToolWrench;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -19,6 +18,7 @@ import stargatetech2.common.reference.BlockReference;
 import stargatetech2.core.network.bus.BusInterface;
 import stargatetech2.core.network.bus.Connection;
 import stargatetech2.core.rendering.RenderBusCable;
+import buildcraft.api.tools.IToolWrench;
 
 public class BlockBusCable extends BaseBlock {
 	

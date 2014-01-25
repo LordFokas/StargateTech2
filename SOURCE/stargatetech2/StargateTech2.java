@@ -60,7 +60,7 @@ public class StargateTech2 {
 				e.printStackTrace();
 			}
 		}
-		StargateLogger.info("All Modules Pre-Initalized successfully");
+		StargateLogger.info("All Modules Pre-Initalized.");
 	}
 	
 	@EventHandler
@@ -75,7 +75,7 @@ public class StargateTech2 {
 				e.printStackTrace();
 			}
 		}
-		StargateLogger.info("All Modules Initalized successfully");
+		StargateLogger.info("All Modules Initalized.");
 		apiImplementation.enableExternalAccess();
 	}
 	
@@ -90,7 +90,7 @@ public class StargateTech2 {
 				e.printStackTrace();
 			}
 		}
-		StargateLogger.info("All Modules Post-Initalized successfully");
+		StargateLogger.info("All Modules Post-Initalized.");
 		config.save();
 	}
 	
