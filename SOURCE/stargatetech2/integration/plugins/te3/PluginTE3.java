@@ -1,6 +1,5 @@
 package stargatetech2.integration.plugins.te3;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import stargatetech2.common.reference.ConfigReference;

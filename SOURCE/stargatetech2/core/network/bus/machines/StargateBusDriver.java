@@ -24,12 +24,21 @@ public class StargateBusDriver implements IBusDriver{
 
 	@Override
 	public void handlePacket(BusPacket packet) {
-		String dial = packet.getPlainText().get("dial");
+		BusPacketLIP lip = packet.getPlainText();
+		String dial = lip.get("dial");
 		if(dial != null){
 			Address address = StargateNetwork.parse(dial);
 			if(address != null){
 				stargate.dial(address);
 			}
+			return;
+		}
+		String action = lip.get("action");
+		if(action != null){
+			if(action.equalsIgnoreCase("disconnect")){
+				stargate.disconnect();
+			}
+			return;
 		}
 	}
 

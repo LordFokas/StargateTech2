@@ -1,12 +1,14 @@
 package stargatetech2.core.tileentity;
 
+import cofh.api.energy.IEnergyHandler;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargateBase;
 
-public class TileStargateBase extends TileStargateRing implements ITileStargateBase, IBusDevice{
+public class TileStargateBase extends TileStargateRing implements ITileStargateBase, IBusDevice, IEnergyHandler{
 	
 	@Override
 	public boolean dial(Address address) {
@@ -16,7 +18,10 @@ public class TileStargateBase extends TileStargateRing implements ITileStargateB
 		}
 		return false;
 	}
-
+	
+	// #########################################################
+	// IBusDevice
+	
 	@Override
 	public IBusInterface[] getInterfaces(int side) {
 		if(side == 1) return null;
@@ -43,5 +48,41 @@ public class TileStargateBase extends TileStargateRing implements ITileStargateB
 	@Override
 	public World getWorld() {
 		return worldObj;
+	}
+	
+	// #########################################################
+	// IEnergyHandler
+	
+	@Override
+	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+		TileStargate stargate = getStargate();
+		if(stargate == null) return 0;
+		else return stargate.receiveEnergy(from, maxReceive, simulate);
+	}
+
+	@Override
+	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+		return 0;
+	}
+
+	@Override
+	public boolean canInterface(ForgeDirection from) {
+		TileStargate stargate = getStargate();
+		if(stargate == null) return false;
+		else return stargate.canInterface(from);
+	}
+
+	@Override
+	public int getEnergyStored(ForgeDirection from) {
+		TileStargate stargate = getStargate();
+		if(stargate == null) return 0;
+		else return stargate.getEnergyStored(from);
+	}
+
+	@Override
+	public int getMaxEnergyStored(ForgeDirection from) {
+		TileStargate stargate = getStargate();
+		if(stargate == null) return 0;
+		else return stargate.getMaxEnergyStored(from);
 	}
 }

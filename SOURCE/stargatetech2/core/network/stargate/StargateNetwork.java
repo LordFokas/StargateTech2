@@ -97,7 +97,7 @@ public class StargateNetwork implements IStargateNetwork{
 				if(srcte instanceof TileStargate && dstte instanceof TileStargate){
 					TileStargate src = (TileStargate) srcte;
 					TileStargate dst = (TileStargate) dstte;
-					if(!src.hasActiveWormhole() && !dst.hasActiveWormhole()){
+					if(src.canDial(8) && !dst.hasActiveWormhole()){
 						activeWormholes.add(new Wormhole(src, dst, srcChunks, dstChunks));
 						return;
 					}
@@ -112,7 +112,6 @@ public class StargateNetwork implements IStargateNetwork{
 		activeWormholes.remove(wormhole);
 	}
 	
-	// TODO: finish this.
 	public boolean canPlaceStargateAt(World w, int x, int y, int z){
 		if(!isLoaded) return false;
 		int dim = w.provider.dimensionId;

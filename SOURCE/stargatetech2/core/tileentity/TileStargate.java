@@ -1,8 +1,11 @@
 package stargatetech2.core.tileentity;
 
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.BusPacketLIP;
 import stargatetech2.api.bus.BusPacketLIP.LIPMetadata;
@@ -21,7 +24,10 @@ import stargatetech2.core.worldgen.lists.StargateBuildList;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileStargate extends BaseTileEntity implements ITileStargateBase, IBusDevice{
+public class TileStargate extends BaseTileEntity implements ITileStargateBase, IBusDevice, IEnergyHandler{
+	private static final int DIAL_COST_8 = 20000;		// 20k
+	private static final int DIAL_COST_9 = 100000000;	// 100M
+	
 	@ServerLogic private boolean isInvalidating = false;
 	@ServerLogic private Wormhole wormhole = null;
 	@ServerLogic private boolean isSource = false;
@@ -30,9 +36,8 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	@ClientLogic private RenderData renderData = new RenderData();
 	
 	private StargateBusDriver networkDriver = new StargateBusDriver(this);
-	private IBusInterface[] interfaces = new IBusInterface[]{
-			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
-	};
+	private IBusInterface[] interfaces = new IBusInterface[]{ StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver) };
+	private EnergyStorage capacitor = new EnergyStorage(400000, 10000);
 	
 	@ClientLogic
 	public static class RenderData{
@@ -143,12 +148,28 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	}
 	
 	@ServerLogic
+	public boolean canDial(int addressSize){
+		if(hasActiveWormhole()){
+			return false;
+		}
+		switch(addressSize){
+			case 7: return true;
+			case 8: return capacitor.getEnergyStored() >= DIAL_COST_8;
+			case 9: return capacitor.getEnergyStored() >= DIAL_COST_9;
+		}
+		return false;
+	}
+	
+	@ServerLogic
 	public void setWormhole(Wormhole wormhole, boolean isSource, boolean broadcast){
 		this.wormhole = wormhole;
 		this.isSource = isSource;
 		PacketWormhole.sendSync(xCoord, yCoord, zCoord, true).sendToAllInDim(worldObj.provider.dimensionId);
 		Address address = isSource ? wormhole.getDestinationAddress() : wormhole.getSourceAddress();
 		if(broadcast){
+			if(isSource && address.length() == 8){
+				capacitor.extractEnergy(DIAL_COST_8, false);
+			}
 			BusPacketLIP packet = new BusPacketLIP(networkDriver.getInterfaceAddress(), (short)0xFFFF);
 			packet.setMetadata(new LIPMetadata(ModReference.MOD_ID, "Stargate", ""));
 			packet.set(".protocol", "Stargate Protocol");
@@ -159,6 +180,13 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 			packet.finish();
 			networkDriver.addPacket(packet);
 			interfaces[0].sendAllPackets();
+		}
+	}
+	
+	@ServerLogic
+	public void disconnect(){
+		if(wormhole != null){
+			wormhole.disconnect();
 		}
 	}
 	
@@ -178,7 +206,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	
 	@ClientLogic
 	private void clientTick(){
-		
+		// TODO: implement gate animation.
 	}
 	
 	@ClientLogic
@@ -208,6 +236,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 		interfaces[0].readFromNBT(nbt, "interface");
 		useXBuilder = nbt.getBoolean("useXBuilder");
 		renderData.hasWormhole = nbt.getBoolean("hasWormhole");
+		capacitor.readFromNBT(nbt);
 	}
 
 	@Override
@@ -215,6 +244,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 		interfaces[0].writeToNBT(nbt, "interface");
 		nbt.setBoolean("useXBuilder", useXBuilder);
 		nbt.setBoolean("hasWormhole", hasActiveWormhole());
+		capacitor.writeToNBT(nbt);
 	}
 
 	@Override
@@ -240,5 +270,33 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	@Override
 	public World getWorld() {
 		return worldObj;
+	}
+	
+	// #########################################################
+	// IEnergyHandler
+
+	@Override
+	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+		return capacitor.receiveEnergy(maxReceive, simulate);
+	}
+
+	@Override
+	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+		return capacitor.extractEnergy(maxExtract, simulate);
+	}
+
+	@Override
+	public boolean canInterface(ForgeDirection from) {
+		return from != ForgeDirection.UP;
+	}
+
+	@Override
+	public int getEnergyStored(ForgeDirection from) {
+		return capacitor.getEnergyStored();
+	}
+
+	@Override
+	public int getMaxEnergyStored(ForgeDirection from) {
+		return capacitor.getMaxEnergyStored();
 	}
 }
