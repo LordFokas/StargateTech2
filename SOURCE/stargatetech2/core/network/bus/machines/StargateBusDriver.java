@@ -25,20 +25,29 @@ public class StargateBusDriver implements IBusDriver{
 	@Override
 	public void handlePacket(BusPacket packet) {
 		BusPacketLIP lip = packet.getPlainText();
-		String dial = lip.get("dial");
-		if(dial != null){
-			Address address = StargateNetwork.parse(dial);
-			if(address != null){
-				stargate.dial(address);
-			}
-			return;
-		}
 		String action = lip.get("action");
 		if(action != null){
 			if(action.equalsIgnoreCase("disconnect")){
 				stargate.disconnect();
+			}else if(action.equalsIgnoreCase("dial")){
+				String addr = lip.get("address");
+				if(addr != null){
+					int timeout;
+					try{
+						timeout = Integer.parseInt(lip.get("timeout"));
+					}catch(Exception e){
+						timeout = 38;
+					}
+					Address address = StargateNetwork.parse(addr);
+					if(address != null){
+						stargate.dial(address, timeout);
+					}
+				}
+			}else if(action.equalsIgnoreCase("openIris")){
+				stargate.openIris();
+			}else if(action.equalsIgnoreCase("closeIris")){
+				stargate.closeIris();
 			}
-			return;
 		}
 	}
 

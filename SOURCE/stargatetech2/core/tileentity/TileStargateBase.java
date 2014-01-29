@@ -1,20 +1,20 @@
 package stargatetech2.core.tileentity;
 
-import cofh.api.energy.IEnergyHandler;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.ITileStargateBase;
+import cofh.api.energy.IEnergyHandler;
 
 public class TileStargateBase extends TileStargateRing implements ITileStargateBase, IBusDevice, IEnergyHandler{
 	
 	@Override
-	public boolean dial(Address address) {
+	public boolean dial(Address address, int timeout) {
 		TileStargate stargate = getStargate();
 		if(stargate != null){
-			return stargate.dial(address);
+			return stargate.dial(address, timeout);
 		}
 		return false;
 	}

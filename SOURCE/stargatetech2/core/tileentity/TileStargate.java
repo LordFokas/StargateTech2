@@ -1,7 +1,5 @@
 package stargatetech2.core.tileentity;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -21,6 +19,8 @@ import stargatetech2.core.network.stargate.StargateNetwork;
 import stargatetech2.core.network.stargate.Wormhole;
 import stargatetech2.core.packet.PacketWormhole;
 import stargatetech2.core.worldgen.lists.StargateBuildList;
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -136,9 +136,10 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	
 	@Override
 	@ServerLogic
-	public boolean dial(Address address){
+	public boolean dial(Address address, int timeout){
 		if(worldObj.isRemote || wormhole != null) return false;
-		StargateNetwork.instance().dial(getAddress(), address);
+		if(timeout < 1 || timeout > 38) timeout = 38;
+		StargateNetwork.instance().dial(getAddress(), address, timeout);
 		return hasActiveWormhole();
 	}
 	
@@ -195,6 +196,10 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 		wormhole = null;
 		PacketWormhole.sendSync(xCoord, yCoord, zCoord, false).sendToAllInDim(worldObj.provider.dimensionId);
 	}
+	
+	// TODO: Implement these, in the future.
+	@ServerLogic public void openIris(){}
+	@ServerLogic public void closeIris(){}
 	
 	@Override
 	public void setWorldObj(World w){

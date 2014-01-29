@@ -17,8 +17,6 @@ import stargatetech2.core.util.ChunkLoader;
 import stargatetech2.core.util.Teleporter;
 
 public final class Wormhole {
-	private static final int DEFAULT_WORMHOLE_TIME = 760; // 38 seconds
-	
 	private Vec4Int tmpSrc, tmpDst;
 	private TileStargate source, destination;
 	private boolean isWormholeActive = true;
@@ -27,8 +25,8 @@ public final class Wormhole {
 	
 	private Wormhole(){}
 	
-	public Wormhole(TileStargate source, TileStargate destination, long srcChunks, long dstChunks){
-		this.countdown = DEFAULT_WORMHOLE_TIME;
+	public Wormhole(TileStargate source, TileStargate destination, long srcChunks, long dstChunks, int timeout){
+		this.countdown = timeout * 20;
 		this.source = source;
 		this.destination = destination;
 		this.src = srcChunks;

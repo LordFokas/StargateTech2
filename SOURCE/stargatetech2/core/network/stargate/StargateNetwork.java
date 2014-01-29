@@ -76,7 +76,7 @@ public class StargateNetwork implements IStargateNetwork{
 		return isLoaded;
 	}
 	
-	public void dial(Address source, Address destination){
+	public void dial(Address source, Address destination, int timeout){
 		AddressMapping srcmap = addresses.get(source);
 		AddressMapping dstmap = addresses.get(destination);
 		if(srcmap != null && dstmap != null){
@@ -98,7 +98,7 @@ public class StargateNetwork implements IStargateNetwork{
 					TileStargate src = (TileStargate) srcte;
 					TileStargate dst = (TileStargate) dstte;
 					if(src.canDial(8) && !dst.hasActiveWormhole()){
-						activeWormholes.add(new Wormhole(src, dst, srcChunks, dstChunks));
+						activeWormholes.add(new Wormhole(src, dst, srcChunks, dstChunks, timeout));
 						return;
 					}
 				}
