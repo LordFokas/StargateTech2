@@ -195,6 +195,14 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	public void onDisconnect(){
 		wormhole = null;
 		PacketWormhole.sendSync(xCoord, yCoord, zCoord, false).sendToAllInDim(worldObj.provider.dimensionId);
+		BusPacketLIP packet = new BusPacketLIP(networkDriver.getInterfaceAddress(), (short)0xFFFF);
+		packet.setMetadata(new LIPMetadata(ModReference.MOD_ID, "Stargate", ""));
+		packet.set(".protocol", "Stargate Protocol");
+		packet.set(".target", "ANY");
+		packet.set("action", "disconnecting");
+		packet.finish();
+		networkDriver.addPacket(packet);
+		interfaces[0].sendAllPackets();
 	}
 	
 	// TODO: Implement these, in the future.
