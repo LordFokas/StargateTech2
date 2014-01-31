@@ -13,12 +13,11 @@ import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.StargateTech2;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.IBusDevice;
-import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.common.base.BaseTileEntity;
 import stargatetech2.common.util.Vec3Int;
 import stargatetech2.core.ModuleCore;
-import stargatetech2.core.network.bus.BusDriver;
+import stargatetech2.core.network.bus.machines.TransportRingBusDriver;
 
 public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	@ClientLogic private static Vec3Int LAST_IN_RANGE;
@@ -38,14 +37,13 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	private int teleportCooldown = 0;
 	private boolean isTeleporting = false;
 	private int teleportCountdown = 0;
-	private IBusDriver networkDriver = new BusDriver();
+	private TransportRingBusDriver networkDriver = new TransportRingBusDriver(this);
 	private IBusInterface[] interfaces = new IBusInterface[]{
 			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
 	};
 	
 	@ClientLogic
 	public static TileTransportRing getRingsInRange(World world){
-		TileTransportRing rings = null;
 		if(world != null && LAST_IN_RANGE != null){
 			TileEntity te = world.getBlockTileEntity(LAST_IN_RANGE.x, LAST_IN_RANGE.y, LAST_IN_RANGE.z);
 			if(te instanceof TileTransportRing){
@@ -54,7 +52,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 				}
 			}
 		}
-		return rings;
+		return null;
 	}
 	
 	@Override
@@ -122,18 +120,23 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	}
 	
 	@ServerLogic
-	public void teleport(boolean up){
+	public void teleport(boolean up, int leap){
 		if(canActivate()){
-			Vec3Int pair = up ? pairUp : pairDn;
-			if(pair == null) return;
-			TileEntity te = worldObj.getBlockTileEntity(pair.x, pair.y, pair.z);
-			if(te instanceof TileTransportRing){
-				TileTransportRing dest = (TileTransportRing) te;
-				if(dest.canActivate()){
-					int off = pair.y - yCoord;
-					this.startTeleportSequence( off);
-					dest.startTeleportSequence(-off);
+			TileTransportRing dest = this;
+			for(int i = 0; i < leap; i++){
+				Vec3Int pair = up ? dest.pairUp : dest.pairDn;
+				if(pair == null) return;
+				TileEntity te = worldObj.getBlockTileEntity(pair.x, pair.y, pair.z);
+				if(te instanceof TileTransportRing){
+					dest = (TileTransportRing) te;
+				}else{
+					return;
 				}
+			}
+			if(dest != this && dest.canActivate()){
+				int off = dest.yCoord - yCoord;
+				this.startTeleportSequence( off);
+				dest.startTeleportSequence(-off);
 			}
 		}
 	}

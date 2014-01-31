@@ -21,7 +21,7 @@ public class PacketActivateRings extends PacketCoordinates {
 		up = input.readBoolean();
 		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
 		if(te instanceof TileTransportRing){
-			((TileTransportRing)te).teleport(up);
+			((TileTransportRing)te).teleport(up, 1);
 		}
 	}
 }

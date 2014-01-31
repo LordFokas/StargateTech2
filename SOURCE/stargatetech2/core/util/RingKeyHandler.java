@@ -2,6 +2,7 @@ package stargatetech2.core.util;
 
 import java.util.EnumSet;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import stargatetech2.core.packet.PacketActivateRings;
 import stargatetech2.core.tileentity.TileTransportRing;
@@ -42,7 +43,7 @@ public class RingKeyHandler extends KeyHandler {
 	
 	private void makePlayerTriggerRings(boolean up){
 		TileTransportRing rings = TileTransportRing.getRingsInRange(FMLClientHandler.instance().getClient().theWorld);
-		if(rings != null){
+		if(rings != null && Minecraft.getMinecraft().currentScreen == null){
 			PacketActivateRings packet = new PacketActivateRings();
 			packet.x = rings.xCoord;
 			packet.y = rings.yCoord;
