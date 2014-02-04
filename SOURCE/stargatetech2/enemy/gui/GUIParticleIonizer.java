@@ -36,8 +36,8 @@ public class GUIParticleIonizer extends BaseGUI {
 		if(ionizer.consuming != null && ionizer.workTicks > 0){
 			Recipe recipe = ParticleIonizerRecipes.getRecipe(ionizer.consuming);
 			itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, ionizer.consuming, 94, 31);
-			drawLeft("" + recipe.ions + " mB/s", 77, 52, 0x444444);
-			drawLeft("" + recipe.power + " RF/s", 77, 64, 0x444444);
+			drawLeft("" + recipe.ions + " mB/t", 77, 52, 0x444444);
+			drawLeft("" + recipe.power + " RF/t", 77, 64, 0x444444);
 			
 			float finish = 1F - ((float)ionizer.workTicks) / ((float)recipe.ticks);
 			bindImage(bgImage);

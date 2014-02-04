@@ -43,9 +43,9 @@ public class ParticleIonizerRecipes{
 		return null;
 	}
 	
-	public static void addRecipe(ItemStack stack, int ticks, int ions, int power){
+	public static void addRecipe(ItemStack stack, int seconds, int ions, int power){
 		if(stack == null) return;
-		Recipe recipe = new Recipe(stack, ticks, ions, power);
+		Recipe recipe = new Recipe(stack, seconds * 20, ions, power);
 		if(!recipes.contains(recipe)) recipes.add(recipe);
 	}
 	
@@ -58,8 +58,8 @@ public class ParticleIonizerRecipes{
 	}
 	
 	static{
-		addRecipe(new ItemStack(Item.glowstone), 300, 5, 2);
-		addRecipe(new ItemStack(Item.redstone), 150, 1, 1);
-		addRecipe(new ItemStack(Block.blockRedstone), 1350, 1, 1);
+		addRecipe(new ItemStack(Item.glowstone), 300, 5, 10);
+		addRecipe(new ItemStack(Item.redstone), 150, 1, 5);
+		addRecipe(new ItemStack(Block.blockRedstone), 1350, 1, 5);
 	}
 }

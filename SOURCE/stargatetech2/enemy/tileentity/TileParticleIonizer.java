@@ -53,7 +53,7 @@ public class TileParticleIonizer extends BaseTileEntity implements IFluidHandler
 	
 	@Override
 	public void updateEntity(){
-		if(worldObj.isRemote == false && worldObj.getWorldTime() % 20 == 0){
+		if(worldObj.isRemote == false){
 			if(consuming == null){
 				for(int slot = 0; slot < inventory.length; slot++){
 					ItemStack item = inventory[slot];

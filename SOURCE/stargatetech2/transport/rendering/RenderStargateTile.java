@@ -1,6 +1,7 @@
 package stargatetech2.transport.rendering;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -80,6 +81,14 @@ public class RenderStargateTile extends BaseTESR {
 		new int[]{36, 37, 38}  // 13
 	};
 	
+	private int outerRing, innerRing;
+	private boolean oR = false, iR = false;
+	
+	public RenderStargateTile(){
+		outerRing = GLAllocation.generateDisplayLists(1);
+		innerRing = GLAllocation.generateDisplayLists(1);
+	}
+	
 	@Override
 	public void render(TileEntity te, Block block, World w, Vec3Int pos, float partialTicks) {
 		TileStargate stargate = (TileStargate) te;
@@ -132,7 +141,13 @@ public class RenderStargateTile extends BaseTESR {
 	private void renderOuterRing(){
 		GL11.glPushMatrix();
 		for(int i = 0; i < RING_SEGMENTS; i++){
-			renderOuterSegment();
+			if(!oR){
+				GL11.glNewList(outerRing, GL11.GL_COMPILE);
+				renderOuterSegment();
+				GL11.glEndList();
+				oR = true;
+			}
+			GL11.glCallList(outerRing);
 			GL11.glRotated(ANGLE_RING * 360D, 0, 0, 360);
 		}
 		GL11.glPopMatrix();
@@ -141,7 +156,13 @@ public class RenderStargateTile extends BaseTESR {
 	private void renderInnerRing(){
 		GL11.glPushMatrix();
 		for(int i = 0; i < RING_SEGMENTS; i++){
-			renderInnerSegment();
+			if(!iR){
+				GL11.glNewList(innerRing, GL11.GL_COMPILE);
+				renderInnerSegment();
+				GL11.glEndList();
+				iR = true;
+			}
+			GL11.glCallList(innerRing);
 			GL11.glRotated(ANGLE_RING * 360D, 0, 0, 360);
 		}
 		GL11.glPopMatrix();
