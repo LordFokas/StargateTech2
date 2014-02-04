@@ -5,8 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import stargatetech2.api.ITabletAccess;
-import stargatetech2.common.base.BaseItem;
-import stargatetech2.common.reference.ItemReference;
+import stargatetech2.core.base.BaseItem;
+import stargatetech2.core.reference.ItemReference;
 
 public class ItemTabletPC extends BaseItem {
 

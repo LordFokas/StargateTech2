@@ -3,7 +3,8 @@ package stargatetech2.integration;
 import java.util.ArrayList;
 
 import stargatetech2.IContentModule;
-import stargatetech2.common.util.StargateLogger;
+import stargatetech2.StargateTech2;
+import stargatetech2.core.util.StargateLogger;
 import stargatetech2.integration.plugins.BasePlugin;
 import stargatetech2.integration.plugins.cc.PluginCC;
 import stargatetech2.integration.plugins.ic2.PluginIC2;
@@ -40,7 +41,10 @@ public class ModuleIntegration implements IContentModule {
 		}
 	}
 
-	@Override public void postInit(){}
+	@Override public void postInit(){
+		StargateTech2.proxy.registerRenderers(Module.INTEGRATION);
+	}
+	
 	@Override public void onServerStart(){}
 	@Override public void onServerStop(){}
 

@@ -6,10 +6,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import stargatetech2.common.base.BaseItem;
-import stargatetech2.common.reference.ItemReference;
-import stargatetech2.common.reference.TextureReference;
-import stargatetech2.common.util.IconRegistry;
+import stargatetech2.core.base.BaseItem;
+import stargatetech2.core.reference.ItemReference;
+import stargatetech2.core.reference.TextureReference;
+import stargatetech2.core.util.IconRegistry;
 
 public class ItemNaquadah extends BaseItem{
 	private static final Metadata DATA[] = new Metadata[9];

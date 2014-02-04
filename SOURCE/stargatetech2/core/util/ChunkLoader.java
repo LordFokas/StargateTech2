@@ -20,8 +20,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import stargatetech2.StargateTech2;
-import stargatetech2.common.util.Helper;
-import stargatetech2.core.network.stargate.StargateNetwork;
+import stargatetech2.transport.stargates.StargateNetwork;
 
 public final class ChunkLoader implements LoadingCallback{
 	public static final ChunkLoader instance = new ChunkLoader();

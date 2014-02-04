@@ -5,9 +5,9 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
-import stargatetech2.common.base.BaseISBRH;
-import stargatetech2.common.reference.TextureReference;
-import stargatetech2.common.util.IconRegistry;
+import stargatetech2.core.base.BaseISBRH;
+import stargatetech2.core.reference.TextureReference;
+import stargatetech2.core.util.IconRegistry;
 
 public class RenderNaquadahOre extends BaseISBRH {
 	private static final RenderNaquadahOre INSTANCE = new RenderNaquadahOre();

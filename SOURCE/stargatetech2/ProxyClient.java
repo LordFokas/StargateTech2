@@ -7,19 +7,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import stargatetech2.IContentModule.Module;
-import stargatetech2.common.base.BaseISBRH;
-import stargatetech2.common.machine.RenderBlockMachine;
-import stargatetech2.common.util.GUIHandlerClient;
-import stargatetech2.core.rendering.RenderBusCable;
-import stargatetech2.core.rendering.RenderLanteanWall;
+import stargatetech2.automation.rendering.RenderBusCable;
+import stargatetech2.core.base.BaseISBRH;
+import stargatetech2.core.machine.RenderBlockMachine;
 import stargatetech2.core.rendering.RenderNaquadahOre;
-import stargatetech2.core.rendering.RenderNaquadahRail;
-import stargatetech2.core.rendering.RenderStargateBlock;
-import stargatetech2.core.rendering.RenderStargateTile;
-import stargatetech2.core.rendering.RenderTransportRing;
-import stargatetech2.core.tileentity.TileStargate;
-import stargatetech2.core.tileentity.TileTransportRing;
-import stargatetech2.core.util.RingKeyHandler;
+import stargatetech2.core.util.GUIHandlerClient;
+import stargatetech2.transport.rendering.RenderNaquadahRail;
+import stargatetech2.transport.rendering.RenderStargateBlock;
+import stargatetech2.transport.rendering.RenderStargateTile;
+import stargatetech2.transport.rendering.RenderTransportRing;
+import stargatetech2.transport.tileentity.TileStargate;
+import stargatetech2.transport.tileentity.TileTransportRing;
+import stargatetech2.transport.util.RingKeyHandler;
+import stargatetech2.world.rendering.RenderLanteanWall;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -33,17 +33,29 @@ public class ProxyClient implements ISidedProxy{
 	@Override
 	public void registerRenderers(Module module){
 		switch(module){
+			case AUTOMATION:
+				registerRenderer(RenderBusCable.instance());
+				break;
 			case CORE:
 				registerRenderer(RenderBlockMachine.instance());
-				registerRenderer(RenderNaquadahRail.instance());
 				registerRenderer(RenderNaquadahOre.instance());
-				registerRenderer(RenderLanteanWall.instance());
+				break;
+			case ENEMY:
+				break;
+			case ENERGY:
+				break;
+			case FACTORY:
+				break;
+			case INTEGRATION:
+				break;
+			case TRANSPORT:
+				registerRenderer(RenderNaquadahRail.instance());
 				registerRenderer(RenderStargateBlock.instance());
-				registerRenderer(RenderBusCable.instance());
 				ClientRegistry.bindTileEntitySpecialRenderer(TileTransportRing.class, new RenderTransportRing());
 				ClientRegistry.bindTileEntitySpecialRenderer(TileStargate.class, new RenderStargateTile());
 				break;
-			case INTEGRATION:
+			case WORLD:
+				registerRenderer(RenderLanteanWall.instance());
 				break;
 		}
 	}

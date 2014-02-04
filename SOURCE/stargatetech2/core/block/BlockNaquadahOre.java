@@ -2,8 +2,8 @@ package stargatetech2.core.block;
 
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.MinecraftForge;
-import stargatetech2.common.base.BaseBlock;
-import stargatetech2.common.reference.BlockReference;
+import stargatetech2.core.base.BaseBlock;
+import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.rendering.RenderNaquadahOre;
 
 public class BlockNaquadahOre extends BaseBlock {

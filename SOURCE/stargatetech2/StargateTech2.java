@@ -6,14 +6,20 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
-import stargatetech2.common.APIImplementation;
-import stargatetech2.common.reference.ModReference;
-import stargatetech2.common.util.Config;
-import stargatetech2.common.util.IconRegistry;
-import stargatetech2.common.util.PacketHandler;
-import stargatetech2.common.util.StargateLogger;
+import stargatetech2.automation.ModuleAutomation;
 import stargatetech2.core.ModuleCore;
+import stargatetech2.core.reference.ModReference;
+import stargatetech2.core.util.APIImplementation;
+import stargatetech2.core.util.Config;
+import stargatetech2.core.util.IconRegistry;
+import stargatetech2.core.util.PacketHandler;
+import stargatetech2.core.util.StargateLogger;
+import stargatetech2.enemy.ModuleEnemy;
+import stargatetech2.energy.ModuleEnergy;
+import stargatetech2.factory.ModuleFactory;
 import stargatetech2.integration.ModuleIntegration;
+import stargatetech2.transport.ModuleTransport;
+import stargatetech2.world.ModuleWorld;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -37,14 +43,29 @@ public class StargateTech2 {
 	public static ISidedProxy proxy;
 	
 	private ArrayList<IContentModule> modules = new ArrayList<IContentModule>();
-	public Config config;
-	public APIImplementation apiImplementation;
+	public static Config config;
+	public static APIImplementation apiImplementation;
+	
+	public static ModuleCore core = new ModuleCore();
+	public static ModuleAutomation automation = new ModuleAutomation();
+	public static ModuleEnergy energy = new ModuleEnergy();
+	public static ModuleEnemy enemy = new ModuleEnemy();
+	public static ModuleFactory factory = new ModuleFactory();
+	public static ModuleTransport transport = new ModuleTransport();
+	public static ModuleWorld world = new ModuleWorld();
+	public static ModuleIntegration integration = new ModuleIntegration();
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
 		config = new Config(new Configuration(event.getSuggestedConfigurationFile()));
-		modules.add(new ModuleCore());
-		modules.add(new ModuleIntegration());
+		modules.add(core);
+		modules.add(automation);
+		modules.add(enemy);
+		modules.add(energy);
+		modules.add(factory);
+		modules.add(transport);
+		modules.add(world);
+		modules.add(integration);
 		StargateLogger.init();
 		apiImplementation = new APIImplementation();
 		MinecraftForge.EVENT_BUS.register(this);
@@ -54,9 +75,10 @@ public class StargateTech2 {
 		StargateLogger.info("Pre-Initializing Modules");
 		for(IContentModule module : modules){
 			try{
+				StargateLogger.info("Pre-Initializing Module: " + module.getModuleName());
 				module.preInit();
 			}catch(Exception e){
-				StargateLogger.severe("An error occurred when Pre-Initializing module \"" + module.getModuleName() + "\"");
+				StargateLogger.severe("An error occurred while Pre-Initializing module \"" + module.getModuleName() + "\"");
 				e.printStackTrace();
 			}
 		}
@@ -69,9 +91,10 @@ public class StargateTech2 {
 		proxy.registerHandlers();
 		for(IContentModule module : modules){
 			try{
+				StargateLogger.info("Initializing Module: " + module.getModuleName());
 				module.init();
 			}catch(Exception e){
-				StargateLogger.severe("An error occurred when Initializing module \"" + module.getModuleName() + "\"");
+				StargateLogger.severe("An error occurred while Initializing module \"" + module.getModuleName() + "\"");
 				e.printStackTrace();
 			}
 		}
@@ -84,9 +107,10 @@ public class StargateTech2 {
 		StargateLogger.info("Post-Initializing Modules");
 		for(IContentModule module : modules){
 			try{
+				StargateLogger.info("Post-Initializing Module: " + module.getModuleName());
 				module.postInit();
 			}catch(Exception e){
-				StargateLogger.severe("An error occurred when Post-Initializing module \"" + module.getModuleName() + "\"");
+				StargateLogger.severe("An error occurred while Post-Initializing module \"" + module.getModuleName() + "\"");
 				e.printStackTrace();
 			}
 		}

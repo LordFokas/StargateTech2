@@ -2,9 +2,9 @@ package stargatetech2.integration.plugins.te3;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import stargatetech2.common.reference.ConfigReference;
 import stargatetech2.core.ModuleCore;
 import stargatetech2.core.item.ItemNaquadah;
+import stargatetech2.core.reference.ConfigReference;
 import stargatetech2.integration.plugins.BasePlugin;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameRegistry;

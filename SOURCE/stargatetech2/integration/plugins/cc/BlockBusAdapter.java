@@ -4,9 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import stargatetech2.common.base.BaseBlockContainer;
-import stargatetech2.common.base.BaseTileEntity;
-import stargatetech2.common.reference.BlockReference;
+import stargatetech2.core.base.BaseBlockContainer;
+import stargatetech2.core.base.BaseTileEntity;
+import stargatetech2.core.reference.BlockReference;
 import buildcraft.api.tools.IToolWrench;
 
 public class BlockBusAdapter extends BaseBlockContainer {

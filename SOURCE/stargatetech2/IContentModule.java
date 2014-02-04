@@ -2,8 +2,14 @@ package stargatetech2;
 
 public interface IContentModule {
 	public enum Module{
+		AUTOMATION,
 		CORE,
-		INTEGRATION
+		ENEMY,
+		ENERGY,
+		FACTORY,
+		INTEGRATION,
+		TRANSPORT,
+		WORLD
 	}
 	
 	public void preInit();

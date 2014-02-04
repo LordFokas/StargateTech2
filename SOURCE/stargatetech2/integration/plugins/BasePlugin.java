@@ -2,7 +2,7 @@ package stargatetech2.integration.plugins;
 
 import net.minecraftforge.common.Configuration;
 import stargatetech2.StargateTech2;
-import stargatetech2.common.reference.ConfigReference;
+import stargatetech2.core.reference.ConfigReference;
 import cpw.mods.fml.common.Loader;
 
 public abstract class BasePlugin {
@@ -14,7 +14,7 @@ public abstract class BasePlugin {
 	public BasePlugin(String modID, String cfgKey){
 		this.modID = modID;
 		this.cfgKey = cfgKey;
-		this.cfg = StargateTech2.instance.config.cfg;
+		this.cfg = StargateTech2.config.cfg;
 		this.enabled = cfg.get(cfgKey, ConfigReference.PLUGIN_ENABLE, true).getBoolean(true);
 	}
 	
