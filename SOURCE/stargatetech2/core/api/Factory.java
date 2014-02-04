@@ -1,4 +1,4 @@
-package stargatetech2.core.util;
+package stargatetech2.core.api;
 
 import stargatetech2.api.IFactory;
 import stargatetech2.api.bus.IBusDevice;

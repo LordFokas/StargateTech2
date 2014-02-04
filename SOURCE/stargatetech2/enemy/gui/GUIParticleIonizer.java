@@ -1,12 +1,12 @@
 package stargatetech2.enemy.gui;
 
+import stargatetech2.core.api.ParticleIonizerRecipes;
+import stargatetech2.core.api.ParticleIonizerRecipes.Recipe;
 import stargatetech2.core.base.BaseGUI;
 import stargatetech2.core.base.BaseGauge.PowerGauge;
 import stargatetech2.core.base.BaseGauge.TankGauge;
 import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.reference.TextureReference;
-import stargatetech2.core.util.ParticleIonizerRecipes;
-import stargatetech2.core.util.ParticleIonizerRecipes.Recipe;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
 
 public class GUIParticleIonizer extends BaseGUI {

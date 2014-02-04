@@ -12,7 +12,7 @@ import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.IconRegistry;
 
 public class ItemNaquadah extends BaseItem{
-	private static final Metadata DATA[] = new Metadata[9];
+	public static final Metadata DATA[] = new Metadata[9];
 	public static final Metadata PWCR1 =	new Metadata(0, "naquadahPowerCrystal_1",	"Naquadah Power Crystal", 1);
 	public static final Metadata PWCR2 =	new Metadata(1, "naquadahPowerCrystal_2",	"Naquadah Power Crystal", 2);
 	public static final Metadata PWCR3 =	new Metadata(2, "naquadahPowerCrystal_3",	"Naquadah Power Crystal", 3);

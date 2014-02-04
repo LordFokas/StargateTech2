@@ -1,25 +1,20 @@
 package stargatetech2.core;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
+import stargatetech2.core.api.StackManager;
 import stargatetech2.core.block.BlockNaquadahOre;
 import stargatetech2.core.item.ItemNaquadah;
+import stargatetech2.core.item.ItemNaquadah.Metadata;
 import stargatetech2.core.item.ItemTabletPC;
-import stargatetech2.core.reference.TileEntityReference;
 import stargatetech2.core.util.ChunkLoader;
 import stargatetech2.core.util.Color;
 import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.CoreWorldGenerator;
 import stargatetech2.core.util.Stacks;
-import stargatetech2.enemy.tileentity.TileParticleIonizer;
-import stargatetech2.enemy.tileentity.TileShield;
-import stargatetech2.enemy.tileentity.TileShieldEmitter;
-import stargatetech2.transport.stargates.StargateNetwork;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -39,9 +34,13 @@ public final class ModuleCore implements IContentModule{
 	@Override
 	public void init(){
 		naquadahOre.registerBlock();
-		GameRegistry.registerTileEntity(TileShieldEmitter.class, TileEntityReference.TILE_SHIELD_EMITTER);
-		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);
-		GameRegistry.registerTileEntity(TileShield.class, TileEntityReference.TILE_SHIELD);
+		
+		StackManager manager = StackManager.instance;
+		manager.addStack("naquadahOre", new ItemStack(naquadahOre));
+		manager.addStack("tabletPC", new ItemStack(tabletPC));
+		for(Metadata meta : naquadah.DATA){
+			manager.addStack(meta.iconName, new ItemStack(naquadah, 1, meta.ID));
+		}
 	}
 
 	@Override
@@ -58,22 +57,21 @@ public final class ModuleCore implements IContentModule{
 		StargateTech2.proxy.registerRenderers(Module.CORE);
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator());
 		ChunkLoader.register();
-		
 		Stacks.init();
 		
-		/*GameRegistry.addSmelting(naquadahOre.blockID, naqIngot, 0);
-		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.LATTICE.ID, circuit, 0);
-		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.DUST.ID, naqIngot, 0);
+		GameRegistry.addSmelting(naquadahOre.blockID, Stacks.naqIngot, 0);
+		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.LATTICE.ID, Stacks.circuit, 0);
+		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.DUST.ID, Stacks.naqIngot, 0);
 		
-		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', naqIngot, 'R', Stacks.redstone, 'G', Stacks.glass);
+		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', Stacks.naqIngot, 'R', Stacks.redstone, 'G', Stacks.glass);
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 3, ItemNaquadah.LATTICE.ID), Stacks.quartz, Stacks.quartz, naqDust);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 4, ItemNaquadah.BAR.ID), "--S", "-S-", "S--", 'S', naqIngot);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', naqIngot);
+		GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 3, ItemNaquadah.LATTICE.ID), Stacks.quartz, Stacks.quartz, Stacks.naqDust);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 4, ItemNaquadah.BAR.ID), "--S", "-S-", "S--", 'S', Stacks.naqIngot);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', Stacks.naqIngot);
 		
-		GameRegistry.addShapedRecipe(crystal1, "GNG", "NNN", "CNC", 'N', naqIngot, 'C', circuit, 'G', Color.GREEN.getDye());
-		GameRegistry.addShapedRecipe(crystal2, "YNY", "NGN", "CDC", 'N', naqIngot, 'C', circuit, 'G', crystal1, 'D', Stacks.diamond, 'Y', Color.YELLOW.getDye());
-		GameRegistry.addShapedRecipe(crystal3, "RNR", "NYN", "CDC", 'N', naqIngot, 'C', circuit, 'Y', crystal2, 'D', Stacks.diamond, 'R', Color.RED.getDye());*/
+		GameRegistry.addShapedRecipe(Stacks.crystal1, "GNG", "NNN", "CNC", 'N', Stacks.naqIngot, 'C', Stacks.circuit, 'G', Color.GREEN.getDye());
+		GameRegistry.addShapedRecipe(Stacks.crystal2, "YNY", "NGN", "CDC", 'N', Stacks.naqIngot, 'C', Stacks.circuit, 'G', Stacks.crystal1, 'D', Stacks.diamond, 'Y', Color.YELLOW.getDye());
+		GameRegistry.addShapedRecipe(Stacks.crystal3, "RNR", "NYN", "CDC", 'N', Stacks.naqIngot, 'C', Stacks.circuit, 'Y', Stacks.crystal2, 'D', Stacks.diamond, 'R', Color.RED.getDye());
 	}
 
 	@Override public void onServerStart(){

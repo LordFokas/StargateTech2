@@ -1,8 +1,10 @@
 package stargatetech2.transport;
 
+import net.minecraft.item.ItemStack;
 import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
 import stargatetech2.core.reference.TileEntityReference;
+import stargatetech2.core.util.Stacks;
 import stargatetech2.transport.block.BlockInvisible;
 import stargatetech2.transport.block.BlockNaquadahRail;
 import stargatetech2.transport.block.BlockStargate;
@@ -49,8 +51,8 @@ public class ModuleTransport implements IContentModule {
 		LanguageRegistry.addName(invisible, "Invisible Block");
 		LanguageRegistry.addName(stargate, "Stargate");
 		
-		//GameRegistry.addShapedRecipe(new ItemStack(naquadahRail), "NSN", "NSN", "NSN", 'N', naqBar, 'S', stick);
-		//GameRegistry.addShapedRecipe(new ItemStack(transportRing), "NPN", "NBN", "NPN", 'N', naqPlate, 'P', pearl, 'B', ironBlock);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail), "NSN", "NSN", "NSN", 'N', Stacks.naqBar, 'S', Stacks.stick);
+		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "NPN", "NBN", "NPN", 'N', Stacks.naqPlate, 'P', Stacks.pearl, 'B', Stacks.ironBlock);
 		
 		StargateTech2.proxy.registerRenderers(Module.TRANSPORT);
 	}

@@ -1,10 +1,13 @@
-package stargatetech2.core.util;
+package stargatetech2.core.api;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fluids.Fluid;
 import stargatetech2.api.IFactory;
+import stargatetech2.api.IStackManager;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.stargate.IStargateNetwork;
+import stargatetech2.core.util.StargateLogger;
+import stargatetech2.core.util.StargateTab;
 import stargatetech2.enemy.util.IonizedParticles;
 import stargatetech2.transport.stargates.StargateNetwork;
 
@@ -34,5 +37,10 @@ public final class APIImplementation extends StargateTechAPI {
 	@Override
 	public IFactory getFactory() {
 		return factory;
+	}
+
+	@Override
+	public IStackManager getStackManager() {
+		return StackManager.instance;
 	}
 }

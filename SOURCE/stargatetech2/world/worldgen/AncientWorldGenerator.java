@@ -5,8 +5,9 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import stargatetech2.core.util.ConfigServer;
+import cpw.mods.fml.common.IWorldGenerator;
 
-public class AncientWorldGenerator {
+public class AncientWorldGenerator implements IWorldGenerator{
 	private static final FeatureRarity RARITY_LOOT_POD = new FeatureRarity(ConfigServer.wgLootPodGap, ConfigServer.wgLootPodGap, ConfigServer.wgLootPodOdd);
 	private static final FeatureRarity RARITY_STARGATE = new FeatureRarity(8, 8, 4);
 	
@@ -25,6 +26,13 @@ public class AncientWorldGenerator {
 		public boolean match(int x, int z, Random r){
 			return x % padX == 0 && z % padZ == 0 && r.nextInt(odds) == 0;
 		}
+	}
+	
+	@Override
+	public void generate(Random r, int cX, int cZ, World w, IChunkProvider chunkGen, IChunkProvider provider){
+		if(w.provider.dimensionId == 1 || w.provider.dimensionId == -1) return;
+		generateLootPod(r, cX, cZ, w, chunkGen, provider);
+		generateStargate(r, cX, cZ, w, chunkGen, provider);
 	}
 	
 	public static void generateLootPod(Random r, int cX, int cZ, World w, IChunkProvider chunkGen, IChunkProvider provider){

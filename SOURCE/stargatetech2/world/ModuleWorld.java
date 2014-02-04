@@ -4,7 +4,9 @@ import net.minecraft.item.ItemStack;
 import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
 import stargatetech2.core.util.Color;
+import stargatetech2.core.util.Stacks;
 import stargatetech2.world.block.BlockLanteanWall;
+import stargatetech2.world.worldgen.AncientWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -27,7 +29,7 @@ public class ModuleWorld implements IContentModule {
 			LanguageRegistry.addName(new ItemStack(lanteanWall, 1, i), Color.COLORS[i].name + " Lantean Wall");
 		}
 		
-		//GameRegistry.addShapedRecipe(new ItemStack(lanteanWall, 8, Color.LIGHT_GRAY.id), "SSS", "SNS", "SSS", 'S', stone, 'N', naqIngot);
+		GameRegistry.addShapedRecipe(new ItemStack(lanteanWall, 8, Color.LIGHT_GRAY.id), "SSS", "SNS", "SSS", 'S', Stacks.stone, 'N', Stacks.naqIngot);
 		
 		for(Color color : Color.COLORS){
 			for(int i = 0; i < 16; i++){
@@ -38,6 +40,7 @@ public class ModuleWorld implements IContentModule {
 		}
 		
 		StargateTech2.proxy.registerRenderers(Module.WORLD);
+		GameRegistry.registerWorldGenerator(new AncientWorldGenerator());
 	}
 
 	@Override public void onServerStart(){}

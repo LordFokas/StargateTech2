@@ -3,8 +3,8 @@ package stargatetech2.world.worldgen.lists;
 import java.util.ArrayList;
 
 import net.minecraft.world.World;
+import stargatetech2.core.api.WeakBlockRegistry;
 import stargatetech2.core.util.Vec3Int;
-import stargatetech2.core.util.WeakBlockRegistry;
 
 public abstract class BuildList {
 	protected static class BuildBlock extends Vec3Int{

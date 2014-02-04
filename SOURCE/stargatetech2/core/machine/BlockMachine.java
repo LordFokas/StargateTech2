@@ -14,9 +14,9 @@ import stargatetech2.core.base.BaseBlockContainer;
 import stargatetech2.core.base.BaseTileEntity;
 import stargatetech2.core.packet.PacketOpenGUI;
 import stargatetech2.core.reference.TextureReference;
+import stargatetech2.core.util.GUIHandler.Screen;
 import stargatetech2.core.util.Helper;
 import stargatetech2.core.util.IconRegistry;
-import stargatetech2.core.util.GUIHandler.Screen;
 import stargatetech2.enemy.tileentity.TileShieldEmitter;
 import buildcraft.api.tools.IToolWrench;
 
