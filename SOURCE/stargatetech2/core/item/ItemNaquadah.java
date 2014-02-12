@@ -12,39 +12,25 @@ import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.IconRegistry;
 
 public class ItemNaquadah extends BaseItem{
-	public static final Metadata DATA[] = new Metadata[9];
-	public static final Metadata PWCR1 =	new Metadata(0, "naquadahPowerCrystal_1",	"Naquadah Power Crystal", 1);
-	public static final Metadata PWCR2 =	new Metadata(1, "naquadahPowerCrystal_2",	"Naquadah Power Crystal", 2);
-	public static final Metadata PWCR3 =	new Metadata(2, "naquadahPowerCrystal_3",	"Naquadah Power Crystal", 3);
-	public static final Metadata INGOT =	new Metadata(3, "naquadahIngot",			"Naquadah Ingot");
-	public static final Metadata DUST =		new Metadata(4, "naquadahDust",				"Naquadah Dust");
-	public static final Metadata BAR =		new Metadata(5, "naquadahBar",				"Naquadah Bar");
-	public static final Metadata PLATE =	new Metadata(6, "naquadahPlate",			"Naquadah Plate");
-	public static final Metadata LATTICE =	new Metadata(7, "lattice",					"Semiconductor Lattice Blend");
-	public static final Metadata CIRCUIT =	new Metadata(8, "circuitCrystal",			"Circuit Crystal");
-	
-	private final static String TIERS[] = new String[]{
-		"\u00A72Tier I",
-		"\u00A76Tier II",
-		"\u00A74Tier III"
-	};
+	public static final Metadata DATA[] = new Metadata[7];
+	public static final Metadata INGOT =	new Metadata(0, "naquadahIngot",	"Naquadah Ingot");
+	public static final Metadata DUST =		new Metadata(1, "naquadahDust",		"Naquadah Dust");
+	public static final Metadata PLATE =	new Metadata(2, "naquadahPlate",	"Naquadah Plate");
+	public static final Metadata LATTICE =	new Metadata(3, "lattice",			"Semiconductor Lattice Blend");
+	public static final Metadata CIRCUIT =	new Metadata(4, "circuitCrystal",	"Circuit Crystal");
+	public static final Metadata COIL_NAQ =	new Metadata(5, "coilNaquadah",		"Magnetic Coil");
+	public static final Metadata COIL_END =	new Metadata(6, "coilEnder",		"Matter Coil");
 	
 	public static class Metadata{
 		public final int ID;
 		public final String iconName;
 		public final String itemName;
-		public final int tier;
 		
 		public Metadata(int meta, String i, String n){
-			this(meta, i, n, 0);
-		}
-		
-		public Metadata(int meta, String i, String n, int t){
 			ID = meta;
 			DATA[ID] = this;
 			iconName = i;
 			itemName = n;
-			tier = t > 0 ? t-1 : -1;
 		}
 	}
 	
@@ -78,9 +64,6 @@ public class ItemNaquadah extends BaseItem{
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean ignored){
 		int meta = stack.getItemDamage();
-		if(getTierForMeta(meta) != -1){
-			list.add(TIERS[DATA[meta].tier]);
-		}
 	}
 	
 	public String[] getItemNames(){
@@ -89,20 +72,6 @@ public class ItemNaquadah extends BaseItem{
 			names[i] = DATA[i].itemName;
 		}
 		return names;
-	}
-	
-	public static int getTierForMeta(int meta){
-		return DATA[meta].tier;
-	}
-	
-	public static int getMetaForTier(int tier){
-		for(int i = 0; i < DATA.length; i++){
-			Metadata meta = DATA[i];
-			if(meta.tier == tier){
-				return i;
-			}
-		}
-		return -1;
 	}
 	
 	static{

@@ -54,8 +54,8 @@ public class ModuleEnemy implements IContentModule {
 		LanguageRegistry.addName(shield, "Shield");
 		LanguageRegistry.addName(personalShield, "Personal Shield");
 		
-		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "PBP", "CPC", "PCP", 'P', Stacks.naqPlate, 'C', Stacks.circuit, 'B', Stacks.bucket);
-		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "PBP", "CPC", "PYP", 'P', Stacks.naqPlate, 'C', Stacks.circuit, 'B', Stacks.bucket, 'Y', Stacks.crystal1);
+		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "-B-", "SMS", "NCN", 'M', Stacks.machine, 'C', Stacks.coilNaq, 'B', Stacks.bucket, 'N', Stacks.naqIngot, 'S', Stacks.circuit);
+		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "-C-", "BMB", "NPN", 'P', Stacks.coilGold, 'C', Stacks.chest, 'B', Stacks.bucket, 'M', Stacks.machine, 'N', Stacks.naqIngot);
 		
 		MinecraftForge.EVENT_BUS.register(new EnemyEventHandler());
 		StargateTech2.proxy.registerRenderers(Module.ENEMY);

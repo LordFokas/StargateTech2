@@ -66,12 +66,10 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', Stacks.naqIngot, 'R', Stacks.redstone, 'G', Stacks.glass);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 3, ItemNaquadah.LATTICE.ID), Stacks.quartz, Stacks.quartz, Stacks.naqDust);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 4, ItemNaquadah.BAR.ID), "--S", "-S-", "S--", 'S', Stacks.naqIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', Stacks.naqIngot);
 		
-		GameRegistry.addShapedRecipe(Stacks.crystal1, "GNG", "NNN", "CNC", 'N', Stacks.naqIngot, 'C', Stacks.circuit, 'G', Color.GREEN.getDye());
-		GameRegistry.addShapedRecipe(Stacks.crystal2, "YNY", "NGN", "CDC", 'N', Stacks.naqIngot, 'C', Stacks.circuit, 'G', Stacks.crystal1, 'D', Stacks.diamond, 'Y', Color.YELLOW.getDye());
-		GameRegistry.addShapedRecipe(Stacks.crystal3, "RNR", "NYN", "CDC", 'N', Stacks.naqIngot, 'C', Stacks.circuit, 'Y', Stacks.crystal2, 'D', Stacks.diamond, 'R', Color.RED.getDye());
+		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 1, ItemNaquadah.COIL_NAQ.ID), "--R", "-N-", "R--", 'R', Stacks.redstone, 'N', Stacks.naqIngot);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 1, ItemNaquadah.COIL_END.ID), "--R", "-E-", "R--", 'R', Stacks.redstone, 'E', Stacks.pearl);
 	}
 
 	@Override public void onServerStart(){

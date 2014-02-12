@@ -51,8 +51,8 @@ public class ModuleTransport implements IContentModule {
 		LanguageRegistry.addName(invisible, "Invisible Block");
 		LanguageRegistry.addName(stargate, "Stargate");
 		
-		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail), "NSN", "NSN", "NSN", 'N', Stacks.naqBar, 'S', Stacks.stick);
-		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "NPN", "NBN", "NPN", 'N', Stacks.naqPlate, 'P', Stacks.pearl, 'B', Stacks.ironBlock);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail, 2), "N-N", "NSN", "N-N", 'N', Stacks.naqIngot, 'S', Stacks.stick);
+		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "-S-", "PMP", "NCN", 'S', Stacks.slab, 'N', Stacks.naqIngot, 'P', Stacks.naqPlate, 'C', Stacks.coilEnd, 'M', Stacks.machine);
 		
 		StargateTech2.proxy.registerRenderers(Module.TRANSPORT);
 	}
