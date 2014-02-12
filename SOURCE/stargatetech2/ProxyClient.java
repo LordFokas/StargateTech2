@@ -24,6 +24,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -74,5 +75,10 @@ public class ProxyClient implements ISidedProxy{
 	public boolean isLocalPlayerInAABB(World world, AxisAlignedBB aabb){
 		List<Entity> players = world.getEntitiesWithinAABB(EntityClientPlayerMP.class, aabb);
 		return players.size() == 1;
+	}
+
+	@Override
+	public void registerLanguages() {
+		LanguageRegistry.instance().loadLocalization("/assets/stargatetech2/lang/en_US.lang", "en_US", false);
 	}
 }

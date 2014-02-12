@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import stargatetech2.core.base.BaseItem;
 import stargatetech2.core.reference.ItemReference;
+import stargatetech2.core.reference.ModReference;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.IconRegistry;
 
@@ -22,13 +23,13 @@ public class ItemNaquadah extends BaseItem{
 	
 	public static class Metadata{
 		public final int ID;
-		public final String iconName;
+		public final String name;
 		public final String itemName;
 		
 		public Metadata(int meta, String i, String n){
 			ID = meta;
 			DATA[ID] = this;
-			iconName = i;
+			name = i;
 			itemName = n;
 		}
 	}
@@ -39,18 +40,8 @@ public class ItemNaquadah extends BaseItem{
 	}
 	
 	@Override
-	public String getItemStackDisplayName(ItemStack stack){
-		return DATA[stack.getItemDamage()].itemName;
-	}
-	
-	@Override
-	public String getItemDisplayName(ItemStack stack){
-		return DATA[stack.getItemDamage()].itemName;
-	}
-	
-	@Override
 	public Icon getIconFromDamage(int meta){
-		return IconRegistry.itemIcons.get(DATA[meta].iconName);
+		return IconRegistry.itemIcons.get(DATA[meta].name);
 	}
 	
 	@Override
@@ -65,17 +56,14 @@ public class ItemNaquadah extends BaseItem{
 		int meta = stack.getItemDamage();
 	}
 	
-	public String[] getItemNames(){
-		String names[] = new String[DATA.length];
-		for(int i = 0; i < DATA.length; i++){
-			names[i] = DATA[i].itemName;
-		}
-		return names;
+	@Override
+	public String getUnlocalizedName(ItemStack stack){
+		return ModReference.MOD_ID + ":item." + DATA[stack.getItemDamage()].name;
 	}
 	
 	static{
 		for(Metadata data : DATA){
-			TextureReference.ITEM_TEXTURES.add(data.iconName);
+			TextureReference.ITEM_TEXTURES.add(data.name);
 		}
 	}
 }

@@ -26,13 +26,7 @@ public class TextureReference {
 	
 	public static final String LANTEAN_BLOCK_CLEAN = "lanteanBlockClean";
 	public static final String STARGATE_BASE_TOP = "stargateBaseTop";
-	public static final String BUS_CABLE_PLUG = "busPlug";
-	
-	
-	
-	//### ITEMS ###
-	public static final String NAQUADAH_POWER_CRYSTAL = "naquadahPowerCrystal";
-	
+	public static final String BUS_CABLE_PLUG = "busPlug";	
 	
 	static{
 		TERRAIN_TEXTURES.add(IONIZED_PARTICLES);
@@ -54,9 +48,6 @@ public class TextureReference {
 		TERRAIN_TEXTURES.add(LANTEAN_BLOCK_CLEAN);
 		TERRAIN_TEXTURES.add(STARGATE_BASE_TOP);
 		TERRAIN_TEXTURES.add(BUS_CABLE_PLUG);
-		
-		ITEM_TEXTURES.add(NAQUADAH_POWER_CRYSTAL + "_1");
-		ITEM_TEXTURES.add(NAQUADAH_POWER_CRYSTAL + "_2");
 	}
 	
 	public static final ResourceLocation GUI_BASE = getTexture("gui/base.png");

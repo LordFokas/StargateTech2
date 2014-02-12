@@ -32,7 +32,6 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	
 	public BlockNaquadahRail() {
 		super(StargateTech2.config.getBlockID(BlockReference.NAQUADAH_RAIL), false);
-		this.setUnlocalizedName(BlockReference.NAQUADAH_RAIL);
 		this.setTextureName(ModReference.MOD_ID + ":" + BlockReference.NAQUADAH_RAIL);
 		this.setCreativeTab(StargateTab.instance);
 		this.setBlockUnbreakable();
@@ -49,6 +48,11 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 			return super.getRenderType();
 		else
 			return RenderNaquadahRail.instance().getRenderId();
+	}
+	
+	@Override
+	public String getUnlocalizedName(){
+		return ModReference.MOD_ID + ":block." + BlockReference.NAQUADAH_RAIL;
 	}
 	
 	@Override

@@ -45,12 +45,7 @@ public class ModuleTransport implements IContentModule {
 	}
 
 	@Override
-	public void postInit(){
-		LanguageRegistry.addName(naquadahRail, "Naquadah Rail");
-		LanguageRegistry.addName(transportRing, "Transport Ring");
-		LanguageRegistry.addName(invisible, "Invisible Block");
-		LanguageRegistry.addName(stargate, "Stargate");
-		
+	public void postInit(){	
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail, 2), "N-N", "NSN", "N-N", 'N', Stacks.naqIngot, 'S', Stacks.stick);
 		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "-S-", "PMP", "NCN", 'S', Stacks.slab, 'N', Stacks.naqIngot, 'P', Stacks.naqPlate, 'C', Stacks.coilEnd, 'M', Stacks.machine);
 		

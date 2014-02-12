@@ -19,6 +19,7 @@ public class BaseBlock extends Block{
 	protected Icon[] iconOverride;
 	protected boolean isOverride = false;
 	private boolean isAbstractBus = false;
+	private String unlocalized;
 	
 	public BaseBlock(String uName){
 		this(uName, false, true);
@@ -30,13 +31,18 @@ public class BaseBlock extends Block{
 	
 	public BaseBlock(String uName, boolean breakable, Material material){
 		super(StargateTech2.config.getBlockID(uName), material);
-		this.setUnlocalizedName(uName);
+		unlocalized = uName;
 		this.setTextureName(ModReference.MOD_ID + ":" + uName);
 		if(!breakable){
 			this.setBlockUnbreakable();
 			this.setResistance(20000000F);
 		}
 		this.setCreativeTab(StargateTab.instance);
+	}
+	
+	@Override
+	public String getUnlocalizedName(){
+		return ModReference.MOD_ID + ":block." + unlocalized;
 	}
 	
 	@Override

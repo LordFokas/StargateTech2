@@ -15,7 +15,6 @@ import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.CoreWorldGenerator;
 import stargatetech2.core.util.Stacks;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public final class ModuleCore implements IContentModule{
 	public static BlockNaquadahOre naquadahOre;
@@ -38,7 +37,7 @@ public final class ModuleCore implements IContentModule{
 		manager.addStack("naquadahOre", new ItemStack(naquadahOre));
 		manager.addStack("tabletPC", new ItemStack(tabletPC));
 		for(Metadata meta : naquadah.DATA){
-			manager.addStack(meta.iconName, new ItemStack(naquadah, 1, meta.ID));
+			manager.addStack(meta.name, new ItemStack(naquadah, 1, meta.ID));
 		}
 		
 		Stacks.init();
@@ -47,21 +46,13 @@ public final class ModuleCore implements IContentModule{
 	@Override
 	public void postInit(){
 		MinecraftForge.EVENT_BUS.register(new CoreEventHandler());
-		
-		LanguageRegistry.addName(naquadahOre, "Naquadah Ore");
-		LanguageRegistry.addName(tabletPC, "Tablet PC");
-		String[] names = naquadah.getItemNames();
-		for(int i = 0; i < names.length; i++){
-			LanguageRegistry.addName(new ItemStack(naquadah, 1, i), names[i]);
-		}
-		
+		StargateTech2.proxy.registerLanguages();
 		StargateTech2.proxy.registerRenderers(Module.CORE);
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator());
 		ChunkLoader.register();
 		
 		GameRegistry.addSmelting(naquadahOre.blockID, Stacks.naqIngot, 0);
 		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.DUST.ID, Stacks.naqIngot, 0);
-		
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "CGC", "NRN", 'N', Stacks.naqPlate, 'C', Stacks.circuit, 'G', Stacks.glass, 'R', Stacks.redstone);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', Stacks.naqIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 1, ItemNaquadah.COIL_NAQ.ID), "--R", "-N-", "R--", 'R', Stacks.redstone, 'N', Stacks.naqIngot);

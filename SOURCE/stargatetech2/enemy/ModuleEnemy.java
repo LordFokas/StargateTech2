@@ -49,11 +49,6 @@ public class ModuleEnemy implements IContentModule {
 
 	@Override
 	public void postInit(){
-		LanguageRegistry.addName(shieldEmitter, "Shield Emitter");
-		LanguageRegistry.addName(particleIonizer, "Particle Ionizer");
-		LanguageRegistry.addName(shield, "Shield");
-		LanguageRegistry.addName(personalShield, "Personal Shield");
-		
 		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "-B-", "SMS", "NCN", 'M', Stacks.machine, 'C', Stacks.coilNaq, 'B', Stacks.bucket, 'N', Stacks.naqIngot, 'S', Stacks.circuit);
 		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "-C-", "BMB", "NPN", 'P', Stacks.coilGold, 'C', Stacks.chest, 'B', Stacks.bucket, 'M', Stacks.machine, 'N', Stacks.naqIngot);
 		

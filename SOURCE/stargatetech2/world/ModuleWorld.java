@@ -25,10 +25,6 @@ public class ModuleWorld implements IContentModule {
 
 	@Override
 	public void postInit(){
-		for(int i = 0; i < 16; i++){
-			LanguageRegistry.addName(new ItemStack(lanteanWall, 1, i), Color.COLORS[i].name + " Lantean Wall");
-		}
-		
 		GameRegistry.addShapedRecipe(new ItemStack(lanteanWall, 8, Color.LIGHT_GRAY.id), "SSS", "SNS", "SSS", 'S', Stacks.stone, 'N', Stacks.naqIngot);
 		
 		for(Color color : Color.COLORS){

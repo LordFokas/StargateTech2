@@ -20,7 +20,6 @@ public class PluginCC extends BasePlugin {
 		busAdapter = new BlockBusAdapter();
 		busAdapter.registerBlock();
 		GameRegistry.registerTileEntity(TileBusAdapter.class, TileEntityReference.TILE_BUS_ADAPTER);
-		LanguageRegistry.addName(busAdapter, "Abstract Bus Adapter");
 		ItemStack plate, cable, circuit;
 		GameRegistry.addShapedRecipe(new ItemStack(busAdapter), "-C-", "PMP", "NBN", 'P', Stacks.naqPlate, 'B', Stacks.busCable, 'C', Stacks.circuit, 'N', Stacks.naqIngot, 'M', Stacks.machine);
 	}
