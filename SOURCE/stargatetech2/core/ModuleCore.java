@@ -11,7 +11,6 @@ import stargatetech2.core.item.ItemNaquadah;
 import stargatetech2.core.item.ItemNaquadah.Metadata;
 import stargatetech2.core.item.ItemTabletPC;
 import stargatetech2.core.util.ChunkLoader;
-import stargatetech2.core.util.Color;
 import stargatetech2.core.util.CoreEventHandler;
 import stargatetech2.core.util.CoreWorldGenerator;
 import stargatetech2.core.util.Stacks;
@@ -41,6 +40,8 @@ public final class ModuleCore implements IContentModule{
 		for(Metadata meta : naquadah.DATA){
 			manager.addStack(meta.iconName, new ItemStack(naquadah, 1, meta.ID));
 		}
+		
+		Stacks.init();
 	}
 
 	@Override
@@ -57,17 +58,12 @@ public final class ModuleCore implements IContentModule{
 		StargateTech2.proxy.registerRenderers(Module.CORE);
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator());
 		ChunkLoader.register();
-		Stacks.init();
 		
 		GameRegistry.addSmelting(naquadahOre.blockID, Stacks.naqIngot, 0);
-		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.LATTICE.ID, Stacks.circuit, 0);
 		FurnaceRecipes.smelting().addSmelting(naquadah.itemID, ItemNaquadah.DUST.ID, Stacks.naqIngot, 0);
 		
-		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "RGR", "NNN", 'N', Stacks.naqIngot, 'R', Stacks.redstone, 'G', Stacks.glass);
-		
-		GameRegistry.addShapelessRecipe(new ItemStack(naquadah, 3, ItemNaquadah.LATTICE.ID), Stacks.quartz, Stacks.quartz, Stacks.naqDust);
+		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "CGC", "NRN", 'N', Stacks.naqPlate, 'C', Stacks.circuit, 'G', Stacks.glass, 'R', Stacks.redstone);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', Stacks.naqIngot);
-		
 		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 1, ItemNaquadah.COIL_NAQ.ID), "--R", "-N-", "R--", 'R', Stacks.redstone, 'N', Stacks.naqIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadah, 1, ItemNaquadah.COIL_END.ID), "--R", "-E-", "R--", 'R', Stacks.redstone, 'E', Stacks.pearl);
 	}

@@ -1,34 +1,29 @@
 package stargatetech2.core.util;
 
-import java.util.ArrayList;
-
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
+import stargatetech2.automation.ModuleAutomation;
 import stargatetech2.core.api.StackManager;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Stacks {
 	// Vanilla Stacks
-	public static ItemStack bucket, chest, diamond, ironBlock, glass, pearl, quartz, redstone, slab, stick, stone;
+	public static ItemStack bucket, chest, glass, pearl, redstone, slab, stick, stone;
 	
 	// ThermalExpansion Stacks
 	public static ItemStack machine, coilGold;
 	
 	// StargateTech 2 Stacks
-	public static ItemStack naqIngot, naqDust, naqPlate, lattice, circuit, coilNaq, coilEnd;
+	public static ItemStack naqIngot, naqDust, naqPlate, lattice, circuit, coilNaq, coilEnd, busCable;
 	
 	public static void init(){
 		//##########################################################################################
 		// VANILLA
 		bucket = new ItemStack(Item.bucketEmpty);
 		chest = new ItemStack(Block.chest);
-		diamond = new ItemStack(Item.diamond);
-		ironBlock = new ItemStack(Block.blockIron);
 		glass = new ItemStack(Block.thinGlass);
 		pearl = new ItemStack(Item.enderPearl);
-		quartz = new ItemStack(Item.netherQuartz);
 		redstone = new ItemStack(Item.redstone);
 		slab = new ItemStack(Block.stoneSingleSlab);
 		stick = new ItemStack(Item.stick);
@@ -48,6 +43,7 @@ public class Stacks {
 		circuit		= StackManager.instance.get("circuitCrystal");
 		coilNaq		= StackManager.instance.get("coilNaquadah");
 		coilEnd		= StackManager.instance.get("coilEnder");
+		busCable	= new ItemStack(ModuleAutomation.busCable);
 	}
 	
 	private static ItemStack fromTE3(String name){

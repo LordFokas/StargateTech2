@@ -12,14 +12,13 @@ import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.IconRegistry;
 
 public class ItemNaquadah extends BaseItem{
-	public static final Metadata DATA[] = new Metadata[7];
+	public static final Metadata DATA[] = new Metadata[6];
 	public static final Metadata INGOT =	new Metadata(0, "naquadahIngot",	"Naquadah Ingot");
 	public static final Metadata DUST =		new Metadata(1, "naquadahDust",		"Naquadah Dust");
 	public static final Metadata PLATE =	new Metadata(2, "naquadahPlate",	"Naquadah Plate");
-	public static final Metadata LATTICE =	new Metadata(3, "lattice",			"Semiconductor Lattice Blend");
-	public static final Metadata CIRCUIT =	new Metadata(4, "circuitCrystal",	"Circuit Crystal");
-	public static final Metadata COIL_NAQ =	new Metadata(5, "coilNaquadah",		"Magnetic Coil");
-	public static final Metadata COIL_END =	new Metadata(6, "coilEnder",		"Matter Coil");
+	public static final Metadata CIRCUIT =	new Metadata(3, "circuitCrystal",	"Circuit Crystal");
+	public static final Metadata COIL_NAQ =	new Metadata(4, "coilNaquadah",		"Magnetic Induction Coil");
+	public static final Metadata COIL_END =	new Metadata(5, "coilEnder",		"Matter Conductance Coil");
 	
 	public static class Metadata{
 		public final int ID;

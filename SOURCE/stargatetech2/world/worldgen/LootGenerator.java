@@ -22,7 +22,6 @@ public class LootGenerator {
 		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 16, ItemNaquadah.INGOT.ID));
 		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 24, ItemNaquadah.DUST.ID));
 		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 8, ItemNaquadah.PLATE.ID));
-		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 12, ItemNaquadah.LATTICE.ID));
 		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 6, ItemNaquadah.CIRCUIT.ID));
 		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahOre, 12));
 		
