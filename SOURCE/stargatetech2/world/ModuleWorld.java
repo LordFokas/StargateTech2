@@ -8,7 +8,6 @@ import stargatetech2.core.util.Stacks;
 import stargatetech2.world.block.BlockLanteanWall;
 import stargatetech2.world.worldgen.AncientWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ModuleWorld implements IContentModule {
 	public static BlockLanteanWall lanteanWall;

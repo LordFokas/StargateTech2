@@ -15,7 +15,6 @@ import stargatetech2.transport.tileentity.TileStargateBase;
 import stargatetech2.transport.tileentity.TileStargateRing;
 import stargatetech2.transport.tileentity.TileTransportRing;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ModuleTransport implements IContentModule {
 	public static BlockNaquadahRail naquadahRail;

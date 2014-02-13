@@ -8,7 +8,6 @@ import stargatetech2.StargateTech2;
 import stargatetech2.automation.block.BlockBusCable;
 import stargatetech2.core.util.Stacks;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ModuleAutomation implements IContentModule {
 	public static BlockBusCable busCable;

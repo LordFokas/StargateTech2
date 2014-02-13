@@ -3,6 +3,7 @@
 
 StargateTech2:block.busAdapter.name=Abstract Bus Adapter
 StargateTech2:block.busCable.name=Abstract Bus Cable
+StargateTech2:block.crossover.name=Crossover
 
 StargateTech2:block.lanteanWall_white.name=White Lantean Wall
 StargateTech2:block.lanteanWall_orange.name=Orange Lantean Wall
@@ -41,3 +42,10 @@ StargateTech2:item.circuitCrystal.name=Circuit Crystal
 StargateTech2:item.coilNaquadah.name=Magnetic Induction Coil
 StargateTech2:item.coilEnder.name=Matter Conductance Coil
 StargateTech2:item.personalShield.name=Personal Shield
+
+
+
+###################################################################################################
+# MISC
+
+StargateTech2:fluid.ionizedParticles=Ionized Particles

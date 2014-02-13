@@ -9,33 +9,27 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import stargatetech2.api.ITabletAccess;
+import net.minecraftforge.common.MinecraftForge;
 import stargatetech2.core.base.BaseBlockContainer;
-import stargatetech2.core.base.BaseTileEntity;
-import stargatetech2.core.packet.PacketOpenGUI;
 import stargatetech2.core.reference.TextureReference;
-import stargatetech2.core.util.GUIHandler.Screen;
 import stargatetech2.core.util.Helper;
 import stargatetech2.core.util.IconRegistry;
-import stargatetech2.enemy.tileentity.TileShieldEmitter;
 import buildcraft.api.tools.IToolWrench;
 
-public abstract class BlockMachine extends BaseBlockContainer implements ITabletAccess{
-	private Screen screen;
+public abstract class BlockMachine extends BaseBlockContainer {
 	
-	public BlockMachine(String uName, Screen scr){
-		super(uName);
-		screen = scr;
+	public BlockMachine(String uName, boolean owned) {
+		super(uName, !owned, true);
+		if(!owned){
+			this.setResistance(80000F);
+			this.setHardness(4.0F);
+			MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 0);
+		}
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase living, ItemStack stack){
-		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw);
-		w.setBlockMetadataWithNotify(x, y, z, dir.ordinal(), 2);
-		TileEntity te = w.getBlockTileEntity(x, y, z);
-		if(te instanceof TileShieldEmitter && living instanceof EntityPlayer){
-			((TileShieldEmitter)te).setOwner(((EntityPlayer)living).getDisplayName());
-		}
+	public int getRenderType(){
+		return RenderBlockMachine.instance().getRenderId();
 	}
 	
 	@Override
@@ -47,39 +41,12 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 			default: return IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
 		}
 	}
-
-	@Override
-	public boolean onTabletAccess(EntityPlayer player, World world, int x, int y, int z) {
-		if(screen != null && canAccess(player, world, x, y, z)){
-			PacketOpenGUI packet = new PacketOpenGUI();
-			packet.guiID = screen.ordinal();
-			packet.x = x;
-			packet.y = y;
-			packet.z = z;
-			packet.sendToServer();
-			TileEntity te = world.getBlockTileEntity(x, y, z);
-			if(te instanceof BaseTileEntity){
-				((BaseTileEntity)te).updateClients();
-			}
-			return true;
-		}
-		return false;
-	}
-	
-	protected boolean canAccess(EntityPlayer player, World world, int x, int y, int z){
-		return true;
-	}
-	
-	@Override
-	public int getRenderType(){
-		return RenderBlockMachine.instance().renderID;
-	}
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int s, float hx, float hy, float hz){
 		ItemStack stack = p.inventory.getCurrentItem();
 		Item item = stack != null ? stack.getItem() : null;
-		if(item instanceof IToolWrench && canAccess(p, w, x, y, z)){
+		if(item instanceof IToolWrench && canPlayerAccess(p, w, x, y, z) && p.isSneaking()){
 			IToolWrench wrench = (IToolWrench) item;
 			if(wrench.canWrench(p, x, y, z)){
 				dropBlockAsItem(w, x, y, z, 0, 0);
@@ -91,6 +58,33 @@ public abstract class BlockMachine extends BaseBlockContainer implements ITablet
 		return false;
 	}
 	
-	public abstract String getFace(IBlockAccess world, int x, int y, int z);
-	public abstract String getGlow(IBlockAccess world, int x, int y, int z);
+	protected boolean canPlayerAccess(EntityPlayer player, World world, int x, int y, int z){
+		return true;
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase living, ItemStack stack){
+		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw);
+		w.setBlockMetadataWithNotify(x, y, z, dir.ordinal(), 2);
+		if(living instanceof EntityPlayer){
+			onPlacedBy(w, x, y, z, (EntityPlayer)living, dir);
+		}
+	}
+	
+	protected void onPlacedBy(World w, int x, int y, int z, EntityPlayer player, ForgeDirection facing){}
+	
+	public final FaceColor[] getTextureMap(IBlockAccess w, int x, int y, int z){
+		TileEntity te = w.getBlockTileEntity(x, y, z);
+		FaceColor[] map = new FaceColor[]{FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID};
+		if(te instanceof TileEntityMachine){
+			TileEntityMachine machine = (TileEntityMachine) te;
+			for(int i = 0; i < 6; i++){
+				map[i] = machine.getColorOnSide(i);
+			}
+		}
+		return map;
+	}
+	
+	@Override
+	protected abstract TileEntityMachine createTileEntity(int metadata);
 }

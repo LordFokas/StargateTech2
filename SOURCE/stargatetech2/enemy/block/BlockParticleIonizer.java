@@ -1,13 +1,13 @@
 package stargatetech2.enemy.block;
 
 import net.minecraft.world.IBlockAccess;
-import stargatetech2.core.machine.BlockMachine;
+import stargatetech2.core.MACHINE_BAD.BlockMachineBAD;
 import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.GUIHandler.Screen;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
 
-public class BlockParticleIonizer extends BlockMachine{
+public class BlockParticleIonizer extends BlockMachineBAD{
 
 	public BlockParticleIonizer() {
 		super(BlockReference.PARTICLE_IONIZER, Screen.PARTICLE_IONIZER);

@@ -5,13 +5,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import stargatetech2.api.ITabletAccess;
-import stargatetech2.core.machine.BlockMachine;
+import stargatetech2.core.MACHINE_BAD.BlockMachineBAD;
 import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.GUIHandler.Screen;
 import stargatetech2.enemy.tileentity.TileShieldEmitter;
 
-public class BlockShieldEmitter extends BlockMachine implements ITabletAccess{
+public class BlockShieldEmitter extends BlockMachineBAD implements ITabletAccess{
 
 	public BlockShieldEmitter() {
 		super(BlockReference.SHIELD_EMITTER, Screen.SHIELD_EMITTER);

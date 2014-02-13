@@ -5,17 +5,35 @@ import java.util.ArrayList;
 public class BlockReference {
 	public static final ArrayList<String> ALL_BLOCKS = new ArrayList<String>(10);
 	
+	// AUTOMATION
+	public static final String BUS_CABLE = "busCable";
+	
+	
 	// CORE
+	public static final String NAQUADAH_ORE = "naquadahOre";
+	
+	
+	// ENEMY
 	public static final String SHIELD_EMITTER = "shieldEmitter";
 	public static final String PARTICLE_IONIZER = "particleIonizer";
 	public static final String SHIELD = "shield";
+	
+	
+	// ENERGY
+	
+	// FACTORY
+	public static final String CROSSOVER = "crossover";
+	
+	
+	// TRANSPORT
+	public static final String STARGATE = "stargate";
 	public static final String NAQUADAH_RAIL = "naquadahRail";
-	public static final String NAQUADAH_ORE = "naquadahOre";
 	public static final String TRANSPORT_RING = "transportRing";
 	public static final String INVISIBLE = "invisible";
+	
+	// WORLD
 	public static final String LANTEAN_WALL = "lanteanWall";
-	public static final String STARGATE = "stargate";
-	public static final String BUS_CABLE = "busCable";
+	
 	
 	// INTEGRATION
 	public static final String BUS_ADAPTER = "busAdapter";

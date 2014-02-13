@@ -6,7 +6,6 @@ import stargatetech2.core.reference.TileEntityReference;
 import stargatetech2.core.util.Stacks;
 import stargatetech2.integration.plugins.BasePlugin;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class PluginCC extends BasePlugin {
 	public static BlockBusAdapter busAdapter;

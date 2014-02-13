@@ -17,7 +17,6 @@ import stargatetech2.enemy.tileentity.TileShieldEmitter;
 import stargatetech2.enemy.util.EnemyEventHandler;
 import stargatetech2.enemy.util.IonizedParticles;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ModuleEnemy implements IContentModule {
 	public static BlockShieldEmitter shieldEmitter;

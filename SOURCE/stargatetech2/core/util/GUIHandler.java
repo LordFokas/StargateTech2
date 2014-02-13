@@ -14,6 +14,8 @@ public class GUIHandler implements IGuiHandler {
 	public enum Screen{
 		SHIELD_EMITTER,
 		PARTICLE_IONIZER,
+		PRIORITIZER,
+		CROSSOVER
 	}
 	
 	@Override

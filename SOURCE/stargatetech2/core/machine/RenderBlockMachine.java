@@ -2,10 +2,8 @@ package stargatetech2.core.machine;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.core.base.BaseISBRH;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.IconRegistry;
@@ -18,42 +16,36 @@ public class RenderBlockMachine extends BaseISBRH {
 	}
 	
 	@Override
-	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer){
+	public boolean renderWorldBlock(IBlockAccess w, int x, int y, int z, Block block, int modelId, RenderBlocks renderer){
 		BlockMachine machine = (BlockMachine) block;
-		int direction = -1;
-		int d = world.getBlockMetadata(x, y, z);
-		if(d > 1 && d < 6) direction = d;
 		Icon mside = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
+		Icon msidei = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE_I);
 		Icon mtop = IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP);
+		Icon mtopi = IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP_I);
 		Icon mbot = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
-		Icon face = IconRegistry.blockIcons.get(machine.getFace(world, x, y, z));
-		Icon glow = IconRegistry.blockIcons.get(machine.getGlow(world, x, y, z));
-		Icon[] tmap = new Icon[]{mbot, mtop, mside, mside, mside, mside, mside};
-		if(direction != -1){
-			tmap[direction] = face;
-			Tessellator tessellator = Tessellator.instance;
-			tessellator.setColorOpaque_I(0xFFFFFF);
-			tessellator.setBrightness(220);
-			switch(ForgeDirection.getOrientation(direction)){
-				case SOUTH:
-					renderer.renderFaceZPos(machine, x, y, z, glow);
+		Icon mboti = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM_I);
+		Icon[] map = new Icon[6];
+		FaceColor[] colors = machine.getTextureMap(w, x, y, z);
+		for(int face = 0; face < 6; face++){
+			switch(face){
+				case 0:
+					map[face] = colors[face].isColor() ? mboti : mbot;
 					break;
-				case EAST:
-					renderer.renderFaceXPos(machine, x, y, z, glow);
+				case 1:
+					map[face] = colors[face].isColor() ? mtopi : mtop;
 					break;
-				case NORTH:
-					renderer.renderFaceZNeg(machine, x, y, z, glow);
+				default:
+					map[face] = colors[face].isColor() ? msidei : mside;
 					break;
-				case WEST:
-					renderer.renderFaceXNeg(machine, x, y, z, glow);
-					break;
-				default: break; 
 			}
 		}
-		machine.setOverride(tmap);
+		machine.setOverride(map);
+		renderer.renderStandardBlock(machine, x, y, z);
+		for(int i = 0; i < 6; i++){
+			map[i] = IconRegistry.blockIcons.get(colors[i].getTexture());
+		}
 		renderer.renderStandardBlock(machine, x, y, z);
 		machine.restoreTextures();
 		return true;
 	}
-
 }
