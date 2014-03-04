@@ -1,8 +1,14 @@
 package stargatetech2.core.base;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Mouse;
@@ -11,19 +17,47 @@ import org.lwjgl.opengl.GL11;
 import stargatetech2.core.reference.TextureReference;
 
 public abstract class BaseGUI extends GuiContainer {
+	private int _xoff = 0, _yoff = 0;
 	private boolean onBackground;
 	private boolean isNativeRender;
 	private boolean usesTextHandler = false;
 	protected ResourceLocation bgImage = null;
 	
-	private ArrayList<IGauge> gauges = new ArrayList<IGauge>();
-	private ArrayList<HandlerWrapper<IClickHandler>> clickHandlers = new ArrayList<HandlerWrapper<IClickHandler>>();
-	private ArrayList<HandlerWrapper<IHoverHandler>> hoverHandlers = new ArrayList<HandlerWrapper<IHoverHandler>>();
+	private ArrayList<TabWrapper> tabs = new ArrayList();
+	private ArrayList<IGauge> gauges = new ArrayList();
+	private ArrayList<HandlerWrapper<IClickHandler>> clickHandlers = new ArrayList();
+	private ArrayList<HandlerWrapper<IHoverHandler>> hoverHandlers = new ArrayList();
+	
+	public static interface ITab{
+		public void register(BaseGUI gui);
+		public TabColor getColor();
+		public ItemStack getIcon();
+		public String getName();
+		public int getSizeX();
+		public int getSizeY();
+		public void render();
+		public boolean handleClick(int x, int y);
+		
+		public static enum TabColor{
+			RED		(96,  0),
+			BLUE	(96, 16),
+			YELLOW	(96, 32),
+			GREEN	(96, 48);
+			
+			public final int x, y;
+			
+			private TabColor(int x, int y){
+				this.x = x;
+				this.y = y;
+			}
+		}
+	}
 	
 	public static interface IGauge{
 		public void register(BaseGUI gui);
 		public void renderGauge();
 		public void renderTooltip();
+		public void update();
 	}
 	
 	public static interface IClickHandler{
@@ -35,9 +69,83 @@ public abstract class BaseGUI extends GuiContainer {
 		public void onLeave();
 	}
 	
+	// TODO: A LOT of stuff!
+	private static class TabWrapper{
+		public int _hx, _hy;
+		public final ITab tab;
+		private BaseGUI gui;
+		private int size;
+		private long lastUpdate = 0;
+		private int grow;
+		private boolean isHover = false;
+		private static final int GROWTH_FACTOR = 25;
+		
+		public TabWrapper(ITab tab, BaseGUI gui){
+			this.tab = tab;
+			this.gui = gui;
+		}
+		
+		public void expand(){
+			if(isContracted()){
+				grow = GROWTH_FACTOR;
+			}
+		}
+		
+		public void contract(){
+			if(!isContracted()){
+				grow = -GROWTH_FACTOR;
+			}
+		}
+		
+		public boolean isExpanded(){
+			return grow == 0 && size == 100;
+		}
+		
+		public boolean isContracted(){
+			return grow == 0 && size == 0;
+		}
+		
+		public void update(){
+			long time = Minecraft.getMinecraft().theWorld.getTotalWorldTime();
+			if(lastUpdate < time && grow != 0){
+				size += grow;
+				if(size > 100) size = 100;
+				if(size < 0  ) size = 0;
+				if(size == 100 || size == 0){
+					grow = 0;
+				}
+			lastUpdate = time;
+			}
+		}
+		
+		public int getX(int off){
+			if(size == 0){
+				return 0;
+			}else{
+				return (tab.getSizeX() + off) * size / 100;
+			}
+		}
+		
+		public int getY(int off){
+			if(size == 0){
+				return 0;
+			}else{
+				return (tab.getSizeY() + off) * size / 100;
+			}
+		}
+		
+		public void setHover(boolean hover){
+			isHover = hover;
+		}
+		
+		public boolean isHover(){
+			return isHover;
+		}
+	}
+	
 	private static class HandlerWrapper<H>{
 		public final H handler;
-		public final int minX, minY, maxX, maxY;
+		public int minX, minY, maxX, maxY;
 		
 		public HandlerWrapper(H h, int x0, int y0, int x1, int y1){
 			handler = h;
@@ -94,6 +202,26 @@ public abstract class BaseGUI extends GuiContainer {
 		gauges.add(gauge);
 	}
 	
+	protected void addTab(ITab tab){
+		tab.register(this);
+		tabs.add(new TabWrapper(tab, this));
+	}
+	
+	protected TabWrapper getTab(int x, int y){
+		int off = 15;
+		for(TabWrapper tab : tabs){
+			int tx = tab.getX(-16) + 22;
+			int ty = tab.getY(-16) + 22;
+			if(off <= y && y < (off + ty)){
+				if(x > -tx-5 && x <= -5){
+					return tab;
+				}
+			}
+			off += ty;
+		}
+		return null;
+	}
+	
 	@Override
 	protected final void mouseClicked(int x, int y, int btn){
 		super.mouseClicked(x, y, btn);
@@ -103,6 +231,19 @@ public abstract class BaseGUI extends GuiContainer {
 			for(HandlerWrapper<IClickHandler> hw : clickHandlers){
 				if(hw.minX <= x && hw.maxX > x && hw.minY <= y && hw.maxY > y){
 					hw.handler.onClick(x, y);
+				}
+			}
+			TabWrapper hit = getTab(x, y);
+			if(hit != null){
+				for(TabWrapper tab : tabs){
+					if(tab == hit){
+						if(hit.isContracted()) hit.expand();
+						else if(hit.tab.handleClick(x, y)){
+							hit.contract();
+						}
+					}else{
+						tab.contract();
+					}
 				}
 			}
 		}
@@ -121,6 +262,14 @@ public abstract class BaseGUI extends GuiContainer {
 					hw.handler.onHover(x, y);
 				}else{
 					hw.handler.onLeave();
+				}
+			}
+			TabWrapper hit = getTab(x, y);
+			for(TabWrapper tab : tabs){
+				tab.setHover(tab == hit);
+				if(tab.isHover()){
+					tab._hx = x;
+					tab._hy = y;
 				}
 			}
 		}
@@ -144,8 +293,15 @@ public abstract class BaseGUI extends GuiContainer {
 	
 	protected void onKeyTyped(char key, int code){}
 	
+	private void updateTabs(){
+		for(TabWrapper wrapper : tabs){
+			wrapper.update();
+		}
+	}
+	
 	@Override
 	protected final void drawGuiContainerBackgroundLayer(float f, int i, int j) {
+		updateTabs();
 		onBackground = true;
 		if(bgImage != null){
 			bindImage(bgImage);
@@ -154,6 +310,7 @@ public abstract class BaseGUI extends GuiContainer {
 			drawLocalQuad(0, 0, 0, x, 0, y, x, y);
 		}
 		bindBaseImage();
+		drawTabBackgrounds();
 		isNativeRender = true;
 		drawLocalQuad(0, 0, 0, 24, 0, 24, 24, 24);
 		drawLocalQuad(xSize-24, 0, 40, 64, 0, 24, 24, 24);
@@ -174,21 +331,82 @@ public abstract class BaseGUI extends GuiContainer {
 	
 	@Override
 	protected final void drawGuiContainerForegroundLayer(int par1, int par2){
+		drawTabForegrounds();
 		drawForeground();
 		for(IGauge gauge : gauges){
 			gauge.renderTooltip();
 		}
+		for(TabWrapper tab : tabs){
+			if(tab.isHover() && tab.isContracted()){
+				drawHover(tab._hx, tab._hy+9, tab.tab.getName());
+			}
+		}
 	}
 	
-	protected void updateGauges(){}
+	private void drawTabBackgrounds(){
+		int off = 0;
+		for(int t = 0; t < tabs.size(); t++){
+			TabWrapper wrapper = tabs.get(t);
+			int tx = wrapper.tab.getColor().x;
+			int ty = wrapper.tab.getColor().y;
+			int sx = 19 + wrapper.getX(-16);
+			int sy = 16 + wrapper.getY(-16);
+			drawLocalQuad(-7-sx, off + 15, tx, tx + 3, ty, ty + 3, 3, 3);
+			drawLocalQuad(-7-sx, off + 18+sy, tx, tx + 3, ty + 13, ty + 16, 3, 3);
+			drawLocalQuad(-7-sx, off + 18, tx, tx + 3, ty + 3, ty + 13, 3, sy);
+			drawLocalQuad(-4-sx, off + 15, tx + 3, tx + 13, ty, ty + 3, sx, 3);
+			drawLocalQuad(-4-sx, off + 18+sy, tx + 3, tx + 13, ty + 13, ty + 16, sx, 3);
+			drawLocalQuad(-4-sx, off + 18, tx + 3, tx + 13, ty + 3, ty + 13, sx, sy);
+			GL11.glDisable(GL11.GL_LIGHTING); // TODO: get rid of this workaround AFTER mc stops fucking up OGL state.
+			itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, wrapper.tab.getIcon(), guiLeft-sx+5, guiTop+27+off);
+			if(wrapper.isExpanded()){
+				GL11.glDisable(GL11.GL_LIGHTING); // TODO: get rid of this workaround AFTER mc stops fucking up OGL state.
+				drawLeft(wrapper.tab.getName(), guiLeft-sx+15, guiTop+23+off, 0xFFFFFF);
+			}
+			bindBaseImage();
+			off += sy + 6;
+		}
+	}
+	
+	private void drawTabForegrounds(){
+		int yoff = 15;
+		int xoff = 0;
+		for(TabWrapper wrapper : tabs){
+			int sy = 22 + wrapper.getY(-16);
+			int sx = 22 + wrapper.getX(-16);
+			xoff = -sx-4;
+			if(wrapper.isExpanded()){
+				_xoff = xoff;
+				_yoff = yoff;
+				wrapper.tab.render();
+			}
+			yoff += sy;
+		}
+		_xoff = 0;
+		_yoff = 0;
+	}
+	
+	private void updateGauges(){
+		for(IGauge gauge : gauges){
+			gauge.update();
+		}
+	}
+	
 	protected void drawBackground(){}
 	protected void drawForeground(){}
+	
+	public final void drawIcon(float x, float y, Icon icon, ResourceLocation map, int size){
+		mc.renderEngine.bindTexture(map);
+		drawQuad(x, y, icon.getMinU(), icon.getMaxU(), icon.getMinV(), icon.getMaxV(), size, size);
+	}
 	
 	public final void drawLocalQuad(float x, float y, float xMin, float xMax, float yMin, float yMax, float xStep, float yStep){
 		drawQuad(x, y, xMin / 256F, xMax / 256F, yMin / 256F, yMax / 256F, xStep, yStep);
 	}
 	
 	public final void drawQuad(float x, float y, float xMin, float xMax, float yMin, float yMax, float xStep, float yStep){
+		x += _xoff;
+		y += _yoff;
 		if(!isNativeRender){
 			x += 9;
 			y += 9;
@@ -233,5 +451,13 @@ public abstract class BaseGUI extends GuiContainer {
 	
 	public final void drawCentered(String s, int xMid, int y, int color){
 		drawLeft(s, xMid - fontRenderer.getStringWidth(s) / 2, y, color);
+	}
+	
+	public final void drawHover(int x, int y, String ... lines){
+		drawHover(Arrays.asList(lines), x, y);
+	}
+	
+	public final void drawHover(List<String> lines, int x, int y){
+		drawHoveringText(lines, x, y, fontRenderer);
 	}
 }

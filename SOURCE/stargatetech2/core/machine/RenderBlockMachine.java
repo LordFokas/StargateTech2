@@ -18,6 +18,7 @@ public class RenderBlockMachine extends BaseISBRH {
 	@Override
 	public boolean renderWorldBlock(IBlockAccess w, int x, int y, int z, Block block, int modelId, RenderBlocks renderer){
 		BlockMachine machine = (BlockMachine) block;
+		int metadata = w.getBlockMetadata(x, y, z);
 		Icon mside = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
 		Icon msidei = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE_I);
 		Icon mtop = IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP);
@@ -26,6 +27,7 @@ public class RenderBlockMachine extends BaseISBRH {
 		Icon mboti = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM_I);
 		Icon[] map = new Icon[6];
 		FaceColor[] colors = machine.getTextureMap(w, x, y, z);
+		colors[metadata] = FaceColor.VOID;
 		for(int face = 0; face < 6; face++){
 			switch(face){
 				case 0:
@@ -39,6 +41,7 @@ public class RenderBlockMachine extends BaseISBRH {
 					break;
 			}
 		}
+		map[metadata] = machine.getBaseIcon(3, 0);
 		machine.setOverride(map);
 		renderer.renderStandardBlock(machine, x, y, z);
 		for(int i = 0; i < 6; i++){

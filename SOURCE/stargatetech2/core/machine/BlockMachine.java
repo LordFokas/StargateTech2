@@ -10,16 +10,24 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
+import stargatetech2.StargateTech2;
 import stargatetech2.core.base.BaseBlockContainer;
 import stargatetech2.core.reference.TextureReference;
+import stargatetech2.core.util.GUIHandler.Screen;
 import stargatetech2.core.util.Helper;
 import stargatetech2.core.util.IconRegistry;
 import buildcraft.api.tools.IToolWrench;
 
 public abstract class BlockMachine extends BaseBlockContainer {
+	private Screen screen;
 	
-	public BlockMachine(String uName, boolean owned) {
+	public BlockMachine(String uName, boolean owned){
+		this(uName, owned, null);
+	}
+	
+	public BlockMachine(String uName, boolean owned, Screen screen) {
 		super(uName, !owned, true);
+		this.screen = screen;
 		if(!owned){
 			this.setResistance(80000F);
 			this.setHardness(4.0F);
@@ -54,6 +62,9 @@ public abstract class BlockMachine extends BaseBlockContainer {
 				wrench.wrenchUsed(p, x, y, z);
 				return true;
 			}
+		}else if(!p.isSneaking() && screen != null){
+			p.openGui(StargateTech2.instance, screen.ordinal(), w, x, y, z);
+			return true;
 		}
 		return false;
 	}
@@ -79,7 +90,7 @@ public abstract class BlockMachine extends BaseBlockContainer {
 		if(te instanceof TileEntityMachine){
 			TileEntityMachine machine = (TileEntityMachine) te;
 			for(int i = 0; i < 6; i++){
-				map[i] = machine.getColorOnSide(i);
+				map[i] = machine.getColor(i);
 			}
 		}
 		return map;

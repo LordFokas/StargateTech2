@@ -23,7 +23,15 @@ public enum FaceColor{
 			case PURPLE:	return TextureReference.INTERFACE_PURPLE;
 			case RED:		return TextureReference.INTERFACE_RED;
 			case YELLOW:	return TextureReference.INTERFACE_YELLOW;
-			default:		return "invisible";
+			default:		return TextureReference.TEXTURE_INVISIBLE;
 		}
+	}
+	
+	public boolean isInput(){
+		return this == BLUE || this == GREEN || this == PURPLE;
+	}
+	
+	public boolean isOutput(){
+		return this == ORANGE || this == RED || this == YELLOW;
 	}
 }

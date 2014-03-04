@@ -2,19 +2,24 @@ package stargatetech2.core.base;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
 
 import org.lwjgl.opengl.GL11;
 
 import stargatetech2.core.base.BaseGUI.IGauge;
 import stargatetech2.core.base.BaseGUI.IHoverHandler;
+import stargatetech2.core.util.Helper;
 import stargatetech2.enemy.util.IonizedParticles;
+import cofh.api.energy.EnergyStorage;
 
 public abstract class BaseGauge implements IGauge{
 	protected BaseGUI master;
 	protected GaugeHoverHandler hoverHandler;
-	protected float cVal, mVal;
+	protected int cVal, mVal;
 	protected int xPos, yPos;
 	
 	protected class GaugeHoverHandler implements IHoverHandler{
@@ -39,10 +44,10 @@ public abstract class BaseGauge implements IGauge{
 		Minecraft.getMinecraft().renderEngine.bindTexture(rl);;
 	}
 	
-	public BaseGauge(int x, int y, float maxValue){
+	public BaseGauge(int x, int y, int maxValue){
 		hoverHandler = new GaugeHoverHandler();
 		mVal = maxValue;
-		cVal = 0F;
+		cVal = 0;
 		xPos = x;
 		yPos = y;
 	}
@@ -53,18 +58,17 @@ public abstract class BaseGauge implements IGauge{
 		master.addHoverHandler(hoverHandler, xPos, yPos, 16, 64);
 	}
 	
-	public void setCurrentValue(float currentValue){
-		cVal = currentValue;
-	}
-	
 	public static class TankGauge extends BaseGauge{
-		public TankGauge(int x, int y, float maxValue) {
-			super(x, y, maxValue);
+		private IFluidTank tank;
+		
+		public TankGauge(int x, int y, IFluidTank tank) {
+			super(x, y, tank.getCapacity());
+			this.tank = tank;
 		}
 
 		@Override
 		public void renderGauge() {
-			float fill = cVal / mVal;
+			float fill = ((float)cVal) / ((float)mVal);
 			Icon f = IonizedParticles.fluid.getIcon();
 			bindImage(TextureMap.locationBlocksTexture);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -82,25 +86,33 @@ public abstract class BaseGauge implements IGauge{
 		@Override
 		public void renderTooltip() {
 			if(hoverHandler.isHover){
-				int baseX = hoverHandler.hoverX+2;
-				int baseY = hoverHandler.hoverY-26;
-				String str = String.format("%d / %d", (int)cVal, (int)mVal);
-				master.bindBaseImage();
-				master.drawLocalQuad(baseX, baseY, 0, 96, 64, 88, 96, 24);
-				master.drawLeft("Ionized Particles", baseX+4, baseY+3, 0x444444);
-				master.drawLeft(str, baseX+4, baseY+14, 0x444444);
+				int baseX = hoverHandler.hoverX + 2;
+				int baseY = hoverHandler.hoverY - 2;
+				String c = Helper.prettyNumber(cVal);
+				String m = Helper.prettyNumber(mVal);
+				FluidStack fluid = tank.getFluid();
+				String name = fluid == null ? EnumChatFormatting.GRAY + "Empty" : fluid.getFluid().getLocalizedName();
+				master.drawHover(baseX, baseY, name, String.format("%s / %s mB", c, m));
 			}
+		}
+
+		@Override
+		public void update() {
+			cVal = tank.getFluidAmount();
 		}
 	}
 	
 	public static class PowerGauge extends BaseGauge{
-		public PowerGauge(int x, int y, float maxValue) {
-			super(x, y, maxValue);
+		private EnergyStorage capacitor;
+		
+		public PowerGauge(int x, int y, EnergyStorage capacitor) {
+			super(x, y, capacitor.getMaxEnergyStored());
+			this.capacitor = capacitor;
 		}
 
 		@Override
 		public void renderGauge() {
-			float power = cVal / mVal;
+			float power = ((float)cVal) / ((float)mVal);
 			master.bindBaseImage();
 			master.drawLocalQuad(xPos, yPos + (64F * (1F-power)), 64, 80, (64F - (64F * power)), 64, 16, 64F*power);
 		}
@@ -108,14 +120,18 @@ public abstract class BaseGauge implements IGauge{
 		@Override
 		public void renderTooltip() {
 			if(hoverHandler.isHover){
-				int baseX = hoverHandler.hoverX+2;
-				int baseY = hoverHandler.hoverY-26;
-				String str = String.format("%d / %d", (int)cVal, (int)mVal);
-				master.bindBaseImage();
-				master.drawLocalQuad(baseX, baseY, 0, 96, 64, 88, 96, 24);
-				master.drawLeft("Power", baseX+4, baseY+3, 0x444444);
-				master.drawLeft(str, baseX+4, baseY+14, 0x444444);
+				int baseX = hoverHandler.hoverX + 2;
+				int baseY = hoverHandler.hoverY - 2;
+				String c = Helper.prettyNumber(cVal);
+				String m = Helper.prettyNumber(mVal);
+				String rate = EnumChatFormatting.GRAY + "Max Rate: " + capacitor.getMaxReceive() + " RF/t";
+				master.drawHover(baseX, baseY, EnumChatFormatting.YELLOW + "Energy (Redstone Flux)", rate, String.format("%s / %s RF", c, m));
 			}
+		}
+
+		@Override
+		public void update() {
+			cVal = capacitor.getEnergyStored();
 		}
 	}
 }

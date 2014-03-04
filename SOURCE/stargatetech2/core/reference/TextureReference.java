@@ -49,7 +49,8 @@ public class TextureReference {
 	
 	@Block public static final String LANTEAN_BLOCK_CLEAN = "lanteanBlockClean";
 	@Block public static final String STARGATE_BASE_TOP = "stargateBaseTop";
-	@Block public static final String BUS_CABLE_PLUG = "busPlug";	
+	@Block public static final String TEXTURE_INVISIBLE = "invisible";
+	@Block public static final String BUS_CABLE_PLUG = "busPlug";
 	
 	static{
 		try{

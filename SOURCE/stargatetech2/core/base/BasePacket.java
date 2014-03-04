@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import stargatetech2.core.packet.PacketOpenGUI;
+import stargatetech2.core.packet.PacketUpdateMachineColors;
 import stargatetech2.core.util.ByteUtil;
 import stargatetech2.core.util.PacketHandler;
 import stargatetech2.enemy.packet.PacketExceptionsUpdate;
@@ -63,6 +64,7 @@ public abstract class BasePacket{
 		packetMap.add(PacketActivateRings.class);
 		packetMap.add(PacketWormhole.class);
 		packetMap.add(PacketPrintAddress.class);
+		packetMap.add(PacketUpdateMachineColors.class);
 	}
 	
 	private ByteArrayOutputStream baos = new ByteArrayOutputStream();

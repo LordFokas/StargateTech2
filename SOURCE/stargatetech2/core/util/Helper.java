@@ -1,6 +1,7 @@
 package stargatetech2.core.util;
 
 import java.io.File;
+import java.util.LinkedList;
 
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.DimensionManager;
@@ -21,5 +22,21 @@ public class Helper {
 	
 	public static File getFile(String file){
 		return new File(DimensionManager.getCurrentSaveRootDirectory().getAbsolutePath() + File.separator + "SGTech2_" + file);
+	}
+	
+	public static String prettyNumber(int n){
+		String number = String.valueOf(n);
+		LinkedList<String> parts = new LinkedList();
+		StringBuilder pretty = new StringBuilder();
+		while(number.length() % 3 != 0){
+			number = " " + number;
+		}
+		while(number.length() > 3){
+			pretty.append(number.substring(0, 3));
+			pretty.append(".");
+			number = number.substring(3);
+		}
+		pretty.append(number);
+		return pretty.toString().trim();
 	}
 }

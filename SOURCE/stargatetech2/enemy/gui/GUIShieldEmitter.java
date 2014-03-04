@@ -138,8 +138,8 @@ public class GUIShieldEmitter extends BaseGUI {
 		addClickHandler(remove2, 101, 55, 8, 8);
 		addClickHandler(remove3, 101, 67, 8, 8);
 		addClickHandler(remove4, 101, 79, 8, 8);
-		ionTank = new TankGauge(8, 28, shieldEmitter.getTankInfo(null)[0].capacity);
-		addGauge(ionTank);
+		//ionTank = new TankGauge(8, 28, shieldEmitter.getTankInfo(null)[0].capacity);
+		//addGauge(ionTank);
 	}
 	
 	@Override
@@ -173,10 +173,10 @@ public class GUIShieldEmitter extends BaseGUI {
 		if(perm.hasBit(ShieldPermissions.PERM_MINECART))	drawLocalQuad(32, 84, 248, 256, 0, 8, 8, 8);
 	}
 	
-	@Override
-	protected void updateGauges(){
-		ionTank.setCurrentValue(shieldEmitter.getIonAmount());
-	}
+//	@Override
+//	protected void updateGauges(){
+//		ionTank.setCurrentValue(shieldEmitter.getIonAmount());
+//	}
 	
 	@Override
 	protected void onKeyTyped(char key, int code){
