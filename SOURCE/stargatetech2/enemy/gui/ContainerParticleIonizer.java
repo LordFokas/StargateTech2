@@ -1,8 +1,11 @@
 package stargatetech2.enemy.gui;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import stargatetech2.core.base.BaseContainer;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
 
@@ -43,5 +46,66 @@ public class ContainerParticleIonizer extends BaseContainer {
 	        slot.onPickupFromSlot(player, stackInSlot);
 		}
 		return stack;
+	}
+	
+	private int lPower = -1;
+	private int lFIonID = 0;
+	private int lFIonQt = 0;
+	
+	@Override
+	public void detectAndSendChanges(){
+		super.detectAndSendChanges();
+		int power = ionizer.energy.getEnergyStored();
+		if(power != lPower){
+			sendUpdate(0, power);
+			lPower = power;
+		}
+		FluidStack fIon = ionizer.fluidIonizable.getFluid();
+		if(fIon == null || fIon.amount == 0 ){
+			if(lFIonID != 0){
+				sendUpdate(1, 0);
+				lFIonID = 0;
+			}
+			if(lFIonQt != 0){
+				sendUpdate(2, 0);
+				lFIonQt = 0;
+			}			
+		}else{
+			if(lFIonID != fIon.fluidID){
+				sendUpdate(1, fIon.fluidID);
+				lFIonID = fIon.fluidID;
+			}
+			if(lFIonQt != fIon.amount){
+				sendUpdate(2, fIon.amount);
+				lFIonQt = fIon.amount;
+			}
+		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public void updateProgressBar(int key, int value){
+		switch(key){
+			case 0:
+				ionizer.energy.setEnergyStored(value);
+				break;
+			case 1:
+				if(value == 0){
+					ionizer.fluidIonizable.setFluid(null);
+				}else{
+					ionizer.fluidIonizable.setFluid(new FluidStack(value, 1));
+				}
+				break;
+			case 2:
+				if(value == 0){
+					ionizer.fluidIonizable.setFluid(null);
+				}else{
+					FluidStack fs = ionizer.fluidIonizable.getFluid();
+					if(fs != null){
+						fs.amount = value;
+					}
+				}
+				break;
+		}
 	}
 }

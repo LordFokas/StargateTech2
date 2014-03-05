@@ -5,61 +5,49 @@ import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
-public class ParticleIonizerRecipes{
-	public static class Recipe{
-		public ItemStack stack;
-		public int ticks, ions, power;
+public final class ParticleIonizerRecipes{
+	private static final ParticleIonizerRecipes RECIPES = new ParticleIonizerRecipes();
+	
+	private ParticleIonizerRecipes(){}
+	
+	public static ParticleIonizerRecipes recipes(){
+		return RECIPES;
+	}
+	
+	public static final class IonizerRecipe{
+		private FluidStack fluidIonizable;
+		private ItemStack  solidIonizable;
+		private int time, power, ions;
 		
-		public Recipe(ItemStack s, int t, int i, int p){
-			stack = s;
-			ticks = t;
-			power = p;
-			ions = i;
+		public IonizerRecipe(FluidStack fluid, int time, int power, int ions){
+			this(fluid, null, time, power, ions);
 		}
 		
-		public Recipe deepClone(){
-			return new Recipe(stack.copy(), ticks, ions, power);
+		public IonizerRecipe(ItemStack solid, int time, int power, int ions){
+			this(null, solid, time, power, ions);
 		}
 		
-		public boolean equals(Object o){
-			if(o instanceof Recipe){
-				ItemStack s = ((Recipe)o).stack;
-				return s.itemID == stack.itemID && s.getItemDamage() == stack.getItemDamage();
+		public IonizerRecipe(FluidStack fluid, ItemStack solid, int time, int power, int ions){
+			if(fluid == null && solid == null){
+				throw new IllegalArgumentException("An Ionizer Recipe must have at least one valid ionizable material!");
 			}
-			return false;
-		}
-	}
-	
-	private static ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-	
-	public static Recipe getRecipe(ItemStack stack){
-		if(stack == null) return null;
-		for(Recipe recipe : recipes){
-			if(recipe.stack.itemID == stack.itemID && recipe.stack.getItemDamage() == stack.getItemDamage()){
-				return recipe.deepClone();
+			if(time <= 0 || power <= 0 || ions <= 0){
+				throw new IllegalArgumentException("An Ionizer Recipe's time, power and ions value MUST be positive!");
 			}
+			this.fluidIonizable = fluid;
+			this.solidIonizable = solid;
+			this.power = power;
+			this.time = time;
+			this.ions = ions;
 		}
-		return null;
 	}
 	
-	public static void addRecipe(ItemStack stack, int seconds, int ions, int power){
-		if(stack == null) return;
-		Recipe recipe = new Recipe(stack, seconds * 20, ions, power);
-		if(!recipes.contains(recipe)) recipes.add(recipe);
-	}
+	private ArrayList<IonizerRecipe> recipes = new ArrayList();
 	
-	public static int getRecipeID(Recipe recipe){
-		return recipes.indexOf(recipe);
-	}
-	
-	public static Recipe getRecipe(int recipeID){
-		return recipes.get(recipeID);
-	}
-	
-	static{
-		addRecipe(new ItemStack(Item.glowstone), 300, 5, 10);
-		addRecipe(new ItemStack(Item.redstone), 150, 1, 5);
-		addRecipe(new ItemStack(Block.blockRedstone), 1350, 1, 5);
+	public void addRecipe(IonizerRecipe recipe){
+		// TODO: check if there's already a recipe with the same materials.
+		recipes.add(recipe);
 	}
 }

@@ -21,8 +21,9 @@ public class PluginIC2 extends BasePlugin {
 		scrapBox = Items.getItem("scrapBox");
 		//uuMatter = Items.getItem("matter");
 		
-		ParticleIonizerRecipes.addRecipe(scrap, 200, 8, 4);
-		ParticleIonizerRecipes.addRecipe(scrapBox, 1800, 8, 4);
+		// TODO: re-do this.
+		//ParticleIonizerRecipes.addRecipe(scrap, 200, 8, 4);
+		//ParticleIonizerRecipes.addRecipe(scrapBox, 1800, 8, 4);
 		//ParticleIonizerRecipes.addRecipe(uuMatter, 1800, 40, 1);
 	}
 
