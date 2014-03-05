@@ -3,8 +3,8 @@ package stargatetech2.enemy.gui;
 import stargatetech2.core.base.BaseGUI;
 import stargatetech2.core.base.BaseGauge.PowerGauge;
 import stargatetech2.core.base.BaseGauge.TankGauge;
-import stargatetech2.core.base.BaseTab.TabAbstractBus;
-import stargatetech2.core.base.BaseTab.TabConfiguration;
+import stargatetech2.core.machine.tabs.TabAbstractBus;
+import stargatetech2.core.machine.tabs.TabConfiguration;
 import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
@@ -25,7 +25,7 @@ public class GUIParticleIonizer extends BaseGUI {
 		super.addGauge(ionizedParticles);
 		super.addGauge(power);
 		super.addTab(new TabAbstractBus());
-		super.addTab(new TabConfiguration());
+		super.addTab(new TabConfiguration(ionizer));
 	}
 	
 	@Override

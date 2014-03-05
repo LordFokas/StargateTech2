@@ -235,13 +235,15 @@ public abstract class BaseGUI extends GuiContainer {
 			}
 			TabWrapper hit = getTab(x, y);
 			if(hit != null){
+				int yoff = 15;
 				for(TabWrapper tab : tabs){
 					if(tab == hit){
 						if(hit.isContracted()) hit.expand();
-						else if(hit.tab.handleClick(x, y)){
+						else if(hit.tab.handleClick(x + 26 + tab.getX(-16), y - yoff)){
 							hit.contract();
 						}
 					}else{
+						yoff += tab.getY(-16) + 22;
 						tab.contract();
 					}
 				}

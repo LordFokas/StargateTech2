@@ -19,8 +19,8 @@ import stargatetech2.core.machine.TileEntityMachine;
 public class TileParticleIonizer extends TileEntityMachine implements IFluidHandler, IEnergyHandler, ISidedInventory{
 	public final FluidTank ionizedParticles = new FluidTank(8000);		// orange
 	public final FluidTank fluidIonizable = new FluidTank(8000);		// blue
-	public final Inventory solidIonizable = new Inventory(9);			// purple
-	public final EnergyStorage energy = new EnergyStorage(32000, 400);	// yellow
+	public final Inventory solidIonizable = new Inventory(9);			// blue
+	public final EnergyStorage energy = new EnergyStorage(32000, 400);
 	
 	@Override
 	public void updateEntity(){
@@ -41,6 +41,11 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 		nbt.setCompoundTag("fluidIonizable", fluidIonizable.writeToNBT(new NBTTagCompound()));
 		nbt.setCompoundTag("solidIonizable", solidIonizable.writeToNBT(new NBTTagCompound()));
 		nbt.setCompoundTag("facing", writeFacingNBT());
+	}
+	
+	@Override
+	protected FaceColor[] getPossibleFaceColors() {
+		return new FaceColor[]{FaceColor.VOID, FaceColor.BLUE, FaceColor.ORANGE};
 	}
 	
 	// ############################################################################################
@@ -91,10 +96,7 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 	// IEnergyHandler
 	@Override
 	public int receiveEnergy(ForgeDirection side, int maxReceive, boolean simulate) {
-		if(canInterface(side)){
-			return energy.receiveEnergy(maxReceive, simulate);
-		}
-		return 0;
+		return energy.receiveEnergy(maxReceive, simulate);
 	}
 
 	@Override
@@ -104,23 +106,17 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 
 	@Override
 	public boolean canInterface(ForgeDirection side) {
-		return getColor(side) == FaceColor.YELLOW;
+		return true;
 	}
 
 	@Override
 	public int getEnergyStored(ForgeDirection side) {
-		if(canInterface(side)){
-			return energy.getEnergyStored();
-		}
-		return 0;
+		return energy.getEnergyStored();
 	}
 
 	@Override
 	public int getMaxEnergyStored(ForgeDirection side) {
-		if(canInterface(side)){
-			return energy.getMaxEnergyStored();
-		}
-		return 0;
+		return energy.getMaxEnergyStored();
 	}
 	
 	// ############################################################################################
@@ -152,7 +148,7 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		if(getColor(side) == FaceColor.PURPLE){
+		if(getColor(side) == FaceColor.BLUE){
 			return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8};
 		}
 		return new int[]{};
@@ -160,12 +156,12 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack stack, int side) {
-		return getColor(side) == FaceColor.PURPLE && solidIonizable.canInsert();
+		return getColor(side) == FaceColor.BLUE && solidIonizable.canInsert();
 	}
 
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
-		return getColor(side) == FaceColor.PURPLE && solidIonizable.canExtract();
+		return getColor(side) == FaceColor.BLUE && solidIonizable.canExtract();
 	}
 	
 	// useless stuff...  :c  (creeper face!)

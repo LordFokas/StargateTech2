@@ -18,4 +18,10 @@ public class TileEntityCrossover extends TileEntityMachine {
 
 	}
 
+	@Override
+	protected FaceColor[] getPossibleFaceColors() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
