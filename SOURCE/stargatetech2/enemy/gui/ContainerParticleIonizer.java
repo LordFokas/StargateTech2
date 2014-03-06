@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import stargatetech2.core.base.BaseContainer;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
+import stargatetech2.enemy.util.IonizedParticles;
 
 public class ContainerParticleIonizer extends BaseContainer {
 	public final TileParticleIonizer ionizer;
@@ -36,7 +37,7 @@ public class ContainerParticleIonizer extends BaseContainer {
 				if(!mergeItemStack(stackInSlot, 9, 45, true))
 					return null;
 			}else{ // Clicked Player Inv Slot
-				if(!mergeItemStack(stackInSlot, 0, ionizer.getSizeInventory(), true))
+				if(!mergeItemStack(stackInSlot, 0, ionizer.getSizeInventory(), false))
 					return null;
 			}
 			if(stackInSlot.stackSize == 0) slot.putStack(null);
@@ -51,6 +52,9 @@ public class ContainerParticleIonizer extends BaseContainer {
 	private int lPower = -1;
 	private int lFIonID = 0;
 	private int lFIonQt = 0;
+	private int lRecipe = -1;
+	private int lPIonQt = 0;
+	private int lTicks = 0;
 	
 	@Override
 	public void detectAndSendChanges(){
@@ -80,6 +84,21 @@ public class ContainerParticleIonizer extends BaseContainer {
 				lFIonQt = fIon.amount;
 			}
 		}
+		int currentRecipe = ionizer.getRecipe();
+		if(lRecipe != currentRecipe){
+			sendUpdate(3, currentRecipe);
+			lRecipe = currentRecipe;
+		}
+		int ions = ionizer.ionizedParticles.getFluidAmount();
+		if(ions != lPIonQt){
+			sendUpdate(4, ions);
+			lPIonQt = ions;
+		}
+		int ticks = ionizer.getWorkLeft();
+		if(lTicks != ticks){
+			sendUpdate(5, ticks);
+			lTicks = ticks;
+		}
 	}
 	
 	@Override
@@ -106,6 +125,19 @@ public class ContainerParticleIonizer extends BaseContainer {
 					}
 				}
 				break;
+			case 3:
+				ionizer.setRecipe(value);
+				break;
+			case 4:
+				ionizer.ionizedParticles.setFluid(new FluidStack(IonizedParticles.fluid, value));
+				break;
+			case 5:
+				lTicks = value;
+				break;
 		}
+	}
+	
+	public int getWorkLeft(){
+		return lTicks;
 	}
 }

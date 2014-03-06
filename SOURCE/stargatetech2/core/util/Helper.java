@@ -39,4 +39,25 @@ public class Helper {
 		pretty.append(number);
 		return pretty.toString().trim();
 	}
+	
+	public static String ticks2time(int ticks){
+		int cent = ticks % 20;
+		int seconds = ticks / 20;
+		cent *= 5;
+		int minutes = seconds / 60;
+		seconds -= minutes * 60;
+		
+		StringBuilder time = new StringBuilder();
+		if(minutes > 0){
+			time.append(minutes);
+			time.append(":");
+		}
+		time.append(seconds);
+		time.append(".");
+		if(cent < 10){
+			time.append("0");
+		}
+		time.append(cent);
+		return time.toString();
+	}
 }

@@ -1,7 +1,7 @@
 package stargatetech2.enemy.tileentity;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyHandler;
+import java.util.LinkedList;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -13,19 +13,146 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import stargatetech2.core.api.ParticleIonizerRecipes;
+import stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.Inventory;
 import stargatetech2.core.machine.TileEntityMachine;
+import stargatetech2.enemy.ModuleEnemy;
+import stargatetech2.enemy.block.BlockParticleIonizer;
+import stargatetech2.enemy.util.IonizedParticles;
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 
 public class TileParticleIonizer extends TileEntityMachine implements IFluidHandler, IEnergyHandler, ISidedInventory{
 	public final FluidTank ionizedParticles = new FluidTank(8000);		// orange
 	public final FluidTank fluidIonizable = new FluidTank(8000);		// blue
 	public final Inventory solidIonizable = new Inventory(9);			// blue
 	public final EnergyStorage energy = new EnergyStorage(32000, 400);
+	private IonizerRecipe recipe = null;
+	private int ticksLeft = 0;
+	private long nextSearch = 0;
+	
+	@Override
+	public void invalidate(){
+		super.invalidate();
+		BlockParticleIonizer block = ModuleEnemy.particleIonizer;
+		for(int slot = 0; slot < solidIonizable.getSizeInventory(); slot++){
+			ItemStack stack = solidIonizable.getStackInSlot(slot);
+			if(stack != null){
+				block.dropItemStack(worldObj, xCoord, yCoord, zCoord, stack);
+			}
+		}
+	}
 	
 	@Override
 	public void updateEntity(){
-		
+		if(!worldObj.isRemote){
+			if(recipe != null){
+				work();
+			}
+			if(recipe == null && worldObj.getTotalWorldTime() >= nextSearch){
+				findRecipe();
+				nextSearch = worldObj.getTotalWorldTime() + 20;
+			}
+		}
+	}
+	
+	private void work(){
+		if(ticksLeft > 0){
+			if(ionizedParticles.getCapacity() - ionizedParticles.getFluidAmount() >= recipe.ions && energy.getEnergyStored() >= recipe.power){
+				ionizedParticles.fill(new FluidStack(IonizedParticles.fluid, recipe.ions), true);
+				energy.extractEnergy(recipe.power, false);
+				ticksLeft--;
+			}
+		}else{
+			FluidStack fluid = fluidIonizable.getFluid();
+			ItemStack[] inventory = getInventory();
+			if(recipe.checkMatch(fluid, inventory)){
+				FluidStack fs = recipe.getFluid();
+				if(fs != null){
+					fluidIonizable.drain(fs.amount, true);
+				}
+				ItemStack is = recipe.getSolid();
+				if(is != null){
+					for(int i = 0; i < solidIonizable.getSizeInventory(); i++){
+						ItemStack stack = solidIonizable.getStackInSlot(i);
+						if(stack == null) continue;
+						stack = stack.copy();
+						stack.stackSize = is.stackSize;
+						if(ItemStack.areItemStacksEqual(is, stack)){
+							solidIonizable.decrStackSize(i, 1);
+							break;
+						}
+					}
+				}
+				ticksLeft = recipe.time;
+			}else{
+				recipe = null;
+			}
+		}
+	}
+	
+	private void findRecipe(){
+		FluidStack fluid = fluidIonizable.getFluid();
+		ItemStack[] inventory = getInventory();
+		LinkedList<IonizerRecipe> solids, fluids, both;
+		solids = new LinkedList();
+		fluids = new LinkedList();
+		both = new LinkedList();
+		for(IonizerRecipe r : ParticleIonizerRecipes.recipes().getRecipes()){
+			if(r.checkMatch(fluid, inventory)){
+				if(r.getFluid() != null && r.getSolid() != null){
+					both.add(r);
+				}else if(r.getFluid() != null){
+					fluids.add(r);
+				}else{
+					solids.add(r);
+				}
+			}
+		}
+		if(!both.isEmpty()){
+			pickRecipe(both);
+		}else if(!solids.isEmpty()){
+			pickRecipe(solids);
+		}else if(!fluids.isEmpty()){
+			pickRecipe(fluids);
+		}
+	}
+	
+	private void pickRecipe(LinkedList<IonizerRecipe> list){
+		IonizerRecipe pick = null;
+		for(IonizerRecipe r : list){
+			if(pick == null || pick.ions < r.ions || (pick.ions == r.ions && pick.power > r.power)){
+				pick = r;
+			}
+		}
+		recipe = pick;
+		ticksLeft = 0;
+	}
+	
+	private ItemStack[] getInventory(){
+		ItemStack[] inventory = new ItemStack[solidIonizable.getSizeInventory()];
+		for(int i = 0; i < inventory.length; i++){
+			inventory[i] = solidIonizable.getStackInSlot(i);
+		}
+		return inventory;
+	}
+	
+	public int getWorkLeft(){
+		return ticksLeft;
+	}
+	
+	public IonizerRecipe getRecipeInstance(){
+		return recipe;
+	}
+	
+	public int getRecipe(){
+		if(recipe == null) return -1;
+		else return ParticleIonizerRecipes.recipes().getRecipeID(recipe);
+	}
+	
+	public void setRecipe(int r){
+		recipe = ParticleIonizerRecipes.recipes().getRecipe(r);
 	}
 	
 	@Override
@@ -35,6 +162,9 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 		solidIonizable.readFromNBT(nbt.getCompoundTag("solidIonizable"));
 		energy.readFromNBT(nbt.getCompoundTag("energy"));
 		readFacingNBT(nbt.getCompoundTag("facing"));
+		setRecipe(nbt.getInteger("recipe"));
+		ticksLeft = nbt.getInteger("ticksLeft");
+		nextSearch = nbt.getLong("nextSearch");
 	}
 	
 	@Override
@@ -44,6 +174,9 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 		nbt.setCompoundTag("solidIonizable", solidIonizable.writeToNBT(new NBTTagCompound()));
 		nbt.setCompoundTag("energy", energy.writeToNBT(new NBTTagCompound()));
 		nbt.setCompoundTag("facing", writeFacingNBT());
+		nbt.setInteger("recipe", getRecipe());
+		nbt.setInteger("ticksLeft", ticksLeft);
+		nbt.setLong("nextSearch", nextSearch);
 	}
 	
 	@Override

@@ -55,6 +55,9 @@ public final class ParticleIonizerRecipes{
 			}
 			if(solidIonizable != null){
 				for(ItemStack stack : stacks){
+					if(stack == null) continue;
+					stack = stack.copy();
+					stack.stackSize = solidIonizable.stackSize;
 					if(ItemStack.areItemStacksEqual(solidIonizable, stack)){
 						return true;
 					}
@@ -108,5 +111,17 @@ public final class ParticleIonizerRecipes{
 			}
 		}
 		return false;
+	}
+	
+	public int getRecipeID(IonizerRecipe recipe){
+		return recipes.indexOf(recipe);
+	}
+	
+	public IonizerRecipe getRecipe(int recipe){
+		if(recipe < 0 || recipe >= recipes.size()){
+			return null;
+		}else{
+			return recipes.get(recipe);
+		}
 	}
 }

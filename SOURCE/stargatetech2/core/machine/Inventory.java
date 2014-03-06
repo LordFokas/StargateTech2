@@ -96,7 +96,7 @@ public class Inventory implements IInventory{
 	@Override public String getInvName(){ return null; }
 	@Override public boolean isInvNameLocalized() { return false; }
 	@Override public ItemStack getStackInSlotOnClosing(int slot){ return null; }
-	@Override public int getInventoryStackLimit(){ return 0; }
+	@Override public int getInventoryStackLimit(){ return 64; }
 	@Override public void onInventoryChanged(){}
 	// #######################################################################################
 	

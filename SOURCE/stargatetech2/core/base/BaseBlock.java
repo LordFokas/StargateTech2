@@ -92,11 +92,11 @@ public class BaseBlock extends Block{
 		return blockIcon;
 	}
 	
-	protected void dropItemStack(World w, int x, int y, int z, ItemStack stack){
+	public void dropItemStack(World w, int x, int y, int z, ItemStack stack){
 		dropStackAt(w, ((double)x)+0.5D, ((double)y)+0.5D, ((double)z)+0.5D, stack);
 	}
 	
-	protected void dropItemStack(World w, EntityPlayer p, ItemStack stack){
+	public void dropItemStack(World w, EntityPlayer p, ItemStack stack){
 		dropStackAt(w, p.posX, p.posY, p.posZ, stack);
 	}
 	
