@@ -79,6 +79,7 @@ public class TabConfiguration extends BaseTab{
 	public boolean handleClick(int x, int y){
 		for(Side side : sides){
 			if(elementHit(side.x, side.y, x, y)){
+				gui.playClick();
 				PacketToggleMachineFace packet = new PacketToggleMachineFace();
 				packet.x = machine.xCoord;
 				packet.y = machine.yCoord;

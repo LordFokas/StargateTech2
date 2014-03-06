@@ -96,6 +96,5 @@ public abstract class BlockMachine extends BaseBlockContainer {
 		return map;
 	}
 	
-	@Override
-	protected abstract TileEntityMachine createTileEntity(int metadata);
+	@Override protected abstract TileEntityMachine createTileEntity(int metadata);
 }

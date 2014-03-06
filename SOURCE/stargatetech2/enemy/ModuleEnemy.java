@@ -2,9 +2,13 @@ package stargatetech2.enemy;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
+import stargatetech2.core.api.ParticleIonizerRecipes;
+import stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
 import stargatetech2.core.reference.TileEntityReference;
 import stargatetech2.core.util.Stacks;
 import stargatetech2.enemy.block.BlockParticleIonizer;
@@ -50,6 +54,12 @@ public class ModuleEnemy implements IContentModule {
 	public void postInit(){
 		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "-B-", "SMS", "NCN", 'M', Stacks.machine, 'C', Stacks.coilNaq, 'B', Stacks.bucket, 'N', Stacks.naqIngot, 'S', Stacks.circuit);
 		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "-C-", "BMB", "NPN", 'P', Stacks.coilGold, 'C', Stacks.chest, 'B', Stacks.bucket, 'M', Stacks.machine, 'N', Stacks.naqIngot);
+		
+		Fluid water = FluidRegistry.WATER;
+		ParticleIonizerRecipes.recipes().addRecipe(new IonizerRecipe(new FluidStack(water,  500), Stacks.redDust,    1200,  10, 10));
+		ParticleIonizerRecipes.recipes().addRecipe(new IonizerRecipe(new FluidStack(water, 1500), Stacks.glowDust,  12000,   8, 15));
+		ParticleIonizerRecipes.recipes().addRecipe(new IonizerRecipe(new FluidStack(water, 4500), Stacks.redBlock,   1200, 100, 200));
+		ParticleIonizerRecipes.recipes().addRecipe(new IonizerRecipe(new FluidStack(water, 6000), Stacks.glowBlock, 12000,  32, 120));
 		
 		MinecraftForge.EVENT_BUS.register(new EnemyEventHandler());
 		StargateTech2.proxy.registerRenderers(Module.ENEMY);

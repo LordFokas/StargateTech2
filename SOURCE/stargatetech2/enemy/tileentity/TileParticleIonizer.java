@@ -12,6 +12,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import stargatetech2.core.api.ParticleIonizerRecipes;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.Inventory;
 import stargatetech2.core.machine.TileEntityMachine;
@@ -32,6 +33,7 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 		ionizedParticles.readFromNBT(nbt.getCompoundTag("ionizedParticles"));
 		fluidIonizable.readFromNBT(nbt.getCompoundTag("fluidIonizable"));
 		solidIonizable.readFromNBT(nbt.getCompoundTag("solidIonizable"));
+		energy.readFromNBT(nbt.getCompoundTag("energy"));
 		readFacingNBT(nbt.getCompoundTag("facing"));
 	}
 	
@@ -40,6 +42,7 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 		nbt.setCompoundTag("ionizedParticles", ionizedParticles.writeToNBT(new NBTTagCompound()));
 		nbt.setCompoundTag("fluidIonizable", fluidIonizable.writeToNBT(new NBTTagCompound()));
 		nbt.setCompoundTag("solidIonizable", solidIonizable.writeToNBT(new NBTTagCompound()));
+		nbt.setCompoundTag("energy", energy.writeToNBT(new NBTTagCompound()));
 		nbt.setCompoundTag("facing", writeFacingNBT());
 	}
 	
@@ -52,7 +55,7 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 	// IFluidHandler
 	@Override
 	public int fill(ForgeDirection side, FluidStack resource, boolean doFill) {
-		if(getColor(side) == FaceColor.BLUE){
+		if(getColor(side) == FaceColor.BLUE && ParticleIonizerRecipes.recipes().isIonizable(resource)){
 			return fluidIonizable.fill(resource, doFill);
 		}
 		return 0;
@@ -143,7 +146,7 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 	
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		return solidIonizable.isItemValidForSlot(slot, stack);
+		return ParticleIonizerRecipes.recipes().isIonizable(stack);
 	}
 
 	@Override

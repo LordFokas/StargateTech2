@@ -18,7 +18,7 @@ public class ContainerParticleIonizer extends BaseContainer {
 		this.player = player;
 		for(int i = 0; i < 3; i++){
 			for(int j = 0; j < 3; j++){
-				addSlotToContainer(new Slot(ionizer.solidIonizable, i*3 + j, 62 + i*18, 30 + j*18));
+				addSlotToContainer(new Slot(ionizer.solidIonizable, i*3 + j, 62 + j*18, 30 + i*18));
 			}
 		}
 		bindInventory(player, 27, 112);

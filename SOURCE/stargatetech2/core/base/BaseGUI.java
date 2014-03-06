@@ -69,7 +69,6 @@ public abstract class BaseGUI extends GuiContainer {
 		public void onLeave();
 	}
 	
-	// TODO: A LOT of stuff!
 	private static class TabWrapper{
 		public int _hx, _hy;
 		public final ITab tab;
@@ -189,25 +188,25 @@ public abstract class BaseGUI extends GuiContainer {
 		usesTextHandler = useText;
 	}
 	
-	protected void addClickHandler(IClickHandler handler, int x, int y, int xS, int yS){
+	protected final void addClickHandler(IClickHandler handler, int x, int y, int xS, int yS){
 		clickHandlers.add(new HandlerWrapper<IClickHandler>(handler, x, y, x+xS, y+yS));
 	}
 	
-	protected void addHoverHandler(IHoverHandler handler, int x, int y, int xS, int yS){
+	protected final void addHoverHandler(IHoverHandler handler, int x, int y, int xS, int yS){
 		hoverHandlers.add(new HandlerWrapper<IHoverHandler>(handler, x, y, x+xS, y+yS));
 	}
 	
-	protected void addGauge(IGauge gauge){
+	protected final void addGauge(IGauge gauge){
 		gauge.register(this);
 		gauges.add(gauge);
 	}
 	
-	protected void addTab(ITab tab){
+	protected final void addTab(ITab tab){
 		tab.register(this);
 		tabs.add(new TabWrapper(tab, this));
 	}
 	
-	protected TabWrapper getTab(int x, int y){
+	protected final TabWrapper getTab(int x, int y){
 		int off = 15;
 		for(TabWrapper tab : tabs){
 			int tx = tab.getX(-16) + 22;
@@ -432,15 +431,15 @@ public abstract class BaseGUI extends GuiContainer {
 		GL11.glEnable(GL11.GL_LIGHTING);
 	}
 	
-	protected void bindImage(ResourceLocation rl){
+	protected final void bindImage(ResourceLocation rl){
 		mc.renderEngine.bindTexture(rl);
 	}
 	
-	public void bindBaseImage(){
+	public final void bindBaseImage(){
 		bindImage(TextureReference.GUI_BASE);
 	}
 	
-	public void bindBGImage(){
+	public final void bindBGImage(){
 		if(bgImage != null)
 			bindImage(bgImage);
 	}
@@ -461,5 +460,13 @@ public abstract class BaseGUI extends GuiContainer {
 	
 	public final void drawHover(List<String> lines, int x, int y){
 		drawHoveringText(lines, x, y, fontRenderer);
+	}
+	
+	public final void playClick(){
+		playClick(0.75F);
+	}
+	
+	public final void playClick(float pitch){
+		super.mc.sndManager.playSoundFX("random.click", 1.0F, pitch);
 	}
 }

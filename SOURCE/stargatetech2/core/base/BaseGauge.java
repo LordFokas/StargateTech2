@@ -69,13 +69,17 @@ public abstract class BaseGauge implements IGauge{
 		@Override
 		public void renderGauge() {
 			float fill = ((float)cVal) / ((float)mVal);
-			Icon f = IonizedParticles.fluid.getIcon();
-			bindImage(TextureMap.locationBlocksTexture);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			if(fill > 0.75F) master.drawQuad(xPos, yPos,	f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);
-			if(fill > 0.50F) master.drawQuad(xPos, yPos+16, f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);
-			if(fill > 0.25F) master.drawQuad(xPos, yPos+32, f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);
-			if(fill > 0.00F) master.drawQuad(xPos, yPos+48, f.getMinU(), f.getMaxU(), f.getMinV(), f.getMaxV(), 16, 16);
+			FluidStack fs = tank.getFluid();
+			if(fs != null){
+				Icon icon = fs.getFluid().getIcon();
+				bindImage(TextureMap.locationBlocksTexture);
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+				if(fill > 0.75F) master.drawQuad(xPos, yPos,	icon.getMinU(), icon.getMaxU(), icon.getMinV(), icon.getMaxV(), 16, 16);
+				if(fill > 0.50F) master.drawQuad(xPos, yPos+16, icon.getMinU(), icon.getMaxU(), icon.getMinV(), icon.getMaxV(), 16, 16);
+				if(fill > 0.25F) master.drawQuad(xPos, yPos+32, icon.getMinU(), icon.getMaxU(), icon.getMinV(), icon.getMaxV(), 16, 16);
+				if(fill > 0.00F) master.drawQuad(xPos, yPos+48, icon.getMinU(), icon.getMaxU(), icon.getMinV(), icon.getMaxV(), 16, 16);
+				
+			}
 			fill = 1F - fill;
 			master.bindBGImage();
 			master.drawLocalQuad(xPos, yPos, xPos, xPos+16, yPos, yPos + (64F * fill), 16, 64F*fill);
