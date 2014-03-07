@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.reference.TextureReference;
 
 public abstract class BaseGUI extends GuiContainer {
@@ -460,6 +461,15 @@ public abstract class BaseGUI extends GuiContainer {
 	
 	public final void drawHover(List<String> lines, int x, int y){
 		drawHoveringText(lines, x, y, fontRenderer);
+	}
+	
+	public final void drawFrame(FaceColor color, int xPos, int yPos, int xSize, int ySize){
+		bindImage(TextureReference.getTexture("blocks/" + color.getTexture() + ".png"));
+		float x0 = 5F / 16F, x1 = 6F / 16F, y0 = 4F / 16F, y1 = 5F / 16F;
+		this.drawQuad(xPos, yPos, x0, x1, y0, y1, xSize, 1);
+		this.drawQuad(xPos, yPos + ySize - 1, x0, x1, y0, y1, xSize, 1);
+		this.drawQuad(xPos, yPos + 1, x0, x1, y0, y1, 1, ySize - 2);
+		this.drawQuad(xPos + xSize - 1, yPos + 1, x0, x1, y0, y1, 1, ySize - 2);
 	}
 	
 	public final void playClick(){

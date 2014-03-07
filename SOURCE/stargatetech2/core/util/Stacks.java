@@ -9,7 +9,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Stacks {
 	// Vanilla Stacks
-	public static ItemStack bucket, chest, glass, glowDust, glowBlock, pearl, redDust, redBlock, slab, stick, stone;
+	public static ItemStack book, bucket, chest, glass, glowDust, glowBlock, pearl, redDust, redBlock, slab, stick, stone;
 	
 	// ThermalExpansion Stacks
 	public static ItemStack machine, coilGold;
@@ -20,6 +20,7 @@ public class Stacks {
 	public static void init(){
 		//##########################################################################################
 		// VANILLA
+		book = new ItemStack(Item.book);
 		bucket = new ItemStack(Item.bucketEmpty);
 		chest = new ItemStack(Block.chest);
 		glass = new ItemStack(Block.thinGlass);

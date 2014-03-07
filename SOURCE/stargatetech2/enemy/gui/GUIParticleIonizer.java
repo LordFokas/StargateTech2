@@ -8,8 +8,9 @@ import stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
 import stargatetech2.core.base.BaseGUI;
 import stargatetech2.core.base.BaseGauge.PowerGauge;
 import stargatetech2.core.base.BaseGauge.TankGauge;
-import stargatetech2.core.machine.tabs.TabAbstractBus;
+import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.tabs.TabConfiguration;
+import stargatetech2.core.machine.tabs.TabMachineRecipes;
 import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.Helper;
@@ -50,7 +51,7 @@ public class GUIParticleIonizer extends BaseGUI {
 		super.addGauge(fluidIonizable);
 		super.addGauge(ionizedParticles);
 		super.addGauge(power);
-		super.addTab(new TabAbstractBus());
+		super.addTab(new TabMachineRecipes());
 		super.addTab(new TabConfiguration(ionizer));
 	}
 	
@@ -62,6 +63,13 @@ public class GUIParticleIonizer extends BaseGUI {
 		drawQuad(4, 3.5F, 0, 1, 0, 1, 8, 8);
 		drawLeft("Particle Ionizer", 16, 4, 0x444444);
 		drawLeft("Inventory", 130, 85, 0x444444);
+		if(ionizer.hasColor(FaceColor.BLUE)){
+			this.drawFrame(FaceColor.BLUE, 27, 19, 20, 68);
+			this.drawFrame(FaceColor.BLUE, 51, 19, 56, 56);
+		}
+		if(ionizer.hasColor(FaceColor.ORANGE)){
+			this.drawFrame(FaceColor.ORANGE, 174, 9, 20, 68);
+		}
 		IonizerRecipe recipe = ionizer.getRecipeInstance();
 		int ticksLeft = ((ContainerParticleIonizer)this.inventorySlots).getWorkLeft();
 		if(recipe != null){

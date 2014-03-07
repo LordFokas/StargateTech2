@@ -15,6 +15,13 @@ public abstract class TileEntityMachine extends BaseTileEntity {
 	
 	protected abstract FaceColor[] getPossibleFaceColors();
 	
+	public final boolean hasColor(FaceColor color){
+		for(FaceColor c : colors){
+			if(c == color) return true;
+		}
+		return false;
+	}
+	
 	@SuppressWarnings("incomplete-switch")
 	public final int getSideFromFace(Face face){
 		ForgeDirection dir = null;
