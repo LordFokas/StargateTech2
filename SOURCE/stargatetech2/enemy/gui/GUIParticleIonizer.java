@@ -1,9 +1,12 @@
 package stargatetech2.enemy.gui;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fluids.FluidStack;
+import stargatetech2.core.api.ParticleIonizerRecipes;
 import stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
 import stargatetech2.core.base.BaseGUI;
 import stargatetech2.core.base.BaseGauge.PowerGauge;
@@ -11,6 +14,7 @@ import stargatetech2.core.base.BaseGauge.TankGauge;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.tabs.TabConfiguration;
 import stargatetech2.core.machine.tabs.TabMachineRecipes;
+import stargatetech2.core.machine.tabs.TabMachineRecipes.IMachineRecipe;
 import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.Helper;
@@ -21,6 +25,31 @@ public class GUIParticleIonizer extends BaseGUI {
 	private ProgressHover progressHover;
 	private TankGauge fluidIonizable, ionizedParticles;
 	private PowerGauge power;
+	
+	private static class MachineRecipe implements IMachineRecipe{
+		private GUIParticleIonizer gui;
+		private IonizerRecipe recipe;
+		
+		public MachineRecipe(GUIParticleIonizer gui, IonizerRecipe recipe){
+			this.recipe = recipe;
+			this.gui = gui;
+		}
+
+		@Override
+		public void renderAt(int x, int y) {
+			ItemStack solid = recipe.getSolid();
+			if(solid != null){
+				gui.drawStack(solid, x+1, y+1);
+				gui.drawLeft(solid.getDisplayName(), x + 20, y + 1, 0xAAAAAA);
+			}
+			FluidStack fluid = recipe.getFluid();
+			if(fluid != null){
+				gui.drawIcon(x+1, y + 18, fluid.getFluid().getStillIcon(), TextureMap.locationBlocksTexture, 16);
+				gui.drawLeft(fluid.getFluid().getLocalizedName(), x + 20, y + 26, 0xAAAAAA);
+			}
+			gui.drawLeft(Helper.prettyNumber(recipe.ions * recipe.time) + " mB", x + 25, y + 14, 0xEEEEEE);
+		}
+	}
 	
 	private static class ProgressHover implements IHoverHandler{
 		public boolean isHover = false;
@@ -51,7 +80,12 @@ public class GUIParticleIonizer extends BaseGUI {
 		super.addGauge(fluidIonizable);
 		super.addGauge(ionizedParticles);
 		super.addGauge(power);
-		super.addTab(new TabMachineRecipes());
+		List<IonizerRecipe> recipes = ParticleIonizerRecipes.recipes().getRecipes();
+		IMachineRecipe[] tabRecipes = new IMachineRecipe[recipes.size()];
+		for(int r = 0; r < recipes.size(); r ++){
+			tabRecipes[r] = new MachineRecipe(this, recipes.get(r));
+		}
+		super.addTab(new TabMachineRecipes(tabRecipes));
 		super.addTab(new TabConfiguration(ionizer));
 	}
 	

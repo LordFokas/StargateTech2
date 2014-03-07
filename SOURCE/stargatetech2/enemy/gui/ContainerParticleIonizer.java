@@ -13,6 +13,12 @@ import stargatetech2.enemy.util.IonizedParticles;
 public class ContainerParticleIonizer extends BaseContainer {
 	public final TileParticleIonizer ionizer;
 	public final EntityPlayer player;
+	private int lPower = -1;
+	private int lFIonID = 0;
+	private int lFIonQt = 0;
+	private int lRecipe = -1;
+	private int lPIonQt = 0;
+	private int lTicks = 0;
 	
 	public ContainerParticleIonizer(TileParticleIonizer ionizer, EntityPlayer player){
 		this.ionizer = ionizer;
@@ -48,13 +54,6 @@ public class ContainerParticleIonizer extends BaseContainer {
 		}
 		return stack;
 	}
-	
-	private int lPower = -1;
-	private int lFIonID = 0;
-	private int lFIonQt = 0;
-	private int lRecipe = -1;
-	private int lPIonQt = 0;
-	private int lTicks = 0;
 	
 	@Override
 	public void detectAndSendChanges(){

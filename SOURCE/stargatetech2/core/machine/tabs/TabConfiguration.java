@@ -14,12 +14,12 @@ import stargatetech2.core.util.Stacks;
 
 public class TabConfiguration extends BaseTab{
 	private static final Side[] sides = new Side[]{
-		new Side(Face.BOTTOM, 42, 63),
-		new Side(Face.TOP, 42, 27),
-		new Side(Face.LEFT, 24, 45),
-		new Side(Face.FRONT, 42, 45),
-		new Side(Face.RIGHT, 60, 45),
-		new Side(Face.BACK, 60, 63)
+		new Side(Face.BOTTOM, 45, 61),
+		new Side(Face.TOP, 45, 25),
+		new Side(Face.LEFT, 27, 43),
+		new Side(Face.FRONT, 45, 43),
+		new Side(Face.RIGHT, 63, 43),
+		new Side(Face.BACK, 63, 61)
 	};
 	
 	private static class Side{
@@ -51,6 +51,7 @@ public class TabConfiguration extends BaseTab{
 
 	@Override
 	public void render() {
+		gui.drawDarkerArea(getColor(), 23, 21, 60, 60);
 		for(int i = 0; i < 6; i++){
 			Side s = sides[i];
 			FaceColor color = machine.getColor(s.face);

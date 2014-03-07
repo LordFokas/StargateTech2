@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import stargatetech2.core.base.BaseGUI.ITab.TabColor;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.reference.TextureReference;
 
@@ -156,7 +157,7 @@ public abstract class BaseGUI extends GuiContainer {
 		}
 	}
 	
-	public class TextHandler{
+	public static class TextHandler{
 		private char[] chars = new char[64];
 		private int pos = 0;
 
@@ -179,6 +180,17 @@ public abstract class BaseGUI extends GuiContainer {
 				buff.append(chars[i]);
 			}
 			return buff.toString();
+		}
+	}
+	
+	public static enum Arrow{
+		UP(136, 8), DOWN(128, 0), LEFT(136, 0), RIGHT(128, 8);
+		
+		public final int x, y;
+		
+		private Arrow(int x, int y){
+			this.x = x;
+			this.y = y;
 		}
 	}
 	
@@ -362,7 +374,6 @@ public abstract class BaseGUI extends GuiContainer {
 			GL11.glDisable(GL11.GL_LIGHTING); // TODO: get rid of this workaround AFTER mc stops fucking up OGL state.
 			itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, wrapper.tab.getIcon(), guiLeft-sx+5, guiTop+27+off);
 			if(wrapper.isExpanded()){
-				GL11.glDisable(GL11.GL_LIGHTING); // TODO: get rid of this workaround AFTER mc stops fucking up OGL state.
 				drawLeft(wrapper.tab.getName(), guiLeft-sx+15, guiTop+23+off, 0xFFFFFF);
 			}
 			bindBaseImage();
@@ -446,8 +457,9 @@ public abstract class BaseGUI extends GuiContainer {
 	}
 	
 	public final void drawLeft(String s, int x, int y, int color){
-		x += 9;
-		y += 9;
+		x += 9 + _xoff;
+		y += 9 + _yoff;
+		GL11.glDisable(GL11.GL_LIGHTING); // TODO: get rid of this workaround AFTER mc stops fucking up OGL state.
 		fontRenderer.drawString(s, x, y, color);
 	}
 	
@@ -466,10 +478,24 @@ public abstract class BaseGUI extends GuiContainer {
 	public final void drawFrame(FaceColor color, int xPos, int yPos, int xSize, int ySize){
 		bindImage(TextureReference.getTexture("blocks/" + color.getTexture() + ".png"));
 		float x0 = 5F / 16F, x1 = 6F / 16F, y0 = 4F / 16F, y1 = 5F / 16F;
-		this.drawQuad(xPos, yPos, x0, x1, y0, y1, xSize, 1);
-		this.drawQuad(xPos, yPos + ySize - 1, x0, x1, y0, y1, xSize, 1);
-		this.drawQuad(xPos, yPos + 1, x0, x1, y0, y1, 1, ySize - 2);
-		this.drawQuad(xPos + xSize - 1, yPos + 1, x0, x1, y0, y1, 1, ySize - 2);
+		drawQuad(xPos, yPos, x0, x1, y0, y1, xSize, 1);
+		drawQuad(xPos, yPos + ySize - 1, x0, x1, y0, y1, xSize, 1);
+		drawQuad(xPos, yPos + 1, x0, x1, y0, y1, 1, ySize - 2);
+		drawQuad(xPos + xSize - 1, yPos + 1, x0, x1, y0, y1, 1, ySize - 2);
+	}
+	
+	public final void drawDarkerArea(TabColor color, int x, int y, int sx, int sy){
+		bindBaseImage();
+		drawLocalQuad(x, y, color.x + 16, color.x + 32, color.y, color.y + 16, sx, sy);
+	}
+	
+	public final void drawArrow(Arrow arrow, int x, int y){
+		bindBaseImage();
+		drawLocalQuad(x, y, arrow.x, arrow.x + 8, arrow.y, arrow.y + 8, 8, 8);
+	}
+	
+	public final void drawStack(ItemStack stack, int x, int y){
+		itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.getTextureManager(), stack, x + 9 + _xoff, y + 9 + _yoff);
 	}
 	
 	public final void playClick(){
@@ -477,6 +503,6 @@ public abstract class BaseGUI extends GuiContainer {
 	}
 	
 	public final void playClick(float pitch){
-		super.mc.sndManager.playSoundFX("random.click", 1.0F, pitch);
+		mc.sndManager.playSoundFX("random.click", 1.0F, pitch);
 	}
 }
