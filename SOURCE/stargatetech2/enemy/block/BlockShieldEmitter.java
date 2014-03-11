@@ -14,7 +14,7 @@ import stargatetech2.enemy.tileentity.TileShieldEmitter;
 public class BlockShieldEmitter extends BlockMachineBAD implements ITabletAccess{
 
 	public BlockShieldEmitter() {
-		super(BlockReference.SHIELD_EMITTER, Screen.SHIELD_EMITTER);
+		super(BlockReference.SHIELD_EMITTER, Screen.SHIELD_CONTROLLER);
 		setIsAbstractBusBlock();
 	}
 

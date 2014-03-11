@@ -3,7 +3,6 @@ package stargatetech2.core.machine.tabs;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.Icon;
 import stargatetech2.core.base.BaseTab;
-import stargatetech2.core.base.BaseGUI.ITab.TabColor;
 import stargatetech2.core.machine.Face;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileEntityMachine;
@@ -55,7 +54,7 @@ public class TabConfiguration extends BaseTab{
 		for(int i = 0; i < 6; i++){
 			Side s = sides[i];
 			FaceColor color = machine.getColor(s.face);
-			if(color == FaceColor.VOID){
+			if(!color.isColored()){
 				gui.drawIcon(s.x, s.y, machine.getBlockType().getIcon(i, 0), TextureMap.locationBlocksTexture, 16);
 			}else{
 				Icon icon;

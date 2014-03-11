@@ -13,7 +13,6 @@ import org.lwjgl.opengl.GL11;
 import stargatetech2.core.base.BaseGUI.IGauge;
 import stargatetech2.core.base.BaseGUI.IHoverHandler;
 import stargatetech2.core.util.Helper;
-import stargatetech2.enemy.util.IonizedParticles;
 import cofh.api.energy.EnergyStorage;
 
 public abstract class BaseGauge implements IGauge{

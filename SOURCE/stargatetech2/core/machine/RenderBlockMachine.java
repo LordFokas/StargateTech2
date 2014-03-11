@@ -31,13 +31,13 @@ public class RenderBlockMachine extends BaseISBRH {
 		for(int face = 0; face < 6; face++){
 			switch(face){
 				case 0:
-					map[face] = colors[face].isColor() ? mboti : mbot;
+					map[face] = colors[face].isColored() ? mboti : mbot;
 					break;
 				case 1:
-					map[face] = colors[face].isColor() ? mtopi : mtop;
+					map[face] = colors[face].isColored() ? mtopi : mtop;
 					break;
 				default:
-					map[face] = colors[face].isColor() ? msidei : mside;
+					map[face] = colors[face].isColored() ? msidei : mside;
 					break;
 			}
 		}

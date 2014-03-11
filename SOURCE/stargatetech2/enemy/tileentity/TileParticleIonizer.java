@@ -181,14 +181,14 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 	
 	@Override
 	protected FaceColor[] getPossibleFaceColors() {
-		return new FaceColor[]{FaceColor.VOID, FaceColor.BLUE, FaceColor.ORANGE};
+		return new FaceColor[]{FaceColor.VOID, FaceColor.BLUE, FaceColor.ORANGE, FaceColor.STRIPES};
 	}
 	
 	// ############################################################################################
 	// IFluidHandler
 	@Override
 	public int fill(ForgeDirection side, FluidStack resource, boolean doFill) {
-		if(getColor(side) == FaceColor.BLUE && ParticleIonizerRecipes.recipes().isIonizable(resource)){
+		if(getColor(side).isInput() && ParticleIonizerRecipes.recipes().isIonizable(resource)){
 			return fluidIonizable.fill(resource, doFill);
 		}
 		return 0;
@@ -203,7 +203,7 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 
 	@Override
 	public FluidStack drain(ForgeDirection side, int maxDrain, boolean doDrain) {
-		if(getColor(side) == FaceColor.ORANGE){
+		if(getColor(side).isOutput()){
 			return ionizedParticles.drain(maxDrain, doDrain);
 		}
 		return null;
@@ -211,19 +211,22 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 
 	@Override
 	public boolean canFill(ForgeDirection side, Fluid fluid) {
-		return getColor(side) == FaceColor.BLUE;
+		return getColor(side).isInput();
 	}
 
 	@Override
 	public boolean canDrain(ForgeDirection side, Fluid fluid) {
-		return getColor(side) == FaceColor.ORANGE;
+		return getColor(side).isOutput();
 	}
 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection side) {
-		if(getColor(side) == FaceColor.BLUE){
+		FaceColor color = getColor(side);
+		if(color.isInput() && color.isOutput()){
+			return new FluidTankInfo[]{fluidIonizable.getInfo(), ionizedParticles.getInfo()};
+		}else if(color.isInput()){
 			return new FluidTankInfo[]{fluidIonizable.getInfo()};
-		}else if(getColor(side) == FaceColor.ORANGE){
+		}else if(color.isOutput()){
 			return new FluidTankInfo[]{ionizedParticles.getInfo()};
 		}else return null;
 	}
@@ -284,7 +287,7 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		if(getColor(side) == FaceColor.BLUE){
+		if(getColor(side).isInput()){
 			return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8};
 		}
 		return new int[]{};
@@ -292,12 +295,12 @@ public class TileParticleIonizer extends TileEntityMachine implements IFluidHand
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack stack, int side) {
-		return getColor(side) == FaceColor.BLUE && solidIonizable.canInsert();
+		return getColor(side).isInput() && solidIonizable.canInsert();
 	}
 
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
-		return getColor(side) == FaceColor.BLUE && solidIonizable.canExtract();
+		return getColor(side).isInput() && solidIonizable.canExtract();
 	}
 	
 	// useless stuff...  :c  (creeper face!)

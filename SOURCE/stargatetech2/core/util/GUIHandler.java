@@ -12,7 +12,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GUIHandler implements IGuiHandler {
 	public enum Screen{
-		SHIELD_EMITTER,
+		SHIELD_CONTROLLER,
 		PARTICLE_IONIZER,
 		PRIORITIZER,
 		CROSSOVER
@@ -23,7 +23,7 @@ public class GUIHandler implements IGuiHandler {
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		BaseContainer container = null;
 		switch(Screen.values()[ID]){
-			case SHIELD_EMITTER:
+			case SHIELD_CONTROLLER:
 				if(te instanceof TileShieldEmitter)
 					container = new ContainerShieldEmitter((TileShieldEmitter)te);
 				break;

@@ -1,6 +1,5 @@
 package stargatetech2.core.machine;
 
-import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.core.base.BaseTileEntity;

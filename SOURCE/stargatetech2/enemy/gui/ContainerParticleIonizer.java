@@ -1,7 +1,5 @@
 package stargatetech2.enemy.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -9,6 +7,8 @@ import net.minecraftforge.fluids.FluidStack;
 import stargatetech2.core.base.BaseContainer;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
 import stargatetech2.enemy.util.IonizedParticles;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ContainerParticleIonizer extends BaseContainer {
 	public final TileParticleIonizer ionizer;

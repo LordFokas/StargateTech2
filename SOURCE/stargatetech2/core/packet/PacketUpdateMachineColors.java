@@ -1,10 +1,10 @@
 package stargatetech2.core.packet;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import stargatetech2.core.base.BasePacket.ServerToClient;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileEntityMachine;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.relauncher.Side;
 
 @ServerToClient

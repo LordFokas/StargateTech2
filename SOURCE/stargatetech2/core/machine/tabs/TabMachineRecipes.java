@@ -1,6 +1,5 @@
 package stargatetech2.core.machine.tabs;
 
-import net.minecraft.item.ItemStack;
 import stargatetech2.core.base.BaseGUI.Arrow;
 import stargatetech2.core.base.BaseTab;
 import stargatetech2.core.util.Stacks;
@@ -15,7 +14,7 @@ public class TabMachineRecipes extends BaseTab{
 	private int numpages;
 	
 	public TabMachineRecipes(IMachineRecipe[] recipes) {
-		super("Recipes", Stacks.book, TabColor.YELLOW);
+		super("Recipes", Stacks.book, TabColor.GREEN);
 		this.recipes = recipes;
 		this.numpages = (recipes.length / 2) + (recipes.length % 2);
 	}

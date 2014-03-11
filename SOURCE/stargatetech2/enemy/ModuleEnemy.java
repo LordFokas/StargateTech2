@@ -13,16 +13,19 @@ import stargatetech2.core.reference.TileEntityReference;
 import stargatetech2.core.util.Stacks;
 import stargatetech2.enemy.block.BlockParticleIonizer;
 import stargatetech2.enemy.block.BlockShield;
+import stargatetech2.enemy.block.BlockShieldController;
 import stargatetech2.enemy.block.BlockShieldEmitter;
 import stargatetech2.enemy.item.ItemPersonalShield;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
 import stargatetech2.enemy.tileentity.TileShield;
+import stargatetech2.enemy.tileentity.TileShieldController;
 import stargatetech2.enemy.tileentity.TileShieldEmitter;
 import stargatetech2.enemy.util.EnemyEventHandler;
 import stargatetech2.enemy.util.IonizedParticles;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModuleEnemy implements IContentModule {
+	public static BlockShieldController shieldController;
 	public static BlockShieldEmitter shieldEmitter;
 	public static BlockParticleIonizer particleIonizer;
 	public static BlockShield shield;
@@ -31,6 +34,7 @@ public class ModuleEnemy implements IContentModule {
 	
 	@Override
 	public void preInit(){
+		shieldController = new BlockShieldController();
 		shieldEmitter = new BlockShieldEmitter();
 		particleIonizer = new BlockParticleIonizer();
 		shield = new BlockShield();
@@ -41,10 +45,13 @@ public class ModuleEnemy implements IContentModule {
 	@Override
 	public void init(){
 		FluidRegistry.registerFluid(IonizedParticles.fluid);
+		
+		shieldController.registerBlock();
 		shieldEmitter.registerBlock();
 		particleIonizer.registerBlock();
 		shield.registerBlock();
 		
+		GameRegistry.registerTileEntity(TileShieldController.class, TileEntityReference.TILE_SHIELD_CONTROLLER);
 		GameRegistry.registerTileEntity(TileShieldEmitter.class, TileEntityReference.TILE_SHIELD_EMITTER);
 		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);
 		GameRegistry.registerTileEntity(TileShield.class, TileEntityReference.TILE_SHIELD);

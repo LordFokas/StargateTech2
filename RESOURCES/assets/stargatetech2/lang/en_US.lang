@@ -25,6 +25,7 @@ StargateTech2:block.lanteanWall_black.name=Black Lantean Wall
 StargateTech2:block.naquadahOre.name=Naquadah Ore
 StargateTech2:block.naquadahRail.name=Naquadah Rail
 StargateTech2:block.particleIonizer.name=Particle Ionizer
+StargateTech2:block.shieldController.name=Shield Controller
 StargateTech2:block.shieldEmitter.name=Shield Emitter
 StargateTech2:block.stargate.name=Stargate
 StargateTech2:block.transportRing.name=Transport Ring Platform

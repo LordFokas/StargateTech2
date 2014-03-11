@@ -7,6 +7,7 @@ public class TileEntityReference {
 	// CORE
 		
 	// ENEMY
+	public static final String TILE_SHIELD_CONTROLLER = "tileShieldController";
 	public static final String TILE_SHIELD_EMITTER = "tileShieldEmitter";
 	public static final String TILE_PARTICLE_IONIZER = "tileParticleIonizer";
 	public static final String TILE_SHIELD = "tileShield";
@@ -16,6 +17,7 @@ public class TileEntityReference {
 	
 	// FACTORY
 	public static final String TILE_CROSSOVER = "tileCrossover";
+	public static final String TILE_PRIORITIZER = "tilePrioritizer";
 	
 	// TRANSPORT
 	public static final String TILE_STARGATE = "tileStargate";

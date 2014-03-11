@@ -62,7 +62,7 @@ public abstract class BlockMachine extends BaseBlockContainer {
 				wrench.wrenchUsed(p, x, y, z);
 				return true;
 			}
-		}else if(!p.isSneaking() && screen != null){
+		}else if(!p.isSneaking() && screen != null && canPlayerAccess(p, w, x, y, z)){
 			p.openGui(StargateTech2.instance, screen.ordinal(), w, x, y, z);
 			return true;
 		}

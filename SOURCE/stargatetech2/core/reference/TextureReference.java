@@ -37,9 +37,7 @@ public class TextureReference {
 	@Block public static final String INTERFACE_ORANGE	= "interfaceOrange";
 	@Block public static final String INTERFACE_YELLOW	= "interfaceYellow";
 	@Block public static final String INTERFACE_RED	= "interfaceRed";
-	
-	@Block public static final String FACE_PARTICLE_IONIZER = "faceParticleIonizer";
-	@Block public static final String GLOW_PARTICLE_IONIZER = "glowParticleIonizer";
+	@Block public static final String INTERFACE_STRIPES = "interfaceStripes";
 	
 	@Block public static final String FACE_SHIELD_EMITTER = "faceShieldEmitter";
 	@Block public static final String GLOW_SHIELD_EMITTER = "glowShieldEmitter";
@@ -75,7 +73,7 @@ public class TextureReference {
 	public static final ResourceLocation GUI_BASE = getTexture("gui/base.png");
 	public static final ResourceLocation GUI_SHIELD_EMITTER = getTexture("gui/shieldEmitter.png");
 	public static final ResourceLocation GUI_PARTICLE_IONIZER = getTexture("gui/particleIonizer.png");
-	public static final ResourceLocation GUI_NAQUADAH_CAPACITOR = getTexture("gui/naquadahCapacitor.png");
+	public static final ResourceLocation GUI_CROSSOVER = getTexture("gui/crossover.png");
 	
 	public static final ResourceLocation TESR_TRANSPORT_RING = getTexture("special/transportRing.png");
 	public static final ResourceLocation TESR_STARGATE = getTexture("special/stargate.png");

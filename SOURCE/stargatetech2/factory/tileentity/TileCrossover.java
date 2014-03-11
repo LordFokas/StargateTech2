@@ -2,10 +2,13 @@ package stargatetech2.factory.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import stargatetech2.core.machine.FaceColor;
+import stargatetech2.core.machine.Inventory;
 import stargatetech2.core.machine.TileEntityMachine;
 
-public class TileEntityCrossover extends TileEntityMachine {
-
+public class TileCrossover extends TileEntityMachine {
+	private Inventory inventory = new Inventory(3);
+	
+	
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
 		// TODO Auto-generated method stub
@@ -20,8 +23,7 @@ public class TileEntityCrossover extends TileEntityMachine {
 
 	@Override
 	protected FaceColor[] getPossibleFaceColors() {
-		// TODO Auto-generated method stub
-		return null;
+		return new FaceColor[]{FaceColor.VOID, FaceColor.RED, FaceColor.GREEN, FaceColor.BLUE};
 	}
 
 }

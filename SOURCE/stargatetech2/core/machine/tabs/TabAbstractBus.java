@@ -1,7 +1,6 @@
 package stargatetech2.core.machine.tabs;
 
 import stargatetech2.core.base.BaseTab;
-import stargatetech2.core.base.BaseGUI.ITab.TabColor;
 import stargatetech2.core.util.Stacks;
 
 public class TabAbstractBus extends BaseTab{

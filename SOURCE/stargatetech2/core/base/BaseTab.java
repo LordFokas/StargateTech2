@@ -1,14 +1,7 @@
 package stargatetech2.core.base;
 
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.core.base.BaseGUI.ITab;
-import stargatetech2.core.machine.Face;
-import stargatetech2.core.reference.TextureReference;
-import stargatetech2.core.util.IconRegistry;
-import stargatetech2.core.util.Stacks;
 
 public abstract class BaseTab implements ITab{
 	private final TabColor color;
