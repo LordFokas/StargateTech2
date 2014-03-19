@@ -1,22 +1,22 @@
 package stargatetech2.enemy.gui;
 
 import stargatetech2.core.base.BaseContainer;
-import stargatetech2.enemy.tileentity.TileShieldEmitter;
+import stargatetech2.enemy.tileentity.TileShieldController;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ContainerShieldEmitter extends BaseContainer{
-	public TileShieldEmitter emitter;
+public class ContainerShieldController extends BaseContainer{
+	public TileShieldController controller;
 	private int lastParticles = -1;
 	
-	public ContainerShieldEmitter(TileShieldEmitter tse){
-		this.emitter = tse;
+	public ContainerShieldController(TileShieldController tsc){
+		this.controller = tsc;
 	}
 	
 	@Override
 	public void detectAndSendChanges(){
 		super.detectAndSendChanges();
-		int particles = emitter.getIonAmount();
+		int particles = controller.getIonAmount();
 		if(particles != lastParticles){
 			lastParticles = particles;
 			sendUpdate(0, particles);
@@ -27,7 +27,7 @@ public class ContainerShieldEmitter extends BaseContainer{
 	@SideOnly(Side.CLIENT)
     public void updateProgressBar(int key, int value){
 		if(key == 0){
-			emitter.setIonAmount(value);
+			controller.setIonAmount(value);
 		}
 	}
 }

@@ -45,20 +45,20 @@ public class TabMachineRecipes extends BaseTab{
 	
 	@Override
 	public boolean handleClick(int x, int y){
-		if(hitButton(x, y, 5, 21)){
+		if(hitButton(x, y, 94, 21)){
 			page++;
 			if(page > numpages){
 				page = 1;
 			}
-			gui.playClick();
+			gui.playClick(0.8F);
 			return false;
 		}
-		if(hitButton(x, y, 94, 21)){
+		if(hitButton(x, y, 5, 21)){
 			page--;
 			if(page < 1){
 				page = numpages;
 			}
-			gui.playClick();
+			gui.playClick(0.7F);
 			return false;
 		}
 		return true;

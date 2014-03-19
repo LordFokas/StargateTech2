@@ -26,7 +26,7 @@ public abstract class BasePlugin {
 		return modID;
 	}
 	
-	public final void run(){
+	public final void init(){
 		if(shouldLoad()){
 			load();
 		}else{
@@ -34,6 +34,13 @@ public abstract class BasePlugin {
 		}
 	}
 	
+	public final void postInit(){
+		if(shouldLoad()){
+			postLoad();
+		}
+	}
+	
 	protected abstract void load();
+	protected abstract void postLoad();
 	protected abstract void fallback();
 }

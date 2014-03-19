@@ -21,7 +21,7 @@ import stargatetech2.core.reference.ModReference;
 import stargatetech2.core.util.StargateTab;
 import stargatetech2.core.util.Vec3Int;
 import stargatetech2.enemy.tileentity.TileShield;
-import stargatetech2.enemy.tileentity.TileShieldEmitter;
+import stargatetech2.enemy.tileentity.TileShieldController;
 import stargatetech2.transport.rendering.RenderNaquadahRail;
 import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -132,9 +132,9 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	public void addCollisionBoxesToList(World w, int x, int y, int z, AxisAlignedBB aabb, List l, Entity e){
 		TileEntity te = w.getBlockTileEntity(x, y, z);
 		if(te instanceof TileShield){
-			TileShieldEmitter emitter = ((TileShield)te).getEmitter();
-			if(emitter == null || !emitter.isShieldOn()) return;
-			ShieldPermissions permissions = emitter.getPermissions();
+			TileShieldController controller = ((TileShield)te).getController();
+			if(controller == null || !controller.isShieldOn()) return;
+			ShieldPermissions permissions = controller.getPermissions();
 			if(!permissions.isEntityAllowed(e, true)){
 				this.setBlockBounds(0, 0, 0, 1, 1, 1);
 				super.addCollisionBoxesToList(w, x, y, z, aabb, l, e);

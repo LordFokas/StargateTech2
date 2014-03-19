@@ -7,7 +7,7 @@ import stargatetech2.core.base.BaseTileEntity;
 import stargatetech2.core.util.Vec3Int;
 
 public class TileShield extends BaseTileEntity {
-	private Vec3Int emitter;
+	private Vec3Int controller;
 	
 	@Override
 	public boolean canUpdate(){
@@ -17,33 +17,33 @@ public class TileShield extends BaseTileEntity {
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
 		if(nbt.hasKey("master"))
-			emitter = Vec3Int.fromNBT(nbt.getCompoundTag("master"));
+			controller = Vec3Int.fromNBT(nbt.getCompoundTag("master"));
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
-		if(emitter != null)
-			nbt.setCompoundTag("master", emitter.toNBT());
+		if(controller != null)
+			nbt.setCompoundTag("master", controller.toNBT());
 	}
 	
 	public void setEmitter(Vec3Int emt){
-		emitter = emt;
+		controller = emt;
 	}
 	
-	public TileShieldEmitter getEmitter(){
-		if(emitter != null){
-			TileEntity te = worldObj.getBlockTileEntity(emitter.x, emitter.y, emitter.z);
-			if(te instanceof TileShieldEmitter)
-				return (TileShieldEmitter) te;
+	public TileShieldController getController(){
+		if(controller != null){
+			TileEntity te = worldObj.getBlockTileEntity(controller.x, controller.y, controller.z);
+			if(te instanceof TileShieldController)
+				return (TileShieldController) te;
 			}
 		return null;
 	}
 	
 	public ShieldPermissions getPermissions(){
-		if(emitter != null){
-			TileShieldEmitter tse = getEmitter();
-			if(tse != null){
-				return tse.getPermissions();
+		if(controller != null){
+			TileShieldController tsc = getController();
+			if(tsc != null){
+				return tsc.getPermissions();
 			}
 		}
 		return ShieldPermissions.getDefault();

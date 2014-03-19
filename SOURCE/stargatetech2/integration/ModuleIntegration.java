@@ -33,7 +33,7 @@ public class ModuleIntegration implements IContentModule {
 		for(BasePlugin plugin : plugins){
 			try{
 				StargateLogger.info("Loading Integration Plugin: " + plugin.getModID());
-				plugin.run();
+				plugin.init();
 			}catch(Exception exception){
 				StargateLogger.severe("An error ocurred while loading the Integration Plugin.");
 				exception.printStackTrace();
@@ -42,6 +42,15 @@ public class ModuleIntegration implements IContentModule {
 	}
 
 	@Override public void postInit(){
+		for(BasePlugin plugin : plugins){
+			try{
+				StargateLogger.info("Post-Loading Integration Plugin: " + plugin.getModID());
+				plugin.postInit();
+			}catch(Exception exception){
+				StargateLogger.severe("An error ocurred while post-loading the Integration Plugin.");
+				exception.printStackTrace();
+			}
+		}
 		StargateTech2.proxy.registerRenderers(Module.INTEGRATION);
 	}
 	

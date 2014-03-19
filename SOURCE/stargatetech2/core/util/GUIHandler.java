@@ -5,9 +5,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import stargatetech2.core.base.BaseContainer;
 import stargatetech2.enemy.gui.ContainerParticleIonizer;
-import stargatetech2.enemy.gui.ContainerShieldEmitter;
+import stargatetech2.enemy.gui.ContainerShieldController;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
-import stargatetech2.enemy.tileentity.TileShieldEmitter;
+import stargatetech2.enemy.tileentity.TileShieldController;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GUIHandler implements IGuiHandler {
@@ -24,8 +24,8 @@ public class GUIHandler implements IGuiHandler {
 		BaseContainer container = null;
 		switch(Screen.values()[ID]){
 			case SHIELD_CONTROLLER:
-				if(te instanceof TileShieldEmitter)
-					container = new ContainerShieldEmitter((TileShieldEmitter)te);
+				if(te instanceof TileShieldController)
+					container = new ContainerShieldController((TileShieldController)te);
 				break;
 			case PARTICLE_IONIZER:
 				if(te instanceof TileParticleIonizer)

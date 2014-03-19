@@ -462,6 +462,10 @@ public abstract class BaseGUI extends GuiContainer {
 		fontRenderer.drawString(s, x, y, color);
 	}
 	
+	public final void drawRight(String s, int x, int y, int color){
+		drawLeft(s, x - fontRenderer.getStringWidth(s), y, color);
+	}
+	
 	public final void drawCentered(String s, int xMid, int y, int color){
 		drawLeft(s, xMid - fontRenderer.getStringWidth(s) / 2, y, color);
 	}

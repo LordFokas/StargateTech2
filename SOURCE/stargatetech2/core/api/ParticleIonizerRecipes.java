@@ -35,9 +35,11 @@ public final class ParticleIonizerRecipes{
 			if(time <= 0 || power <= 0 || ions <= 0){
 				throw new IllegalArgumentException("An Ionizer Recipe's time, power and ions value MUST be positive!");
 			}
-			this.fluidIonizable = fluid.copy();
-			this.solidIonizable = solid.copy();
-			this.solidIonizable.stackSize = 1;
+			this.fluidIonizable = (fluid == null) ? null : fluid.copy();
+			this.solidIonizable = (solid == null) ? null : solid.copy();
+			if(solid != null){
+				this.solidIonizable.stackSize = 1;
+			}
 			this.power = power;
 			this.time = time;
 			this.ions = ions;

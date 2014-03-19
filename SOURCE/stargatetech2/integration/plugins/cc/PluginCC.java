@@ -24,4 +24,5 @@ public class PluginCC extends BasePlugin {
 	}
 
 	@Override protected void fallback(){}
+	@Override protected void postLoad(){}
 }

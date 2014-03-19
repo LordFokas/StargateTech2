@@ -8,7 +8,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import stargatetech2.IContentModule.Module;
 import stargatetech2.automation.rendering.RenderBusCable;
-import stargatetech2.core.MACHINE_BAD.RenderBlockMachineBAD;
 import stargatetech2.core.base.BaseISBRH;
 import stargatetech2.core.machine.RenderBlockMachine;
 import stargatetech2.core.rendering.RenderNaquadahOre;
@@ -39,7 +38,6 @@ public class ProxyClient implements ISidedProxy{
 				registerRenderer(RenderBusCable.instance());
 				break;
 			case CORE:
-				registerRenderer(RenderBlockMachineBAD.instance());
 				registerRenderer(RenderBlockMachine.instance());
 				registerRenderer(RenderNaquadahOre.instance());
 				break;

@@ -11,14 +11,16 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
+import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileEntityMachine;
 import stargatetech2.enemy.util.IonizedParticles;
 
 public class TileShieldController extends TileEntityMachine implements IBusDevice, IFluidHandler{
 	private IBusInterface[] interfaces = new IBusInterface[]{};
-	private FluidTank tank = new FluidTank(16000);
+	public FluidTank tank = new FluidTank(16000);
 	private String owner = null;
+	private ShieldPermissions permissions = ShieldPermissions.getDefault();
 	
 	@Override
 	protected FaceColor[] getPossibleFaceColors() {
@@ -34,16 +36,58 @@ public class TileShieldController extends TileEntityMachine implements IBusDevic
 		return owner == null ? true : player.getEntityName().contentEquals(owner);
 	}
 	
+	// required by the shield
+	public ShieldPermissions getPermissions(){
+		return permissions;
+	}
+	
+	// required by the Naquadah Rails
+	public boolean isShieldOn(){
+		return false;
+	}
+	
+	// required by packets
+	public void updatePermissions(boolean set, int flag){
+		if(set){
+			permissions.allow(flag);
+		}else{
+			permissions.disallow(flag);
+		}
+		updateClients();
+	}
+	
+	// required by packets
+	public void updateExceptions(boolean set, String name){
+		if(set){
+			permissions.setPlayerException(name);
+		}else{
+			permissions.removePlayerException(name);
+		}
+		updateClients();
+	}
+	
+	// required by container
+	public int getIonAmount(){
+		return tank.getFluidAmount();
+	}
+	
+	// required by container
+	public void setIonAmount(int ions){
+		tank.setFluid(new FluidStack(IonizedParticles.fluid, ions));
+	}
+	
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
 		tank.readFromNBT(nbt.getCompoundTag("tank"));
 		owner = nbt.getString("owner");
+		permissions = ShieldPermissions.readFromNBT(nbt.getCompoundTag("permissions"));
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		nbt.setCompoundTag("tank", tank.writeToNBT(new NBTTagCompound()));
 		nbt.setString("owner", owner);
+		nbt.setCompoundTag("permissions", permissions.writeToNBT());
 	}
 	
 	

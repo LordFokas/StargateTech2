@@ -125,7 +125,11 @@ public class GUIParticleIonizer extends BaseGUI {
 			drawLeft("---", 123, 66, 0x444444);
 		}
 		if(progressHover.isHover){
-			this.drawHover(progressHover.x, progressHover.y, EnumChatFormatting.BLUE + "Recipe Time Left", Helper.ticks2time(ticksLeft));
+			if(recipe != null){
+				drawHover(progressHover.x, progressHover.y, EnumChatFormatting.BLUE + "Time Left", Helper.ticks2time(ticksLeft));
+			}else{
+				drawHover(progressHover.x, progressHover.y, EnumChatFormatting.GRAY + "No work to do!");
+			}
 		}
 	}
 }

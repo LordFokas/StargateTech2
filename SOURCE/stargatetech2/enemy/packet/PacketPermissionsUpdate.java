@@ -3,20 +3,20 @@ package stargatetech2.enemy.packet;
 import net.minecraft.entity.player.EntityPlayer;
 import stargatetech2.core.base.BasePacket;
 import stargatetech2.core.base.BasePacket.ClientToServer;
-import stargatetech2.enemy.tileentity.TileShieldEmitter;
+import stargatetech2.enemy.tileentity.TileShieldController;
 import cpw.mods.fml.relauncher.Side;
 
 @ClientToServer
 public class PacketPermissionsUpdate extends BasePacket {
-	public TileShieldEmitter emitter;
+	public TileShieldController controller;
 	public boolean isSetting;
 	public int permissionFlag;
 	
 	@Override
 	protected void onBeforeSend() throws Exception {
-		output.writeInt(emitter.xCoord);
-		output.writeInt(emitter.yCoord);
-		output.writeInt(emitter.zCoord);
+		output.writeInt(controller.xCoord);
+		output.writeInt(controller.yCoord);
+		output.writeInt(controller.zCoord);
 		output.writeBoolean(isSetting);
 		output.writeInt(permissionFlag);
 	}
@@ -28,7 +28,7 @@ public class PacketPermissionsUpdate extends BasePacket {
 		int z = input.readInt();
 		isSetting = input.readBoolean();
 		permissionFlag = input.readInt();
-		emitter = (TileShieldEmitter) player.worldObj.getBlockTileEntity(x, y, z);
-		emitter.updatePermissions(isSetting, permissionFlag);
+		controller = (TileShieldController) player.worldObj.getBlockTileEntity(x, y, z);
+		controller.updatePermissions(isSetting, permissionFlag);
 	}
 }

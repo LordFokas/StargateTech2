@@ -23,7 +23,8 @@ public class PluginTE3 extends BasePlugin {
 		addSmelterRecipe(4800, Stacks.naqIngot, new ItemStack(Item.netherQuartz, 3), Stacks.circuit);
 		addSmelterRecipe(3200, Stacks.naqDust, new ItemStack(Item.netherQuartz, 3), Stacks.circuit);
 	}
-
+	
+	@Override protected void postLoad(){}
 	@Override protected void fallback(){}
 	
 	private void addPulverizerRecipe(int energy, ItemStack input, ItemStack output){
