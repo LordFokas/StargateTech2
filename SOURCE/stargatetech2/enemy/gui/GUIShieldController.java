@@ -11,6 +11,7 @@ import stargatetech2.core.machine.tabs.TabConfiguration;
 import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.enemy.tileentity.TileShieldController;
+import stargatetech2.integration.plugins.te3.CoFHFriendHelper;
 
 public class GUIShieldController extends BaseGUI {
 	private TileShieldController shieldController;
@@ -68,7 +69,11 @@ public class GUIShieldController extends BaseGUI {
 		drawLeft("Vessels", 115, 62, 0x444444);
 		bindBGImage();
 		ShieldPermissions perm = shieldController.getPermissions();
-		if(perm.hasBit(ShieldPermissions.PERM_FRIEND)) drawLocalQuad(89, 33, 248, 256, 0, 8, 8, 8);
+		if(CoFHFriendHelper.isSystemEnabled()){
+			if(perm.hasBit(ShieldPermissions.PERM_FRIEND)) drawLocalQuad(89, 33, 248, 256, 0, 8, 8, 8);
+		}else{
+			drawLocalQuad(89, 33, 240, 248, 0, 8, 8, 8);
+		}
 		if(perm.hasBit(ShieldPermissions.PERM_PLAYER)) drawLocalQuad(104, 33, 248, 256, 0, 8, 8, 8);
 		if(perm.hasBit(ShieldPermissions.PERM_VILLAGER)) drawLocalQuad(89, 47, 248, 256, 0, 8, 8, 8);
 		if(perm.hasBit(ShieldPermissions.PERM_MONSTER)) drawLocalQuad(104, 47, 248, 256, 0, 8, 8, 8);
