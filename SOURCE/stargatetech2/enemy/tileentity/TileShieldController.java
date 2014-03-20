@@ -9,15 +9,21 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import stargatetech2.api.bus.IBusDevice;
+import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.shields.ShieldPermissions;
+import stargatetech2.automation.bus.machines.ShieldControllerBusDriver;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileEntityMachine;
+import stargatetech2.core.machine.tabs.TabAbstractBus.ISyncBusDevice;
 import stargatetech2.enemy.util.IonizedParticles;
 
-public class TileShieldController extends TileEntityMachine implements IBusDevice, IFluidHandler{
-	private IBusInterface[] interfaces = new IBusInterface[]{};
+public class TileShieldController extends TileEntityMachine implements ISyncBusDevice, IFluidHandler{
+	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver();
+	private IBusInterface[] interfaces = new IBusInterface[]{
+			StargateTechAPI.api().getFactory().getIBusInterface(this, driver)
+	};
+	
 	public FluidTank tank = new FluidTank(16000);
 	private String owner = null;
 	private ShieldPermissions permissions = ShieldPermissions.getDefault();
@@ -81,6 +87,8 @@ public class TileShieldController extends TileEntityMachine implements IBusDevic
 		tank.readFromNBT(nbt.getCompoundTag("tank"));
 		owner = nbt.getString("owner");
 		permissions = ShieldPermissions.readFromNBT(nbt.getCompoundTag("permissions"));
+		driver.setAddress(nbt.getShort("address"));
+		driver.setEnabled(nbt.getBoolean("enabled"));
 	}
 
 	@Override
@@ -88,11 +96,13 @@ public class TileShieldController extends TileEntityMachine implements IBusDevic
 		nbt.setCompoundTag("tank", tank.writeToNBT(new NBTTagCompound()));
 		nbt.setString("owner", owner);
 		nbt.setCompoundTag("permissions", permissions.writeToNBT());
+		nbt.setShort("address", driver.getInterfaceAddress());
+		nbt.setBoolean("enabled", driver.isInterfaceEnabled());
 	}
 	
 	
 	// ***************************************************
-	// IBusDevice
+	// ISyncBusDevice
 	
 	@Override
 	public IBusInterface[] getInterfaces(int side) {
@@ -120,6 +130,28 @@ public class TileShieldController extends TileEntityMachine implements IBusDevic
 	@Override
 	public int getZCoord() {
 		return zCoord;
+	}
+	
+	@Override
+	public void setEnabled(boolean enabled) {
+		driver.setEnabled(enabled);
+		updateClients();
+	}
+
+	@Override
+	public boolean getEnabled() {
+		return driver.isInterfaceEnabled();
+	}
+
+	@Override
+	public void setAddress(short addr) {
+		driver.setAddress(addr);
+		updateClients();
+	}
+
+	@Override
+	public short getAddress() {
+		return driver.getInterfaceAddress();
 	}
 	
 	

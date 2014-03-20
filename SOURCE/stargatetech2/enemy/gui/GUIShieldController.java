@@ -48,9 +48,9 @@ public class GUIShieldController extends BaseGUI {
 	public GUIShieldController(ContainerShieldController container) {
 		super(container, 200, 144, true);
 		shieldController = container.controller;
-		bgImage = TextureReference.GUI_SHIELD_EMITTER;
+		bgImage = TextureReference.GUI_SHIELD_CONTROLLER;
 		addGauge(new TankGauge(5, 75, shieldController.tank));
-		addTab(new TabAbstractBus());
+		addTab(new TabAbstractBus(shieldController));
 		addTab(new TabConfiguration(shieldController));
 	}
 	

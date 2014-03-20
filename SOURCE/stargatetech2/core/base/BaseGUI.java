@@ -183,13 +183,28 @@ public abstract class BaseGUI extends GuiContainer {
 	}
 	
 	public static enum Arrow{
-		UP(136, 8), DOWN(128, 0), LEFT(136, 0), RIGHT(128, 8);
+		UP(152, 8), DOWN(144, 0), LEFT(152, 0), RIGHT(144, 8);
 		
 		public final int x, y;
 		
 		private Arrow(int x, int y){
 			this.x = x;
 			this.y = y;
+		}
+	}
+	
+	public static enum Toggle{
+		ON(144, 16), OFF(144, 24);
+		
+		public final int x, y;
+		
+		private Toggle(int x, int y){
+			this.x = x;
+			this.y = y;
+		}
+		
+		public Toggle invert(){
+			return this == ON ? OFF : ON;
 		}
 	}
 	
@@ -497,8 +512,29 @@ public abstract class BaseGUI extends GuiContainer {
 		drawLocalQuad(x, y, arrow.x, arrow.x + 8, arrow.y, arrow.y + 8, 8, 8);
 	}
 	
+	public final void drawSlot(TabColor color, int x, int y, int sx, int sy){
+		int xodd = sx % 2;
+		int yodd = sy % 2;
+		x--;
+		y--;
+		sx = (sx + 2) / 2;
+		sy = (sy + 2) / 2;
+		bindBaseImage();
+		int tx = color.x + 32;
+		int ty = color.y;
+		drawLocalQuad(x, y, tx, tx + sx, ty, ty + sy, sx, sy);
+		drawLocalQuad(x + sx, y, tx + 16 - (sx + xodd), tx + 16, ty, ty + sy, sx + xodd, sy);
+		drawLocalQuad(x, y + sy, tx, tx + sx, ty + 16 - (sy + yodd), ty + 16, sx, sy + yodd);
+		drawLocalQuad(x + sx, y + sy, tx + 16 - (sx + xodd), tx + 16, ty + 16 - (sy + yodd), ty + 16, sx + xodd, sy + yodd);
+	}
+	
 	public final void drawStack(ItemStack stack, int x, int y){
 		itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.getTextureManager(), stack, x + 9 + _xoff, y + 9 + _yoff);
+	}
+	
+	public final void drawToggle(Toggle toggle, int x, int y){
+		bindBaseImage();
+		drawLocalQuad(x, y, toggle.x, toggle.x + 16, toggle.y, toggle.y + 8, 16, 8);
 	}
 	
 	public final void playClick(){

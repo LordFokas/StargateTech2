@@ -1,6 +1,6 @@
-package stargatetech2.integration.plugins.cc;
+package stargatetech2.automation.bus;
 
-public class CCAddressHelper {
+public class AddressHelper {
 	public static String convert(short address){
 		String result = Integer.toHexString(address).toUpperCase();
 		if(result.length() > 4){

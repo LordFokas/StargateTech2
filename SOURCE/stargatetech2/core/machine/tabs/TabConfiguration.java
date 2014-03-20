@@ -78,7 +78,7 @@ public class TabConfiguration extends BaseTab{
 	@Override
 	public boolean handleClick(int x, int y){
 		for(Side side : sides){
-			if(elementHit(side.x, side.y, x, y)){
+			if(elementHit(side.x, side.y, x, y, 16, 16)){
 				gui.playClick();
 				PacketToggleMachineFace packet = new PacketToggleMachineFace();
 				packet.x = machine.xCoord;
@@ -86,13 +86,8 @@ public class TabConfiguration extends BaseTab{
 				packet.z = machine.zCoord;
 				packet.face = side.face;
 				packet.sendToServer();
-				return false;
 			}
 		}
-		return true;
-	}
-	
-	private boolean elementHit(int ex, int ey, int cx, int cy){
-		return cx >= ex && cx < ex + 16 && cy >= ey && cy < ey + 16;
+		return !elementHit(23, 21, x, y, 60, 60);
 	}
 }

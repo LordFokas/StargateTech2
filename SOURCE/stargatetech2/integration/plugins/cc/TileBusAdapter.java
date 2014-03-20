@@ -10,6 +10,7 @@ import stargatetech2.api.bus.BusPacketLIP;
 import stargatetech2.api.bus.BusPacketLIP.LIPMetadata;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
+import stargatetech2.automation.bus.AddressHelper;
 import stargatetech2.core.base.BaseTileEntity;
 import stargatetech2.core.reference.ModReference;
 import dan200.computer.api.IComputerAccess;
@@ -70,7 +71,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 		ComputerMethod m = ComputerMethod.values()[method];
 		switch(m){
 			case GETADDRESS: // GETS THE CURRENT ADDRESS FROM THE NETWORK DRIVER
-				return new Object[]{CCAddressHelper.convert(networkDriver.getInterfaceAddress())};
+				return new Object[]{AddressHelper.convert(networkDriver.getInterfaceAddress())};
 				
 			case GETRECVCOUNT: // GETS THE NUMBER OF PACKETS IN THE RECEIVE QUEUE
 				return new Object[]{received.size()};
@@ -81,7 +82,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 				
 			case SENDPACKET: // SENDS A PACKET TO THE REST OF THE NETWORK
 				if(arguments.length < 2) throw new Exception("Not enough arguments (min. 2 args)");
-				BusPacketLIP output = new BusPacketLIP(networkDriver.getInterfaceAddress(), CCAddressHelper.convert((String)arguments[0]));
+				BusPacketLIP output = new BusPacketLIP(networkDriver.getInterfaceAddress(), AddressHelper.convert((String)arguments[0]));
 				output.setMetadata(new LIPMetadata(ModReference.MOD_ID, "BusAdapter", ""));
 				for(int i = 1; i < arguments.length; i++){
 					String arg = (String) arguments[i];
@@ -96,7 +97,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 				
 			case SETADDRESS: // SETS THE SPECIFIED ADDRESS ON THE NETWORK DRIVER
 				if(arguments.length == 1 && arguments[0] instanceof String){
-					networkDriver.setInterfaceAddress(CCAddressHelper.convert((String)arguments[0]));
+					networkDriver.setInterfaceAddress(AddressHelper.convert((String)arguments[0]));
 					return new Object[]{true};
 				}
 				return new Object[]{false};

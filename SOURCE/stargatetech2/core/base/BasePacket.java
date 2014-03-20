@@ -14,6 +14,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import stargatetech2.core.packet.PacketOpenGUI;
 import stargatetech2.core.packet.PacketToggleMachineFace;
+import stargatetech2.core.packet.PacketUpdateBusAddress;
+import stargatetech2.core.packet.PacketUpdateBusEnabled;
 import stargatetech2.core.packet.PacketUpdateMachineColors;
 import stargatetech2.core.util.ByteUtil;
 import stargatetech2.core.util.PacketHandler;
@@ -67,6 +69,8 @@ public abstract class BasePacket{
 		packetMap.add(PacketPrintAddress.class);
 		packetMap.add(PacketUpdateMachineColors.class);
 		packetMap.add(PacketToggleMachineFace.class);
+		packetMap.add(PacketUpdateBusAddress.class);
+		packetMap.add(PacketUpdateBusEnabled.class);
 	}
 	
 	private ByteArrayOutputStream baos = new ByteArrayOutputStream();

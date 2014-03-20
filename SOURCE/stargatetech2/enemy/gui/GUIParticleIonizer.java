@@ -9,6 +9,7 @@ import net.minecraftforge.fluids.FluidStack;
 import stargatetech2.core.api.ParticleIonizerRecipes;
 import stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
 import stargatetech2.core.base.BaseGUI;
+import stargatetech2.core.base.BaseGUI.ITab.TabColor;
 import stargatetech2.core.base.BaseGauge.PowerGauge;
 import stargatetech2.core.base.BaseGauge.TankGauge;
 import stargatetech2.core.machine.FaceColor;
@@ -38,16 +39,18 @@ public class GUIParticleIonizer extends BaseGUI {
 		@Override
 		public void renderAt(int x, int y) {
 			ItemStack solid = recipe.getSolid();
+			gui.drawSlot(TabColor.GREEN, x+2, y+2, 16, 16);
+			gui.drawSlot(TabColor.GREEN, x+2, y+21, 16, 16);
 			if(solid != null){
-				gui.drawStack(solid, x+1, y+1);
-				gui.drawLeft(solid.getDisplayName(), x + 20, y + 1, 0xAAAAAA);
+				gui.drawStack(solid, x+2, y+2);
+				gui.drawLeft(solid.getDisplayName(), x + 20, y + 2, 0xAAAAAA);
 			}
 			FluidStack fluid = recipe.getFluid();
 			if(fluid != null){
-				gui.drawIcon(x+1, y + 18, fluid.getFluid().getStillIcon(), TextureMap.locationBlocksTexture, 16);
-				gui.drawLeft(fluid.getFluid().getLocalizedName(), x + 20, y + 26, 0xAAAAAA);
+				gui.drawIcon(x+2, y + 21, fluid.getFluid().getStillIcon(), TextureMap.locationBlocksTexture, 16);
+				gui.drawLeft(fluid.getFluid().getLocalizedName(), x + 20, y + 30, 0xAAAAAA);
 			}
-			gui.drawLeft(Helper.prettyNumber(recipe.ions * recipe.time) + " mB", x + 25, y + 14, 0xEEEEEE);
+			gui.drawLeft(Helper.prettyNumber(recipe.ions * recipe.time) + " mB", x + 25, y + 16, 0xEEEEEE);
 		}
 	}
 	

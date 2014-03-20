@@ -44,4 +44,8 @@ public abstract class BaseTab implements ITab{
 	public boolean handleClick(int x, int y){
 		return true;
 	}
+	
+	protected boolean elementHit(int ex, int ey, int cx, int cy, int sx, int sy){
+		return cx >= ex && cx < ex + sx && cy >= ey && cy < ey + sy;
+	}
 }
