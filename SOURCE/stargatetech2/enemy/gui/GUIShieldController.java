@@ -2,6 +2,8 @@ package stargatetech2.enemy.gui;
 
 import java.util.List;
 
+import org.lwjgl.input.Mouse;
+
 import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.core.base.BaseGUI;
 import stargatetech2.core.base.BaseGauge.TankGauge;
@@ -10,6 +12,7 @@ import stargatetech2.core.machine.tabs.TabAbstractBus;
 import stargatetech2.core.machine.tabs.TabConfiguration;
 import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.reference.TextureReference;
+import stargatetech2.enemy.packet.PacketExceptionsUpdate;
 import stargatetech2.enemy.tileentity.TileShieldController;
 import stargatetech2.integration.plugins.te3.CoFHFriendHelper;
 
@@ -18,9 +21,10 @@ public class GUIShieldController extends BaseGUI {
 	private TankGauge ionTank;
 	private TextHandler textHandler = new TextHandler();
 	private ExceptionList exceptions = new ExceptionList();
+	private IClickHandler addException;
 	
 	private class ExceptionList{
-		public String[] names = new String[5];
+		public String[] names = new String[10];
 		private int last = 0;
 		private int lastMax = -1;
 		
@@ -33,13 +37,13 @@ public class GUIShieldController extends BaseGUI {
 		}
 		
 		public void buildFrom(ShieldPermissions perm){
-			names = new String[5];
+			names = new String[names.length];
 			List<String> ex = perm.getExceptionList();
 			lastMax = ex.size() - 1;
 			if(last > lastMax) last = lastMax;
-			int s = last - 4;
+			int s = last + 1 - names.length;
 			if(s < 0) s = 0;
-			for(int i = 0; i < 5; i++){
+			for(int i = 0; i < names.length; i++){
 				if(s+i > ex.size()-1) break;
 				names[i] = ex.get(s+i);
 			}
@@ -47,12 +51,32 @@ public class GUIShieldController extends BaseGUI {
 	}
 	
 	public GUIShieldController(ContainerShieldController container) {
-		super(container, 200, 144, true);
+		super(container, 200, 140, true);
 		shieldController = container.controller;
 		bgImage = TextureReference.GUI_SHIELD_CONTROLLER;
-		addGauge(new TankGauge(5, 75, shieldController.tank));
+		//addGauge(new TankGauge(5, 75, shieldController.tank));
 		addTab(new TabAbstractBus(shieldController));
 		addTab(new TabConfiguration(shieldController));
+		
+		addException = new IClickHandler(){
+			@Override
+			public void onClick(int x, int y) {
+				String name = textHandler.toString();
+				if(name != null && !name.isEmpty()){
+					PacketExceptionsUpdate update = new PacketExceptionsUpdate();
+					update.x = shieldController.xCoord;
+					update.y = shieldController.yCoord;
+					update.z = shieldController.zCoord;
+					update.playerName = name;
+					update.isSetting = true;
+					update.sendToServer();
+					playClick(0.8F);
+					textHandler = new TextHandler();
+				}
+			}
+		};
+		
+		addClickHandler(addException, 184, 30, 12, 12);
 	}
 	
 	@Override
@@ -60,29 +84,41 @@ public class GUIShieldController extends BaseGUI {
 		bindImage(TextureReference.getTexture("blocks/" + BlockReference.SHIELD_CONTROLLER + ".png"));
 		drawQuad(4, 3.5F, 0, 1, 0, 1, 8, 8);
 		drawLeft("Shield Controller", 16, 4, 0x444444);
-		drawCentered("Permissions", 100, 20, 0x444444);
-		drawRight("CoFH Friends", 86, 34, 0x444444);
-		drawLeft("Other Players", 115, 34, 0x444444);
-		drawRight("Villagers", 86, 48, 0x444444);
-		drawLeft("Monsters", 115, 48, 0x444444);
-		drawRight("Animals", 86, 62, 0x444444);
-		drawLeft("Vessels", 115, 62, 0x444444);
+		drawLeft("Entity Perms", 4, 19, 0x444444);
+		drawLeft("Player Exceptions", 103, 19, 0x444444);
+		drawLeft("CoFH Friends", 16, 32, 0x444444);
+		drawLeft("Other Players", 16, 50, 0x444444);
+		drawLeft("Villagers", 16, 68, 0x444444);
+		drawLeft("Monsters", 16, 86, 0x444444);
+		drawLeft("Animals", 16, 104, 0x444444);
+		drawLeft("Vessels", 16, 122, 0x444444);
+		String input = textHandler.getString(99);
+		if(input != null && !input.isEmpty()){
+			drawLeft(input, 105, 33, 0xFFFFFF);
+		}
+		for(int i = 0; i < exceptions.names.length; i++){
+			String name = exceptions.names[i];
+			if(name == null || name.isEmpty()) break;
+			bindBGImage();
+			drawLocalQuad(105, 46 + (i * 9), 248, 256, 8, 16, 8, 8);
+			drawLeft(name, 114, 46 + (i * 9), 0xFFFFFF);
+		}
 		bindBGImage();
 		ShieldPermissions perm = shieldController.getPermissions();
+		exceptions.buildFrom(perm);
 		if(CoFHFriendHelper.isSystemEnabled()){
-			if(perm.hasBit(ShieldPermissions.PERM_FRIEND)) drawLocalQuad(89, 33, 248, 256, 0, 8, 8, 8);
+			if(perm.hasBit(ShieldPermissions.PERM_FRIEND)) drawLocalQuad(5, 31, 248, 256, 0, 8, 8, 8);
 		}else{
-			drawLocalQuad(89, 33, 240, 248, 0, 8, 8, 8);
+			drawLocalQuad(5, 31, 240, 248, 0, 8, 8, 8);
 		}
-		if(perm.hasBit(ShieldPermissions.PERM_PLAYER)) drawLocalQuad(104, 33, 248, 256, 0, 8, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_VILLAGER)) drawLocalQuad(89, 47, 248, 256, 0, 8, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_MONSTER)) drawLocalQuad(104, 47, 248, 256, 0, 8, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_ANIMAL)) drawLocalQuad(89, 61, 248, 256, 0, 8, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_VESSEL)) drawLocalQuad(104, 61, 248, 256, 0, 8, 8, 8);
-		if(shieldController.hasColor(FaceColor.BLUE)) drawFrame(FaceColor.BLUE, 3, 73, 20, 68);
+		if(perm.hasBit(ShieldPermissions.PERM_PLAYER)) drawLocalQuad(5, 49, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_VILLAGER)) drawLocalQuad(5, 67, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_MONSTER)) drawLocalQuad(5, 85, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_ANIMAL)) drawLocalQuad(5, 103, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_VESSEL)) drawLocalQuad(5, 121, 248, 256, 0, 8, 8, 8);
+		//if(shieldController.hasColor(FaceColor.BLUE)) drawFrame(FaceColor.BLUE, 3, 73, 20, 68);
 	}
 	
-	/*
 	@Override
 	protected void onKeyTyped(char key, int code){
 		if(code == 28){ // Enter
@@ -106,5 +142,4 @@ public class GUIShieldController extends BaseGUI {
 			exceptions.lastDec();
 		}
 	}
-	*/
 }

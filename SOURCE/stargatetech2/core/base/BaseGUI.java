@@ -180,6 +180,11 @@ public abstract class BaseGUI extends GuiContainer {
 			}
 			return buff.toString();
 		}
+		
+		@Override
+		public String toString(){
+			return getString(99999);
+		}
 	}
 	
 	public static enum Arrow{
@@ -388,6 +393,7 @@ public abstract class BaseGUI extends GuiContainer {
 			GL11.glDisable(GL11.GL_LIGHTING); // TODO: get rid of this workaround AFTER mc stops fucking up OGL state.
 			itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, wrapper.tab.getIcon(), guiLeft-sx+5, guiTop+27+off);
 			if(wrapper.isExpanded()){
+				drawLeft(wrapper.tab.getName(), guiLeft-sx+16, guiTop+24+off, 0x555555);
 				drawLeft(wrapper.tab.getName(), guiLeft-sx+15, guiTop+23+off, 0xFFFFFF);
 			}
 			bindBaseImage();
