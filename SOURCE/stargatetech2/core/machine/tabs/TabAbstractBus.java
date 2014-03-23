@@ -12,7 +12,7 @@ import stargatetech2.core.util.Stacks;
 public class TabAbstractBus extends BaseTab{
 	private static final int TOGGLE_X = 20;
 	private static final int TOGGLE_Y = 27;
-	private static final int ADDR_X = 20;
+	private static final int ADDR_X = 51;
 	private static final int ADDR_Y = 42;
 	
 	private short address;
@@ -44,6 +44,7 @@ public class TabAbstractBus extends BaseTab{
 		gui.drawToggle(toggle, TOGGLE_X, TOGGLE_Y);
 		gui.drawLeft(toggle == Toggle.ON ? "Enabled" : "Disabled", TOGGLE_X + 20, TOGGLE_Y + 1, 0xEEEEEE);
 		
+		gui.drawRight("Addr:", ADDR_X - 4, ADDR_Y + 9, 0xEEEEEE);
 		for(int i = 0; i < 4; i++){
 			gui.drawSlot(getColor(), ADDR_X + (9 * i), ADDR_Y + 8, 7, 9);
 			gui.drawLeft(getDigit(i), ADDR_X + 1 + (9 * i), ADDR_Y + 9, 0xFFFFFF);
