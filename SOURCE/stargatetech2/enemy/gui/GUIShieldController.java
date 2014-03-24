@@ -13,6 +13,7 @@ import stargatetech2.core.machine.tabs.TabConfiguration;
 import stargatetech2.core.reference.BlockReference;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.enemy.packet.PacketExceptionsUpdate;
+import stargatetech2.enemy.packet.PacketPermissionsUpdate;
 import stargatetech2.enemy.tileentity.TileShieldController;
 import stargatetech2.integration.plugins.te3.CoFHFriendHelper;
 
@@ -102,7 +103,28 @@ public class GUIShieldController extends BaseGUI {
 		toggleBit = new IClickHandler(){
 			@Override
 			public void onClick(int x, int y) {
-				
+				y -= 31;
+				for(int n = 0; n < 6; n++){
+					int b = n*18;
+					if(y > b && y < b+9){
+						if(n == 0){
+							if(!CoFHFriendHelper.isSystemEnabled()){
+								playClick(0.25F);
+								return;
+							}
+						}
+						int perm = 1 << n;
+						PacketPermissionsUpdate update = new PacketPermissionsUpdate();
+						update.x = shieldController.xCoord;
+						update.y = shieldController.yCoord;
+						update.z = shieldController.zCoord;
+						update.permissionFlag = perm;
+						update.isSetting = !shieldController.getPermissions().hasBit(perm);
+						update.sendToServer();
+						playClick(update.isSetting ? 0.8F : 0.7F);
+						return;
+					}
+				}
 			}
 		};
 		
@@ -121,8 +143,8 @@ public class GUIShieldController extends BaseGUI {
 		drawLeft("CoFH Friends", 16, 32, 0x444444);
 		drawLeft("Other Players", 16, 50, 0x444444);
 		drawLeft("Villagers", 16, 68, 0x444444);
-		drawLeft("Monsters", 16, 86, 0x444444);
-		drawLeft("Animals", 16, 104, 0x444444);
+		drawLeft("Animals", 16, 86, 0x444444);
+		drawLeft("Monsters", 16, 104, 0x444444);
 		drawLeft("Vessels", 16, 122, 0x444444);
 		String input = textHandler.getString(99);
 		if(input != null && !input.isEmpty()){
@@ -145,8 +167,8 @@ public class GUIShieldController extends BaseGUI {
 		}
 		if(perm.hasBit(ShieldPermissions.PERM_PLAYER)) drawLocalQuad(5, 49, 248, 256, 0, 8, 8, 8);
 		if(perm.hasBit(ShieldPermissions.PERM_VILLAGER)) drawLocalQuad(5, 67, 248, 256, 0, 8, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_MONSTER)) drawLocalQuad(5, 85, 248, 256, 0, 8, 8, 8);
-		if(perm.hasBit(ShieldPermissions.PERM_ANIMAL)) drawLocalQuad(5, 103, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_ANIMAL)) drawLocalQuad(5, 85, 248, 256, 0, 8, 8, 8);
+		if(perm.hasBit(ShieldPermissions.PERM_MONSTER)) drawLocalQuad(5, 103, 248, 256, 0, 8, 8, 8);
 		if(perm.hasBit(ShieldPermissions.PERM_VESSEL)) drawLocalQuad(5, 121, 248, 256, 0, 8, 8, 8);
 		//if(shieldController.hasColor(FaceColor.BLUE)) drawFrame(FaceColor.BLUE, 3, 73, 20, 68);
 	}

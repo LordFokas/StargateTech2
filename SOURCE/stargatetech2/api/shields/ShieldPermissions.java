@@ -15,12 +15,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class ShieldPermissions {
 	// Permission Flags
-	public static final int PERM_FRIEND	= 0x01;
-	public static final int PERM_PLAYER	= 0x02;
+	public static final int PERM_FRIEND		= 0x01;
+	public static final int PERM_PLAYER		= 0x02;
 	public static final int PERM_VILLAGER	= 0x04;
 	public static final int PERM_ANIMAL		= 0x08;
 	public static final int PERM_MONSTER	= 0x10;
-	public static final int PERM_VESSEL	= 0x20;
+	public static final int PERM_VESSEL		= 0x20;
 	
 	private int permValue = 0;
 	private LinkedList<String> playerExceptions = new LinkedList<String>();
