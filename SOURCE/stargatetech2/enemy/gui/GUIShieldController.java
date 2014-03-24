@@ -21,7 +21,7 @@ public class GUIShieldController extends BaseGUI {
 	private TankGauge ionTank;
 	private TextHandler textHandler = new TextHandler();
 	private ExceptionList exceptions = new ExceptionList();
-	private IClickHandler addException;
+	private IClickHandler addException, remException, toggleBit;
 	
 	private class ExceptionList{
 		public String[] names = new String[10];
@@ -76,7 +76,39 @@ public class GUIShieldController extends BaseGUI {
 			}
 		};
 		
+		remException = new IClickHandler(){
+			@Override
+			public void onClick(int x, int y) {
+				y -= 46;
+				for(int n = 0; n < exceptions.names.length; n++){
+					if(y > n*9 && y < (n+1)*9){
+						String name = exceptions.names[n];
+						if(name != null && !name.isEmpty()){
+							PacketExceptionsUpdate update = new PacketExceptionsUpdate();
+							update.x = shieldController.xCoord;
+							update.y = shieldController.yCoord;
+							update.z = shieldController.zCoord;
+							update.playerName = name;
+							update.isSetting = false;
+							update.sendToServer();
+							playClick(0.7F);
+						}
+						return;
+					}
+				}
+			}
+		};
+		
+		toggleBit = new IClickHandler(){
+			@Override
+			public void onClick(int x, int y) {
+				
+			}
+		};
+		
 		addClickHandler(addException, 184, 30, 12, 12);
+		addClickHandler(remException, 105, 46, 8, 89);
+		addClickHandler(toggleBit, 5, 31, 8, 98);
 	}
 	
 	@Override
