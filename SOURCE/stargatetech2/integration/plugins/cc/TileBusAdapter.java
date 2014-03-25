@@ -28,6 +28,11 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 	private IComputerAccess computer;
 	private BusPacketLIP packet;
 	
+	@Override
+	public boolean canUpdate(){
+		return false;
+	}
+	
 	//############################### CC STUFF
 	private static enum ComputerMethod{
 		SETADDRESS	("setAddress"),

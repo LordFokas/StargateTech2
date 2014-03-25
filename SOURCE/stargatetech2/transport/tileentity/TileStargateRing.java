@@ -28,6 +28,11 @@ public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 		}
 	}
 	
+	@Override
+	public boolean canUpdate(){
+		return false;
+	}
+	
 	public final TileStargate getStargate(){
 		TileEntity te = worldObj.getBlockTileEntity(sgx, sgy, sgz);
 		if(te instanceof TileStargate){
