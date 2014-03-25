@@ -2,9 +2,9 @@ package stargatetech2.factory.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import stargatetech2.core.machine.FaceColor;
-import stargatetech2.core.machine.TileEntityMachine;
+import stargatetech2.core.machine.TileMachine;
 
-public class TilePrioritizer extends TileEntityMachine {
+public class TilePrioritizer extends TileMachine {
 	private boolean multipleInputs = true;
 	
 	@Override

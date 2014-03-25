@@ -5,7 +5,7 @@ import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.core.base.BaseTileEntity;
 import stargatetech2.core.packet.PacketUpdateMachineColors;
 
-public abstract class TileEntityMachine extends BaseTileEntity {
+public abstract class TileMachine extends BaseTileEntity {
 	private FaceColor[] colors = new FaceColor[]{
 			FaceColor.VOID, FaceColor.VOID,
 			FaceColor.VOID, FaceColor.VOID,

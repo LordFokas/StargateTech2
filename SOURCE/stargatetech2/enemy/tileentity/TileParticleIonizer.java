@@ -16,14 +16,14 @@ import stargatetech2.core.api.ParticleIonizerRecipes;
 import stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.Inventory;
-import stargatetech2.core.machine.TileEntityMachine;
+import stargatetech2.core.machine.TileMachine;
 import stargatetech2.enemy.ModuleEnemy;
 import stargatetech2.enemy.block.BlockParticleIonizer;
 import stargatetech2.enemy.util.IonizedParticles;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 
-public class TileParticleIonizer extends TileEntityMachine implements IFluidHandler, IEnergyHandler, ISidedInventory{
+public class TileParticleIonizer extends TileMachine implements IFluidHandler, IEnergyHandler, ISidedInventory{
 	public final FluidTank ionizedParticles = new FluidTank(8000);		// orange
 	public final FluidTank fluidIonizable = new FluidTank(8000);		// blue
 	public final Inventory solidIonizable = new Inventory(9);			// blue

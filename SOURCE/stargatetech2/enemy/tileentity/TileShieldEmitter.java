@@ -2,10 +2,10 @@ package stargatetech2.enemy.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import stargatetech2.core.machine.FaceColor;
-import stargatetech2.core.machine.TileEntityMachine;
+import stargatetech2.core.machine.TileMachine;
 import stargatetech2.core.util.Vec3Int;
 
-public class TileShieldEmitter extends TileEntityMachine{
+public class TileShieldEmitter extends TileMachine{
 	private Vec3Int controllerCoords;
 	
 	@Override

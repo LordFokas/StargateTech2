@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import stargatetech2.core.base.BasePacket.ServerToClient;
 import stargatetech2.core.machine.FaceColor;
-import stargatetech2.core.machine.TileEntityMachine;
+import stargatetech2.core.machine.TileMachine;
 import cpw.mods.fml.relauncher.Side;
 
 @ServerToClient
@@ -32,8 +32,8 @@ public class PacketUpdateMachineColors extends PacketCoordinates {
 			colors[s] = FaceColor.values()[input.readByte()];
 		}
 		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
-		if(te instanceof TileEntityMachine){
-			((TileEntityMachine)te).updateColors(colors);
+		if(te instanceof TileMachine){
+			((TileMachine)te).updateColors(colors);
 		}
 	}
 }

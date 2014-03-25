@@ -1,6 +1,5 @@
 package stargatetech2.enemy.tileentity;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -14,45 +13,38 @@ import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.automation.bus.machines.ShieldControllerBusDriver;
 import stargatetech2.core.machine.FaceColor;
-import stargatetech2.core.machine.TileEntityMachine;
+import stargatetech2.core.machine.TileOwnedMachine;
 import stargatetech2.core.machine.tabs.TabAbstractBus.ISyncBusDevice;
 import stargatetech2.enemy.util.IonizedParticles;
 
-public class TileShieldController extends TileEntityMachine implements ISyncBusDevice, IFluidHandler{
+public class TileShieldController extends TileOwnedMachine implements ISyncBusDevice, IFluidHandler{
 	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver();
 	private IBusInterface[] interfaces = new IBusInterface[]{
 			StargateTechAPI.api().getFactory().getIBusInterface(this, driver)
 	};
 	
 	public FluidTank tank = new FluidTank(16000);
-	private String owner = null;
 	private ShieldPermissions permissions = ShieldPermissions.getDefault();
+	private boolean active = false; // Implement all the things.
+	
+	@Override
+	public void updateEntity(){
+		// TODO: implement things.
+	}
 	
 	@Override
 	protected FaceColor[] getPossibleFaceColors() {
 		return new FaceColor[]{FaceColor.VOID, FaceColor.BLUE};
 	}
 	
-	public void setOwner(EntityPlayer player){
-		if(owner == null)
-			owner = player.getEntityName();
-	}
-	
-	public boolean isOwner(EntityPlayer player){
-		return owner == null ? true : player.getEntityName().contentEquals(owner);
-	}
-	
-	// required by the shield
 	public ShieldPermissions getPermissions(){
 		return permissions;
 	}
 	
-	// required by the Naquadah Rails
 	public boolean isShieldOn(){
 		return false;
 	}
 	
-	// required by packets
 	public void updatePermissions(boolean set, int flag){
 		if(set){
 			permissions.allow(flag);
@@ -62,7 +54,6 @@ public class TileShieldController extends TileEntityMachine implements ISyncBusD
 		updateClients();
 	}
 	
-	// required by packets
 	public void updateExceptions(boolean set, String name){
 		if(set){
 			permissions.setPlayerException(name);
@@ -72,12 +63,10 @@ public class TileShieldController extends TileEntityMachine implements ISyncBusD
 		updateClients();
 	}
 	
-	// required by container
 	public int getIonAmount(){
 		return tank.getFluidAmount();
 	}
 	
-	// required by container
 	public void setIonAmount(int ions){
 		tank.setFluid(new FluidStack(IonizedParticles.fluid, ions));
 	}
@@ -85,7 +74,6 @@ public class TileShieldController extends TileEntityMachine implements ISyncBusD
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
 		tank.readFromNBT(nbt.getCompoundTag("tank"));
-		owner = nbt.getString("owner");
 		permissions = ShieldPermissions.readFromNBT(nbt.getCompoundTag("permissions"));
 		driver.setAddress(nbt.getShort("address"));
 		driver.setEnabled(nbt.getBoolean("enabled"));
@@ -94,7 +82,6 @@ public class TileShieldController extends TileEntityMachine implements ISyncBusD
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		nbt.setCompoundTag("tank", tank.writeToNBT(new NBTTagCompound()));
-		nbt.setString("owner", owner);
 		nbt.setCompoundTag("permissions", permissions.writeToNBT());
 		nbt.setShort("address", driver.getInterfaceAddress());
 		nbt.setBoolean("enabled", driver.isInterfaceEnabled());

@@ -7,7 +7,6 @@ import org.lwjgl.input.Mouse;
 import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.core.base.BaseGUI;
 import stargatetech2.core.base.BaseGauge.TankGauge;
-import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.tabs.TabAbstractBus;
 import stargatetech2.core.machine.tabs.TabConfiguration;
 import stargatetech2.core.reference.BlockReference;

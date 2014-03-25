@@ -5,7 +5,7 @@ import net.minecraft.util.Icon;
 import stargatetech2.core.base.BaseTab;
 import stargatetech2.core.machine.Face;
 import stargatetech2.core.machine.FaceColor;
-import stargatetech2.core.machine.TileEntityMachine;
+import stargatetech2.core.machine.TileMachine;
 import stargatetech2.core.packet.PacketToggleMachineFace;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.IconRegistry;
@@ -33,9 +33,9 @@ public class TabConfiguration extends BaseTab{
 	}
 	
 	private final Icon side, top, bottom;
-	private final TileEntityMachine machine;
+	private final TileMachine machine;
 	
-	public TabConfiguration(TileEntityMachine machine) {
+	public TabConfiguration(TileMachine machine) {
 		super("Configuration", Stacks.circuit, TabColor.RED);
 		this.machine = machine;
 		side = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE_I);

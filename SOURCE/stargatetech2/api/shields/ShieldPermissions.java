@@ -1,6 +1,5 @@
 package stargatetech2.api.shields;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

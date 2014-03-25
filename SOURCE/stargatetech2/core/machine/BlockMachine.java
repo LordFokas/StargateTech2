@@ -69,8 +69,13 @@ public abstract class BlockMachine extends BaseBlockContainer {
 		return false;
 	}
 	
-	protected boolean canPlayerAccess(EntityPlayer player, World world, int x, int y, int z){
-		return true;
+	protected final boolean canPlayerAccess(EntityPlayer player, World world, int x, int y, int z){
+		TileEntity te = world.getBlockTileEntity(x, y, z);
+		if(te instanceof IOwnedMachine){
+			return ((IOwnedMachine)te).hasAccess(player.getDisplayName());
+		}else{
+			return true;
+		}
 	}
 	
 	@Override
@@ -78,6 +83,10 @@ public abstract class BlockMachine extends BaseBlockContainer {
 		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw);
 		w.setBlockMetadataWithNotify(x, y, z, dir.ordinal(), 2);
 		if(living instanceof EntityPlayer){
+			TileEntity te = w.getBlockTileEntity(x, y, z);
+			if(te instanceof IOwnedMachine){
+				((IOwnedMachine)te).setOwner(((EntityPlayer)living).getDisplayName());
+			}
 			onPlacedBy(w, x, y, z, (EntityPlayer)living, dir);
 		}
 	}
@@ -87,8 +96,8 @@ public abstract class BlockMachine extends BaseBlockContainer {
 	public final FaceColor[] getTextureMap(IBlockAccess w, int x, int y, int z){
 		TileEntity te = w.getBlockTileEntity(x, y, z);
 		FaceColor[] map = new FaceColor[]{FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID};
-		if(te instanceof TileEntityMachine){
-			TileEntityMachine machine = (TileEntityMachine) te;
+		if(te instanceof TileMachine){
+			TileMachine machine = (TileMachine) te;
 			for(int i = 0; i < 6; i++){
 				map[i] = machine.getColor(i);
 			}
@@ -96,5 +105,5 @@ public abstract class BlockMachine extends BaseBlockContainer {
 		return map;
 	}
 	
-	@Override protected abstract TileEntityMachine createTileEntity(int metadata);
+	@Override protected abstract TileMachine createTileEntity(int metadata);
 }

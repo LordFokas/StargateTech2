@@ -3,9 +3,9 @@ package stargatetech2.factory.tileentity;
 import net.minecraft.nbt.NBTTagCompound;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.Inventory;
-import stargatetech2.core.machine.TileEntityMachine;
+import stargatetech2.core.machine.TileMachine;
 
-public class TileCrossover extends TileEntityMachine {
+public class TileCrossover extends TileMachine {
 	private Inventory inventory = new Inventory(3);
 	
 	
