@@ -26,8 +26,8 @@ public class TileShield extends BaseTileEntity {
 			nbt.setCompoundTag("master", controller.toNBT());
 	}
 	
-	public void setEmitter(Vec3Int emt){
-		controller = emt;
+	public void setController(Vec3Int controller){
+		this.controller = controller;
 	}
 	
 	public TileShieldController getController(){

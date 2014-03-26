@@ -10,6 +10,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.IBusInterface;
+import stargatetech2.api.shields.IShieldController;
 import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.automation.bus.machines.ShieldControllerBusDriver;
 import stargatetech2.core.machine.FaceColor;
@@ -17,7 +18,7 @@ import stargatetech2.core.machine.TileOwnedMachine;
 import stargatetech2.core.machine.tabs.TabAbstractBus.ISyncBusDevice;
 import stargatetech2.enemy.util.IonizedParticles;
 
-public class TileShieldController extends TileOwnedMachine implements ISyncBusDevice, IFluidHandler{
+public class TileShieldController extends TileOwnedMachine implements ISyncBusDevice, IFluidHandler, IShieldController{
 	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver();
 	private IBusInterface[] interfaces = new IBusInterface[]{
 			StargateTechAPI.api().getFactory().getIBusInterface(this, driver)

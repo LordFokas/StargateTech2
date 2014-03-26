@@ -106,7 +106,7 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	public void onShield(World world, int x, int y, int z, int px, int py, int pz) {
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		if(te instanceof TileShield){
-			((TileShield)te).setEmitter(new Vec3Int(px, py, pz));
+			((TileShield)te).setController(new Vec3Int(px, py, pz));
 			int meta = world.getBlockMetadata(x, y, z);
 			world.setBlockMetadataWithNotify(x, y, z, meta | 8, 2);
 		}
