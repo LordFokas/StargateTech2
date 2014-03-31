@@ -15,7 +15,7 @@ public class IconRegistry {
 	public static void load(TextureMap map){
 		if(map.textureType == 0){
 			loadTerrain(map);
-		} else {
+		} else if(map.textureType == 1) {
 			loadItems(map);
 		}
 	}
