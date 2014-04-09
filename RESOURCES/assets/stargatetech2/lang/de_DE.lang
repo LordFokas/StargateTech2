@@ -1,0 +1,52 @@
+###################################################################################################
+# BLOCKS
+
+StargateTech2:block.busAdapter.name=Abstract Bus Adapter
+StargateTech2:block.busCable.name=Abstract Bus Cable
+StargateTech2:block.crossover.name=Crossover
+
+StargateTech2:block.lanteanWall_white.name=White Lantean Wall
+StargateTech2:block.lanteanWall_orange.name=Orange Lantean Wall
+StargateTech2:block.lanteanWall_magenta.name=Magenta Lantean Wall
+StargateTech2:block.lanteanWall_light_blue.name=Light Blue Lantean Wall
+StargateTech2:block.lanteanWall_yellow.name=Yellow Lantean Wall
+StargateTech2:block.lanteanWall_lime.name=Lime Lantean Wall
+StargateTech2:block.lanteanWall_pink.name=Pink Lantean Wall
+StargateTech2:block.lanteanWall_dark_gray.name=Dark Gray Lantean Wall
+StargateTech2:block.lanteanWall_light_gray.name=Light Gray Lantean Wall
+StargateTech2:block.lanteanWall_cyan.name=Cyan Lantean Wall
+StargateTech2:block.lanteanWall_purple.name=Purple Lantean Wall
+StargateTech2:block.lanteanWall_blue.name=Blue Lantean Wall
+StargateTech2:block.lanteanWall_brown.name=Brown Lantean Wall
+StargateTech2:block.lanteanWall_green.name=Green Lantean Wall
+StargateTech2:block.lanteanWall_red.name=Red Lantean Wall
+StargateTech2:block.lanteanWall_black.name=Black Lantean Wall
+
+StargateTech2:block.naquadahOre.name=Naquadah Erz
+StargateTech2:block.naquadahRail.name=Naquadah Schiene
+StargateTech2:block.particleIonizer.name=Particle Ionizer
+StargateTech2:block.shieldController.name=Schild Steuercomputer
+StargateTech2:block.shieldEmitter.name=Schild Emitter
+StargateTech2:block.stargate.name=Stargate
+StargateTech2:block.transportRing.name=Ringtransporter
+
+
+
+###################################################################################################
+# ITEMS
+
+StargateTech2:item.tabletPC.name=Tablet
+StargateTech2:item.naquadahIngot.name=Naquadah Barren
+StargateTech2:item.naquadahDust.name=Naquadah Staub
+StargateTech2:item.naquadahPlate.name=Naquadah Platte
+StargateTech2:item.circuitCrystal.name=Kristall Schlateinheit
+StargateTech2:item.coilNaquadah.name=Magnetische Inductionsspule
+StargateTech2:item.coilEnder.name=Matterie Leiterspule
+StargateTech2:item.personalShield.name=Personen Shild
+
+
+
+###################################################################################################
+# MISC
+
+StargateTech2:fluid.ionizedParticles=Ionisierte Partickel
