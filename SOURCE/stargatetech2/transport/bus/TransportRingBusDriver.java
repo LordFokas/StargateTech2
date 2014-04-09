@@ -1,4 +1,4 @@
-package stargatetech2.automation.bus.machines;
+package stargatetech2.transport.bus;
 
 import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.BusPacketLIP;

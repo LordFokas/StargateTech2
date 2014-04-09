@@ -14,10 +14,10 @@ import stargatetech2.StargateTech2;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
-import stargatetech2.automation.bus.machines.TransportRingBusDriver;
 import stargatetech2.core.base.BaseTileEntity;
 import stargatetech2.core.util.Vec3Int;
 import stargatetech2.transport.ModuleTransport;
+import stargatetech2.transport.bus.TransportRingBusDriver;
 
 public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	@ClientLogic private static Vec3Int LAST_IN_RANGE;

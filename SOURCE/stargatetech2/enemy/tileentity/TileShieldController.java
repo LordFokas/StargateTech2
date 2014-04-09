@@ -1,5 +1,8 @@
 package stargatetech2.enemy.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -12,17 +15,21 @@ import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.shields.IShieldController;
 import stargatetech2.api.shields.ShieldPermissions;
-import stargatetech2.automation.bus.machines.ShieldControllerBusDriver;
+import stargatetech2.automation.bus.StandardBusDriver;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileOwnedMachine;
 import stargatetech2.core.machine.tabs.TabAbstractBus.ISyncBusDevice;
+import stargatetech2.core.util.Vec3Int;
+import stargatetech2.enemy.bus.ShieldControllerBusDriver;
+import stargatetech2.enemy.bus.ShieldControllerBusPacket;
 import stargatetech2.enemy.util.IonizedParticles;
 
 public class TileShieldController extends TileOwnedMachine implements ISyncBusDevice, IFluidHandler, IShieldController{
-	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver();
-	private IBusInterface[] interfaces = new IBusInterface[]{
-			StargateTechAPI.api().getFactory().getIBusInterface(this, driver)
-	};
+	private ShieldControllerBusDriver networkDriver = new ShieldControllerBusDriver();
+	private StandardBusDriver emitterDriver = new StandardBusDriver((short)0x0000);
+	private IBusInterface networkInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver);
+	private IBusInterface emitterInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, emitterDriver);
+	private IBusInterface[] interfaces = new IBusInterface[]{ networkInterface, emitterInterface };
 	
 	public FluidTank tank = new FluidTank(16000);
 	private ShieldPermissions permissions = ShieldPermissions.getDefault();
@@ -31,6 +38,11 @@ public class TileShieldController extends TileOwnedMachine implements ISyncBusDe
 	@Override
 	public void updateEntity(){
 		// TODO: implement things.
+	}
+	
+	private void updateShields(){
+		emitterDriver.addpacketToQueue(new ShieldControllerBusPacket(active, new Vec3Int(xCoord, yCoord, zCoord)));
+		emitterInterface.sendAllPackets();
 	}
 	
 	@Override
@@ -76,16 +88,16 @@ public class TileShieldController extends TileOwnedMachine implements ISyncBusDe
 	protected void readNBT(NBTTagCompound nbt) {
 		tank.readFromNBT(nbt.getCompoundTag("tank"));
 		permissions = ShieldPermissions.readFromNBT(nbt.getCompoundTag("permissions"));
-		driver.setAddress(nbt.getShort("address"));
-		driver.setEnabled(nbt.getBoolean("enabled"));
+		networkDriver.setAddress(nbt.getShort("address"));
+		networkDriver.setEnabled(nbt.getBoolean("enabled"));
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		nbt.setCompoundTag("tank", tank.writeToNBT(new NBTTagCompound()));
 		nbt.setCompoundTag("permissions", permissions.writeToNBT());
-		nbt.setShort("address", driver.getInterfaceAddress());
-		nbt.setBoolean("enabled", driver.isInterfaceEnabled());
+		nbt.setShort("address", networkDriver.getInterfaceAddress());
+		nbt.setBoolean("enabled", networkDriver.isInterfaceEnabled());
 	}
 	
 	
@@ -122,24 +134,24 @@ public class TileShieldController extends TileOwnedMachine implements ISyncBusDe
 	
 	@Override
 	public void setEnabled(boolean enabled) {
-		driver.setEnabled(enabled);
+		networkDriver.setEnabled(enabled);
 		updateClients();
 	}
 
 	@Override
 	public boolean getEnabled() {
-		return driver.isInterfaceEnabled();
+		return networkDriver.isInterfaceEnabled();
 	}
 
 	@Override
 	public void setAddress(short addr) {
-		driver.setAddress(addr);
+		networkDriver.setAddress(addr);
 		updateClients();
 	}
 
 	@Override
 	public short getAddress() {
-		return driver.getInterfaceAddress();
+		return networkDriver.getInterfaceAddress();
 	}
 	
 	
