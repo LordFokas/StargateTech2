@@ -1,0 +1,52 @@
+###################################################################################################
+# BLOCKS
+
+StargateTech2:block.busAdapter.name=Adaptateur de Bus Abstrait
+StargateTech2:block.busCable.name=Cable de bus Abstrait
+StargateTech2:block.crossover.name=Crossover
+
+StargateTech2:block.lanteanWall_white.name=Lanterne murale blanche
+StargateTech2:block.lanteanWall_orange.name=Lanterne murale orange
+StargateTech2:block.lanteanWall_magenta.name=Lanterne murale magenta
+StargateTech2:block.lanteanWall_light_blue.name=Lanterne murale bleu clair
+StargateTech2:block.lanteanWall_yellow.name=Lanterne murale jaune
+StargateTech2:block.lanteanWall_lime.name=Lanterne murale vert clair
+StargateTech2:block.lanteanWall_pink.name=Lanterne murale rose
+StargateTech2:block.lanteanWall_dark_gray.name=Lanterne murale gris foncé
+StargateTech2:block.lanteanWall_light_gray.name=Lanterne murale gris clair
+StargateTech2:block.lanteanWall_cyan.name=Lanterne murale cyan
+StargateTech2:block.lanteanWall_purple.name=Lanterne murale violet
+StargateTech2:block.lanteanWall_blue.name=Lanterne murale bleu
+StargateTech2:block.lanteanWall_brown.name=Lanterne murale marron
+StargateTech2:block.lanteanWall_green.name=Lanterne murale vert
+StargateTech2:block.lanteanWall_red.name=Lanterne murale rouge
+StargateTech2:block.lanteanWall_black.name=Lanterne murale noire
+
+StargateTech2:block.naquadahOre.name=Minerai de Naquadah
+StargateTech2:block.naquadahRail.name=rail en Naquadah
+StargateTech2:block.particleIonizer.name=Ionizer de particules
+StargateTech2:block.shieldController.name=Controleur de bouclier
+StargateTech2:block.shieldEmitter.name=Emetteur de bouclier
+StargateTech2:block.stargate.name=Porte des étoiles
+StargateTech2:block.transportRing.name=Plateforme d'anneaux de transport
+
+
+
+###################################################################################################
+# ITEMS
+
+StargateTech2:item.tabletPC.name=Tablette
+StargateTech2:item.naquadahIngot.name=Lingot Naquadah
+StargateTech2:item.naquadahDust.name=Poussière de Naquadah
+StargateTech2:item.naquadahPlate.name=Plaque de Naquadah
+StargateTech2:item.circuitCrystal.name=Circuit en Crystal
+StargateTech2:item.coilNaquadah.name=Bobine d'induction magnétique
+StargateTech2:item.coilEnder.name=Bobine conductrice de matière
+StargateTech2:item.personalShield.name=Bouclier personnel
+
+
+
+###################################################################################################
+# MISC
+
+StargateTech2:fluid.ionizedParticles=Ionized Particles
