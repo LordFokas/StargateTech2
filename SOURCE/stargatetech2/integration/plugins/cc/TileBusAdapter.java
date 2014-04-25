@@ -13,9 +13,9 @@ import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.automation.bus.AddressHelper;
 import stargatetech2.core.base.BaseTileEntity;
 import stargatetech2.core.reference.ModReference;
-import dan200.computer.api.IComputerAccess;
-import dan200.computer.api.ILuaContext;
-import dan200.computer.api.IPeripheral;
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IPeripheral;
 
 public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPeripheral{
 	private LinkedList<BusPacket> outputQueue = new LinkedList();
@@ -44,8 +44,8 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 		PULLPACKET("pullPacket"),
 		DISPOSEPACKET("disposePacket"),
 		GETFIELDLIST("getFieldList"),
-		GETFIELD("getField");
-		
+		GETFIELD("getField"),
+		LISTMETHODS("listMethods");
 		private String name;
 		public static final String[] ALL;
 		
@@ -119,12 +119,13 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 				return packet.getEntryList().toArray();
 			case GETFIELD:
 				return new Object[]{packet.get((String)arguments[0])};
+			case LISTMETHODS:
+				return getMethodNames();
 			default: break;
 		}
 		return null;
 	}
 
-	@Override
 	public boolean canAttachToSide(int side) {
 		return attachedComputers == 0;
 	}
@@ -192,5 +193,11 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 	protected void writeNBT(NBTTagCompound nbt){
 		interfaces[0].writeToNBT(nbt, "interface");
 		nbt.setShort("address", networkDriver.getInterfaceAddress());
+	}
+
+	@Override
+	public boolean equals(IPeripheral other) {
+		
+		return other==this;
 	}
 }
