@@ -6,6 +6,7 @@ import stargatetech2.core.reference.TileEntityReference;
 import stargatetech2.core.util.Stacks;
 import stargatetech2.integration.plugins.BasePlugin;
 import cpw.mods.fml.common.registry.GameRegistry;
+import dan200.computercraft.api.ComputerCraftAPI;
 
 public class PluginCC extends BasePlugin {
 	public static BlockBusAdapter busAdapter;
@@ -21,6 +22,7 @@ public class PluginCC extends BasePlugin {
 		GameRegistry.registerTileEntity(TileBusAdapter.class, TileEntityReference.TILE_BUS_ADAPTER);
 		ItemStack plate, cable, circuit;
 		GameRegistry.addShapedRecipe(new ItemStack(busAdapter), "-C-", "PMP", "NBN", 'P', Stacks.naqPlate, 'B', Stacks.busCable, 'C', Stacks.circuit, 'N', Stacks.naqIngot, 'M', Stacks.machine);
+		ComputerCraftAPI.registerPeripheralProvider(new CCPeripheralProvider());
 	}
 
 	@Override protected void fallback(){}
