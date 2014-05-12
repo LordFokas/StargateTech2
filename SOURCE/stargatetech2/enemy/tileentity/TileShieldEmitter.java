@@ -1,6 +1,7 @@
 package stargatetech2.enemy.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileMachine;
 import stargatetech2.core.util.Vec3Int;
@@ -11,6 +12,20 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 	
 	public void setController(Vec3Int controller){
 		this.controller = controller;
+		TileEntity te = worldObj.getBlockTileEntity(controller.x, controller.y, controller.z);
+		if(te instanceof TileShieldController){
+			((TileShieldController)te).addEmitter(this);
+		}
+	}
+	
+	@Override
+	public void invalidate(){
+		super.invalidate();
+		if(controller == null) return;
+		TileEntity te = worldObj.getBlockTileEntity(controller.x, controller.y, controller.z);
+		if(te instanceof TileShieldController){
+			((TileShieldController)te).removeEmitter(this);
+		}
 	}
 	
 	@Override
@@ -23,14 +38,14 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 
 	@Override
 	protected void readNBT(NBTTagCompound nbt){
-		// TODO Auto-generated method stub
+		controller = Vec3Int.fromNBT(nbt.getCompoundTag("controller"));
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt){
-		// TODO Auto-generated method stub
+		nbt.setCompoundTag("controller", controller.toNBT());
 	}
-
+	
 	@Override
 	public Vec3Int getShieldControllerCoords(){
 		return controller;

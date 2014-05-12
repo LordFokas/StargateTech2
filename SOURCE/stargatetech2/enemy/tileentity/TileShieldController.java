@@ -1,6 +1,11 @@
 package stargatetech2.enemy.tileentity;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -16,6 +21,7 @@ import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileOwnedMachine;
 import stargatetech2.core.machine.tabs.TabAbstractBus.ISyncBusDevice;
 import stargatetech2.core.util.Vec3Int;
+import stargatetech2.enemy.ModuleEnemy;
 import stargatetech2.enemy.bus.ShieldControllerBusDriver;
 import stargatetech2.enemy.util.IShieldControllerProvider;
 import stargatetech2.enemy.util.IonizedParticles;
@@ -23,12 +29,13 @@ import stargatetech2.enemy.util.IonizedParticles;
 public class TileShieldController extends TileOwnedMachine
 implements ISyncBusDevice, IFluidHandler, IShieldController, IShieldControllerProvider{
 	
-	private ShieldControllerBusDriver networkDriver = new ShieldControllerBusDriver();
-	private IBusInterface networkInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver);
-	private IBusInterface[] interfaces = new IBusInterface[]{networkInterface};
+	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver();
+	private IBusInterface busInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, driver);
+	private IBusInterface[] interfaces = new IBusInterface[]{busInterface};
 	
 	public FluidTank tank = new FluidTank(16000);
 	private ShieldPermissions permissions = ShieldPermissions.getDefault();
+	private ArrayList<Vec3Int> emitters = new ArrayList();
 	private boolean active = false; // Implement all the things.
 	
 	@Override
@@ -43,8 +50,50 @@ implements ISyncBusDevice, IFluidHandler, IShieldController, IShieldControllerPr
 		// Balance it with higher particle consuption per check.
 	}
 	
-	private void updateShields(){
-		
+	public void addEmitter(TileShieldEmitter emitter){
+		emitters.add(new Vec3Int(emitter.xCoord, emitter.yCoord, emitter.zCoord));
+	}
+	
+	public void removeEmitter(TileShieldEmitter emitter){
+		emitters.remove(new Vec3Int(emitter.xCoord, emitter.yCoord, emitter.zCoord));
+		ArrayList<Vec3Int> unreachableDependencies = emitters;
+		LinkedList<Vec3Int> memory = new LinkedList();
+		memory.add(getShieldControllerCoords());
+		emitters = new ArrayList();
+		recursiveRemap(worldObj, xCoord, yCoord, zCoord, emitters, memory);
+		unreachableDependencies.removeAll(emitters);
+		dropAll(unreachableDependencies);
+	}
+	
+	private void dropAll(List<Vec3Int> unreachable){
+		for(Vec3Int e : unreachable){
+			ModuleEnemy.shieldEmitter.dropSelf(worldObj, e.x, e.y, e.z);
+		}
+	}
+	
+	@Override
+	public void invalidate(){
+		super.invalidate();
+		dropAll(emitters);
+	}
+	
+	private void recursiveRemap(World w, int x, int y, int z, ArrayList<Vec3Int> found, LinkedList<Vec3Int> memory){
+		for(ForgeDirection fd : ForgeDirection.VALID_DIRECTIONS){
+			int nx = x + fd.offsetX;
+			int ny = y + fd.offsetY;
+			int nz = z + fd.offsetZ;
+			if(ny >= 0 && ny < w.getActualHeight()){
+				Vec3Int pos = new Vec3Int(nx, ny, nz);
+				if(!memory.contains(pos)){
+					memory.add(pos);
+					TileEntity te = w.getBlockTileEntity(nx, ny, nz);
+					if(te instanceof TileShieldEmitter){
+						found.add(pos);
+						recursiveRemap(w, nx, ny, nz, found, memory);
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -90,16 +139,25 @@ implements ISyncBusDevice, IFluidHandler, IShieldController, IShieldControllerPr
 	protected void readNBT(NBTTagCompound nbt) {
 		tank.readFromNBT(nbt.getCompoundTag("tank"));
 		permissions = ShieldPermissions.readFromNBT(nbt.getCompoundTag("permissions"));
-		networkDriver.setAddress(nbt.getShort("address"));
-		networkDriver.setEnabled(nbt.getBoolean("enabled"));
+		driver.setAddress(nbt.getShort("address"));
+		driver.setEnabled(nbt.getBoolean("driverEnabled"));
+		int size = nbt.getInteger("emitters");
+		emitters = new ArrayList(size);
+		for(int i = 0; i < size; i++){
+			emitters.add(Vec3Int.fromNBT(nbt.getCompoundTag("emitter_" + i)));
+		}
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		nbt.setCompoundTag("tank", tank.writeToNBT(new NBTTagCompound()));
 		nbt.setCompoundTag("permissions", permissions.writeToNBT());
-		nbt.setShort("address", networkDriver.getInterfaceAddress());
-		nbt.setBoolean("enabled", networkDriver.isInterfaceEnabled());
+		nbt.setShort("address", driver.getInterfaceAddress());
+		nbt.setBoolean("driverEnabled", driver.isInterfaceEnabled());
+		nbt.setInteger("emitters", emitters.size());
+		for(int i = 0; i < emitters.size(); i++){
+			nbt.setCompoundTag("emitter_" + i, emitters.get(i).toNBT());
+		}
 	}
 	
 	
@@ -136,24 +194,24 @@ implements ISyncBusDevice, IFluidHandler, IShieldController, IShieldControllerPr
 	
 	@Override
 	public void setEnabled(boolean enabled) {
-		networkDriver.setEnabled(enabled);
+		driver.setEnabled(enabled);
 		updateClients();
 	}
 
 	@Override
 	public boolean getEnabled() {
-		return networkDriver.isInterfaceEnabled();
+		return driver.isInterfaceEnabled();
 	}
 
 	@Override
 	public void setAddress(short addr) {
-		networkDriver.setAddress(addr);
+		driver.setAddress(addr);
 		updateClients();
 	}
 
 	@Override
 	public short getAddress() {
-		return networkDriver.getInterfaceAddress();
+		return driver.getInterfaceAddress();
 	}
 	
 	

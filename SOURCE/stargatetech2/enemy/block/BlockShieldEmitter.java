@@ -31,7 +31,7 @@ public class BlockShieldEmitter extends BlockMachine{
 				if(te instanceof IShieldControllerProvider){
 					Vec3Int c = ((IShieldControllerProvider)te).getShieldControllerCoords();
 					if(controller == null) controller = c; // make sure we always have a controller;
-					if(!controller.equals(c)) return false; // make sure there's no 2 different controllers;
+					else if(!controller.equals(c)) return false; // make sure there's no 2 different controllers;
 				}
 			}
 		}
@@ -41,7 +41,7 @@ public class BlockShieldEmitter extends BlockMachine{
 	@Override
 	protected void onPlacedBy(World w, int x, int y, int z, EntityPlayer player, ForgeDirection facing){
 		TileEntity te = w.getBlockTileEntity(x, y, z);
-		if(te instanceof TileShieldEmitter){
+		if(te instanceof TileShieldEmitter){ // the power of copy-pasta. TODO: clean this mess.
 			for(ForgeDirection fd : ForgeDirection.VALID_DIRECTIONS){
 				int sx = x + fd.offsetX;
 				int sy = y + fd.offsetY;
@@ -51,6 +51,7 @@ public class BlockShieldEmitter extends BlockMachine{
 					if(prvdr instanceof IShieldControllerProvider){
 						Vec3Int controller = ((IShieldControllerProvider)prvdr).getShieldControllerCoords();
 						if(controller != null){
+							System.out.println("SETTING CONTROLLER: " + controller);
 							((TileShieldEmitter)te).setController(controller);
 							return;
 						}
