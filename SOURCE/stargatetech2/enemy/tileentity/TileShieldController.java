@@ -15,10 +15,14 @@ import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileOwnedMachine;
 import stargatetech2.core.machine.tabs.TabAbstractBus.ISyncBusDevice;
+import stargatetech2.core.util.Vec3Int;
 import stargatetech2.enemy.bus.ShieldControllerBusDriver;
+import stargatetech2.enemy.util.IShieldControllerProvider;
 import stargatetech2.enemy.util.IonizedParticles;
 
-public class TileShieldController extends TileOwnedMachine implements ISyncBusDevice, IFluidHandler, IShieldController{
+public class TileShieldController extends TileOwnedMachine
+implements ISyncBusDevice, IFluidHandler, IShieldController, IShieldControllerProvider{
+	
 	private ShieldControllerBusDriver networkDriver = new ShieldControllerBusDriver();
 	private IBusInterface networkInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver);
 	private IBusInterface[] interfaces = new IBusInterface[]{networkInterface};
@@ -192,5 +196,10 @@ public class TileShieldController extends TileOwnedMachine implements ISyncBusDe
 		}else{
 			return new FluidTankInfo[]{};
 		}
+	}
+
+	@Override
+	public Vec3Int getShieldControllerCoords() {
+		return new Vec3Int(xCoord, yCoord, zCoord);
 	}
 }
