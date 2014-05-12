@@ -7,8 +7,11 @@ import stargatetech2.core.util.Vec3Int;
 import stargatetech2.enemy.util.IShieldControllerProvider;
 
 public class TileShieldEmitter extends TileMachine implements IShieldControllerProvider{
-	// TODO: get a better way to make shield emitters aquire an owner and receive commands.
-	// Consider block-chaining.
+	private Vec3Int controller;
+	
+	public void setController(Vec3Int controller){
+		this.controller = controller;
+	}
 	
 	@Override
 	public boolean canUpdate(){
@@ -30,6 +33,6 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 
 	@Override
 	public Vec3Int getShieldControllerCoords(){
-		return null;
+		return controller;
 	}
 }
