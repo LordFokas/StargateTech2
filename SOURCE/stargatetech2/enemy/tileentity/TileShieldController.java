@@ -1,8 +1,5 @@
 package stargatetech2.enemy.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -15,21 +12,16 @@ import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.shields.IShieldController;
 import stargatetech2.api.shields.ShieldPermissions;
-import stargatetech2.automation.bus.StandardBusDriver;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileOwnedMachine;
 import stargatetech2.core.machine.tabs.TabAbstractBus.ISyncBusDevice;
-import stargatetech2.core.util.Vec3Int;
 import stargatetech2.enemy.bus.ShieldControllerBusDriver;
-import stargatetech2.enemy.bus.ShieldControllerBusPacket;
 import stargatetech2.enemy.util.IonizedParticles;
 
 public class TileShieldController extends TileOwnedMachine implements ISyncBusDevice, IFluidHandler, IShieldController{
 	private ShieldControllerBusDriver networkDriver = new ShieldControllerBusDriver();
-	private StandardBusDriver emitterDriver = new StandardBusDriver((short)0x0000);
 	private IBusInterface networkInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver);
-	private IBusInterface emitterInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, emitterDriver);
-	private IBusInterface[] interfaces = new IBusInterface[]{ networkInterface, emitterInterface };
+	private IBusInterface[] interfaces = new IBusInterface[]{networkInterface};
 	
 	public FluidTank tank = new FluidTank(16000);
 	private ShieldPermissions permissions = ShieldPermissions.getDefault();
@@ -38,11 +30,17 @@ public class TileShieldController extends TileOwnedMachine implements ISyncBusDe
 	@Override
 	public void updateEntity(){
 		// TODO: implement things.
+		
+		// Attempt to drain particles
+		// » if it fails and shield is raised, lower the shield
+		// » if it succeeds and shield is down, raise the shield
+		
+		// Probably snap the check to every 1 or 5 seconds, to keep lag down when supplies are low.
+		// Balance it with higher particle consuption per check.
 	}
 	
 	private void updateShields(){
-		emitterDriver.addpacketToQueue(new ShieldControllerBusPacket(active, new Vec3Int(xCoord, yCoord, zCoord)));
-		emitterInterface.sendAllPackets();
+		
 	}
 	
 	@Override

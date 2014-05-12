@@ -5,11 +5,11 @@ import java.util.LinkedList;
 import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.IBusDriver;
 
-public class StandardBusDriver implements IBusDriver{
+public class OutputBusDriver implements IBusDriver{
 	private LinkedList<BusPacket> queue = new LinkedList();
 	private short address;
 	
-	public StandardBusDriver(short address){
+	public OutputBusDriver(short address){
 		this.address = address;
 	}
 	

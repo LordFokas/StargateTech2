@@ -3,10 +3,10 @@ package stargatetech2.enemy.tileentity;
 import net.minecraft.nbt.NBTTagCompound;
 import stargatetech2.core.machine.FaceColor;
 import stargatetech2.core.machine.TileMachine;
-import stargatetech2.core.util.Vec3Int;
 
 public class TileShieldEmitter extends TileMachine{
-	private Vec3Int controllerCoords;
+	// TODO: get a better way to make shield emitters aquire an owner and receive commands.
+	// Consider block-chaining.
 	
 	@Override
 	public boolean canUpdate(){
@@ -14,19 +14,15 @@ public class TileShieldEmitter extends TileMachine{
 	}
 	
 	@Override // Never used;
-	protected FaceColor[] getPossibleFaceColors(){
-		return null;
-	}
+	protected FaceColor[] getPossibleFaceColors(){ return null; }
 
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		// TODO Auto-generated method stub
-		
 	}
 }
