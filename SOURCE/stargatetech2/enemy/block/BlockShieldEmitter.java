@@ -1,14 +1,15 @@
 package stargatetech2.enemy.block;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.core.machine.BlockMachine;
 import stargatetech2.core.machine.TileMachine;
 import stargatetech2.core.reference.BlockReference;
+import stargatetech2.core.reference.TextureReference;
+import stargatetech2.core.util.IconRegistry;
 import stargatetech2.core.util.Vec3Int;
 import stargatetech2.enemy.tileentity.TileShieldEmitter;
 import stargatetech2.enemy.util.IShieldControllerProvider;
@@ -17,6 +18,7 @@ public class BlockShieldEmitter extends BlockMachine{
 
 	public BlockShieldEmitter() {
 		super(BlockReference.SHIELD_EMITTER, true);
+		super.setUseVertical();
 	}
 	
 	public boolean canPlaceBlockAt(World w, int x, int y, int z){
@@ -60,6 +62,13 @@ public class BlockShieldEmitter extends BlockMachine{
 			}
 			throw new RuntimeException("Someone f***ed up, and it ain't me!");
 		}
+	}
+	
+	@Override
+	public Icon getFaceForMeta(int meta){
+		if(meta == 0) return IconRegistry.blockIcons.get(TextureReference.SHIELD_EMITTER_B);
+		if(meta == 1) return IconRegistry.blockIcons.get(TextureReference.SHIELD_EMITTER_T);
+		return super.getFaceForMeta(meta);
 	}
 	
 	@Override

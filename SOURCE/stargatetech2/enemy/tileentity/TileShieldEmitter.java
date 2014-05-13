@@ -28,10 +28,7 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 		}
 	}
 	
-	@Override
-	public boolean canUpdate(){
-		return false;
-	}
+	@Override public boolean canUpdate(){ return false; }
 	
 	@Override // Never used;
 	protected FaceColor[] getPossibleFaceColors(){ return null; }
