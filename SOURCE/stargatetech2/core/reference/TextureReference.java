@@ -39,8 +39,8 @@ public class TextureReference {
 	@Block public static final String INTERFACE_RED	= "interfaceRed";
 	@Block public static final String INTERFACE_STRIPES = "interfaceStripes";
 	
-	@Block public static final String FACE_SHIELD_EMITTER = "faceShieldEmitter";
-	@Block public static final String GLOW_SHIELD_EMITTER = "glowShieldEmitter";
+	@Block public static final String SHIELD_EMITTER_B = "shieldEmitter_B";
+	@Block public static final String SHIELD_EMITTER_T = "shieldEmitter_T";
 	
 	@Block public static final String FACE_NAQUADAH_ORE = "faceNaquadahOre";
 	@Block public static final String GLOW_NAQUADAH_ORE = "glowNaquadahOre";

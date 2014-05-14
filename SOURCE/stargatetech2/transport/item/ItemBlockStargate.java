@@ -26,7 +26,7 @@ public class ItemBlockStargate extends ItemBlock {
 			return false;
 		}
 		boolean blockWasPlaced;
-		ForgeDirection dir = Helper.yaw2dir(p.rotationYaw);
+		ForgeDirection dir = Helper.yaw2dir(p.rotationYaw, 0, false);
 		StargateBuildList builder = null;
 		int xm = dir.offsetZ * dir.offsetZ;
 		boolean isX = (xm == 1);

@@ -19,6 +19,7 @@ import stargatetech2.core.util.IconRegistry;
 import buildcraft.api.tools.IToolWrench;
 
 public abstract class BlockMachine extends BaseBlockContainer {
+	private boolean useVertical = false;
 	private Screen screen;
 	
 	public BlockMachine(String uName, boolean owned){
@@ -35,9 +36,17 @@ public abstract class BlockMachine extends BaseBlockContainer {
 		}
 	}
 	
+	protected void setUseVertical(){
+		useVertical = true;
+	}
+	
 	@Override
 	public int getRenderType(){
 		return RenderBlockMachine.instance().getRenderId();
+	}
+	
+	public Icon getFaceForMeta(int meta){
+		return getBaseIcon(3, 0);
 	}
 	
 	@Override
@@ -80,7 +89,7 @@ public abstract class BlockMachine extends BaseBlockContainer {
 	
 	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase living, ItemStack stack){
-		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw);
+		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw, living.rotationPitch, useVertical);
 		w.setBlockMetadataWithNotify(x, y, z, dir.ordinal(), 2);
 		if(living instanceof EntityPlayer){
 			TileEntity te = w.getBlockTileEntity(x, y, z);

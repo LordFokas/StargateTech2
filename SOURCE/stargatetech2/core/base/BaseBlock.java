@@ -92,6 +92,11 @@ public class BaseBlock extends Block{
 		return blockIcon;
 	}
 	
+	public void dropSelf(World w, int x, int y, int z){
+		w.setBlockToAir(x, y, z);
+		dropItemStack(w, x, y, z, new ItemStack(this));
+	}
+	
 	public void dropItemStack(World w, int x, int y, int z, ItemStack stack){
 		dropStackAt(w, ((double)x)+0.5D, ((double)y)+0.5D, ((double)z)+0.5D, stack);
 	}

@@ -8,7 +8,11 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeDirection;
 
 public class Helper {
-	public static ForgeDirection yaw2dir(float yaw){
+	public static ForgeDirection yaw2dir(float yaw, float pitch, boolean vertical){
+		if(vertical){
+			if(pitch < -45) return ForgeDirection.DOWN;
+			if(pitch >  45) return ForgeDirection.UP;
+		}
 		int dir = (MathHelper.floor_double((double)(yaw * 4.0F / 360.0F) + 0.5D) & 3)+3;
 		if(dir > 4) dir -= 4;
 		switch(dir){

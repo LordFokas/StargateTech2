@@ -43,4 +43,9 @@ public class Vec3Int {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString(){
+		return "Vec3Int{ " + x + " : " + y + " : " + z + " }";
+	}
 }

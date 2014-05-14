@@ -41,7 +41,7 @@ public class RenderBlockMachine extends BaseISBRH {
 					break;
 			}
 		}
-		map[metadata] = machine.getBaseIcon(3, 0);
+		map[metadata] = machine.getFaceForMeta(metadata);
 		machine.setOverride(map);
 		renderer.renderStandardBlock(machine, x, y, z);
 		for(int i = 0; i < 6; i++){
