@@ -5,7 +5,7 @@ package stargatetech2.api.shields;
  * 
  * @author LordFokas
  */
-public interface IShieldController {
+public interface ITileShieldController {
 	/**
 	 * Given the way shield emitters work together, you cannot
 	 * directly access their ShieldPermissions object.
