@@ -33,4 +33,15 @@ public interface IStargateNetwork {
 	 * @return The Stargate's address, or null if the location doesn't contain a Stargate.
 	 */
 	public Address getAddressOf(World world, int x, int y, int z);
+	
+	/**
+	 * Returns the address of the Stargate nearest to the specified location, or null if there is no gate within the specified radius
+	 * @param world The world the target Stargate is in.
+	 * @param x The target Stargate's X coordinate.
+	 * @param y The target Stargate's Y coordinate.
+	 * @param z The target Stargate's Z coordinate.
+	 * @param radius The maximum radius to look for a Stargate. Use -1 to search the whole world.
+	 * @return The Stargate's address, or null if no Stargate was found
+	 */
+	public Address findNearestGate(World world, int x, int y, int z, int radius);
 }
