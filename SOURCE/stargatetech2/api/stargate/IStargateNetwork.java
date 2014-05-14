@@ -44,4 +44,18 @@ public interface IStargateNetwork {
 	 * @return The Stargate's address, or null if no Stargate was found
 	 */
 	public Address findNearestStargate(World world, int x, int y, int z, int radius);
+	
+	/**
+	 * Register a new IDynamicWorldLoader.
+	 * 
+	 * @param dwl The IDynamicWorldLoader to register.
+	 */
+	public void registerDynamicWorldLoader(IDynamicWorldLoader dwl);
+	
+	/**
+	 * Unregister a known IDynamicWorldLoader.
+	 * 
+	 * @param dwl The IDynamicWorldLoader to unregister.
+	 */
+	public void unregisterDynamicWorldLoader(IDynamicWorldLoader dwl);
 }

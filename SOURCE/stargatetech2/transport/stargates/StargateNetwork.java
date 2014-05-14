@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
@@ -22,8 +23,10 @@ import net.minecraftforge.event.world.WorldEvent;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.DialError;
 import stargatetech2.api.stargate.DialEvent;
+import stargatetech2.api.stargate.IDynamicWorldLoader;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.api.stargate.Symbol;
+import stargatetech2.core.api.SeedingShip;
 import stargatetech2.core.util.ChunkLoader;
 import stargatetech2.core.util.ConfigServer;
 import stargatetech2.core.util.Helper;
@@ -40,6 +43,9 @@ public class StargateNetwork implements IStargateNetwork{
 	private HashMap<Integer, DimensionPrefix> prefixes;
 	private HashMap<Address, AddressMapping> addresses;
 	private ArrayList<Wormhole> activeWormholes;
+	private LinkedList<IDynamicWorldLoader> loaders;
+	private Address dynamicLoadingAddr = null;
+	private DimensionPrefix dynamicLoadingPrefix = null;
 	private long saveTime;
 	
 	public static StargateNetwork instance(){
@@ -65,6 +71,7 @@ public class StargateNetwork implements IStargateNetwork{
 		addresses = new HashMap();
 		prefixes = new HashMap();
 		activeWormholes = new ArrayList();
+		loaders = new LinkedList();
 		readFromFile();
 		isLoaded = true;
 	}
@@ -78,12 +85,37 @@ public class StargateNetwork implements IStargateNetwork{
 		return isLoaded;
 	}
 	
+	@Override
+	public void registerDynamicWorldLoader(IDynamicWorldLoader dwl) {
+		if(!loaders.contains(dwl)) loaders.add(dwl);
+	}
+
+	@Override
+	public void unregisterDynamicWorldLoader(IDynamicWorldLoader dwl) {
+		loaders.remove(dwl);
+	}
+	
 	public DialError dial(Address source, Address destination, int timeout){
 		if (!MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return null;
 		
 		DialError error = null;
 		AddressMapping srcmap = addresses.get(source);
 		AddressMapping dstmap = addresses.get(destination);
+		Symbol[] syms = new Symbol[]{destination.getSymbol(0), destination.getSymbol(1), destination.getSymbol(2)};
+		dynamicLoadingPrefix = new DimensionPrefix(syms);
+		if(srcmap != null && dstmap == null && !prefixes.containsValue(dynamicLoadingPrefix)){
+			Collections.shuffle(loaders);
+			for(IDynamicWorldLoader loader : loaders){
+				if(loader.willCreateWorldFor(destination)){
+					dynamicLoadingAddr = destination;
+					loader.loadWorldFor(destination, SeedingShip.SHIP);
+					dynamicLoadingAddr = null;
+					break;
+				}
+			}
+		}
+		dynamicLoadingPrefix = null;
+		dstmap = addresses.get(destination);
 		if(srcmap != null && dstmap != null){
 			WorldServer srcworld = MinecraftServer.getServer().worldServerForDimension(srcmap.getDimension());
 			WorldServer dstworld = MinecraftServer.getServer().worldServerForDimension(dstmap.getDimension());
@@ -240,7 +272,12 @@ public class StargateNetwork implements IStargateNetwork{
 	public Address getMyAddress(World world, int x, int y, int z){
 		Address address = getAddressOf(world, x, y, z);
 		if(address == null){
-			address = getRandomAddress(world);
+			if(dynamicLoadingAddr != null && dynamicLoadingPrefix != null && prefixes.get(world.provider.dimensionId) == null){
+				prefixes.put(world.provider.dimensionId, dynamicLoadingPrefix);
+				address = dynamicLoadingAddr;
+			}else{
+				address = getRandomAddress(world);
+			}
 			AddressMapping mapping = new AddressMapping(address, world.provider.dimensionId, x, y, z);
 			addresses.put(address, mapping);
 		}
@@ -258,7 +295,6 @@ public class StargateNetwork implements IStargateNetwork{
 	public Address findNearestStargate(World w, int x, int y, int z, int r) {
 		if(!isLoaded) return null;
 		int dim = w.provider.dimensionId;
-		boolean fullScan = r < 0;
 		int nearest = r*r;
 		Address addr = null;
 		for(AddressMapping map : addresses.values()){
@@ -268,7 +304,7 @@ public class StargateNetwork implements IStargateNetwork{
 				int dz = z - map.getZCoord();
 				int dst = dx*dx + dy*dy + dz*dz;
 				
-				if (dst < nearest || fullScan) {
+				if (dst < nearest || r < 0) {
 					nearest = dst;
 					addr = map.getAddress();
 				}

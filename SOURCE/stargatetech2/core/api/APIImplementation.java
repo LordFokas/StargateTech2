@@ -6,6 +6,7 @@ import stargatetech2.api.IFactory;
 import stargatetech2.api.IStackManager;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.stargate.IStargateNetwork;
+import stargatetech2.api.stargate.IStargatePlacer;
 import stargatetech2.core.util.StargateLogger;
 import stargatetech2.core.util.StargateTab;
 import stargatetech2.enemy.util.IonizedParticles;
@@ -33,7 +34,12 @@ public final class APIImplementation extends StargateTechAPI {
 	public IStargateNetwork getStargateNetwork() {
 		return StargateNetwork.instance();
 	}
-
+	
+	@Override
+	public IStargatePlacer getSeedingShip() {
+		return SeedingShip.SHIP;
+	}
+	
 	@Override
 	public IFactory getFactory() {
 		return factory;

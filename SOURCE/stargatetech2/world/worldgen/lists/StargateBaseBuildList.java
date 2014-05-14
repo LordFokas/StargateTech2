@@ -1,12 +1,9 @@
 package stargatetech2.world.worldgen.lists;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.FakePlayer;
 import net.minecraftforge.common.ForgeDirection;
-import stargatetech2.transport.ModuleTransport;
-import stargatetech2.transport.item.ItemBlockStargate;
+import stargatetech2.core.api.SeedingShip;
 import stargatetech2.world.worldgen.LootGenerator;
 import stargatetech2.world.worldgen.LootGenerator.LootLevel;
 
@@ -96,9 +93,7 @@ public class StargateBaseBuildList extends BuildList {
 	
 	@Override
 	protected void afterBuild(World w, int x, int y, int z, Object o){
-		FakePlayer fake = new FakePlayer(w, "AnquietasGatePlacer");
-		fake.rotationYaw = 270;
-		ItemBlockStargate.instance.placeBlockAt(new ItemStack(ModuleTransport.stargate), fake, w, x+3, y+5, z, 0, 0, 0, 0, 0);
+		SeedingShip.SHIP.placeStargate(w, x, y, z, 3);
 		LootGenerator.generateLootChest(w, x, y + 1, z - 3, LootLevel.RARE);
 		w.setBlockMetadataWithNotify(x, y + 1, z - 3, 3, 3);
 		LootGenerator.generateLootChest(w, x, y + 1, z + 3, LootLevel.RARE);
