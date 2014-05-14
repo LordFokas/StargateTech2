@@ -20,6 +20,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import stargatetech2.api.stargate.Address;
+import stargatetech2.api.stargate.DialError;
 import stargatetech2.api.stargate.DialEvent;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.api.stargate.Symbol;
@@ -77,9 +78,10 @@ public class StargateNetwork implements IStargateNetwork{
 		return isLoaded;
 	}
 	
-	public void dial(Address source, Address destination, int timeout){
-		if (!MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return;
+	public DialError dial(Address source, Address destination, int timeout){
+		if (!MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return null;
 		
+		DialError error = null;
 		AddressMapping srcmap = addresses.get(source);
 		AddressMapping dstmap = addresses.get(destination);
 		if(srcmap != null && dstmap != null){
@@ -87,30 +89,42 @@ public class StargateNetwork implements IStargateNetwork{
 			WorldServer dstworld = MinecraftServer.getServer().worldServerForDimension(dstmap.getDimension());
 			if(srcworld != null && dstworld != null && srcworld != dstworld){
 				long srcChunks = ChunkLoader.load9Chunks(srcworld, srcmap.getXCoord() >> 4, srcmap.getZCoord() >> 4);
-				if(srcChunks < 0){
-					return;
-				}
 				long dstChunks = ChunkLoader.load9Chunks(dstworld, dstmap.getXCoord() >> 4, dstmap.getZCoord() >> 4);
-				if(dstChunks < 0){
-					ChunkLoader.release(srcChunks);
-					return;
-				}
-				TileEntity srcte = srcworld.getBlockTileEntity(srcmap.getXCoord(), srcmap.getYCoord(), srcmap.getZCoord());
-				TileEntity dstte = dstworld.getBlockTileEntity(dstmap.getXCoord(), dstmap.getYCoord(), dstmap.getZCoord());
-				if(srcte instanceof TileStargate && dstte instanceof TileStargate){
-					TileStargate src = (TileStargate) srcte;
-					TileStargate dst = (TileStargate) dstte;
-					if(src.canDial(8) && !dst.hasActiveWormhole()){
-						activeWormholes.add(new Wormhole(src, dst, srcChunks, dstChunks, timeout));
-						MinecraftForge.EVENT_BUS.post(new DialEvent.Success(source, destination, timeout));
-						return;
+				if(srcChunks >= 0 && dstChunks >= 0){
+					TileEntity srcte = srcworld.getBlockTileEntity(srcmap.getXCoord(), srcmap.getYCoord(), srcmap.getZCoord());
+					TileEntity dstte = dstworld.getBlockTileEntity(dstmap.getXCoord(), dstmap.getYCoord(), dstmap.getZCoord());
+					if(srcte instanceof TileStargate && dstte instanceof TileStargate){
+						TileStargate src = (TileStargate) srcte;
+						TileStargate dst = (TileStargate) dstte;
+						if(src.canDial(8) && !dst.hasActiveWormhole()){
+							activeWormholes.add(new Wormhole(src, dst, srcChunks, dstChunks, timeout));
+							MinecraftForge.EVENT_BUS.post(new DialEvent.Success(source, destination, timeout));
+							return null;
+						}else{
+							if(dst.hasActiveWormhole()) error = DialError.TARGET_GATE_BUSY;
+							else error = DialError.SOURCE_GATE_UNABLE_TO_DIAL;
+						}
+					}else{
+						if(!(srcte instanceof TileStargate)) error = DialError.SOURCE_GATE_NOT_FOUND;
+						else error = DialError.TARGET_GATE_NOT_FOUND;
 					}
+				}else{
+					if(srcChunks < 0) error = DialError.FAILED_CHUNKLOADING_SOURCE;
+					else error = DialError.FAILED_CHUNKLOADING_TARGET;
 				}
 				ChunkLoader.release(srcChunks);
 				ChunkLoader.release(dstChunks);
+			}else{
+				if(srcworld == null) error = DialError.SOURCE_WORLD_NOT_FOUND;
+				else if(dstworld == null) error = DialError.TARGET_WORLD_NOT_FOUND;
+				else if(dstworld == srcworld) error = DialError.CANNOT_DIAL_SAME_WORLD;
 			}
+		}else{
+			if(srcmap == null) error = DialError.SOURCE_ADDRESS_NOT_FOUND;
+			else error = DialError.TARGET_ADDRESS_NOT_FOUND;
 		}
-		MinecraftForge.EVENT_BUS.post(new DialEvent.Error(source, destination, timeout));
+		MinecraftForge.EVENT_BUS.post(new DialEvent.Error(source, destination, error));
+		return error;
 	}
 	
 	public void removeWormhole(Wormhole wormhole){
@@ -241,19 +255,20 @@ public class StargateNetwork implements IStargateNetwork{
 	}
 	
 	@Override
-	public Address findNearestGate(World w, int x, int y, int z, int r) {
+	public Address findNearestStargate(World w, int x, int y, int z, int r) {
 		if(!isLoaded) return null;
 		int dim = w.provider.dimensionId;
-		int nearest = r;
+		boolean fullScan = r < 0;
+		int nearest = r*r;
 		Address addr = null;
 		for(AddressMapping map : addresses.values()){
 			if(map.getDimension() == dim){
 				int dx = x - map.getXCoord();
 				int dy = y - map.getYCoord();
 				int dz = z - map.getZCoord();
-				int dst = (int)Math.sqrt(dx*dx + dy*dy + dz*dz);
+				int dst = dx*dx + dy*dy + dz*dz;
 				
-				if (dst < nearest || nearest < 0) {
+				if (dst < nearest || fullScan) {
 					nearest = dst;
 					addr = map.getAddress();
 				}

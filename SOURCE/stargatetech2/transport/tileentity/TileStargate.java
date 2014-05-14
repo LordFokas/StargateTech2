@@ -10,6 +10,7 @@ import stargatetech2.api.bus.BusPacketLIP.LIPMetadata;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.stargate.Address;
+import stargatetech2.api.stargate.DialError;
 import stargatetech2.api.stargate.ITileStargateBase;
 import stargatetech2.core.base.BaseTileEntity;
 import stargatetech2.core.reference.ModReference;
@@ -139,7 +140,8 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	public boolean dial(Address address, int timeout){
 		if(worldObj.isRemote || wormhole != null) return false;
 		if(timeout < 1 || timeout > 38) timeout = 38;
-		StargateNetwork.instance().dial(getAddress(), address, timeout);
+		DialError error = StargateNetwork.instance().dial(getAddress(), address, timeout);
+		// TODO: use this later to reply through the Bus what the error was, when we implement packet replies.
 		return hasActiveWormhole();
 	}
 	

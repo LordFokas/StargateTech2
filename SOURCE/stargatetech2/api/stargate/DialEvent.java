@@ -4,7 +4,6 @@ import net.minecraftforge.event.Cancelable;
 import net.minecraftforge.event.Event;
 
 public abstract class DialEvent extends Event {
-
 	public final Address sourceAddress;
 	public final Address destAddress;
 	public final int duration;
@@ -29,8 +28,11 @@ public abstract class DialEvent extends Event {
 	}
 	
 	public static class Error extends DialEvent {
-		public Error(Address src, Address dst, int dur) {
-			super(src, dst, dur);
+		public final DialError error;
+		
+		public Error(Address src, Address dst, DialError error) {
+			super(src, dst, -1);
+			this.error = error;
 		}
 	}
 }

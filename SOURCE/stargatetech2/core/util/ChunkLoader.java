@@ -137,6 +137,7 @@ public final class ChunkLoader implements LoadingCallback{
 	}
 	
 	public synchronized static void release(long ticket){
+		if(ticket < 0) return; 
 		Ticket found = null;
 		for(Ticket t : instance.tickets){
 			if(ticket == t.getModData().getLong("ticketID")){

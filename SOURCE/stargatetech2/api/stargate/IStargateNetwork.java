@@ -43,5 +43,5 @@ public interface IStargateNetwork {
 	 * @param radius The maximum radius to look for a Stargate. Use -1 to search the whole world.
 	 * @return The Stargate's address, or null if no Stargate was found
 	 */
-	public Address findNearestGate(World world, int x, int y, int z, int radius);
+	public Address findNearestStargate(World world, int x, int y, int z, int radius);
 }
