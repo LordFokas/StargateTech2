@@ -20,6 +20,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import stargatetech2.api.stargate.Address;
+import stargatetech2.api.stargate.DialEvent;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.api.stargate.Symbol;
 import stargatetech2.core.util.ChunkLoader;
@@ -77,6 +78,8 @@ public class StargateNetwork implements IStargateNetwork{
 	}
 	
 	public void dial(Address source, Address destination, int timeout){
+		if (!MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return;
+		
 		AddressMapping srcmap = addresses.get(source);
 		AddressMapping dstmap = addresses.get(destination);
 		if(srcmap != null && dstmap != null){
@@ -99,6 +102,7 @@ public class StargateNetwork implements IStargateNetwork{
 					TileStargate dst = (TileStargate) dstte;
 					if(src.canDial(8) && !dst.hasActiveWormhole()){
 						activeWormholes.add(new Wormhole(src, dst, srcChunks, dstChunks, timeout));
+						MinecraftForge.EVENT_BUS.post(new DialEvent.Success(source, destination, timeout));
 						return;
 					}
 				}
@@ -106,6 +110,7 @@ public class StargateNetwork implements IStargateNetwork{
 				ChunkLoader.release(dstChunks);
 			}
 		}
+		MinecraftForge.EVENT_BUS.post(new DialEvent.Error(source, destination, timeout));
 	}
 	
 	public void removeWormhole(Wormhole wormhole){
@@ -233,6 +238,28 @@ public class StargateNetwork implements IStargateNetwork{
 		if(address != null){
 			addresses.remove(address);
 		}
+	}
+	
+	@Override
+	public Address findNearestGate(World w, int x, int y, int z, int r) {
+		if(!isLoaded) return null;
+		int dim = w.provider.dimensionId;
+		int nearest = r;
+		Address addr = null;
+		for(AddressMapping map : addresses.values()){
+			if(map.getDimension() == dim){
+				int dx = x - map.getXCoord();
+				int dy = y - map.getYCoord();
+				int dz = z - map.getZCoord();
+				int dst = (int)Math.sqrt(dx*dx + dy*dy + dz*dz);
+				
+				if (dst < nearest || nearest < 0) {
+					nearest = dst;
+					addr = map.getAddress();
+				}
+			}
+		}
+		return addr;
 	}
 	
 	private DimensionPrefix generatePrefixForDimension(Integer key){
