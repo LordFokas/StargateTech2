@@ -20,6 +20,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import stargatetech2.api.stargate.Address;
+import stargatetech2.api.stargate.DialEvent;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.api.stargate.Symbol;
 import stargatetech2.core.util.ChunkLoader;
@@ -77,6 +78,8 @@ public class StargateNetwork implements IStargateNetwork{
 	}
 	
 	public void dial(Address source, Address destination, int timeout){
+		if (!MinecraftForge.EVENT_BUS.post(new DialEvent(source, destination, timeout))) return;
+		
 		AddressMapping srcmap = addresses.get(source);
 		AddressMapping dstmap = addresses.get(destination);
 		if(srcmap != null && dstmap != null){
