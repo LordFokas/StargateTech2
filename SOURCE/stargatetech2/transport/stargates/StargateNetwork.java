@@ -295,14 +295,14 @@ public class StargateNetwork implements IStargateNetwork{
 	public Address findNearestStargate(World w, int x, int y, int z, int r) {
 		if(!isLoaded) return null;
 		int dim = w.provider.dimensionId;
-		int nearest = r;
+		double nearest = r;
 		Address addr = null;
 		for(AddressMapping map : addresses.values()){
 			if(map.getDimension() == dim){
 				int dx = x - map.getXCoord();
 				int dy = y - map.getYCoord();
 				int dz = z - map.getZCoord();
-				int dst = (int)Math.sqrt(dx*dx + dy*dy + dz*dz);
+				double dst = Math.sqrt(dx*dx + dy*dy + dz*dz);
 				
 				if (dst < nearest || nearest < 0) {
 					nearest = dst;
