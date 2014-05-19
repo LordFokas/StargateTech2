@@ -218,7 +218,12 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	@Override
 	public boolean addressExists(Address address){
-		if(isLoaded) return addresses.containsKey(address);
+		if(isLoaded) {
+			for (IDynamicWorldLoader loader : loaders) {
+				if (loader.willCreateWorldFor(address)) return true;
+			}
+			return addresses.containsKey(address);
+		}
 		else return false;
 	}
 	
