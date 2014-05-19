@@ -24,6 +24,14 @@ public interface IStargateNetwork {
 	public boolean addressExists(Address address);
 	
 	/**
+	 * Checks if the given prefix exists in the network.
+	 * 
+	 * @param prefix The prefix to check.
+	 * @return Whether the prefix exists in the network.
+	 */
+	public boolean prefixExists(DimensionPrefix prefix);
+	
+	/**
 	 * Returns the address of the Stargate in a specific location if it exists or null otherwise.
 	 * 
 	 * @param world The world the target Stargate is in.
@@ -58,4 +66,5 @@ public interface IStargateNetwork {
 	 * @param dwl The IDynamicWorldLoader to unregister.
 	 */
 	public void unregisterDynamicWorldLoader(IDynamicWorldLoader dwl);
+
 }
