@@ -300,15 +300,14 @@ public class StargateNetwork implements IStargateNetwork{
 	public Address findNearestStargate(World w, int x, int y, int z, int r) {
 		if(!isLoaded) return null;
 		int dim = w.provider.dimensionId;
-		double nearest = r;
+		int nearest = r < 0 ? -1 : r*r;
 		Address addr = null;
 		for(AddressMapping map : addresses.values()){
 			if(map.getDimension() == dim){
 				int dx = x - map.getXCoord();
 				int dy = y - map.getYCoord();
 				int dz = z - map.getZCoord();
-				double dst = Math.sqrt(dx*dx + dy*dy + dz*dz);
-				
+				int dst = dx*dx + dy*dy + dz*dz;
 				if (dst < nearest || nearest < 0) {
 					nearest = dst;
 					addr = map.getAddress();
