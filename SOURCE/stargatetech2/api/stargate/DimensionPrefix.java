@@ -1,8 +1,7 @@
-package stargatetech2.transport.stargates;
+package stargatetech2.api.stargate;
 
 import java.util.Random;
 
-import stargatetech2.api.stargate.Symbol;
 
 public class DimensionPrefix {
 	private Symbol[] symbols;

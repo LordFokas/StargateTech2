@@ -1,12 +1,19 @@
 package stargatetech2.api.stargate;
 
 
+
 public interface IDynamicWorldLoader {
 	/**
 	 * @param address The address we're creating a new world for.
 	 * @return Whether or not this loader will create a new world for this non-existing address.
 	 */
 	public boolean willCreateWorldFor(Address address);
+	
+	/**
+	 * @param prefix The prefix we're testing.
+	 * @return Whether or not this loader should reserve the prefix
+	 */
+	public boolean reservesPrefix(DimensionPrefix prefix);
 	
 	/**
 	 * Actually create a new world for this address.

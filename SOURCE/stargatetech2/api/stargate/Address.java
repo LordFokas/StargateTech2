@@ -1,5 +1,7 @@
 package stargatetech2.api.stargate;
 
+import java.util.Arrays;
+
 public class Address {
 	private Symbol[] symbols;
 	
@@ -40,6 +42,10 @@ public class Address {
 		}else{
 			return Symbol.VOID;
 		}
+	}
+	
+	public DimensionPrefix getPrefix() {
+		return new DimensionPrefix(Arrays.copyOfRange(symbols, 0, 3));
 	}
 	
 	@Override

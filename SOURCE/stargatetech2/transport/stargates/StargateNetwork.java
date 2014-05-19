@@ -23,6 +23,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.DialError;
 import stargatetech2.api.stargate.DialEvent;
+import stargatetech2.api.stargate.DimensionPrefix;
 import stargatetech2.api.stargate.IDynamicWorldLoader;
 import stargatetech2.api.stargate.IStargateNetwork;
 import stargatetech2.api.stargate.Symbol;
@@ -218,7 +219,12 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	@Override
 	public boolean addressExists(Address address){
-		if(isLoaded) return addresses.containsKey(address);
+		if(isLoaded) {
+			for (IDynamicWorldLoader loader : loaders) {
+				if (loader.willCreateWorldFor(address)) return true;
+			}
+			return addresses.containsKey(address);
+		}
 		else return false;
 	}
 	
@@ -312,6 +318,17 @@ public class StargateNetwork implements IStargateNetwork{
 		return addr;
 	}
 	
+	@Override
+	public boolean prefixExists(DimensionPrefix prefix) {
+		if(isLoaded) {
+			for (IDynamicWorldLoader loader : loaders) {
+				if (loader.reservesPrefix(prefix)) return true;
+			}
+			return prefixes.containsValue(prefix);
+		}
+		else return false;
+	}
+	
 	private DimensionPrefix generatePrefixForDimension(Integer key){
 		DimensionPrefix prefix;
 		switch(key.intValue()){
@@ -324,7 +341,7 @@ public class StargateNetwork implements IStargateNetwork{
 			default:
 				do{
 					prefix = DimensionPrefix.generateRandom();
-				}while(prefixes.containsValue(prefix));
+				}while(prefixExists(prefix));
 		}
 		prefixes.put(key, prefix);
 		return prefix;
