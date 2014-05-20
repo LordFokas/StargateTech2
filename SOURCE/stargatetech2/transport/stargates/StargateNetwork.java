@@ -186,6 +186,18 @@ public class StargateNetwork implements IStargateNetwork{
 		return false;
 	}
 	
+	@Override
+	public boolean prefixExists(Symbol[] syms) {
+		if(syms == null) throw new IllegalArgumentException("The prefix must not be null!");
+		if(syms.length != 3) throw new IllegalArgumentException("The prefix must contain exactly 3 Symbols!");
+		for(Symbol s : syms){
+			if(s == null || s == Symbol.VOID) throw new IllegalArgumentException("The symbols must not be null or Symbol.VOID!");
+		}
+		
+		DimensionPrefix prefix = new DimensionPrefix(syms);
+		return reserved.containsKey(prefix) || prefixes.containsValue(prefix);
+	}
+	
 	public void removeWormhole(Wormhole wormhole){
 		activeWormholes.remove(wormhole);
 	}
