@@ -40,6 +40,7 @@ public class StargateNetwork implements IStargateNetwork{
 	public static final int RANDOM_ADDRESS_LENGTH = 8;
 	
 	private boolean isLoaded;
+	private HashMap<DimensionPrefix, IDynamicWorldLoader> reserved;
 	private HashMap<Integer, DimensionPrefix> prefixes;
 	private HashMap<Address, AddressMapping> addresses;
 	private ArrayList<Wormhole> activeWormholes;
@@ -68,6 +69,7 @@ public class StargateNetwork implements IStargateNetwork{
 	}
 	
 	public void load(){
+		reserved = new HashMap();
 		addresses = new HashMap();
 		prefixes = new HashMap();
 		activeWormholes = new ArrayList();
@@ -95,26 +97,34 @@ public class StargateNetwork implements IStargateNetwork{
 		loaders.remove(dwl);
 	}
 	
-	public DialError dial(Address source, Address destination, int timeout){
-		if (!MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return null;
-		
-		DialError error = null;
-		AddressMapping srcmap = addresses.get(source);
-		AddressMapping dstmap = addresses.get(destination);
+	private void dinamicallyLoadWorlds(AddressMapping dstmap, AddressMapping srcmap, Address destination){
 		Symbol[] syms = new Symbol[]{destination.getSymbol(0), destination.getSymbol(1), destination.getSymbol(2)};
 		dynamicLoadingPrefix = new DimensionPrefix(syms);
 		if(srcmap != null && dstmap == null && !prefixes.containsValue(dynamicLoadingPrefix)){
-			Collections.shuffle(loaders);
-			for(IDynamicWorldLoader loader : loaders){
-				if(loader.willCreateWorldFor(destination)){
-					dynamicLoadingAddr = destination;
-					loader.loadWorldFor(destination, SeedingShip.SHIP);
-					dynamicLoadingAddr = null;
-					break;
+			if(reserved.containsKey(dynamicLoadingPrefix)){
+				IDynamicWorldLoader loader = reserved.get(dynamicLoadingPrefix);
+				loader.loadWorldFor(destination, SeedingShip.SHIP);
+			}else{
+				Collections.shuffle(loaders);
+				for(IDynamicWorldLoader loader : loaders){
+					if(loader.willCreateWorldFor(destination)){
+						dynamicLoadingAddr = destination;
+						loader.loadWorldFor(destination, SeedingShip.SHIP);
+						dynamicLoadingAddr = null;
+						break;
+					}
 				}
 			}
 		}
 		dynamicLoadingPrefix = null;
+	}
+	
+	public DialError dial(Address source, Address destination, int timeout){
+		if (!MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return null;
+		DialError error = null;
+		AddressMapping srcmap = addresses.get(source);
+		AddressMapping dstmap = addresses.get(destination);
+		dinamicallyLoadWorlds(dstmap, srcmap, destination);
 		dstmap = addresses.get(destination);
 		if(srcmap != null && dstmap != null){
 			WorldServer srcworld = MinecraftServer.getServer().worldServerForDimension(srcmap.getDimension());
@@ -157,6 +167,23 @@ public class StargateNetwork implements IStargateNetwork{
 		}
 		MinecraftForge.EVENT_BUS.post(new DialEvent.Error(source, destination, error));
 		return error;
+	}
+	
+	@Override
+	public boolean reserveDimensionPrefix(IDynamicWorldLoader dwl, Symbol[] syms) {
+		if(dwl == null) throw new IllegalArgumentException("The IDynamicWorldLoader must not be null!");
+		if(syms == null) throw new IllegalArgumentException("The prefix must not be null!");
+		if(syms.length != 3) throw new IllegalArgumentException("The prefix must contain exactly 3 Symbols!");
+		for(Symbol s : syms){
+			if(s == null || s == Symbol.VOID) throw new IllegalArgumentException("The symbols must not be null or Symbol.VOID!");
+		}
+		
+		DimensionPrefix prefix = new DimensionPrefix(syms);
+		if(!reserved.containsKey(prefix)){
+			reserved.put(prefix, dwl);
+			return true;
+		}
+		return false;
 	}
 	
 	public void removeWormhole(Wormhole wormhole){
@@ -324,7 +351,7 @@ public class StargateNetwork implements IStargateNetwork{
 			default:
 				do{
 					prefix = DimensionPrefix.generateRandom();
-				}while(prefixes.containsValue(prefix));
+				}while(prefixes.containsValue(prefix) || reserved.containsKey(prefix));
 		}
 		prefixes.put(key, prefix);
 		return prefix;

@@ -58,4 +58,15 @@ public interface IStargateNetwork {
 	 * @param dwl The IDynamicWorldLoader to unregister.
 	 */
 	public void unregisterDynamicWorldLoader(IDynamicWorldLoader dwl);
+	
+	/**
+	 * Reserve an address prefix for your DWL.
+	 * If a Stargate attempts to dial a world with that prefix,
+	 * your DWL is given exclusivity in generating that world.
+	 * 
+	 * @param dwl Your IDynamicWorldLoader
+	 * @param prefix And array of exactly 3 non-null and non-void symbols representing a dimension.
+	 * @return whether or not the prefix has been successfully reserved.
+	 */
+	public boolean reserveDimensionPrefix(IDynamicWorldLoader dwl, Symbol[] prefix);
 }

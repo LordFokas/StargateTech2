@@ -31,6 +31,11 @@ public class DimensionPrefix {
 	}
 	
 	@Override
+	public int hashCode(){
+		return 0xDEADBEEF;
+	}
+	
+	@Override
 	public boolean equals(Object o){
 		if(o instanceof DimensionPrefix){
 			DimensionPrefix dp = (DimensionPrefix) o;
