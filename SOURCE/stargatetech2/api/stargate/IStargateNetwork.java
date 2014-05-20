@@ -69,4 +69,12 @@ public interface IStargateNetwork {
 	 * @return whether or not the prefix has been successfully reserved.
 	 */
 	public boolean reserveDimensionPrefix(IDynamicWorldLoader dwl, Symbol[] prefix);
+	
+	/**
+	 * Checks if the specified prefix is associated with a dimension or reserved by a {@link IDynamicWorldLoader}.
+	 * 
+	 * @param prefix An array of exactly 3 non-null and non-void symbols representing a dimension.
+	 * @return Whether or not the prefix is either used or reserved.
+	 */
+	public boolean prefixExists(Symbol[] prefix);
 }
