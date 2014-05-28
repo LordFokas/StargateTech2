@@ -100,6 +100,7 @@ public class StargateNetwork implements IStargateNetwork{
 	private void dinamicallyLoadWorlds(AddressMapping dstmap, AddressMapping srcmap, Address destination){
 		Symbol[] syms = new Symbol[]{destination.getSymbol(0), destination.getSymbol(1), destination.getSymbol(2)};
 		dynamicLoadingPrefix = new DimensionPrefix(syms);
+		dynamicLoadingAddr = destination;
 		if(srcmap != null && dstmap == null && !prefixes.containsValue(dynamicLoadingPrefix)){
 			if(reserved.containsKey(dynamicLoadingPrefix)){
 				IDynamicWorldLoader loader = reserved.get(dynamicLoadingPrefix);
@@ -108,14 +109,13 @@ public class StargateNetwork implements IStargateNetwork{
 				Collections.shuffle(loaders);
 				for(IDynamicWorldLoader loader : loaders){
 					if(loader.willCreateWorldFor(destination)){
-						dynamicLoadingAddr = destination;
 						loader.loadWorldFor(destination, SeedingShip.SHIP);
-						dynamicLoadingAddr = null;
 						break;
 					}
 				}
 			}
 		}
+		dynamicLoadingAddr = null;
 		dynamicLoadingPrefix = null;
 	}
 	
