@@ -22,7 +22,7 @@ public class EventWorldGen extends Event {
 	public static enum GenType {
 		STARGATE,
 		LOOT_POD,
-		VEIN_NAQUEDAH;
+		VEIN_NAQUADAH;
 	}
 
 }

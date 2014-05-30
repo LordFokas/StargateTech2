@@ -40,18 +40,18 @@ public class AncientWorldGenerator implements IWorldGenerator{
 	}
 	
 	public static void generateLootPod(Random r, int cX, int cZ, World w, IChunkProvider chunkGen, IChunkProvider provider){
-		EventWorldGen event = new EventWorldGen(w, cX, cZ, GenType.LOOT_POD);
-		MinecraftForge.TERRAIN_GEN_BUS.post(event);
-		if(RARITY_LOOT_POD.match(cX, cZ, r) && event.getResult() != Result.DENY){
-			worldGenLootPod.generate(r, cX, cZ, w, chunkGen, provider);
+		if(RARITY_LOOT_POD.match(cX, cZ, r)){
+			EventWorldGen event = new EventWorldGen(w, cX, cZ, GenType.LOOT_POD);
+			MinecraftForge.TERRAIN_GEN_BUS.post(event);
+			if (event.getResult() != Result.DENY)worldGenLootPod.generate(r, cX, cZ, w, chunkGen, provider);
 		}
 	}
 	
 	public static void generateStargate(Random r, int cX, int cZ, World w, IChunkProvider chunkGen, IChunkProvider provider){
-		EventWorldGen event = new EventWorldGen(w, cX, cZ, GenType.STARGATE);
-		MinecraftForge.TERRAIN_GEN_BUS.post(event);
-		if(RARITY_STARGATE.match(cX, cZ, r) && event.getResult() != Result.DENY){
-			worldGenStargate.generate(r, cX, cZ, w, chunkGen, provider);
+		if(RARITY_STARGATE.match(cX, cZ, r)){
+			EventWorldGen event = new EventWorldGen(w, cX, cZ, GenType.STARGATE);
+			MinecraftForge.TERRAIN_GEN_BUS.post(event);
+			if (event.getResult() != Result.DENY) worldGenStargate.generate(r, cX, cZ, w, chunkGen, provider);
 		}
 	}
 }
