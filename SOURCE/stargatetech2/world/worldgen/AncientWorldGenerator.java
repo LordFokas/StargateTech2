@@ -4,6 +4,10 @@ import java.util.Random;
 
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.Event.Result;
+import stargatetech2.api.world.EventWorldGen;
+import stargatetech2.api.world.EventWorldGen.GenType;
 import stargatetech2.core.util.ConfigServer;
 import cpw.mods.fml.common.IWorldGenerator;
 
@@ -36,13 +40,17 @@ public class AncientWorldGenerator implements IWorldGenerator{
 	}
 	
 	public static void generateLootPod(Random r, int cX, int cZ, World w, IChunkProvider chunkGen, IChunkProvider provider){
-		if(RARITY_LOOT_POD.match(cX, cZ, r)){
+		EventWorldGen event = new EventWorldGen(w, cX, cZ, GenType.LOOT_POD);
+		MinecraftForge.TERRAIN_GEN_BUS.post(event);
+		if(RARITY_LOOT_POD.match(cX, cZ, r) && event.getResult() != Result.DENY){
 			worldGenLootPod.generate(r, cX, cZ, w, chunkGen, provider);
 		}
 	}
 	
 	public static void generateStargate(Random r, int cX, int cZ, World w, IChunkProvider chunkGen, IChunkProvider provider){
-		if(RARITY_STARGATE.match(cX, cZ, r)){
+		EventWorldGen event = new EventWorldGen(w, cX, cZ, GenType.STARGATE);
+		MinecraftForge.TERRAIN_GEN_BUS.post(event);
+		if(RARITY_STARGATE.match(cX, cZ, r) && event.getResult() != Result.DENY){
 			worldGenStargate.generate(r, cX, cZ, w, chunkGen, provider);
 		}
 	}
