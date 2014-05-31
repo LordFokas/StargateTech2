@@ -120,7 +120,7 @@ public class StargateNetwork implements IStargateNetwork{
 	}
 	
 	public DialError dial(Address source, Address destination, int timeout){
-		if (!MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return null;
+		if (MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return null;
 		DialError error = null;
 		AddressMapping srcmap = addresses.get(source);
 		AddressMapping dstmap = addresses.get(destination);
