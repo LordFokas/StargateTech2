@@ -6,6 +6,7 @@ import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.BusPacketLIP;
 import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.api.stargate.Address;
+import stargatetech2.api.stargate.ITileStargateBase.DialMethod;
 import stargatetech2.transport.stargates.StargateNetwork;
 import stargatetech2.transport.tileentity.TileStargate;
 
@@ -40,7 +41,7 @@ public class StargateBusDriver implements IBusDriver{
 					}
 					Address address = StargateNetwork.parse(addr);
 					if(address != null){
-						stargate.dial(address, timeout);
+						stargate.dial(address, timeout, DialMethod.MANUAL);
 					}
 				}
 			}else if(action.equalsIgnoreCase("openIris")){

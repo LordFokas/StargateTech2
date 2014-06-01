@@ -11,10 +11,10 @@ import cofh.api.energy.IEnergyHandler;
 public class TileStargateBase extends TileStargateRing implements ITileStargateBase, IBusDevice, IEnergyHandler{
 	
 	@Override
-	public boolean dial(Address address, int timeout) {
+	public boolean dial(Address address, int timeout, DialMethod method) {
 		TileStargate stargate = getStargate();
 		if(stargate != null){
-			return stargate.dial(address, timeout);
+			return stargate.dial(address, timeout, method);
 		}
 		return false;
 	}
