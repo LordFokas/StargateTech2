@@ -96,6 +96,7 @@ public class RenderStargateTile extends BaseTESR {
 		bindTexture(TextureReference.TESR_STARGATE);
 		GL11.glRotated(w.getBlockMetadata(pos.x, pos.y, pos.z) * 90, 0, 1, 0);
 		GL11.glTranslated(0, 2.5D, 0);
+		GL11.glNormal3f(0.0F, 0.0F, 1.0F);
 		renderOuterRing();
 		GL11.glPushMatrix();
 			GL11.glRotatef(data.curr_theta + (data.dTheta * partialTicks), 0, 0, 1);
