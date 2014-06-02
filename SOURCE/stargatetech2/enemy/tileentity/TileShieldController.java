@@ -209,6 +209,7 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 		for(int i = 0; i < emitters.size(); i++){
 			nbt.setCompoundTag("emitter_" + i, emitters.get(i).toNBT());
 		}
+		nbt.setInteger("shields", shields.size());
 		for(int i = 0; i < shields.size(); i++){
 			nbt.setCompoundTag("shield_" + i, shields.get(i).toNBT());
 		}
