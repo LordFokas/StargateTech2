@@ -94,9 +94,12 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 	}
 	
 	private void dropAll(List<Vec3Int> unreachable){
+		boolean shieldsUp = active;
+		if(shieldsUp) lowerShields();
 		for(Vec3Int e : unreachable){
 			ModuleEnemy.shieldEmitter.dropSelf(worldObj, e.x, e.y, e.z);
 		}
+		if(shieldsUp) raiseShields();
 	}
 	
 	@Override

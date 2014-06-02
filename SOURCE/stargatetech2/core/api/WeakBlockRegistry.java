@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.block.Block;
 
 public class WeakBlockRegistry{
+	// TODO: allow API access to add weak blocks;
 	private static final class RemovableWeakBlock{
 		private int id, meta;
 		
