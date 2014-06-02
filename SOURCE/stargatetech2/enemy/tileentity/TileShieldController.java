@@ -33,7 +33,7 @@ public class TileShieldController extends TileOwnedMachine
 implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControllerProvider{
 	private static final int ION_DRAIN = 10;
 	
-	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver();
+	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver(this);
 	private IBusInterface busInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, driver);
 	private IBusInterface[] interfaces = new IBusInterface[]{busInterface};
 	
@@ -42,16 +42,22 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 	private ArrayList<Vec3Int> emitters = new ArrayList();
 	private LinkedList<Vec3Int> shields = new LinkedList();
 	private boolean active = false;
+	private boolean enabled = false;
 	
 	@Override
 	public void updateEntity(){
 		if(worldObj.isRemote || (worldObj.getTotalWorldTime() % 100) != 0) return;
-		if(tank.getFluidAmount() >= ION_DRAIN){
+		if(active && !enabled) lowerShields();
+		if(enabled && hasIons()){
 			tank.drain(ION_DRAIN, true);
-			if(!active) raiseShields();
+			if(!active && enabled) raiseShields();
 		}else{
-			if( active) lowerShields();
+			if( active && enabled) lowerShields();
 		}
+	}
+	
+	private boolean hasIons(){
+		return tank.getFluidAmount() >= ION_DRAIN;
 	}
 	
 	private void raiseShields(){
@@ -76,6 +82,12 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 		}
 		shields.clear();
 		active = false;
+	}
+	
+	public void setShieldStatus(boolean enabled){
+		this.enabled = enabled;
+		if(enabled && !active && hasIons()) raiseShields();
+		if(!enabled && active) lowerShields();
 	}
 	
 	public void addEmitter(TileShieldEmitter emitter){
@@ -182,6 +194,9 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 		for(int i = 0; i < num_shields; i++){
 			shields.add(Vec3Int.fromNBT(nbt.getCompoundTag("shield_" + i)));
 		}
+		active = nbt.getBoolean("active");
+		enabled = nbt.getBoolean("enabled");
+		readFacingNBT(nbt.getCompoundTag("facing"));
 	}
 
 	@Override
@@ -197,6 +212,9 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 		for(int i = 0; i < shields.size(); i++){
 			nbt.setCompoundTag("shield_" + i, shields.get(i).toNBT());
 		}
+		nbt.setBoolean("active", active);
+		nbt.setBoolean("enabled", enabled);
+		nbt.setCompoundTag("facing", writeFacingNBT());
 	}
 	
 	

@@ -43,8 +43,9 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 		for(int i = 0; i < ConfigServer.shieldEmitterRange; i++){
 			pos = pos.offset(fd);
 			Block b = Block.blocksList[worldObj.getBlockId(pos.x, pos.y, pos.z)];
-			if(WeakBlockRegistry.isRemovable(b.blockID, worldObj.getBlockMetadata(pos.x, pos.y, pos.z))){
+			if(b == null || WeakBlockRegistry.isRemovable(b.blockID, worldObj.getBlockMetadata(pos.x, pos.y, pos.z))){
 				worldObj.setBlock(pos.x, pos.y, pos.z, ModuleEnemy.shield.blockID, 0, 2);
+				((TileShield)worldObj.getBlockTileEntity(pos.x, pos.y, pos.z)).setController(controller);
 				list.add(pos);
 			}else if(b instanceof IShieldable){
 				((IShieldable)b).onShield(worldObj, pos.x, pos.y, pos.z, controller.x, controller.y, controller.z);
