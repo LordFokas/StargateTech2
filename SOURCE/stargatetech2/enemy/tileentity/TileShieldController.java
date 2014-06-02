@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -15,6 +16,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.IBusInterface;
+import stargatetech2.api.shields.IShieldable;
 import stargatetech2.api.shields.ITileShieldController;
 import stargatetech2.api.shields.ShieldPermissions;
 import stargatetech2.core.machine.FaceColor;
@@ -22,12 +24,14 @@ import stargatetech2.core.machine.TileOwnedMachine;
 import stargatetech2.core.machine.tabs.TabAbstractBus.ISyncBusDevice;
 import stargatetech2.core.util.Vec3Int;
 import stargatetech2.enemy.ModuleEnemy;
+import stargatetech2.enemy.block.BlockShield;
 import stargatetech2.enemy.bus.ShieldControllerBusDriver;
 import stargatetech2.enemy.util.IShieldControllerProvider;
 import stargatetech2.enemy.util.IonizedParticles;
 
 public class TileShieldController extends TileOwnedMachine
 implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControllerProvider{
+	private static final int ION_DRAIN = 10;
 	
 	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver();
 	private IBusInterface busInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, driver);
@@ -36,18 +40,42 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 	public FluidTank tank = new FluidTank(16000);
 	private ShieldPermissions permissions = ShieldPermissions.getDefault();
 	private ArrayList<Vec3Int> emitters = new ArrayList();
-	private boolean active = false; // Implement all the things.
+	private LinkedList<Vec3Int> shields = new LinkedList();
+	private boolean active = false;
 	
 	@Override
 	public void updateEntity(){
-		// TODO: implement things.
-		
-		// Attempt to drain particles
-		// » if it fails and shield is raised, lower the shield
-		// » if it succeeds and shield is down, raise the shield
-		
-		// Probably snap the check to every 1 or 5 seconds, to keep lag down when supplies are low.
-		// Balance it with higher particle consuption per check.
+		if(worldObj.isRemote || (worldObj.getTotalWorldTime() % 100) != 0) return;
+		if(tank.getFluidAmount() >= ION_DRAIN){
+			tank.drain(ION_DRAIN, true);
+			if(!active) raiseShields();
+		}else{
+			if( active) lowerShields();
+		}
+	}
+	
+	private void raiseShields(){
+		shields.clear();
+		for(Vec3Int pos : emitters){
+			TileEntity te = worldObj.getBlockTileEntity(pos.x, pos.y, pos.z);
+			if(te instanceof TileShieldEmitter){
+				shields.addAll(((TileShieldEmitter)te).createShields());
+			}
+		}
+		active = true;
+	}
+	
+	private void lowerShields(){
+		for(Vec3Int pos : shields){
+			Block b = Block.blocksList[worldObj.getBlockId(pos.x, pos.y, pos.z)];
+			if(b instanceof BlockShield){
+				worldObj.setBlockToAir(pos.x, pos.y, pos.z);
+			}else if(b instanceof IShieldable){
+				((IShieldable)b).onUnshield(worldObj, pos.x, pos.y, pos.z);
+			}
+		}
+		shields.clear();
+		active = false;
 	}
 	
 	public void addEmitter(TileShieldEmitter emitter){
@@ -141,10 +169,15 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 		permissions = ShieldPermissions.readFromNBT(nbt.getCompoundTag("permissions"));
 		driver.setAddress(nbt.getShort("address"));
 		driver.setEnabled(nbt.getBoolean("driverEnabled"));
-		int size = nbt.getInteger("emitters");
-		emitters = new ArrayList(size);
-		for(int i = 0; i < size; i++){
+		int num_emitters = nbt.getInteger("emitters");
+		emitters = new ArrayList(num_emitters);
+		for(int i = 0; i < num_emitters; i++){
 			emitters.add(Vec3Int.fromNBT(nbt.getCompoundTag("emitter_" + i)));
+		}
+		int num_shields = nbt.getInteger("shields");
+		shields.clear();
+		for(int i = 0; i < num_shields; i++){
+			shields.add(Vec3Int.fromNBT(nbt.getCompoundTag("shield_" + i)));
 		}
 	}
 
@@ -157,6 +190,9 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 		nbt.setInteger("emitters", emitters.size());
 		for(int i = 0; i < emitters.size(); i++){
 			nbt.setCompoundTag("emitter_" + i, emitters.get(i).toNBT());
+		}
+		for(int i = 0; i < shields.size(); i++){
+			nbt.setCompoundTag("shield_" + i, shields.get(i).toNBT());
 		}
 	}
 	

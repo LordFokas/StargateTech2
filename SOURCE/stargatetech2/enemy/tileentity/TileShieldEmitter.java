@@ -1,5 +1,7 @@
 package stargatetech2.enemy.tileentity;
 
+import java.util.LinkedList;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import stargatetech2.core.machine.FaceColor;
@@ -26,6 +28,10 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 		if(te instanceof TileShieldController){
 			((TileShieldController)te).removeEmitter(this);
 		}
+	}
+	
+	public LinkedList<Vec3Int> createShields(){
+		return null; // TODO: implement this
 	}
 	
 	@Override public boolean canUpdate(){ return false; }
