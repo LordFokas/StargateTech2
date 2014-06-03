@@ -52,6 +52,7 @@ public class RenderTransportRing extends BaseTESR{
 		if(!data.isRendering) return;
 		bindTexture(TextureReference.TESR_TRANSPORT_RING);
 		GL11.glTranslated(0, 2.0D, 0);
+		GL11.glNormal3f(0.0F, 1.0F, 0.0F);
 		for(int r = 0; r < 5; r++){
 			int ringPos = data.ringPos[r];
 			if(ringPos != 0){
