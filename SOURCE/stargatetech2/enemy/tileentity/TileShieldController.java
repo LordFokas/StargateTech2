@@ -149,7 +149,7 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 	}
 	
 	public boolean isShieldOn(){
-		return false;
+		return active;
 	}
 	
 	public void updatePermissions(boolean set, int flag){
