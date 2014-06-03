@@ -46,4 +46,14 @@ public class CCBusDriver implements IBusDriver {
 	public short getInterfaceAddress() {
 		return address;
 	}
+
+	@Override
+	public String getShortName() {
+		return "Abstract Bus Adapter";
+	}
+
+	@Override
+	public String getDescription() {
+		return "The Abstract Bus Adapter can be used by ComputerCraft computers to interact with the Abstract Bus.";
+	}
 }

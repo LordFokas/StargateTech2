@@ -8,6 +8,8 @@ import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.BusPacketLIP;
 import stargatetech2.api.bus.BusPacketLIP.LIPMetadata;
+import stargatetech2.api.bus.BusPacketNetScan;
+import stargatetech2.api.bus.BusPacketNetScan.Device;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.automation.bus.AddressHelper;
@@ -35,6 +37,8 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 	
 	//############################### CC STUFF
 	private static enum ComputerMethod{
+		SCANNETWORK	("scanNetwork"),
+		
 		SETADDRESS	("setAddress"),
 		GETADDRESS	("getAddress"),
 		SENDPACKET	("sendPacket"),
@@ -45,6 +49,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 		GETFIELDLIST("getFieldList"),
 		GETFIELD("getField"),
 		LISTMETHODS("listMethods");
+		
 		private String name;
 		public static final String[] ALL;
 		
@@ -74,6 +79,39 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 	public synchronized Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception {
 		ComputerMethod m = ComputerMethod.values()[method];
 		switch(m){
+			case SCANNETWORK:
+				if(arguments.length > 2) throw new Exception("Too many args! USAGE: scanNetwork([options [, address]])");
+				boolean status, location, name, desc, addr;
+				short address = (short)0xFFFF;
+				if(arguments.length == 2) try{
+					address = AddressHelper.convert((String)arguments[1]);
+				}catch(Exception ignored){}
+				if(arguments.length > 0 && arguments[0] instanceof String){
+					String options = (String) arguments[0];
+					location = options.contains("l");
+					status = options.contains("e");
+					name = options.contains("n");
+					desc = options.contains("d");
+					addr = options.contains("a");
+				}else{
+					name = addr = status = true;
+					location = desc = false;
+				}
+				BusPacketNetScan scan = new BusPacketNetScan(address);
+				outputQueue.add(scan);
+				interfaces[0].sendAllPackets();
+				LinkedList<String> deviceList = new LinkedList();
+				for(Device device : scan.getDevices()){
+					StringBuffer str = new StringBuffer();
+					if(status) str.append("[").append(device.enabled ? "E" : "D").append("] ");
+					if(addr) str.append("0x").append(AddressHelper.convert(device.address)).append(" ");
+					if(name) str.append(device.name).append(" ");
+					if(location) str.append("{").append(device.x).append(", ").append(device.y).append(", ").append(device.z).append("} ");
+					if(desc) str.append("\n").append(device.description).append("\n");
+					deviceList.add(str.toString());
+				}
+				return deviceList.toArray();
+				
 			case GETADDRESS: // GETS THE CURRENT ADDRESS FROM THE NETWORK DRIVER
 				return new Object[]{AddressHelper.convert(networkDriver.getInterfaceAddress())};
 				
@@ -101,6 +139,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 					return new Object[]{true};
 				}
 				return new Object[]{false};
+				
 			// ### PACKET HANDLING ##################################################################
 			case PULLPACKET:
 				boolean hadPacket = !received.isEmpty();

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.BusPacketLIP;
+import stargatetech2.api.bus.BusProtocols;
 import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.DialError;
@@ -21,7 +22,7 @@ public class StargateBusDriver implements IBusDriver{
 	
 	@Override
 	public boolean canHandlePacket(short sender, int protocolID, boolean hasLIP) {
-		return protocolID == BusPacketLIP.PROTOCOL_ID;
+		return protocolID == BusProtocols.PROTOCOL_LIP;
 	}
 
 	@Override
@@ -82,5 +83,15 @@ public class StargateBusDriver implements IBusDriver{
 	@Override
 	public short getInterfaceAddress() {
 		return 0x0000; // Sniffing only.
+	}
+
+	@Override
+	public String getShortName() {
+		return "Stargate";
+	}
+
+	@Override
+	public String getDescription() {
+		return "The Stargate is an extremely advanced portal that uses a Wormhole to teleport entities to other worlds.";
 	}
 }

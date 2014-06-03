@@ -2,6 +2,7 @@ package stargatetech2.transport.bus;
 
 import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.BusPacketLIP;
+import stargatetech2.api.bus.BusProtocols;
 import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.transport.tileentity.TileTransportRing;
 
@@ -14,7 +15,7 @@ public class TransportRingBusDriver implements IBusDriver{
 	
 	@Override
 	public boolean canHandlePacket(short sender, int protocolID, boolean hasLIP) {
-		return protocolID == BusPacketLIP.PROTOCOL_ID;
+		return protocolID == BusProtocols.PROTOCOL_LIP;
 	}
 	
 	@Override
@@ -51,5 +52,15 @@ public class TransportRingBusDriver implements IBusDriver{
 	@Override
 	public short getInterfaceAddress() {
 		return 0x0000;
+	}
+
+	@Override
+	public String getShortName() {
+		return "Transport Rings";
+	}
+
+	@Override
+	public String getDescription() {
+		return "The Transport Rings can teleport any entity to another set of rings above or below itself.";
 	}
 }

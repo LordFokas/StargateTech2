@@ -17,7 +17,7 @@ public class ShieldControllerBusDriver implements IBusDriver{
 	
 	@Override
 	public boolean canHandlePacket(short sender, int protocolID, boolean hasLIP) {
-		return protocolID == BusPacketLIP.PROTOCOL_ID;
+		return protocolID == BusProtocols.PROTOCOL_LIP;
 	}
 
 	@Override
@@ -55,5 +55,15 @@ public class ShieldControllerBusDriver implements IBusDriver{
 	
 	public void setAddress(short address){
 		this.address = address;
+	}
+
+	@Override
+	public String getShortName() {
+		return "Shield Controller";
+	}
+
+	@Override
+	public String getDescription() {
+		return "The Shield Controller is used to control attached Shield Emitters.";
 	}
 }

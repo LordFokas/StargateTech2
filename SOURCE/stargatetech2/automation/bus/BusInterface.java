@@ -6,6 +6,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import stargatetech2.api.bus.BusPacket;
+import stargatetech2.api.bus.BusPacketNetScan;
+import stargatetech2.api.bus.BusPacketNetScan.Device;
+import stargatetech2.api.bus.BusProtocols;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.api.bus.IBusInterface;
@@ -74,7 +77,8 @@ public final class BusInterface implements IBusInterface{
 	}
 	
 	public void recvPacket(BusPacket packet){
-		if(!driver.isInterfaceEnabled()) return;
+		boolean mapping = packet.getProtocolID() == BusProtocols.PROTOCOL_NETSCAN;
+		if(!mapping && !driver.isInterfaceEnabled()) return;
 		// split addresses into net and host address.
 		// uses /8 netmask in a 16-bit address.
 		short address = driver.getInterfaceAddress();
@@ -87,7 +91,13 @@ public final class BusInterface implements IBusInterface{
 		// if addresses match      or it's a broadcast      or we're sniffing
 		if(sendNet  == addrNet  || sendNet  == BROADCAST || addrNet  == PROMISCUOUS)
 		if(sendHost == addrHost || sendHost == BROADCAST || addrHost == PROMISCUOUS){
-			if(driver.canHandlePacket(sender, packet.getProtocolID(), packet.hasPlainText())){
+			if(mapping){
+				String dsc = driver.getDescription();
+				String snm = driver.getShortName();
+				short adrs = driver.getInterfaceAddress();
+				boolean on = driver.isInterfaceEnabled();
+				((BusPacketNetScan)packet).addDevice(new Device(dsc, snm, adrs, on, device.getXCoord(), device.getYCoord(), device.getZCoord()));
+			}else if(driver.canHandlePacket(sender, packet.getProtocolID(), packet.hasPlainText())){
 				driver.handlePacket(packet);
 			}
 		}
