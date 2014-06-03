@@ -26,5 +26,5 @@ public interface ITileStargateBase extends ITileStargate{
 	 * @param timeout How many seconds the connection will last. (1 - 38; default: 38);
 	 * @return whether the dialing sequence started (true) or failed (false).
 	 */
-	public boolean dial(Address address, int timeout, DialMethod method);
+	public DialError dial(Address address, int timeout, DialMethod method);
 }

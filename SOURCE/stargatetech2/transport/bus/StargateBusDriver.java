@@ -6,6 +6,7 @@ import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.BusPacketLIP;
 import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.api.stargate.Address;
+import stargatetech2.api.stargate.DialError;
 import stargatetech2.api.stargate.ITileStargateBase.DialMethod;
 import stargatetech2.transport.stargates.StargateNetwork;
 import stargatetech2.transport.tileentity.TileStargate;
@@ -30,6 +31,7 @@ public class StargateBusDriver implements IBusDriver{
 		if(action != null){
 			if(action.equalsIgnoreCase("disconnect")){
 				stargate.disconnect();
+				lip.addResponse("Disconnecting Wormhole");
 			}else if(action.equalsIgnoreCase("dial")){
 				String addr = lip.get("address");
 				if(addr != null){
@@ -41,13 +43,24 @@ public class StargateBusDriver implements IBusDriver{
 					}
 					Address address = StargateNetwork.parse(addr);
 					if(address != null){
-						stargate.dial(address, timeout, DialMethod.MANUAL);
+						DialError error = stargate.dial(address, timeout, DialMethod.MANUAL);
+						if(error == DialError.SUCCESSFULLY_DIALED){
+							lip.addResponse(String.format("Dialing %s for %d seconds", address.toString(), timeout));
+						}else{
+							lip.addResponse("Dialing error: " + error);
+						}
+					}else{
+						lip.addResponse("ERROR: Address Invalid!");
 					}
+				}else{
+					lip.addResponse("ERROR: you must provide an address!");
 				}
 			}else if(action.equalsIgnoreCase("openIris")){
-				stargate.openIris();
+				// stargate.openIris();
+				lip.addResponse("Open what now?");
 			}else if(action.equalsIgnoreCase("closeIris")){
-				stargate.closeIris();
+				// stargate.closeIris();
+				lip.addResponse("Who is that Irish you speak of?");
 			}
 		}
 	}

@@ -5,18 +5,19 @@ import net.minecraftforge.common.ForgeDirection;
 import stargatetech2.api.bus.IBusDevice;
 import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.stargate.Address;
+import stargatetech2.api.stargate.DialError;
 import stargatetech2.api.stargate.ITileStargateBase;
 import cofh.api.energy.IEnergyHandler;
 
 public class TileStargateBase extends TileStargateRing implements ITileStargateBase, IBusDevice, IEnergyHandler{
 	
 	@Override
-	public boolean dial(Address address, int timeout, DialMethod method) {
+	public DialError dial(Address address, int timeout, DialMethod method) {
 		TileStargate stargate = getStargate();
 		if(stargate != null){
 			return stargate.dial(address, timeout, method);
 		}
-		return false;
+		return DialError.UNKNOWN_LOGIC_ERROR;
 	}
 	
 	// #########################################################

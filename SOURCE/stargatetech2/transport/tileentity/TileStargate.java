@@ -137,12 +137,11 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	
 	@Override
 	@ServerLogic
-	public boolean dial(Address address, int timeout, DialMethod method){
-		if(worldObj.isRemote || wormhole != null) return false;
+	public DialError dial(Address address, int timeout, DialMethod method){
+		if(worldObj.isRemote) return DialError.UNKNOWN_LOGIC_ERROR;
+		if(wormhole != null) return DialError.SOURCE_GATE_BUSY;
 		if(timeout < 1 || timeout > 38) timeout = 38;
-		DialError error = StargateNetwork.instance().dial(getAddress(), address, timeout);
-		// TODO: use this later to reply through the Bus what the error was, when we implement packet replies.
-		return hasActiveWormhole();
+		return StargateNetwork.instance().dial(getAddress(), address, timeout);
 	}
 	
 	@ServerLogic

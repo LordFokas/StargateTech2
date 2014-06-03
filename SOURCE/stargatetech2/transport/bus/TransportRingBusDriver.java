@@ -14,7 +14,7 @@ public class TransportRingBusDriver implements IBusDriver{
 	
 	@Override
 	public boolean canHandlePacket(short sender, int protocolID, boolean hasLIP) {
-		return hasLIP;
+		return protocolID == BusPacketLIP.PROTOCOL_ID;
 	}
 	
 	@Override
@@ -34,6 +34,7 @@ public class TransportRingBusDriver implements IBusDriver{
 		}catch(Exception e){
 			leap = 1;
 		}
+		packet.addResponse("Ring activation request received");
 		rings.teleport(up, leap);
 	}
 	

@@ -120,8 +120,8 @@ public class StargateNetwork implements IStargateNetwork{
 	}
 	
 	public DialError dial(Address source, Address destination, int timeout){
-		if (MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return null;
-		DialError error = null;
+		if (MinecraftForge.EVENT_BUS.post(new DialEvent.Pre(source, destination, timeout))) return DialError.DIALING_EVENT_CANCELED;
+		DialError error = DialError.UNKNOWN_LOGIC_ERROR;
 		AddressMapping srcmap = addresses.get(source);
 		AddressMapping dstmap = addresses.get(destination);
 		dinamicallyLoadWorlds(dstmap, srcmap, destination);
@@ -141,10 +141,10 @@ public class StargateNetwork implements IStargateNetwork{
 						if(src.canDial(8) && !dst.hasActiveWormhole()){
 							activeWormholes.add(new Wormhole(src, dst, srcChunks, dstChunks, timeout));
 							MinecraftForge.EVENT_BUS.post(new DialEvent.Success(source, destination, timeout));
-							return null;
+							return DialError.SUCCESSFULLY_DIALED;
 						}else{
 							if(dst.hasActiveWormhole()) error = DialError.TARGET_GATE_BUSY;
-							else error = DialError.SOURCE_GATE_UNABLE_TO_DIAL;
+							else error = DialError.NOT_ENOUGH_POWER;
 						}
 					}else{
 						if(!(srcte instanceof TileStargate)) error = DialError.SOURCE_GATE_NOT_FOUND;

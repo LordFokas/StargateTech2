@@ -38,7 +38,6 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 		SETADDRESS	("setAddress"),
 		GETADDRESS	("getAddress"),
 		SENDPACKET	("sendPacket"),
-		RECVPACKET	("recvPacket"),
 		GETRECVCOUNT("getRecvCount"),
 		
 		PULLPACKET("pullPacket"),
@@ -81,10 +80,6 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 			case GETRECVCOUNT: // GETS THE NUMBER OF PACKETS IN THE RECEIVE QUEUE
 				return new Object[]{received.size()};
 				
-			case RECVPACKET: // GETS THE NEXT PACKET IN THE RECEIVE QUEUE
-				
-				break;
-				
 			case SENDPACKET: // SENDS A PACKET TO THE REST OF THE NETWORK
 				if(arguments.length < 2) throw new Exception("Not enough arguments (min. 2 args)");
 				BusPacketLIP output = new BusPacketLIP(networkDriver.getInterfaceAddress(), AddressHelper.convert((String)arguments[0]));
@@ -98,7 +93,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 				output.finish();
 				outputQueue.add(output);
 				interfaces[0].sendAllPackets();
-				break;
+				return output.getResponses().toArray();
 				
 			case SETADDRESS: // SETS THE SPECIFIED ADDRESS ON THE NETWORK DRIVER
 				if(arguments.length == 1 && arguments[0] instanceof String){

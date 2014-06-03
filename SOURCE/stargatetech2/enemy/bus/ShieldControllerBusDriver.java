@@ -2,6 +2,7 @@ package stargatetech2.enemy.bus;
 
 import stargatetech2.api.bus.BusPacket;
 import stargatetech2.api.bus.BusPacketLIP;
+import stargatetech2.api.bus.BusProtocols;
 import stargatetech2.api.bus.IBusDriver;
 import stargatetech2.enemy.tileentity.TileShieldController;
 
@@ -16,17 +17,20 @@ public class ShieldControllerBusDriver implements IBusDriver{
 	
 	@Override
 	public boolean canHandlePacket(short sender, int protocolID, boolean hasLIP) {
-		return hasLIP;
+		return protocolID == BusPacketLIP.PROTOCOL_ID;
 	}
 
 	@Override
 	public void handlePacket(BusPacket packet){
 		BusPacketLIP lip = packet.getPlainText();
 		String action = lip.get("action");
+		if(action == null) return;
 		if(action.equalsIgnoreCase("enable")){
 			controller.setShieldStatus(true);
+			lip.addResponse("Shield Status: Enabled");
 		}else if(action.equalsIgnoreCase("disable")){
 			controller.setShieldStatus(false);
+			lip.addResponse("Shield Status: Disabled");
 		}
 	}
 
