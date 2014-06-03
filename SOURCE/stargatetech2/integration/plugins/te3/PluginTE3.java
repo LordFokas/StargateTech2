@@ -26,7 +26,8 @@ public class PluginTE3 extends BasePlugin {
 	
 	@Override
 	protected void postLoad(){
-		CoFHFriendHelper.init();
+		// TODO: re-enable in MC 1.7 when CoFH add list sync.
+		// CoFHFriendHelper.init();
 	}
 	
 	@Override protected void fallback(){}
