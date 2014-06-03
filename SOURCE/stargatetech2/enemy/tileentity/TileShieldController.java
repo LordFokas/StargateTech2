@@ -197,6 +197,7 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 		active = nbt.getBoolean("active");
 		enabled = nbt.getBoolean("enabled");
 		readFacingNBT(nbt.getCompoundTag("facing"));
+		readOwnedMachineData(nbt);
 	}
 
 	@Override
@@ -216,6 +217,7 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 		nbt.setBoolean("active", active);
 		nbt.setBoolean("enabled", enabled);
 		nbt.setCompoundTag("facing", writeFacingNBT());
+		writeOwnedMachineData(nbt);
 	}
 	
 	

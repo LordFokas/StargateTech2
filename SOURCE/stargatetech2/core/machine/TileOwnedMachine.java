@@ -4,12 +4,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import stargatetech2.integration.plugins.te3.CoFHFriendHelper;
 
 public abstract class TileOwnedMachine extends TileMachine implements IOwnedMachine{
+	private static final String NO_OWNER = "__*";
+	
 	public enum AccessMode{
 		PRIVATE, FRIENDS, PUBLIC
 	}
 	
 	private AccessMode mode = AccessMode.PRIVATE;
-	private String owner = null;
+	private String owner = NO_OWNER;
 	
 	public final AccessMode getAccessMode(){
 		return mode;
@@ -26,13 +28,13 @@ public abstract class TileOwnedMachine extends TileMachine implements IOwnedMach
 
 	@Override
 	public final void setOwner(String owner) {
-		if(this.owner != null)
+		if(this.owner.equals(NO_OWNER))
 			this.owner = owner;
 	}
 
 	@Override
 	public boolean hasAccess(String player) {
-		if(owner != null){
+		if(!owner.equals(NO_OWNER)){
 			switch(mode){
 				case FRIENDS:
 					if(CoFHFriendHelper.isSystemEnabled()){

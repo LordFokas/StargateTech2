@@ -48,4 +48,8 @@ public class TileShield extends BaseTileEntity {
 		}
 		return ShieldPermissions.getDefault();
 	}
+	
+	public String getOwner(){
+		return getController().getOwner();
+	}
 }

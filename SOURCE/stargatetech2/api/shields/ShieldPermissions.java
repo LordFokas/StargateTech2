@@ -3,6 +3,8 @@ package stargatetech2.api.shields;
 import java.util.LinkedList;
 import java.util.List;
 
+import stargatetech2.core.util.StargateLogger;
+import stargatetech2.integration.plugins.te3.CoFHFriendHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.monster.EntityMob;
@@ -82,11 +84,17 @@ public class ShieldPermissions {
 	 * by a disallowed one, it's rider will be dismounted so this entity can pass.
 	 * @return Whether this entity can go through or not.
 	 */
-	public boolean isEntityAllowed(Entity entity, boolean doDismount){
+	public boolean isEntityAllowed(Entity entity, boolean doDismount, String owner){
 		boolean allow = false;
 		if(entity instanceof EntityPlayer){
-			if(hasBit(PERM_PLAYER)){
-				allow = true;
+			if(CoFHFriendHelper.isSystemEnabled()){
+				if(CoFHFriendHelper.isFriend(entity.getEntityName(), owner)){
+					allow = hasBit(PERM_FRIEND);
+				}else{
+					allow = hasBit(PERM_PLAYER);
+				}
+			}else{
+				allow = hasBit(PERM_PLAYER);
 			}
 			if(playerExceptions.contains(entity.getEntityName())){
 				allow = !allow;
@@ -101,7 +109,7 @@ public class ShieldPermissions {
 			allow = hasBit(PERM_VESSEL);
 		}
 		if(allow && entity.riddenByEntity != null && doDismount && entity.worldObj.isRemote == false){
-			if(!isEntityAllowed(entity.riddenByEntity, true)){
+			if(!isEntityAllowed(entity.riddenByEntity, true, owner)){
 				Entity rider = entity.riddenByEntity;
 				if(rider instanceof EntityPlayer){
 					rider.mountEntity(null);

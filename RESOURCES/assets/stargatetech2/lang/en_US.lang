@@ -4,6 +4,7 @@
 StargateTech2:block.busAdapter.name=Abstract Bus Adapter
 StargateTech2:block.busCable.name=Abstract Bus Cable
 StargateTech2:block.crossover.name=Crossover
+StargateTech2:block.prioritizer.name=Prioritizer
 
 StargateTech2:block.lanteanWall_white.name=White Lantean Wall
 StargateTech2:block.lanteanWall_orange.name=Orange Lantean Wall

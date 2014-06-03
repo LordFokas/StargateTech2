@@ -48,7 +48,7 @@ public class BlockShield extends BaseBlockContainer implements ITabletAccess {
 		TileEntity te = w.getBlockTileEntity(x, y, z);
 		if(te instanceof TileShield){
 			ShieldPermissions permissions = ((TileShield)te).getPermissions();
-			if(!permissions.isEntityAllowed(e, true)){
+			if(!permissions.isEntityAllowed(e, true, ((TileShield)te).getOwner())){
 				super.addCollisionBoxesToList(w, x, y, z, aabb, l, e);
 			}
 		}
@@ -65,7 +65,7 @@ public class BlockShield extends BaseBlockContainer implements ITabletAccess {
 		if(te instanceof TileShield){
 			ShieldPermissions permissions = ((TileShield)te).getPermissions();
 			String message;
-			if(permissions.isEntityAllowed(player, false)){
+			if(permissions.isEntityAllowed(player, false, ((TileShield)te).getOwner())){
 				message = "\u00A79 A field of Ionized Particles. It seems to invite you through.";
 			}else{
 				message = "\u00A79 A field of Ionized Particles. It seems to refuse your passage.";
