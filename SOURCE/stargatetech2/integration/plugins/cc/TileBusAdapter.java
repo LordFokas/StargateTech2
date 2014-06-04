@@ -87,7 +87,7 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 					address = AddressHelper.convert((String)arguments[1]);
 				}catch(Exception ignored){}
 				if(arguments.length > 0 && arguments[0] instanceof String){
-					String options = (String) arguments[0];
+					String options = ((String) arguments[0]).toLowerCase();
 					location = options.contains("l");
 					status = options.contains("e");
 					name = options.contains("n");

@@ -2,8 +2,8 @@
 {
   "modid": "StargateTech2",
   "name": "StargateTech 2",
-  "description": "Adds Stargate-themed technology to minecraft!",
-  "version": "0.7.0-Alpha-preview",
+  "description": "Adds Stargate-themed technology to minecraft! This is still in very heavy development, most things are subject to change in the future!",
+  "version": "0.7.0-Alpha",
   "credits": "Thanks to Matchlighter and JoshTheEnder",
   "logoFile": "",
   "mcversion": "1.6.4",
