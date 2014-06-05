@@ -12,6 +12,7 @@ import stargatetech2.api.ITabletAccess;
 import stargatetech2.api.bus.BusEvent;
 import stargatetech2.api.stargate.ITileStargate;
 import stargatetech2.api.stargate.ITileStargateBase;
+import stargatetech2.api.stargate.StargateEvent;
 import stargatetech2.core.base.BaseBlockContainer;
 import stargatetech2.core.base.BaseTileEntity;
 import stargatetech2.core.reference.BlockReference;
@@ -80,6 +81,8 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
                                 }else{
                                         stargate = (TileStargate)te;
                                 }
+                                
+                                if (!MinecraftForge.EVENT_BUS.post(new StargateEvent.StargateWrenched(stargate.getAddress(), stargate.worldObj, stargate.xCoord, stargate.yCoord, stargate.zCoord))) return false;
                                 stargate.destroyStargate();
                                 wrench.wrenchUsed(p, x, y, z);
                                 return true;

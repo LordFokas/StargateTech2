@@ -1,9 +1,8 @@
 package stargatetech2.api.stargate;
 
 import net.minecraftforge.event.Cancelable;
-import net.minecraftforge.event.Event;
 
-public abstract class DialEvent extends Event {
+public abstract class DialEvent extends StargateEvent {
 	public final Address sourceAddress;
 	public final Address destAddress;
 	public final int duration;
