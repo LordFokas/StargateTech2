@@ -82,7 +82,7 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
                                         stargate = (TileStargate)te;
                                 }
                                 
-                                if (!MinecraftForge.EVENT_BUS.post(new StargateEvent.StargateWrenched(stargate.getAddress(), stargate.worldObj, stargate.xCoord, stargate.yCoord, stargate.zCoord))) return false;
+                                if (MinecraftForge.EVENT_BUS.post(new StargateEvent.StargateWrenched(stargate.getAddress(), stargate.worldObj, stargate.xCoord, stargate.yCoord, stargate.zCoord))) return false;
                                 stargate.destroyStargate();
                                 wrench.wrenchUsed(p, x, y, z);
                                 return true;
