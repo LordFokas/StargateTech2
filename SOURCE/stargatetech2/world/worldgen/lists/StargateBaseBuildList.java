@@ -93,7 +93,7 @@ public class StargateBaseBuildList extends BuildList {
 	
 	@Override
 	protected void afterBuild(World w, int x, int y, int z, Object o){
-		SeedingShip.SHIP.placeStargate(w, x, y, z, 3);
+		SeedingShip.SHIP.placeStargate(w, x+3, y+5, z, 3);
 		LootGenerator.generateLootChest(w, x, y + 1, z - 3, LootLevel.RARE);
 		w.setBlockMetadataWithNotify(x, y + 1, z - 3, 3, 3);
 		LootGenerator.generateLootChest(w, x, y + 1, z + 3, LootLevel.RARE);

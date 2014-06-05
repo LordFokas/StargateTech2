@@ -16,6 +16,6 @@ public class SeedingShip implements IStargatePlacer{
 	public boolean placeStargate(World w, int x, int y, int z, int facing) {
 		FakePlayer fake = new FakePlayer(w, "AnquietasGatePlacer");
 		fake.rotationYaw = facing * 90;
-		return ItemBlockStargate.instance.placeBlockAt(new ItemStack(ModuleTransport.stargate), fake, w, x+3, y+5, z, 0, 0, 0, 0, 0);
+		return ItemBlockStargate.instance.placeBlockAt(new ItemStack(ModuleTransport.stargate), fake, w, x, y, z, 0, 0, 0, 0, 0);
 	}
 }
