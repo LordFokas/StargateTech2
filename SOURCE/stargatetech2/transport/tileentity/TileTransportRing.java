@@ -149,7 +149,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 		updateClients();
 		for(Vec3Int b : RING_BLOCKS){
 			if(worldObj.isAirBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z)){
-				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, ModuleTransport.invisible.blockID);
+				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, ModuleTransport.invisible.blockID, 14, 3);
 			}
 		}
 	}
