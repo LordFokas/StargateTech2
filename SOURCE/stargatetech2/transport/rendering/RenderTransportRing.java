@@ -2,7 +2,9 @@ package stargatetech2.transport.rendering;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
@@ -53,6 +55,9 @@ public class RenderTransportRing extends BaseTESR{
 		bindTexture(TextureReference.TESR_TRANSPORT_RING);
 		GL11.glTranslated(0, 2.0D, 0);
 		GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+		
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)255 / 1.0F, (float)0 / 1.0F);
+		
 		for(int r = 0; r < 5; r++){
 			int ringPos = data.ringPos[r];
 			if(ringPos != 0){

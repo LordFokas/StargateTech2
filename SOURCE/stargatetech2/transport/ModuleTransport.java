@@ -6,6 +6,7 @@ import stargatetech2.StargateTech2;
 import stargatetech2.core.reference.TileEntityReference;
 import stargatetech2.core.util.Stacks;
 import stargatetech2.transport.block.BlockInvisible;
+import stargatetech2.transport.block.BlockLight;
 import stargatetech2.transport.block.BlockNaquadahRail;
 import stargatetech2.transport.block.BlockStargate;
 import stargatetech2.transport.block.BlockTransportRing;
@@ -21,6 +22,7 @@ public class ModuleTransport implements IContentModule {
 	public static BlockTransportRing transportRing;
 	public static BlockInvisible invisible;
 	public static BlockStargate stargate;
+	public static BlockLight light;
 	
 	@Override
 	public void preInit(){
@@ -28,6 +30,7 @@ public class ModuleTransport implements IContentModule {
 		transportRing = new BlockTransportRing();
 		invisible = new BlockInvisible();
 		stargate = new BlockStargate();
+		light = new BlockLight();
 	}
 
 	@Override

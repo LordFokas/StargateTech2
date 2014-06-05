@@ -30,6 +30,7 @@ public class BlockReference {
 	public static final String NAQUADAH_RAIL = "naquadahRail";
 	public static final String TRANSPORT_RING = "transportRing";
 	public static final String INVISIBLE = "invisible";
+	public static final String LIGHT = "light";
 	
 	
 	// WORLD
