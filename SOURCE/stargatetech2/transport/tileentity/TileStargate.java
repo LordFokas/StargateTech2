@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.MinecraftForge;
 import stargatetech2.api.StargateTechAPI;
 import stargatetech2.api.bus.BusPacketLIP;
 import stargatetech2.api.bus.BusPacketLIP.LIPMetadata;
@@ -12,6 +13,7 @@ import stargatetech2.api.bus.IBusInterface;
 import stargatetech2.api.stargate.Address;
 import stargatetech2.api.stargate.DialError;
 import stargatetech2.api.stargate.ITileStargateBase;
+import stargatetech2.api.stargate.StargateEvent;
 import stargatetech2.core.base.BaseTileEntity;
 import stargatetech2.core.reference.ModReference;
 import stargatetech2.transport.ModuleTransport;
@@ -123,6 +125,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	public void destroyStargate(){
 		if(!isInvalidating){
 			isInvalidating = true;
+			MinecraftForge.EVENT_BUS.post(new StargateEvent.StargateDestroyed(getAddress(), worldObj, xCoord, yCoord, zCoord));
 			ModuleTransport.stargate.dropStargate(worldObj, xCoord, yCoord, zCoord);
 		}
 	}
