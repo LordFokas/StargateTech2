@@ -147,14 +147,9 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 		isTeleporting = true;
 		teleportCountdown = SEQ_TIME;
 		updateClients();
-		for (int y=2; y<5; y++) {
-			if(worldObj.isAirBlock(xCoord, yCoord + y, zCoord)){
-				worldObj.setBlock(xCoord, yCoord + y, zCoord, ModuleTransport.light.blockID);
-			}
-		}
 		for(Vec3Int b : RING_BLOCKS){
 			if(worldObj.isAirBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z)){
-				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, ModuleTransport.invisible.blockID);
+				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, ModuleTransport.invisible.blockID, 14, 3);
 			}
 		}
 	}
@@ -183,11 +178,6 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 		isTeleporting = false;
 		teleportCooldown = TP_COOLDOWN;
 		updateClients();
-		for (int y=2; y<5; y++) {
-			if(worldObj.getBlockId(xCoord, yCoord + y, zCoord) == ModuleTransport.light.blockID){
-				worldObj.setBlock(xCoord, yCoord + y, zCoord, 0);
-			}
-		}
 		for(Vec3Int b : RING_BLOCKS){
 			if(worldObj.getBlockId(xCoord + b.x, yCoord + b.y, zCoord + b.z) == ModuleTransport.invisible.blockID){
 				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, 0);
