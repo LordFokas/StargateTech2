@@ -164,7 +164,7 @@ public abstract class BaseGUI extends GuiContainer {
 			if(c == 14){
 				chars[pos] = ' ';
 				if(pos > 0) pos--;
-			}else if(c >= 2 && c <= 11 || c >= 16 && c <= 25 || c >= 30 && c <= 38 || c >= 44 && c <= 50){
+			}else if(c >= 2 && c <= 11 || c >= 16 && c <= 25 || c >= 30 && c <= 38 || c >= 44 && c <= 50 || k == '_'){
 				if(pos < 64){
 					chars[pos] = k;
 					pos++;

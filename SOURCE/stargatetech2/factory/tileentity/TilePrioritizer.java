@@ -44,9 +44,9 @@ public class TilePrioritizer extends TileMachine implements ISidedInventory, IFl
 	@Override
 	protected FaceColor[] getPossibleFaceColors() {
 		if(multipleInputs){ // multiple inputs, one output.
-			return new FaceColor[]{FaceColor.PURPLE, FaceColor.GREEN, FaceColor.ORANGE};
+			return new FaceColor[]{FaceColor.VOID, FaceColor.ORANGE, FaceColor.PURPLE, FaceColor.GREEN};
 		}else{ // one input, multiple outputs.
-			return new FaceColor[]{FaceColor.BLUE, FaceColor.RED, FaceColor.YELLOW};
+			return new FaceColor[]{FaceColor.VOID, FaceColor.BLUE, FaceColor.RED, FaceColor.YELLOW};
 		}
 	}
 	
