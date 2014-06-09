@@ -74,6 +74,7 @@ public class TextureReference {
 	public static final ResourceLocation GUI_SHIELD_CONTROLLER = getTexture("gui/shieldController.png");
 	public static final ResourceLocation GUI_PARTICLE_IONIZER = getTexture("gui/particleIonizer.png");
 	public static final ResourceLocation GUI_CROSSOVER = getTexture("gui/crossover.png");
+	public static final ResourceLocation GUI_PRIORITIZER = getTexture("gui/prioritizer.png");
 	
 	public static final ResourceLocation TESR_TRANSPORT_RING = getTexture("special/transportRing.png");
 	public static final ResourceLocation TESR_STARGATE = getTexture("special/stargate.png");

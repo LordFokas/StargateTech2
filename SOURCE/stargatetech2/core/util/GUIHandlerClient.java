@@ -11,8 +11,11 @@ import stargatetech2.enemy.gui.GUIShieldController;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
 import stargatetech2.enemy.tileentity.TileShieldController;
 import stargatetech2.factory.gui.ContainerCrossover;
+import stargatetech2.factory.gui.ContainerPrioritizer;
 import stargatetech2.factory.gui.GUICrossover;
+import stargatetech2.factory.gui.GUIPrioritizer;
 import stargatetech2.factory.tileentity.TileCrossover;
+import stargatetech2.factory.tileentity.TilePrioritizer;
 
 public class GUIHandlerClient extends GUIHandler {
 	
@@ -32,6 +35,9 @@ public class GUIHandlerClient extends GUIHandler {
 			case CROSSOVER:
 				if(te instanceof TileCrossover)
 					gui = new GUICrossover(new ContainerCrossover((TileCrossover)te, player));
+			case PRIORITIZER:
+				if(te instanceof TilePrioritizer)
+					gui = new GUIPrioritizer(new ContainerPrioritizer((TilePrioritizer)te, player));
 			default: break;
 		}
 		return gui;

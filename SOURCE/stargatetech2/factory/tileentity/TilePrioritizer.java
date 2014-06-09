@@ -71,6 +71,7 @@ public class TilePrioritizer extends TileMachine implements ISidedInventory, IFl
 			primary = new BufferItem(8);
 			secondary = new BufferItem(8);
 			break;
+		default: throw new RuntimeException("Illegal buffer type: " + type);
 		}
 	}
 	

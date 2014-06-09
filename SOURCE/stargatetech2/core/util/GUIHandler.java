@@ -8,6 +8,8 @@ import stargatetech2.enemy.gui.ContainerParticleIonizer;
 import stargatetech2.enemy.gui.ContainerShieldController;
 import stargatetech2.enemy.tileentity.TileParticleIonizer;
 import stargatetech2.enemy.tileentity.TileShieldController;
+import stargatetech2.factory.gui.ContainerPrioritizer;
+import stargatetech2.factory.tileentity.TilePrioritizer;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GUIHandler implements IGuiHandler {
@@ -30,6 +32,10 @@ public class GUIHandler implements IGuiHandler {
 			case PARTICLE_IONIZER:
 				if(te instanceof TileParticleIonizer)
 					container = new ContainerParticleIonizer((TileParticleIonizer)te, player);
+				break;
+			case PRIORITIZER:
+				if(te instanceof TilePrioritizer)
+					container = new ContainerPrioritizer((TilePrioritizer)te, player);
 				break;
 			default: break;
 		}
