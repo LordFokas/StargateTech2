@@ -11,23 +11,23 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModuleFactory implements IContentModule {
 	// public static BlockCrossover crossover;
-	// public static BlockPrioritizer prioritizer;
+	public static BlockPrioritizer prioritizer;
 	
 	@Override
 	public void preInit(){
 		// crossover = new BlockCrossover();
-		// prioritizer = new BlockPrioritizer();
+		prioritizer = new BlockPrioritizer();
 	}
 
 	@Override
 	public void init(){
 		// crossover.registerBlock();
-		// prioritizer.registerBlock();
+		prioritizer.registerBlock();
 		
 		// GameRegistry.registerTileEntity(TileCrossover.class, TileEntityReference.TILE_CROSSOVER);
-		// GameRegistry.registerTileEntity(TilePrioritizer.class, TileEntityReference.TILE_PRIORITIZER);
+		GameRegistry.registerTileEntity(TilePrioritizer.class, TileEntityReference.TILE_PRIORITIZER);
 	}
-
+	
 	@Override
 	public void postInit(){
 		StargateTech2.proxy.registerRenderers(Module.FACTORY);
