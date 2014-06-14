@@ -3,9 +3,7 @@ package stargatetech2.factory;
 import stargatetech2.IContentModule;
 import stargatetech2.StargateTech2;
 import stargatetech2.core.reference.TileEntityReference;
-import stargatetech2.factory.block.BlockCrossover;
 import stargatetech2.factory.block.BlockPrioritizer;
-import stargatetech2.factory.tileentity.TileCrossover;
 import stargatetech2.factory.tileentity.TilePrioritizer;
 import cpw.mods.fml.common.registry.GameRegistry;
 

@@ -54,3 +54,7 @@ StargateTech2:item.personalShield.name=Personal Shield
 # MISC
 
 StargateTech2:fluid.ionizedParticles=Ionized Particles
+StargateTech2:fluid.moltenNaquadah=Molten Naquadah
+
+# Dirty workaround for Tinker's Construct bad code. Why, mDiyo, why!?
+fluid.molten_naquadah=Molten Naquadah

@@ -9,20 +9,24 @@ import stargatetech2.integration.plugins.BasePlugin;
 import stargatetech2.integration.plugins.cc.PluginCC;
 import stargatetech2.integration.plugins.ic2.PluginIC2;
 import stargatetech2.integration.plugins.te3.PluginTE3;
+import stargatetech2.integration.plugins.tico.PluginTiCo;
 
 public class ModuleIntegration implements IContentModule {
-	private ArrayList<BasePlugin> plugins = new ArrayList<BasePlugin>();
+	private ArrayList<BasePlugin> plugins = new ArrayList<BasePlugin>(4);
 	
+	public static BasePlugin tico;
 	public static BasePlugin te3;
 	public static BasePlugin ic2;
 	public static BasePlugin cc;
 	
 	@Override
 	public void preInit(){
-		te3	= new PluginTE3();
-		ic2	= new PluginIC2();
-		cc	= new PluginCC();
+		tico = new PluginTiCo();
+		te3  = new PluginTE3();
+		ic2  = new PluginIC2();
+		cc   = new PluginCC();
 		
+		plugins.add(tico);
 		plugins.add(te3);
 		plugins.add(ic2);
 		plugins.add(cc);

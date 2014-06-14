@@ -1,6 +1,5 @@
 package stargatetech2.factory.gui;
 
-import stargatetech2.core.base.BaseContainer;
 import stargatetech2.core.base.BaseGUI;
 import stargatetech2.core.machine.tabs.TabConfiguration;
 import stargatetech2.core.reference.TextureReference;

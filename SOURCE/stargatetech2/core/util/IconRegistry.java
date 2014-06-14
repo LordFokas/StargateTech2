@@ -7,6 +7,7 @@ import net.minecraft.util.Icon;
 import stargatetech2.core.reference.ModReference;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.enemy.util.IonizedParticles;
+import stargatetech2.integration.plugins.tico.MoltenNaquadah;
 
 public class IconRegistry {
 	public static final HashMap<String, Icon> blockIcons = new HashMap<String, Icon>();
@@ -25,6 +26,7 @@ public class IconRegistry {
 			load(textureName, map, blockIcons);
 		}
 		IonizedParticles.fluid.setIcons(blockIcons.get(TextureReference.IONIZED_PARTICLES));
+		MoltenNaquadah.instance.setIcons(blockIcons.get(TextureReference.MOLTEN_NAQUADAH), blockIcons.get(TextureReference.MOLTEN_NAQUADAH_FLOW));
 	}
 	
 	private static void loadItems(TextureMap map){

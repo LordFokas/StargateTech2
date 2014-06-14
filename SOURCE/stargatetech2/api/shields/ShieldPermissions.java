@@ -3,8 +3,6 @@ package stargatetech2.api.shields;
 import java.util.LinkedList;
 import java.util.List;
 
-import stargatetech2.core.util.StargateLogger;
-import stargatetech2.integration.plugins.te3.CoFHFriendHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.monster.EntityMob;
@@ -12,6 +10,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import stargatetech2.integration.plugins.te3.CoFHFriendHelper;
 
 
 public class ShieldPermissions {

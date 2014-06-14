@@ -3,8 +3,6 @@ package stargatetech2.enemy.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -12,6 +10,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import stargatetech2.core.base.BaseItem;
 import stargatetech2.core.reference.ItemReference;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemPersonalShield extends BaseItem {
 	private static final ArrayList<DamageSource> blockables = new ArrayList<DamageSource>();

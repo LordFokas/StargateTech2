@@ -23,6 +23,8 @@ public class TextureReference {
 	
 	//### BLOCKS ###
 	@Block public static final String IONIZED_PARTICLES = "ionizedParticles";
+	@Block public static final String MOLTEN_NAQUADAH = "moltenNaquadah";
+	@Block public static final String MOLTEN_NAQUADAH_FLOW = "moltenNaquadah_flow";
 	
 	@Block public static final String MACHINE_SIDE = "machineSide";
 	@Block public static final String MACHINE_SIDE_I = "machineSideI";

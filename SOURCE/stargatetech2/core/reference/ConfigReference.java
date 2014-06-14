@@ -13,9 +13,9 @@ public class ConfigReference {
 	public static final String KEY_IDS_ITEMS		= "ids.items";
 	public static final String KEY_PLUGINS			= "plugins";
 	public static final String KEY_PLUGINS_CC		= "plugins.computercraft";
-	public static final String KEY_PLUGINS_FORESTRY	= "plugins.forestry";
 	public static final String KEY_PLUGINS_IC2		= "plugins.industrialcraft2";
 	public static final String KEY_PLUGINS_TE3		= "plugins.thermalexpansion3";
+	public static final String KEY_PLUGINS_TICO		= "plugins.tinkersconstruct";
 	
 	
 	//****************************************************************************************************
@@ -32,9 +32,10 @@ public class ConfigReference {
 	
 	public static final String PLUGIN_ENABLE = "enable";
 	
-	
-	
 	static{
+		PLUGIN_LIST.add(KEY_PLUGINS_CC);
 		PLUGIN_LIST.add(KEY_PLUGINS_IC2);
+		PLUGIN_LIST.add(KEY_PLUGINS_TE3);
+		PLUGIN_LIST.add(KEY_PLUGINS_TICO);
 	}
 }

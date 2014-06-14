@@ -1,8 +1,8 @@
 package stargatetech2.factory.util;
 
+import net.minecraft.nbt.NBTTagCompound;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyStorage;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class BufferEnergy extends Buffer<BufferEnergy, IEnergyStorage> {
 	private EnergyStorage storage;
