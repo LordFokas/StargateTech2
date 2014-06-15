@@ -7,7 +7,7 @@ public class BlockReference {
 	
 	
 	// CORE
-	public static final String NAQUADAH_ORE = "naquadahOre";
+	public static final String NAQUADAH = "naquadah";
 	
 	
 	// ENEMY

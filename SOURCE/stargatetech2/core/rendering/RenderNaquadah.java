@@ -9,20 +9,25 @@ import stargatetech2.core.base.BaseISBRH;
 import stargatetech2.core.reference.TextureReference;
 import stargatetech2.core.util.IconRegistry;
 
-public class RenderNaquadahOre extends BaseISBRH {
-	private static final RenderNaquadahOre INSTANCE = new RenderNaquadahOre();
+public class RenderNaquadah extends BaseISBRH {
+	private static final RenderNaquadah INSTANCE = new RenderNaquadah();
 	
-	public static RenderNaquadahOre instance(){
+	public static RenderNaquadah instance(){
 		return INSTANCE;
 	}
 	
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer){
-		Icon face = IconRegistry.blockIcons.get(TextureReference.FACE_NAQUADAH_ORE);
-		Icon glow = IconRegistry.blockIcons.get(TextureReference.GLOW_NAQUADAH_ORE);
-		renderer.setOverrideBlockTexture(face);
-		renderer.renderStandardBlock(block, x, y, z);
-		renderer.clearOverrideBlockTexture();
+		Icon glow;
+		if(world.getBlockMetadata(x, y, z) == 0){
+			Icon face = IconRegistry.blockIcons.get(TextureReference.FACE_NAQUADAH_ORE);
+			glow = IconRegistry.blockIcons.get(TextureReference.GLOW_NAQUADAH_ORE);
+			renderer.setOverrideBlockTexture(face);
+			renderer.renderStandardBlock(block, x, y, z);
+			renderer.clearOverrideBlockTexture();
+		}else{
+			glow = IconRegistry.blockIcons.get(TextureReference.NAQUADAH_BLOCK);
+		}
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.setColorOpaque_I(0xFFFFFF);
 		tessellator.setBrightness(220);

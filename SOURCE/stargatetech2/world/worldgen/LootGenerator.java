@@ -19,11 +19,11 @@ public class LootGenerator {
 	
 	static{
 		LOOT_COMMON = new ArrayList<ItemStack>();
-		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 16, ItemNaquadah.INGOT.ID));
-		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 24, ItemNaquadah.DUST.ID));
-		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 8, ItemNaquadah.PLATE.ID));
-		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadah, 6, ItemNaquadah.CIRCUIT.ID));
-		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahOre, 12));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahItem, 16, ItemNaquadah.INGOT.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahItem, 24, ItemNaquadah.DUST.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahItem, 8, ItemNaquadah.PLATE.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahItem, 6, ItemNaquadah.CIRCUIT.ID));
+		LOOT_COMMON.add(new ItemStack(ModuleCore.naquadahBlock, 12));
 		
 		LOOT_RARE = new ArrayList<ItemStack>();
 		LOOT_RARE.add(new ItemStack(ModuleTransport.naquadahRail, 4));

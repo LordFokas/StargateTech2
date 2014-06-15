@@ -44,8 +44,10 @@ public class TextureReference {
 	@Block public static final String SHIELD_EMITTER_B = "shieldEmitter_B";
 	@Block public static final String SHIELD_EMITTER_T = "shieldEmitter_T";
 	
+	@Block public static final String NAQUADAH_ORE = "naquadahOre";
 	@Block public static final String FACE_NAQUADAH_ORE = "faceNaquadahOre";
 	@Block public static final String GLOW_NAQUADAH_ORE = "glowNaquadahOre";
+	@Block public static final String NAQUADAH_BLOCK = "naquadah";
 	
 	@Block public static final String LANTEAN_BLOCK_CLEAN = "lanteanBlockClean";
 	@Block public static final String STARGATE_BASE_TOP = "stargateBaseTop";

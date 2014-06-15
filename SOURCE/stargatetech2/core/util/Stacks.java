@@ -4,7 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import stargatetech2.automation.ModuleAutomation;
+import stargatetech2.core.ModuleCore;
 import stargatetech2.core.api.StackManager;
+import stargatetech2.core.block.BlockNaquadah;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Stacks {
@@ -15,7 +17,7 @@ public class Stacks {
 	public static ItemStack machine, coilGold;
 	
 	// StargateTech 2 Stacks
-	public static ItemStack naqIngot, naqDust, naqPlate, lattice, circuit, coilNaq, coilEnd, busCable;
+	public static ItemStack naqIngot, naqDust, naqPlate, naqOre, naqBlock, lattice, circuit, coilNaq, coilEnd, busCable;
 	
 	public static void init(){
 		//##########################################################################################
@@ -43,6 +45,8 @@ public class Stacks {
 		naqIngot	= StackManager.instance.get("naquadahIngot");
 		naqDust		= StackManager.instance.get("naquadahDust");
 		naqPlate	= StackManager.instance.get("naquadahPlate");
+		naqOre		= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.ORE);
+		naqBlock	= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.BLOCK);
 		lattice		= StackManager.instance.get("lattice");
 		circuit		= StackManager.instance.get("circuitCrystal");
 		coilNaq		= StackManager.instance.get("coilNaquadah");

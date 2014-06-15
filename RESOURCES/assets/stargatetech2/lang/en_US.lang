@@ -26,7 +26,8 @@ StargateTech2:block.lanteanWall_green.name=Green Lantean Wall
 StargateTech2:block.lanteanWall_red.name=Red Lantean Wall
 StargateTech2:block.lanteanWall_black.name=Black Lantean Wall
 
-StargateTech2:block.naquadahOre.name=Naquadah Ore
+StargateTech2:block.naquadah.ore.name=Naquadah Ore
+StargateTech2:block.naquadah.block.name=Naquadah Block
 StargateTech2:block.naquadahRail.name=Naquadah Rail
 StargateTech2:block.particleIonizer.name=Particle Ionizer
 StargateTech2:block.shieldController.name=Shield Controller

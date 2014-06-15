@@ -18,8 +18,8 @@ public class PluginTE3 extends BasePlugin {
 
 	@Override
 	protected void load() {
-		addPulverizerRecipe(4000, new ItemStack(ModuleCore.naquadahOre), new ItemStack(ModuleCore.naquadah, 2, ItemNaquadah.DUST.ID));
-		addPulverizerRecipe(2400, new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.INGOT.ID), new ItemStack(ModuleCore.naquadah, 1, ItemNaquadah.DUST.ID));
+		addPulverizerRecipe(4000, new ItemStack(ModuleCore.naquadahBlock), new ItemStack(ModuleCore.naquadahItem, 2, ItemNaquadah.DUST.ID));
+		addPulverizerRecipe(2400, new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.INGOT.ID), new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.DUST.ID));
 		addSmelterRecipe(4800, Stacks.naqIngot, new ItemStack(Item.netherQuartz, 3), Stacks.circuit);
 		addSmelterRecipe(3200, Stacks.naqDust, new ItemStack(Item.netherQuartz, 3), Stacks.circuit);
 	}

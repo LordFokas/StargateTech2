@@ -22,7 +22,7 @@ public class CoreWorldGenerator implements IWorldGenerator {
 		MinecraftForge.ORE_GEN_BUS.post(event);
 		if (event.getResult() == Result.DENY) return;
 		
-		WorldGenMinable wgm = new WorldGenMinable(ModuleCore.naquadahOre.blockID, 20);
+		WorldGenMinable wgm = new WorldGenMinable(ModuleCore.naquadahBlock.blockID, 20);
 		wgm.generate(world, random, (cX * 16) + (random.nextInt() % 16), 16 + (random.nextInt() % 20), (cZ * 16) + (random.nextInt() % 16));
 	}
 }
