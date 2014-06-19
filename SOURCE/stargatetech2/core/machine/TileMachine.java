@@ -76,6 +76,9 @@ public abstract class TileMachine extends BaseTileEntity {
 	}
 	
 	public final FaceColor getColor(int side) {
+		if(side < 0 || side >= colors.length){
+			return FaceColor.VOID;
+		}
 		return colors[side];
 	}
 	

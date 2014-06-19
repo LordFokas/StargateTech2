@@ -24,7 +24,7 @@ public class ModuleAutomation implements IContentModule {
 
 	@Override
 	public void postInit(){
-		GameRegistry.addShapedRecipe(new ItemStack(busCable, 8), "WWW", "NNN", "WWW", 'N', Stacks.naqIngot, 'W', new ItemStack(Block.cloth, 1, OreDictionary.WILDCARD_VALUE));
+		GameRegistry.addShapedRecipe(new ItemStack(busCable, 32), "WWW", "NNN", "WWW", 'N', Stacks.naqIngot, 'W', new ItemStack(Block.cloth, 1, OreDictionary.WILDCARD_VALUE));
 		StargateTech2.proxy.registerRenderers(Module.AUTOMATION);
 	}
 
