@@ -8,6 +8,7 @@ import stargatetech2.core.reference.ModReference;
 public class ItemBlockNaquadah extends ItemBlock {
 	public ItemBlockNaquadah(int id) {
 		super(id);
+		setHasSubtypes(true);
 	}
 	
 	@Override
