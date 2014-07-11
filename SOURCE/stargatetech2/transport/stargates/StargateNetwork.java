@@ -255,6 +255,10 @@ public class StargateNetwork implements IStargateNetwork{
 		}
 	}
 	
+	public AddressMapping getAddressMapping(Address address) {
+		return addresses.get(address);
+	}
+	
 	@Override
 	public boolean addressExists(Address address){
 		if(isLoaded) return addresses.containsKey(address);
