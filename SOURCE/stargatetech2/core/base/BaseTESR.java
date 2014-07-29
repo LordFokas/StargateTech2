@@ -11,6 +11,7 @@ import net.minecraftforge.common.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
+import stargatetech2.core.ModuleCore;
 import stargatetech2.core.util.Vec3Int;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -25,6 +26,11 @@ public abstract class BaseTESR extends TileEntitySpecialRenderer {
 		World w = Minecraft.getMinecraft().theWorld;
 		Vec3Int pos = new Vec3Int(te.xCoord, te.yCoord, te.zCoord);
 		Block block = Block.blocksList[w.getBlockId(pos.x, pos.y, pos.z)];
+		if(block == null){
+			// Fallback to a known block instance in case
+			// rendering starts before the world fully loads.
+			block = ModuleCore.naquadahBlock;
+		}
 		tessellator = Tessellator.instance;
 		GL11.glPushMatrix();
 		GL11.glTranslated(x+0.5D, y, z+0.5D);
