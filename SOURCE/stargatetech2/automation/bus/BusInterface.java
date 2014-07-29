@@ -66,6 +66,9 @@ public final class BusInterface implements IBusInterface{
 			TileEntity te = w.getBlockTileEntity(addr.x, addr.y, addr.z);
 			if(te instanceof IBusDevice){
 				IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(addr.w);
+				if(interfaces == null){
+					continue;
+				}
 				for(IBusInterface i : interfaces){
 					if(i instanceof BusInterface && !memory.contains(i)){
 						((BusInterface)i).recvPacket(packet);
