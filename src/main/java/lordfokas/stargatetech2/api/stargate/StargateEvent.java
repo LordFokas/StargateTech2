@@ -1,13 +1,12 @@
 package lordfokas.stargatetech2.api.stargate;
 
+import cpw.mods.fml.common.eventhandler.Cancelable;
+import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.world.World;
-import net.minecraftforge.event.Cancelable;
-import net.minecraftforge.event.Event;
 
 public abstract class StargateEvent extends Event {
 
 	private static abstract class PhysicalGateEvent extends StargateEvent {
-		
 		public final Address address;
 		public final World world;
 		public final int xCoord;

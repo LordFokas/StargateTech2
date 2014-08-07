@@ -1,8 +1,8 @@
 package lordfokas.stargatetech2.api.world;
 
 import net.minecraft.world.World;
-import net.minecraftforge.event.Event;
-import net.minecraftforge.event.Event.HasResult;
+import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.Event.HasResult;
 
 @HasResult
 public class EventWorldGen extends Event {

@@ -86,8 +86,9 @@ public class ShieldPermissions {
 	public boolean isEntityAllowed(Entity entity, boolean doDismount, String owner){
 		boolean allow = false;
 		if(entity instanceof EntityPlayer){
+			EntityPlayer player = (EntityPlayer) entity;
 			if(CoFHFriendHelper.isSystemEnabled()){
-				if(CoFHFriendHelper.isFriend(entity.getEntityName(), owner)){
+				if(CoFHFriendHelper.isFriend(player.getDisplayName(), owner)){
 					allow = hasBit(PERM_FRIEND);
 				}else{
 					allow = hasBit(PERM_PLAYER);
@@ -95,7 +96,7 @@ public class ShieldPermissions {
 			}else{
 				allow = hasBit(PERM_PLAYER);
 			}
-			if(playerExceptions.contains(entity.getEntityName())){
+			if(playerExceptions.contains(player.getDisplayName())){
 				allow = !allow;
 			}
 		}else if(entity instanceof EntityVillager){
