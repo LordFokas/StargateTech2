@@ -1,13 +1,14 @@
 package lordfokas.stargatetech2.core.item;
 
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import lordfokas.stargatetech2.core.block.BlockNaquadah;
 import lordfokas.stargatetech2.core.reference.ModReference;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 
 public class ItemBlockNaquadah extends ItemBlock {
-	public ItemBlockNaquadah(int id) {
-		super(id);
+	public ItemBlockNaquadah(Block b) {
+		super(b);
 		setHasSubtypes(true);
 	}
 	

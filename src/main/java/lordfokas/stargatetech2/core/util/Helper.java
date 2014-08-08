@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class Helper {
 	public static ForgeDirection yaw2dir(float yaw, float pitch, boolean vertical){

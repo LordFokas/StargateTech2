@@ -7,7 +7,7 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Mouse;
@@ -319,7 +319,7 @@ public abstract class BaseGUI extends GuiContainer {
 			}else{
 				onKeyTyped(key, code);
 			}
-		}else if(code == 1 || code == mc.gameSettings.keyBindInventory.keyCode){
+		}else if(code == 1 || code == mc.gameSettings.keyBindInventory.getKeyCode()){
 			this.mc.thePlayer.closeScreen();
 		}
 	}
@@ -391,7 +391,7 @@ public abstract class BaseGUI extends GuiContainer {
 			drawLocalQuad(-4-sx, off + 18+sy, tx + 3, tx + 13, ty + 13, ty + 16, sx, 3);
 			drawLocalQuad(-4-sx, off + 18, tx + 3, tx + 13, ty + 3, ty + 13, sx, sy);
 			GL11.glDisable(GL11.GL_LIGHTING); // TODO: get rid of this workaround AFTER mc stops fucking up OGL state.
-			itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, wrapper.tab.getIcon(), guiLeft-sx+5, guiTop+27+off);
+			itemRender.renderItemAndEffectIntoGUI(fontRendererObj, mc.renderEngine, wrapper.tab.getIcon(), guiLeft-sx+5, guiTop+27+off);
 			if(wrapper.isExpanded()){
 				drawLeft(wrapper.tab.getName(), guiLeft-sx+16, guiTop+24+off, 0x555555);
 				drawLeft(wrapper.tab.getName(), guiLeft-sx+15, guiTop+23+off, 0xFFFFFF);
@@ -428,7 +428,7 @@ public abstract class BaseGUI extends GuiContainer {
 	protected void drawBackground(){}
 	protected void drawForeground(){}
 	
-	public final void drawIcon(float x, float y, Icon icon, ResourceLocation map, int size){
+	public final void drawIcon(float x, float y, IIcon icon, ResourceLocation map, int size){
 		mc.renderEngine.bindTexture(map);
 		drawQuad(x, y, icon.getMinU(), icon.getMaxU(), icon.getMinV(), icon.getMaxV(), size, size);
 	}
@@ -480,15 +480,15 @@ public abstract class BaseGUI extends GuiContainer {
 		x += 9 + _xoff;
 		y += 9 + _yoff;
 		GL11.glDisable(GL11.GL_LIGHTING); // TODO: get rid of this workaround AFTER mc stops fucking up OGL state.
-		fontRenderer.drawString(s, x, y, color);
+		fontRendererObj.drawString(s, x, y, color);
 	}
 	
 	public final void drawRight(String s, int x, int y, int color){
-		drawLeft(s, x - fontRenderer.getStringWidth(s), y, color);
+		drawLeft(s, x - fontRendererObj.getStringWidth(s), y, color);
 	}
 	
 	public final void drawCentered(String s, int xMid, int y, int color){
-		drawLeft(s, xMid - fontRenderer.getStringWidth(s) / 2, y, color);
+		drawLeft(s, xMid - fontRendererObj.getStringWidth(s) / 2, y, color);
 	}
 	
 	public final void drawHover(int x, int y, String ... lines){
@@ -496,7 +496,7 @@ public abstract class BaseGUI extends GuiContainer {
 	}
 	
 	public final void drawHover(List<String> lines, int x, int y){
-		drawHoveringText(lines, x, y, fontRenderer);
+		drawHoveringText(lines, x, y, fontRendererObj);
 	}
 	
 	public final void drawFrame(FaceColor color, int xPos, int yPos, int xSize, int ySize){
@@ -535,7 +535,7 @@ public abstract class BaseGUI extends GuiContainer {
 	}
 	
 	public final void drawStack(ItemStack stack, int x, int y){
-		itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.getTextureManager(), stack, x + 9 + _xoff, y + 9 + _yoff);
+		itemRender.renderItemAndEffectIntoGUI(fontRendererObj, mc.getTextureManager(), stack, x + 9 + _xoff, y + 9 + _yoff);
 	}
 	
 	public final void drawToggle(Toggle toggle, int x, int y){

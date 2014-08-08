@@ -6,10 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public abstract class BaseTileEntity extends TileEntity {
 	

@@ -2,10 +2,6 @@ package lordfokas.stargatetech2;
 
 import java.util.List;
 
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.IContentModule.Module;
 import lordfokas.stargatetech2.automation.rendering.RenderBusCable;
 import lordfokas.stargatetech2.core.base.BaseISBRH;
@@ -20,8 +16,11 @@ import lordfokas.stargatetech2.transport.tileentity.TileStargate;
 import lordfokas.stargatetech2.transport.tileentity.TileTransportRing;
 import lordfokas.stargatetech2.transport.util.RingKeyHandler;
 import lordfokas.stargatetech2.world.rendering.RenderLanteanWall;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;

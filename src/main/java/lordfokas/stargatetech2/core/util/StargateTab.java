@@ -1,6 +1,7 @@
 package lordfokas.stargatetech2.core.util;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import lordfokas.stargatetech2.transport.ModuleTransport;
 
@@ -20,5 +21,10 @@ public class StargateTab extends CreativeTabs {
 	@Override
 	public ItemStack getIconItemStack(){
 		return new ItemStack(ModuleTransport.stargate, 1);
+	}
+
+	@Override
+	public Item getTabIconItem() {
+		return null;
 	}
 }

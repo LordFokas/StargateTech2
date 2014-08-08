@@ -2,7 +2,7 @@ package lordfokas.stargatetech2.core.machine;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import lordfokas.stargatetech2.core.base.BaseISBRH;
 import lordfokas.stargatetech2.core.reference.TextureReference;
@@ -19,13 +19,13 @@ public class RenderBlockMachine extends BaseISBRH {
 	public boolean renderWorldBlock(IBlockAccess w, int x, int y, int z, Block block, int modelId, RenderBlocks renderer){
 		BlockMachine machine = (BlockMachine) block;
 		int metadata = w.getBlockMetadata(x, y, z);
-		Icon mside = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
-		Icon msidei = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE_I);
-		Icon mtop = IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP);
-		Icon mtopi = IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP_I);
-		Icon mbot = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
-		Icon mboti = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM_I);
-		Icon[] map = new Icon[6];
+		IIcon mside = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
+		IIcon msidei = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE_I);
+		IIcon mtop = IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP);
+		IIcon mtopi = IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP_I);
+		IIcon mbot = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
+		IIcon mboti = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM_I);
+		IIcon[] map = new IIcon[6];
 		FaceColor[] colors = machine.getTextureMap(w, x, y, z);
 		colors[metadata] = FaceColor.VOID;
 		for(int face = 0; face < 6; face++){

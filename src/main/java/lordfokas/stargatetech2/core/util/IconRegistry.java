@@ -3,20 +3,20 @@ package lordfokas.stargatetech2.core.util;
 import java.util.HashMap;
 
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import lordfokas.stargatetech2.core.reference.ModReference;
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import lordfokas.stargatetech2.enemy.util.IonizedParticles;
 import lordfokas.stargatetech2.integration.plugins.tico.MoltenNaquadah;
 
 public class IconRegistry {
-	public static final HashMap<String, Icon> blockIcons = new HashMap<String, Icon>();
-	public static final HashMap<String, Icon> itemIcons = new HashMap<String, Icon>();
+	public static final HashMap<String, IIcon> blockIcons = new HashMap<String, IIcon>();
+	public static final HashMap<String, IIcon> itemIcons = new HashMap<String, IIcon>();
 	
 	public static void load(TextureMap map){
-		if(map.textureType == 0){
+		if(map.getTextureType() == 0){
 			loadTerrain(map);
-		} else if(map.textureType == 1) {
+		} else if(map.getTextureType() == 1) {
 			loadItems(map);
 		}
 	}
@@ -35,7 +35,7 @@ public class IconRegistry {
 		}
 	}
 	
-	private static void load(String texture, TextureMap map, HashMap<String, Icon> iconList){
+	private static void load(String texture, TextureMap map, HashMap<String, IIcon> iconList){
 		iconList.put(texture, map.registerIcon(ModReference.MOD_ID + ":" + texture));
 	}
 }

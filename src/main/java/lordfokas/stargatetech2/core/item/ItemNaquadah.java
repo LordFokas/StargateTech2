@@ -4,8 +4,9 @@ import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import lordfokas.stargatetech2.core.base.BaseItem;
 import lordfokas.stargatetech2.core.reference.ItemReference;
 import lordfokas.stargatetech2.core.reference.ModReference;
@@ -40,14 +41,14 @@ public class ItemNaquadah extends BaseItem{
 	}
 	
 	@Override
-	public Icon getIconFromDamage(int meta){
+	public IIcon getIconFromDamage(int meta){
 		return IconRegistry.itemIcons.get(DATA[meta].name);
 	}
 	
 	@Override
-	public void getSubItems(int id, CreativeTabs tab, List list){
+	public void getSubItems(Item item, CreativeTabs tab, List list){
 		for(int i = 0; i < DATA.length; i++){
-			list.add(new ItemStack(id, 1, i));
+			list.add(new ItemStack(this, 1, i));
 		}
 	}
 	

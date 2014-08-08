@@ -3,7 +3,7 @@ package lordfokas.stargatetech2.core.base;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
@@ -36,6 +36,11 @@ public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 	}
 	
 	@Override
+	public boolean shouldRender3DInInventory(int modelId) {
+		return true;
+	}
+	
+	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer){
 		block.setBlockBoundsForItemRender();
 		renderInventoryCuboid(block, metadata, renderer);
@@ -45,12 +50,7 @@ public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public abstract boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer);
-
-	@Override
-	public boolean shouldRender3DInInventory(){
-		return true;
-	}
-
+	
 	@Override
 	public int getRenderId(){
 		return renderID;
@@ -65,7 +65,7 @@ public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 	}
 	
 	protected final void renderInventoryCuboid(Block block, int meta, RenderBlocks renderer){
-		Icon[] tmap = new Icon[6];
+		IIcon[] tmap = new IIcon[6];
 		for(int i = 0; i < 6; i++){
 			tmap[i] = block.getIcon(i, meta);
 		}

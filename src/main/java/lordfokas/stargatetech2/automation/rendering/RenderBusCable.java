@@ -1,15 +1,15 @@
 package lordfokas.stargatetech2.automation.rendering;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.util.Icon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.ForgeDirection;
 import lordfokas.stargatetech2.automation.block.BlockBusCable;
 import lordfokas.stargatetech2.automation.bus.Connection;
 import lordfokas.stargatetech2.core.base.BaseISBRH;
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import lordfokas.stargatetech2.core.util.IconRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class RenderBusCable extends BaseISBRH {
 	private static final RenderBusCable INSTANCE = new RenderBusCable();
@@ -26,7 +26,7 @@ public class RenderBusCable extends BaseISBRH {
 		renderer.setRenderBounds(F05, F05, F05, F11, F11, F11);
 		renderer.renderStandardBlock(cable, x, y, z);
 		Connection x0, x1, y0, y1, z0, z1;
-		Icon plug = IconRegistry.blockIcons.get(TextureReference.BUS_CABLE_PLUG);
+		IIcon plug = IconRegistry.blockIcons.get(TextureReference.BUS_CABLE_PLUG);
 		y0 = cable.getBusConnection(world, x, y, z, ForgeDirection.DOWN);
 		if(y0.isConnected()){
 			renderer.setRenderBounds(F05, 0, F05, F11, F05, F11);

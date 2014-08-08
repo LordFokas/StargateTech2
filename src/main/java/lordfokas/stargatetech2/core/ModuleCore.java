@@ -48,11 +48,11 @@ public final class ModuleCore implements IContentModule{
 		MinecraftForge.EVENT_BUS.register(new CoreEventHandler());
 		StargateTech2.proxy.registerLanguages();
 		StargateTech2.proxy.registerRenderers(Module.CORE);
-		GameRegistry.registerWorldGenerator(new CoreWorldGenerator());
+		GameRegistry.registerWorldGenerator(new CoreWorldGenerator(), 0);
 		ChunkLoader.register();
 		
-		FurnaceRecipes.smelting().addSmelting(naquadahBlock.blockID, BlockNaquadah.ORE, Stacks.naqIngot, 0);
-		FurnaceRecipes.smelting().addSmelting(naquadahItem.itemID, ItemNaquadah.DUST.ID, Stacks.naqIngot, 0);
+		FurnaceRecipes.smelting().func_151394_a(new ItemStack(naquadahBlock, BlockNaquadah.ORE), Stacks.naqIngot, 0);
+		FurnaceRecipes.smelting().func_151394_a(new ItemStack(naquadahItem, ItemNaquadah.DUST.ID), Stacks.naqIngot, 0);
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "CGC", "NRN", 'N', Stacks.naqPlate, 'C', Stacks.circuit, 'G', Stacks.glass, 'R', Stacks.redDust);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', Stacks.naqIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.COIL_NAQ.ID), "--R", "-N-", "R--", 'R', Stacks.redDust, 'N', Stacks.naqIngot);

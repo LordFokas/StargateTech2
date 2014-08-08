@@ -2,19 +2,22 @@ package lordfokas.stargatetech2.core.block;
 
 import java.util.List;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
+import javax.swing.Icon;
+
 import lordfokas.stargatetech2.core.base.BaseBlock;
 import lordfokas.stargatetech2.core.item.ItemBlockNaquadah;
 import lordfokas.stargatetech2.core.reference.BlockReference;
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import lordfokas.stargatetech2.core.rendering.RenderNaquadah;
 import lordfokas.stargatetech2.core.util.IconRegistry;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockNaquadah extends BaseBlock {
@@ -34,13 +37,13 @@ public class BlockNaquadah extends BaseBlock {
 	}
 	
 	@Override
-	public void getSubBlocks(int id, CreativeTabs tab, List list){
-		list.add(new ItemStack(id, 1, ORE));
-		list.add(new ItemStack(id, 1, BLOCK));
+	public void getSubBlocks(Item i, CreativeTabs tab, List list){
+		list.add(new ItemStack(this, 1, ORE));
+		list.add(new ItemStack(this, 1, BLOCK));
 	}
 	
 	@Override
-	public Icon getBaseIcon(int side, int meta){
+	public IIcon getBaseIcon(int side, int meta){
 		return meta != 0 ? blockIcon : IconRegistry.blockIcons.get(TextureReference.NAQUADAH_ORE);
 	}
 	

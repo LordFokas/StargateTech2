@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import lordfokas.stargatetech2.StargateTech2;
@@ -16,7 +16,7 @@ import lordfokas.stargatetech2.core.util.StargateTab;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BaseBlock extends Block{
-	protected Icon[] iconOverride;
+	protected IIcon[] iconOverride;
 	protected boolean isOverride = false;
 	private boolean isAbstractBus = false;
 	private String unlocalized;
@@ -30,9 +30,10 @@ public class BaseBlock extends Block{
 	}
 	
 	public BaseBlock(String uName, boolean breakable, Material material){
-		super(StargateTech2.config.getBlockID(uName), material);
+		super(material);
+		// StargateTech2.config.getBlockID(uName)
 		unlocalized = uName;
-		this.setTextureName(ModReference.MOD_ID + ":" + uName);
+		this.setBlockTextureName(ModReference.MOD_ID + ":" + uName);
 		if(!breakable){
 			this.setBlockUnbreakable();
 			this.setResistance(20000000F);
@@ -58,7 +59,7 @@ public class BaseBlock extends Block{
 		GameRegistry.registerBlock(this, getUnlocalizedName());
 	}
 	
-	public void setOverride(Icon[] icons){
+	public void setOverride(IIcon[] icons){
 		iconOverride = icons;
 		isOverride = true;
 	}
@@ -74,13 +75,13 @@ public class BaseBlock extends Block{
 	}
 	
 	@Override
-	public void breakBlock(World w, int x, int y, int z, int i, int m){
-		super.breakBlock(w, x, y, z, i, m);
+	public void breakBlock(World w, int x, int y, int z, Block b, int m){
+		super.breakBlock(w, x, y, z, b, m);
 		if(isAbstractBus) MinecraftForge.EVENT_BUS.post(new BusEvent.RemoveFromNetwork(w, x, y, z));
 	}
 	
 	@Override
-	public final Icon getIcon(int side, int meta){
+	public final IIcon getIcon(int side, int meta){
 		if(isOverride){
 			return iconOverride[side];
 		}else{
@@ -88,7 +89,7 @@ public class BaseBlock extends Block{
 		}
 	}
 	
-	public Icon getBaseIcon(int side, int meta){
+	public IIcon getBaseIcon(int side, int meta){
 		return blockIcon;
 	}
 	

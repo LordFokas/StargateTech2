@@ -1,15 +1,15 @@
 package lordfokas.stargatetech2.enemy.util;
 
+import lordfokas.stargatetech2.enemy.ModuleEnemy;
+import lordfokas.stargatetech2.enemy.item.ItemPersonalShield;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import lordfokas.stargatetech2.enemy.ModuleEnemy;
-import lordfokas.stargatetech2.enemy.item.ItemPersonalShield;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EnemyEventHandler {
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onPlayerDamaged(LivingHurtEvent evt){
 		try{
 			ItemPersonalShield shield = ModuleEnemy.personalShield;

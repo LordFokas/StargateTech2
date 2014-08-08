@@ -1,6 +1,8 @@
 package lordfokas.stargatetech2.core.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import lordfokas.stargatetech2.automation.ModuleAutomation;
@@ -22,18 +24,18 @@ public class Stacks {
 	public static void init(){
 		//##########################################################################################
 		// VANILLA
-		book = new ItemStack(Item.book);
-		bucket = new ItemStack(Item.bucketEmpty);
-		chest = new ItemStack(Block.chest);
-		glass = new ItemStack(Block.thinGlass);
-		glowBlock = new ItemStack(Block.glowStone);
-		glowDust = new ItemStack(Item.glowstone);
-		pearl = new ItemStack(Item.enderPearl);
-		redBlock = new ItemStack(Block.blockRedstone);
-		redDust = new ItemStack(Item.redstone);
-		slab = new ItemStack(Block.stoneSingleSlab);
-		stick = new ItemStack(Item.stick);
-		stone = new ItemStack(Block.stone);
+		book = new ItemStack(Items.book);
+		bucket = new ItemStack(Items.bucket);
+		chest = new ItemStack(Blocks.chest);
+		glass = new ItemStack(Blocks.glass_pane);
+		glowBlock = new ItemStack(Blocks.glowstone);
+		glowDust = new ItemStack(Items.glowstone_dust);
+		pearl = new ItemStack(Items.ender_pearl);
+		redBlock = new ItemStack(Blocks.redstone_block);
+		redDust = new ItemStack(Items.redstone);
+		slab = new ItemStack(Blocks.stone_slab);
+		stick = new ItemStack(Items.stick);
+		stone = new ItemStack(Blocks.stone);
 		
 		//##########################################################################################
 		// THERMAl EXPANSION 3

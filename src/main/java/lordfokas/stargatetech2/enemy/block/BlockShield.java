@@ -20,7 +20,7 @@ public class BlockShield extends BaseBlockContainer implements ITabletAccess {
 	public BlockShield() {
 		super(BlockReference.SHIELD);
 		setCreativeTab(null);
-		setLightValue(1.0F);
+		setLightLevel(1.0F);
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class BlockShield extends BaseBlockContainer implements ITabletAccess {
 	
 	@Override
 	public void addCollisionBoxesToList(World w, int x, int y, int z, AxisAlignedBB aabb, List l, Entity e){
-		TileEntity te = w.getBlockTileEntity(x, y, z);
+		TileEntity te = w.getTileEntity(x, y, z);
 		if(te instanceof TileShield){
 			ShieldPermissions permissions = ((TileShield)te).getPermissions();
 			if(!permissions.isEntityAllowed(e, true, ((TileShield)te).getOwner())){
@@ -61,7 +61,7 @@ public class BlockShield extends BaseBlockContainer implements ITabletAccess {
 
 	@Override
 	public boolean onTabletAccess(EntityPlayer player, World world, int x, int y, int z) {
-		TileEntity te = world.getBlockTileEntity(x, y, z);
+		TileEntity te = world.getTileEntity(x, y, z);
 		if(te instanceof TileShield){
 			ShieldPermissions permissions = ((TileShield)te).getPermissions();
 			String message;

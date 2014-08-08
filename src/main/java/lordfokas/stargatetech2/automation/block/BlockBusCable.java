@@ -2,15 +2,6 @@ package lordfokas.stargatetech2.automation.block;
 
 import java.util.List;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.automation.bus.BusInterface;
@@ -18,6 +9,16 @@ import lordfokas.stargatetech2.automation.bus.Connection;
 import lordfokas.stargatetech2.automation.rendering.RenderBusCable;
 import lordfokas.stargatetech2.core.base.BaseBlock;
 import lordfokas.stargatetech2.core.reference.BlockReference;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import buildcraft.api.tools.IToolWrench;
 
 public class BlockBusCable extends BaseBlock {
@@ -44,8 +45,8 @@ public class BlockBusCable extends BaseBlock {
 	}
 	
 	public Connection getBusConnection(IBlockAccess world, int x, int y, int z, ForgeDirection d){
-		if(world.getBlockId(x + d.offsetX, y + d.offsetY, z + d.offsetZ) == blockID) return Connection.CABLE;
-		TileEntity te = world.getBlockTileEntity(x + d.offsetX, y + d.offsetY, z + d.offsetZ);
+		if(world.getBlock(x + d.offsetX, y + d.offsetY, z + d.offsetZ) == this) return Connection.CABLE;
+		TileEntity te = world.getTileEntity(x + d.offsetX, y + d.offsetY, z + d.offsetZ);
 		if(te instanceof IBusDevice){
 			IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(d.getOpposite().ordinal());
 			if(interfaces == null || interfaces.length == 0) return Connection.DISCONNECTED;
@@ -66,7 +67,7 @@ public class BlockBusCable extends BaseBlock {
 			IToolWrench wrench = (IToolWrench) item;
 			if(wrench.canWrench(p, x, y, z)){
 				dropBlockAsItem(w, x, y, z, 0, 0);
-				w.setBlock(x, y, z, 0, 0, 3);
+				w.setBlock(x, y, z, Blocks.air, 0, 3);
 				wrench.wrenchUsed(p, x, y, z);
 				return true;
 			}

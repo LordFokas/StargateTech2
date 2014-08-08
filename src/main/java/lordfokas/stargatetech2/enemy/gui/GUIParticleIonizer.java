@@ -116,7 +116,7 @@ public class GUIParticleIonizer extends BaseGUI {
 				drawIcon(124, 21, fluid.getFluid().getStillIcon(), TextureMap.locationBlocksTexture, 16);
 			}
 			if(solid != null){
-				itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, mc.renderEngine, solid, 151, 30);
+				itemRender.renderItemAndEffectIntoGUI(fontRendererObj, mc.renderEngine, solid, 151, 30);
 			}
 			float fill = 1F - ((float)ticksLeft) / ((float)recipe.time);
 			this.bindBGImage();

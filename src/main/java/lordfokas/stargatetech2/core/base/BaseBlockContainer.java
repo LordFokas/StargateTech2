@@ -12,18 +12,16 @@ public abstract class BaseBlockContainer extends BaseBlock implements ITileEntit
 	protected BaseBlockContainer(String name, boolean breakable, boolean requiresTool) {
 		super(name, breakable, requiresTool);
 	}
-
-	@Override // This doesn't really get used.
-	public BaseTileEntity createNewTileEntity(World world){
-		return createTileEntity(0);
-	}
 	
 	@Override
 	public final BaseTileEntity createTileEntity(World world, int metadata){
 		return createTileEntity(metadata);
 	}
 	
-	// World is never used. At least will not be for a long time.
-	// Metadata is all I need :D
+	@Override
+	public final BaseTileEntity createNewTileEntity(World world, int metadata){
+		return createTileEntity(metadata);
+	}
+	
 	protected abstract BaseTileEntity createTileEntity(int metadata);
 }

@@ -3,7 +3,7 @@ package lordfokas.stargatetech2.core.rendering;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import lordfokas.stargatetech2.core.base.BaseISBRH;
 import lordfokas.stargatetech2.core.reference.TextureReference;
@@ -18,9 +18,9 @@ public class RenderNaquadah extends BaseISBRH {
 	
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer){
-		Icon glow;
+		IIcon glow;
 		if(world.getBlockMetadata(x, y, z) == 0){
-			Icon face = IconRegistry.blockIcons.get(TextureReference.FACE_NAQUADAH_ORE);
+			IIcon face = IconRegistry.blockIcons.get(TextureReference.FACE_NAQUADAH_ORE);
 			glow = IconRegistry.blockIcons.get(TextureReference.GLOW_NAQUADAH_ORE);
 			renderer.setOverrideBlockTexture(face);
 			renderer.renderStandardBlock(block, x, y, z);

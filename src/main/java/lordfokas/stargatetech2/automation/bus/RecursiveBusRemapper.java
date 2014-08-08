@@ -3,16 +3,15 @@ package lordfokas.stargatetech2.automation.bus;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.automation.ModuleAutomation;
 import lordfokas.stargatetech2.automation.block.BlockBusCable;
 import lordfokas.stargatetech2.core.util.Vec3Int;
 import lordfokas.stargatetech2.core.util.Vec4Int;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class RecursiveBusRemapper {
 	public static void scan(World w, Vec3Int start){
@@ -21,9 +20,9 @@ public class RecursiveBusRemapper {
 	}
 	
 	private static void scan(World w, Vec3Int start, boolean allowMachine){
-		if(Block.blocksList[w.getBlockId(start.x, start.y, start.z)] instanceof BlockBusCable){
+		if(w.getBlock(start.x, start.y, start.z) instanceof BlockBusCable){
 			scanCable(w, start);
-		}else if(w.getBlockTileEntity(start.x, start.y, start.z) instanceof IBusDevice && allowMachine){
+		}else if(w.getTileEntity(start.x, start.y, start.z) instanceof IBusDevice && allowMachine){
 			for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS){
 				scan(w, start.offset(direction), false);
 			}
@@ -46,7 +45,7 @@ public class RecursiveBusRemapper {
 			int x = device.x;
 			int y = device.y;
 			int z = device.z;
-			TileEntity te = w.getBlockTileEntity(x, y, z);
+			TileEntity te = w.getTileEntity(x, y, z);
 			if(te instanceof IBusDevice){
 				for(IBusInterface b : ((IBusDevice)te).getInterfaces(s)){
 					if(b instanceof BusInterface && !ifmemory.contains(b)){

@@ -63,7 +63,7 @@ public final class BusInterface implements IBusInterface{
 		ArrayList memory = new ArrayList();
 		World w = device.getWorld();
 		for(Vec4Int addr : addressCache){
-			TileEntity te = w.getBlockTileEntity(addr.x, addr.y, addr.z);
+			TileEntity te = w.getTileEntity(addr.x, addr.y, addr.z);
 			if(te instanceof IBusDevice){
 				IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(addr.w);
 				if(interfaces == null){
@@ -117,12 +117,12 @@ public final class BusInterface implements IBusInterface{
 			}else{
 				table.setInteger("size", tbl.size());
 				for(int j = 0; j < tbl.size(); j++){
-					table.setCompoundTag("addr"+j, tbl.get(j).toNBT());
+					table.setTag("addr"+j, tbl.get(j).toNBT());
 				}
 			}
-			data.setCompoundTag("table"+i, table);
+			data.setTag("table"+i, table);
 		}
-		nbt.setCompoundTag(tag, data);
+		nbt.setTag(tag, data);
 	}
 
 	@Override

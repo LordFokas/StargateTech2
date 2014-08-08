@@ -35,7 +35,7 @@ public class Inventory implements IInventory{
 			if(inventory[slot] != null){
 				NBTTagCompound stack = new NBTTagCompound();
 				inventory[slot].writeToNBT(stack);
-				inventoryNBT.setCompoundTag("slot_" + slot, stack);
+				inventoryNBT.setTag("slot_" + slot, stack);
 			}
 		}
 		return inventoryNBT;
@@ -91,13 +91,12 @@ public class Inventory implements IInventory{
 	// #######################################################################################
 	// These don't really matter...
 	@Override public boolean isUseableByPlayer(EntityPlayer entityplayer) { return false; }
-	@Override public void openChest(){}
-	@Override public void closeChest(){}
-	@Override public String getInvName(){ return null; }
-	@Override public boolean isInvNameLocalized() { return false; }
 	@Override public ItemStack getStackInSlotOnClosing(int slot){ return null; }
 	@Override public int getInventoryStackLimit(){ return 64; }
-	@Override public void onInventoryChanged(){}
+	@Override public boolean hasCustomInventoryName(){ return false; }
+	@Override public void markDirty(){}
+	@Override public void openInventory(){}
+	@Override public void closeInventory(){}
 	// #######################################################################################
 	
 	public boolean canInsert(){
@@ -106,5 +105,10 @@ public class Inventory implements IInventory{
 	
 	public boolean canExtract(){
 		return mode.canExtract();
+	}
+
+	@Override
+	public String getInventoryName() {
+		return "sgtech2.inventory";
 	}
 }

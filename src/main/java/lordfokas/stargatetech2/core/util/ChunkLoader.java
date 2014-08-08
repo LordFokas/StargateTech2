@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -17,7 +18,6 @@ import net.minecraftforge.common.ForgeChunkManager.LoadingCallback;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
@@ -80,7 +80,7 @@ public final class ChunkLoader implements LoadingCallback{
 		}
 	}
 	
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void forceReloadChunks(WorldEvent.Load evt){
 		if(evt.world.provider.dimensionId == 0){
 			MinecraftServer server = MinecraftServer.getServer();

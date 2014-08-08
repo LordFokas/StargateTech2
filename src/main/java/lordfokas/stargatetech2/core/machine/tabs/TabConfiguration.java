@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.core.machine.tabs;
 
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import lordfokas.stargatetech2.core.base.BaseTab;
 import lordfokas.stargatetech2.core.machine.Face;
 import lordfokas.stargatetech2.core.machine.FaceColor;
@@ -32,7 +32,7 @@ public class TabConfiguration extends BaseTab{
 		}
 	}
 	
-	private final Icon side, top, bottom;
+	private final IIcon side, top, bottom;
 	private final TileMachine machine;
 	
 	public TabConfiguration(TileMachine machine) {
@@ -57,7 +57,7 @@ public class TabConfiguration extends BaseTab{
 			if(!color.isColored()){
 				gui.drawIcon(s.x, s.y, machine.getBlockType().getIcon(i, 0), TextureMap.locationBlocksTexture, 16);
 			}else{
-				Icon icon;
+				IIcon icon;
 				switch(s.face){
 				case BOTTOM:
 					icon = bottom;

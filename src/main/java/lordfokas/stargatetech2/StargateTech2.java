@@ -2,10 +2,6 @@ package lordfokas.stargatetech2;
 
 import java.util.ArrayList;
 
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import lordfokas.stargatetech2.automation.ModuleAutomation;
 import lordfokas.stargatetech2.core.ModuleCore;
 import lordfokas.stargatetech2.core.api.APIImplementation;
@@ -20,6 +16,8 @@ import lordfokas.stargatetech2.factory.ModuleFactory;
 import lordfokas.stargatetech2.integration.ModuleIntegration;
 import lordfokas.stargatetech2.transport.ModuleTransport;
 import lordfokas.stargatetech2.world.ModuleWorld;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -29,7 +27,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

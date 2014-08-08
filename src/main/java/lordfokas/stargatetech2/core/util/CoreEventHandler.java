@@ -1,19 +1,20 @@
 package lordfokas.stargatetech2.core.util;
 
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.event.ForgeSubscribe;
 import lordfokas.stargatetech2.api.bus.BusEvent;
 import lordfokas.stargatetech2.automation.bus.RecursiveBusRemapper;
 import lordfokas.stargatetech2.enemy.ModuleEnemy;
 import lordfokas.stargatetech2.transport.ModuleTransport;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.common.util.ForgeDirection;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class CoreEventHandler {
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void remapAbstractBus(BusEvent evt){
 		if(!evt.world.isRemote){
 			if(evt instanceof BusEvent.RemoveFromNetwork){
@@ -27,13 +28,12 @@ public class CoreEventHandler {
 		}
 	}
 	
-	@ForgeSubscribe
+	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void handleBlockHighlight(DrawBlockHighlightEvent evt){
 		MovingObjectPosition mop = evt.target;
-		World world = evt.context.theWorld;
-		int blockID = world.getBlockId(mop.blockX, mop.blockY, mop.blockZ);
-		if(blockID == ModuleEnemy.shield.blockID || blockID == ModuleTransport.invisible.blockID){
+		Block b = Minecraft.getMinecraft().theWorld.getBlock(mop.blockX, mop.blockY, mop.blockZ);
+		if(b == ModuleEnemy.shield || b == ModuleTransport.invisible){
 			evt.setCanceled(true);
 		}
 	}

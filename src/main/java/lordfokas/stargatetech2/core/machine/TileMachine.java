@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.core.machine;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
 import lordfokas.stargatetech2.core.packet.PacketUpdateMachineColors;
 
@@ -94,13 +94,13 @@ public abstract class TileMachine extends BaseTileEntity {
 			update.y = yCoord;
 			update.z = zCoord;
 			update.sendToAllInDim(worldObj.provider.dimensionId);
-			worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType().blockID);
+			worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType());
 		}
 	}
 	
 	public final void updateColors(FaceColor[] colors){
 		this.colors = colors;
-		worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 	
 	protected final NBTTagCompound writeFacingNBT(){

@@ -1,10 +1,5 @@
 package lordfokas.stargatetech2.enemy.block;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import lordfokas.stargatetech2.core.machine.BlockMachine;
 import lordfokas.stargatetech2.core.machine.TileMachine;
 import lordfokas.stargatetech2.core.reference.BlockReference;
@@ -13,6 +8,11 @@ import lordfokas.stargatetech2.core.util.IconRegistry;
 import lordfokas.stargatetech2.core.util.Vec3Int;
 import lordfokas.stargatetech2.enemy.tileentity.TileShieldEmitter;
 import lordfokas.stargatetech2.enemy.util.IShieldControllerProvider;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockShieldEmitter extends BlockMachine{
 
@@ -29,7 +29,7 @@ public class BlockShieldEmitter extends BlockMachine{
 			int sy = y + fd.offsetY;
 			int sz = z + fd.offsetZ;
 			if(sy >= 0 && sy < w.getActualHeight()){ // make sure we're within vertical world bounds;
-				TileEntity te = w.getBlockTileEntity(sx, sy, sz);
+				TileEntity te = w.getTileEntity(sx, sy, sz);
 				if(te instanceof IShieldControllerProvider){
 					Vec3Int c = ((IShieldControllerProvider)te).getShieldControllerCoords();
 					if(controller == null) controller = c; // make sure we always have a controller;
@@ -42,14 +42,14 @@ public class BlockShieldEmitter extends BlockMachine{
 	
 	@Override
 	protected void onPlacedBy(World w, int x, int y, int z, EntityPlayer player, ForgeDirection facing){
-		TileEntity te = w.getBlockTileEntity(x, y, z);
+		TileEntity te = w.getTileEntity(x, y, z);
 		if(te instanceof TileShieldEmitter){ // the power of copy-pasta. TODO: clean this mess.
 			for(ForgeDirection fd : ForgeDirection.VALID_DIRECTIONS){
 				int sx = x + fd.offsetX;
 				int sy = y + fd.offsetY;
 				int sz = z + fd.offsetZ;
 				if(sy >= 0 && sy < w.getActualHeight()){ // make sure we're within vertical world bounds;
-					TileEntity prvdr = w.getBlockTileEntity(sx, sy, sz);
+					TileEntity prvdr = w.getTileEntity(sx, sy, sz);
 					if(prvdr instanceof IShieldControllerProvider){
 						Vec3Int controller = ((IShieldControllerProvider)prvdr).getShieldControllerCoords();
 						if(controller != null){
@@ -65,7 +65,7 @@ public class BlockShieldEmitter extends BlockMachine{
 	}
 	
 	@Override
-	public Icon getFaceForMeta(int meta){
+	public IIcon getFaceForMeta(int meta){
 		if(meta == 0) return IconRegistry.blockIcons.get(TextureReference.SHIELD_EMITTER_B);
 		if(meta == 1) return IconRegistry.blockIcons.get(TextureReference.SHIELD_EMITTER_T);
 		return super.getFaceForMeta(meta);

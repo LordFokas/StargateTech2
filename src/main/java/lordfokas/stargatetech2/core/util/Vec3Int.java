@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.core.util;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class Vec3Int {
 	public final int x, y, z;

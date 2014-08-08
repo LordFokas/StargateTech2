@@ -1,12 +1,12 @@
 package lordfokas.stargatetech2.core.item;
 
+import lordfokas.stargatetech2.api.ITabletAccess;
+import lordfokas.stargatetech2.core.base.BaseItem;
+import lordfokas.stargatetech2.core.reference.ItemReference;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import lordfokas.stargatetech2.api.ITabletAccess;
-import lordfokas.stargatetech2.core.base.BaseItem;
-import lordfokas.stargatetech2.core.reference.ItemReference;
 
 public class ItemTabletPC extends BaseItem {
 
@@ -16,7 +16,7 @@ public class ItemTabletPC extends BaseItem {
 	
 	@Override
 	public boolean onItemUseFirst(ItemStack s, EntityPlayer p, World w, int x, int y, int z, int d, float a, float b, float c){
-		Block block = Block.blocksList[w.getBlockId(x, y, z)];
+		Block block = w.getBlock(x, y, z);
 		if(block instanceof ITabletAccess){
 			return ((ITabletAccess)block).onTabletAccess(p, w, x, y, z);
 		}

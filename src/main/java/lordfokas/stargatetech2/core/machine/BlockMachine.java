@@ -1,15 +1,16 @@
 package lordfokas.stargatetech2.core.machine;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.core.base.BaseBlockContainer;
 import lordfokas.stargatetech2.core.reference.TextureReference;
@@ -45,12 +46,12 @@ public abstract class BlockMachine extends BaseBlockContainer {
 		return RenderBlockMachine.instance().getRenderId();
 	}
 	
-	public Icon getFaceForMeta(int meta){
+	public IIcon getFaceForMeta(int meta){
 		return getBaseIcon(3, 0);
 	}
 	
 	@Override
-	public Icon getBaseIcon(int side, int meta){
+	public IIcon getBaseIcon(int side, int meta){
 		switch(side){
 			case 0: return IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
 			case 1: return IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP);
@@ -67,7 +68,7 @@ public abstract class BlockMachine extends BaseBlockContainer {
 			IToolWrench wrench = (IToolWrench) item;
 			if(wrench.canWrench(p, x, y, z)){
 				dropBlockAsItem(w, x, y, z, 0, 0);
-				w.setBlock(x, y, z, 0, 0, 3);
+				w.setBlock(x, y, z, (Block) Block.blockRegistry.getObjectById(0), 0, 3);
 				wrench.wrenchUsed(p, x, y, z);
 				return true;
 			}
@@ -79,7 +80,7 @@ public abstract class BlockMachine extends BaseBlockContainer {
 	}
 	
 	protected final boolean canPlayerAccess(EntityPlayer player, World world, int x, int y, int z){
-		TileEntity te = world.getBlockTileEntity(x, y, z);
+		TileEntity te = world.getTileEntity(x, y, z);
 		if(te instanceof IOwnedMachine){
 			return ((IOwnedMachine)te).hasAccess(player.getDisplayName());
 		}else{
@@ -92,7 +93,7 @@ public abstract class BlockMachine extends BaseBlockContainer {
 		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw, living.rotationPitch, useVertical);
 		w.setBlockMetadataWithNotify(x, y, z, dir.ordinal(), 2);
 		if(living instanceof EntityPlayer){
-			TileEntity te = w.getBlockTileEntity(x, y, z);
+			TileEntity te = w.getTileEntity(x, y, z);
 			if(te instanceof IOwnedMachine){
 				((IOwnedMachine)te).setOwner(((EntityPlayer)living).getDisplayName());
 			}
@@ -103,7 +104,7 @@ public abstract class BlockMachine extends BaseBlockContainer {
 	protected void onPlacedBy(World w, int x, int y, int z, EntityPlayer player, ForgeDirection facing){}
 	
 	public final FaceColor[] getTextureMap(IBlockAccess w, int x, int y, int z){
-		TileEntity te = w.getBlockTileEntity(x, y, z);
+		TileEntity te = w.getTileEntity(x, y, z);
 		FaceColor[] map = new FaceColor[]{FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID};
 		if(te instanceof TileMachine){
 			TileMachine machine = (TileMachine) te;

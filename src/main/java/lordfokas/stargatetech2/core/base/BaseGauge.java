@@ -3,7 +3,7 @@ package lordfokas.stargatetech2.core.base;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
@@ -70,7 +70,7 @@ public abstract class BaseGauge implements IGauge{
 			float fill = ((float)cVal) / ((float)mVal);
 			FluidStack fs = tank.getFluid();
 			if(fs != null){
-				Icon icon = fs.getFluid().getIcon();
+				IIcon icon = fs.getFluid().getIcon();
 				bindImage(TextureMap.locationBlocksTexture);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				if(fill > 0.75F) master.drawQuad(xPos, yPos,	icon.getMinU(), icon.getMaxU(), icon.getMinV(), icon.getMaxV(), 16, 16);
