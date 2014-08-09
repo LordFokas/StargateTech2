@@ -25,7 +25,7 @@ public class RenderStargateBlock extends BaseISBRH {
 	}
 	
 	@Override
-	public boolean shouldRender3DInInventory(){
+	public boolean shouldRender3DInInventory(int modelId){
 		return false;
 	}
 }

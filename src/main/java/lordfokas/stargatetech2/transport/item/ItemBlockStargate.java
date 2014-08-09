@@ -1,16 +1,16 @@
 package lordfokas.stargatetech2.transport.item;
 
+import lordfokas.stargatetech2.core.util.Helper;
+import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
+import lordfokas.stargatetech2.transport.tileentity.TileStargate;
+import lordfokas.stargatetech2.world.worldgen.lists.StargateBuildList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import lordfokas.stargatetech2.core.util.Helper;
-import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
-import lordfokas.stargatetech2.transport.tileentity.TileStargate;
-import lordfokas.stargatetech2.world.worldgen.lists.StargateBuildList;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemBlockStargate extends ItemBlock {
 	public static ItemBlockStargate instance;
@@ -45,7 +45,7 @@ public class ItemBlockStargate extends ItemBlock {
 		}
 		builder.buildStargate(w, x, y, z);
 		w.setBlockMetadataWithNotify(x, y, z, ROTATIONS[dir.ordinal() - 2], 2);
-		TileEntity te = w.getBlockTileEntity(x, y, z);
+		TileEntity te = w.getTileEntity(x, y, z);
 		((TileStargate)te).setDirectionX(isX);
 		return true;
 	}

@@ -2,7 +2,6 @@ package lordfokas.stargatetech2.transport.packet;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.EnumChatFormatting;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.ITileStargate;
