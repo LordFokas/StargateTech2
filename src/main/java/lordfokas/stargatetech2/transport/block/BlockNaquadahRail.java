@@ -7,6 +7,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -31,8 +32,8 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	private boolean useSuperClassRenderer = false;
 	
 	public BlockNaquadahRail() {
-		super(StargateTech2.config.getBlockID(BlockReference.NAQUADAH_RAIL), false);
-		this.setTextureName(ModReference.MOD_ID + ":" + BlockReference.NAQUADAH_RAIL);
+		super(false);
+		this.setBlockTextureName(ModReference.MOD_ID + ":" + BlockReference.NAQUADAH_RAIL);
 		this.setCreativeTab(StargateTab.instance);
 		this.setBlockUnbreakable();
 		this.setResistance(20000000F);
@@ -79,7 +80,7 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 			boolean isShielded = (w.getBlockMetadata(x,y,z) & 8) != 0;
 			if(wrench.canWrench(p, x, y, z) && !isShielded){
 				dropBlockAsItem(w, x, y, z, 0, 0);
-				w.setBlock(x, y, z, 0, 0, 3);
+				w.setBlock(x, y, z, Blocks.air, 0, 3);
 				wrench.wrenchUsed(p, x, y, z);
 				return true;
 			}
@@ -88,12 +89,12 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	}
 	
 	@Override
-	public boolean canMakeSlopes(World world, int x, int y, int z){
+	public boolean canMakeSlopes(IBlockAccess world, int x, int y, int z){
 		return false;
 	}
 	
 	@Override
-	public boolean isFlexibleRail(World world, int y, int x, int z){
+	public boolean isFlexibleRail(IBlockAccess world, int y, int x, int z){
 		return false;
 	}
 	
@@ -104,7 +105,7 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	
 	@Override
 	public void onShield(World world, int x, int y, int z, int px, int py, int pz) {
-		TileEntity te = world.getBlockTileEntity(x, y, z);
+		TileEntity te = world.getTileEntity(x, y, z);
 		if(te instanceof TileShield){
 			((TileShield)te).setController(new Vec3Int(px, py, pz));
 			int meta = world.getBlockMetadata(x, y, z);
@@ -119,18 +120,18 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	}
 
 	@Override
-	public TileShield createNewTileEntity(World world) {
+	public TileShield createNewTileEntity(World world, int meta) {
 		return new TileShield();
 	}
 	
 	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World w, int x, int y, int z){
-		return AxisAlignedBB.getAABBPool().getAABB(x, y, z, x+1, y+1, z+1);
+		return AxisAlignedBB.getBoundingBox(x, y, z, x+1, y+1, z+1);
 	}
 	
 	@Override
 	public void addCollisionBoxesToList(World w, int x, int y, int z, AxisAlignedBB aabb, List l, Entity e){
-		TileEntity te = w.getBlockTileEntity(x, y, z);
+		TileEntity te = w.getTileEntity(x, y, z);
 		if(te instanceof TileShield){
 			TileShieldController controller = ((TileShield)te).getController();
 			if(controller == null || !controller.isShieldOn()) return;

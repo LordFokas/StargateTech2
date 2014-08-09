@@ -44,7 +44,7 @@ public class PacketWormhole extends PacketCoordinates {
 		type = input.readByte();
 		switch(type){
 			case SYNC_REQUEST:
-				TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
+				TileEntity te = player.worldObj.getTileEntity(x, y, z);
 				if(te instanceof TileStargate){
 					PacketWormhole response = sendSync(x, y, z, ((TileStargate)te).hasActiveWormhole());
 					response.sendToPlayer(player);
@@ -53,7 +53,7 @@ public class PacketWormhole extends PacketCoordinates {
 			case SYNC_INACTIVE:
 			case SYNC_ACTIVE:
 				boolean active = (type == SYNC_ACTIVE);
-				TileEntity sg = player.worldObj.getBlockTileEntity(x, y, z);
+				TileEntity sg = player.worldObj.getTileEntity(x, y, z);
 				if(sg instanceof TileStargate){
 					((TileStargate)sg).setHasWormhole(active);
 				}

@@ -18,7 +18,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.DialError;
@@ -33,6 +32,7 @@ import lordfokas.stargatetech2.core.util.Helper;
 import lordfokas.stargatetech2.core.util.StargateLogger;
 import lordfokas.stargatetech2.transport.tileentity.TileStargate;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class StargateNetwork implements IStargateNetwork{
 	private static final StargateNetwork INSTANCE = new StargateNetwork();
@@ -59,7 +59,7 @@ public class StargateNetwork implements IStargateNetwork{
 		saveTime = 0;
 	}
 	
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void save(WorldEvent.Save event){
 		long newSaveTime = System.currentTimeMillis();
 		if(newSaveTime > saveTime + MIN_SAVE_INTERVAL_MS){
@@ -133,8 +133,8 @@ public class StargateNetwork implements IStargateNetwork{
 				long srcChunks = ChunkLoader.load9Chunks(srcworld, srcmap.getXCoord() >> 4, srcmap.getZCoord() >> 4);
 				long dstChunks = ChunkLoader.load9Chunks(dstworld, dstmap.getXCoord() >> 4, dstmap.getZCoord() >> 4);
 				if(srcChunks >= 0 && dstChunks >= 0){
-					TileEntity srcte = srcworld.getBlockTileEntity(srcmap.getXCoord(), srcmap.getYCoord(), srcmap.getZCoord());
-					TileEntity dstte = dstworld.getBlockTileEntity(dstmap.getXCoord(), dstmap.getYCoord(), dstmap.getZCoord());
+					TileEntity srcte = srcworld.getTileEntity(srcmap.getXCoord(), srcmap.getYCoord(), srcmap.getZCoord());
+					TileEntity dstte = dstworld.getTileEntity(dstmap.getXCoord(), dstmap.getYCoord(), dstmap.getZCoord());
 					if(srcte instanceof TileStargate && dstte instanceof TileStargate){
 						TileStargate src = (TileStargate) srcte;
 						TileStargate dst = (TileStargate) dstte;

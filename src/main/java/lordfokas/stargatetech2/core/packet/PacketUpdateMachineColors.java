@@ -31,7 +31,7 @@ public class PacketUpdateMachineColors extends PacketCoordinates {
 		for(int s = 0; s < 6; s++){
 			colors[s] = FaceColor.values()[input.readByte()];
 		}
-		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
+		TileEntity te = player.worldObj.getTileEntity(x, y, z);
 		if(te instanceof TileMachine){
 			((TileMachine)te).updateColors(colors);
 		}

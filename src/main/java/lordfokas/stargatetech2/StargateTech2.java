@@ -18,6 +18,7 @@ import lordfokas.stargatetech2.transport.ModuleTransport;
 import lordfokas.stargatetech2.world.ModuleWorld;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -27,6 +28,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -129,7 +131,7 @@ public class StargateTech2 {
 		}
 	}
 	
-	@ForgeSubscribe
+	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void beforeTextureStitch(TextureStitchEvent.Pre event){
 		IconRegistry.load(event.map);

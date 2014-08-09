@@ -1,6 +1,7 @@
 package lordfokas.stargatetech2.integration.plugins.cc;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -29,7 +30,7 @@ public class BlockBusAdapter extends BaseBlockContainer {
 			IToolWrench wrench = (IToolWrench) item;
 			if(wrench.canWrench(p, x, y, z)){
 				dropBlockAsItem(w, x, y, z, 0, 0);
-				w.setBlock(x, y, z, 0, 0, 3);
+				w.setBlock(x, y, z, Blocks.air, 0, 3);
 				wrench.wrenchUsed(p, x, y, z);
 				return true;
 			}

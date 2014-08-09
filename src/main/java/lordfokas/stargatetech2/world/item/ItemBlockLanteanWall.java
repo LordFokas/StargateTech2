@@ -1,15 +1,16 @@
 package lordfokas.stargatetech2.world.item;
 
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import lordfokas.stargatetech2.core.reference.ModReference;
 import lordfokas.stargatetech2.core.util.Color;
 import lordfokas.stargatetech2.world.ModuleWorld;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 
 public class ItemBlockLanteanWall extends ItemBlock {
 
-	public ItemBlockLanteanWall(int id) {
-		super(id);
+	public ItemBlockLanteanWall(Block b) {
+		super(b);
 		setHasSubtypes(true);
 	}
 	

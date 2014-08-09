@@ -18,7 +18,7 @@ public class PacketPrintAddress extends PacketCoordinates {
 
 	@Override
 	protected void readData(EntityPlayer player, Side side) throws Exception {
-		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
+		TileEntity te = player.worldObj.getTileEntity(x, y, z);
 		if(te instanceof ITileStargate){
 			Address address = ((ITileStargate)te).getAddress();
 			player.sendChatToPlayer(new ChatMessageComponent().addText("This Stargate uses the address: " +

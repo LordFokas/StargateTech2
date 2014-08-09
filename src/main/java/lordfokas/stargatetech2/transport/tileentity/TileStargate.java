@@ -1,10 +1,5 @@
 package lordfokas.stargatetech2.transport.tileentity;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.common.MinecraftForge;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP.LIPMetadata;
@@ -22,6 +17,11 @@ import lordfokas.stargatetech2.transport.packet.PacketWormhole;
 import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
 import lordfokas.stargatetech2.transport.stargates.Wormhole;
 import lordfokas.stargatetech2.world.worldgen.lists.StargateBuildList;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -245,7 +245,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	@Override
 	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox(){
-		return AxisAlignedBB.getAABBPool().getAABB(xCoord - 2, yCoord, zCoord-2, xCoord + 3, yCoord+5, zCoord+3);
+		return AxisAlignedBB.getBoundingBox(xCoord - 2, yCoord, zCoord-2, xCoord + 3, yCoord+5, zCoord+3);
 	}
 	
 	@Override

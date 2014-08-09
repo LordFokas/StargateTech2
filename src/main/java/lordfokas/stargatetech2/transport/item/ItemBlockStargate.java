@@ -1,5 +1,6 @@
 package lordfokas.stargatetech2.transport.item;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -15,8 +16,8 @@ public class ItemBlockStargate extends ItemBlock {
 	public static ItemBlockStargate instance;
 	private static final int[] ROTATIONS = new int[]{4, 2, 5, 3};
 	
-	public ItemBlockStargate(int id) {
-		super(id);
+	public ItemBlockStargate(Block b) {
+		super(b);
 		instance = this;
 	}
 	

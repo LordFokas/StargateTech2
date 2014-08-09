@@ -34,7 +34,7 @@ public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 	}
 	
 	public final TileStargate getStargate(){
-		TileEntity te = worldObj.getBlockTileEntity(sgx, sgy, sgz);
+		TileEntity te = worldObj.getTileEntity(sgx, sgy, sgz);
 		if(te instanceof TileStargate){
 			return (TileStargate) te;
 		}else{

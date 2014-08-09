@@ -28,7 +28,7 @@ public class BlockNaquadah extends BaseBlock {
 		super(BlockReference.NAQUADAH, true, Material.rock);
 		this.setHardness(3.0F);
 		this.setResistance(5.0F);
-		MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
+		setHarvestLevel("pickaxe", 2);
 	}
 	
 	@Override

@@ -11,8 +11,8 @@ import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
 
 public class RingKeyHandler extends KeyHandler {
-	private static final KeyBinding RING_UP = new KeyBinding("[SGTech2] Activate rings (Up)", 200);
-	private static final KeyBinding RING_DOWN = new KeyBinding("[SGTech2] Activate rings (Down)", 208);
+	private static final KeyBinding RING_UP = new KeyBinding("[SGTech2] Activate rings (Up)", 200, "SGTech2");
+	private static final KeyBinding RING_DOWN = new KeyBinding("[SGTech2] Activate rings (Down)", 208, "SGTech2");
 	
 	public RingKeyHandler(){
 		super(new KeyBinding[]{RING_UP, RING_DOWN}, new boolean[]{true, true});
@@ -29,9 +29,9 @@ public class RingKeyHandler extends KeyHandler {
 	@Override
 	public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd){
 		if(!tickEnd) return;
-		if(kb.keyCode == RING_UP.keyCode){
+		if(kb.getKeyCode() == RING_UP.getKeyCode()){
 			makePlayerTriggerRings(true);
-		}else if(kb.keyCode == RING_DOWN.keyCode){
+		}else if(kb.getKeyCode() == RING_DOWN.getKeyCode()){
 			makePlayerTriggerRings(false);
 		}
 	}

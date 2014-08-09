@@ -15,6 +15,6 @@ public class ProxyServer implements ISidedProxy{
 
 	@Override
 	public void registerHandlers() {
-		NetworkRegistry.instance().registerGuiHandler(this, new GUIHandler());
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GUIHandler());
 	}
 }

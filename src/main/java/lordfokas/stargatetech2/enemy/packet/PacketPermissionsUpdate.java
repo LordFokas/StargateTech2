@@ -21,7 +21,7 @@ public class PacketPermissionsUpdate extends PacketCoordinates {
 	protected void readData(EntityPlayer player, Side side) throws Exception {
 		isSetting = input.readBoolean();
 		permissionFlag = input.readInt();
-		TileShieldController controller = (TileShieldController) player.worldObj.getBlockTileEntity(x, y, z);
+		TileShieldController controller = (TileShieldController) player.worldObj.getTileEntity(x, y, z);
 		controller.updatePermissions(isSetting, permissionFlag);
 	}
 }

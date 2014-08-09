@@ -31,14 +31,14 @@ public final class Wormhole {
 		this.destination = destination;
 		this.src = srcChunks;
 		this.dst = dstChunks;
-		lastWormholeTime = source.worldObj.getTotalWorldTime();
+		lastWormholeTime = source.getWorldObj().getTotalWorldTime();
 		source.setWormhole(this, true, true);
 		destination.setWormhole(this, false, true);
 	}
 	
 	public void update(){
-		countdown -= (source.worldObj.getTotalWorldTime() - lastWormholeTime);
-		lastWormholeTime = source.worldObj.getTotalWorldTime();
+		countdown -= (source.getWorldObj().getTotalWorldTime() - lastWormholeTime);
+		lastWormholeTime = source.getWorldObj().getTotalWorldTime();
 		doTeleport();
 		if(countdown <= 0){
 			disconnect();
@@ -75,10 +75,10 @@ public final class Wormhole {
 		}
 		Vec3Int position = new Vec3Int(destination.xCoord, destination.yCoord+1, destination.zCoord);
 		float yaw = (90 * destination.getBlockMetadata());
-		List<Entity> entities = source.worldObj.getEntitiesWithinAABB(Entity.class, aabb);
+		List<Entity> entities = source.getWorldObj().getEntitiesWithinAABB(Entity.class, aabb);
 		for(Entity entity : entities){
 			if(entity.riddenByEntity == null){
-				Teleporter.teleport(source.worldObj, entity, destination.worldObj, position, yaw);
+				Teleporter.teleport(source.getWorldObj(), entity, destination.getWorldObj(), position, yaw);
 			}
 		}
 	}
@@ -88,11 +88,11 @@ public final class Wormhole {
 		dos.writeLong(lastWormholeTime);
 		dos.writeLong(dst);
 		dos.writeLong(src);
-		dos.writeInt(source.worldObj.provider.dimensionId);
+		dos.writeInt(source.getWorldObj().provider.dimensionId);
 		dos.writeInt(source.xCoord);
 		dos.writeInt(source.yCoord);
 		dos.writeInt(source.zCoord);
-		dos.writeInt(destination.worldObj.provider.dimensionId);
+		dos.writeInt(destination.getWorldObj().provider.dimensionId);
 		dos.writeInt(destination.xCoord);
 		dos.writeInt(destination.yCoord);
 		dos.writeInt(destination.zCoord);
@@ -123,10 +123,10 @@ public final class Wormhole {
 			World w;
 			TileStargate s;
 			w = MinecraftServer.getServer().worldServerForDimension(tmpSrc.w);
-			s = (TileStargate) w.getBlockTileEntity(tmpSrc.x, tmpSrc.y, tmpSrc.z);
+			s = (TileStargate) w.getTileEntity(tmpSrc.x, tmpSrc.y, tmpSrc.z);
 			source = s;
 			w = MinecraftServer.getServer().worldServerForDimension(tmpDst.w);
-			s = (TileStargate) w.getBlockTileEntity(tmpDst.x, tmpDst.y, tmpDst.z);
+			s = (TileStargate) w.getTileEntity(tmpDst.x, tmpDst.y, tmpDst.z);
 			destination = s;
 			source.setWormhole(this, true, false);
 			destination.setWormhole(this, false, false);

@@ -3,13 +3,6 @@ package lordfokas.stargatetech2.transport.tileentity;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
@@ -18,6 +11,14 @@ import lordfokas.stargatetech2.core.base.BaseTileEntity;
 import lordfokas.stargatetech2.core.util.Vec3Int;
 import lordfokas.stargatetech2.transport.ModuleTransport;
 import lordfokas.stargatetech2.transport.bus.TransportRingBusDriver;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	@ClientLogic private static Vec3Int LAST_IN_RANGE;
@@ -45,7 +46,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	@ClientLogic
 	public static TileTransportRing getRingsInRange(World world){
 		if(world != null && LAST_IN_RANGE != null){
-			TileEntity te = world.getBlockTileEntity(LAST_IN_RANGE.x, LAST_IN_RANGE.y, LAST_IN_RANGE.z);
+			TileEntity te = world.getTileEntity(LAST_IN_RANGE.x, LAST_IN_RANGE.y, LAST_IN_RANGE.z);
 			if(te instanceof TileTransportRing){
 				if(((TileTransportRing)te).isLocalPlayerInRange()){
 					return (TileTransportRing)te;
@@ -78,7 +79,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	@ServerLogic
 	private TileTransportRing getPair(Vec3Int pair){
 		if(pair != null){
-			TileEntity te = worldObj.getBlockTileEntity(pair.x, pair.y, pair.z);
+			TileEntity te = worldObj.getTileEntity(pair.x, pair.y, pair.z);
 			if(te instanceof TileTransportRing){
 				return (TileTransportRing)te;
 			}
@@ -126,7 +127,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 			for(int i = 0; i < leap; i++){
 				Vec3Int pair = up ? dest.pairUp : dest.pairDn;
 				if(pair == null) return;
-				TileEntity te = worldObj.getBlockTileEntity(pair.x, pair.y, pair.z);
+				TileEntity te = worldObj.getTileEntity(pair.x, pair.y, pair.z);
 				if(te instanceof TileTransportRing){
 					dest = (TileTransportRing) te;
 				}else{
@@ -149,7 +150,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 		updateClients();
 		for(Vec3Int b : RING_BLOCKS){
 			if(worldObj.isAirBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z)){
-				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, ModuleTransport.invisible.blockID, 14, 3);
+				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, ModuleTransport.invisible, 14, 3);
 			}
 		}
 	}
@@ -179,8 +180,8 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 		teleportCooldown = TP_COOLDOWN;
 		updateClients();
 		for(Vec3Int b : RING_BLOCKS){
-			if(worldObj.getBlockId(xCoord + b.x, yCoord + b.y, zCoord + b.z) == ModuleTransport.invisible.blockID){
-				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, 0);
+			if(worldObj.getBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z) == ModuleTransport.invisible){
+				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, Blocks.air);
 			}
 		}
 	}
@@ -204,7 +205,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	
 	@ServerLogic
 	private boolean findPair(Vec3Int me, int y, boolean dirUp){
-		TileEntity te = worldObj.getBlockTileEntity(xCoord, y, zCoord);
+		TileEntity te = worldObj.getTileEntity(xCoord, y, zCoord);
 		if(te instanceof TileTransportRing){
 			if(dirUp){
 				((TileTransportRing)te).pairDn = me;
@@ -251,7 +252,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	
 	@Override
 	public AxisAlignedBB getRenderBoundingBox(){
-		return AxisAlignedBB.getAABBPool().getAABB(xCoord-2, yCoord, zCoord-2, xCoord+3, yCoord+5, zCoord+3);
+		return AxisAlignedBB.getBoundingBox(xCoord-2, yCoord, zCoord-2, xCoord+3, yCoord+5, zCoord+3);
 	}
 	
 	@Override
@@ -289,10 +290,10 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 		nbt.setInteger("teleportCooldown", teleportCooldown);
 		nbt.setInteger("yOffset", yOffset);
 		if(pairUp != null){
-			nbt.setCompoundTag("pairUp", pairUp.toNBT());
+			nbt.setTag("pairUp", pairUp.toNBT());
 		}
 		if(pairDn != null){
-			nbt.setCompoundTag("pairDn", pairDn.toNBT());
+			nbt.setTag("pairDn", pairDn.toNBT());
 		}
 	}
 	

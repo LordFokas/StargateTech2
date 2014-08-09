@@ -1,12 +1,12 @@
 package lordfokas.stargatetech2.transport.tileentity;
 
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.DialError;
 import lordfokas.stargatetech2.api.stargate.ITileStargateBase;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 
 public class TileStargateBase extends TileStargateRing implements ITileStargateBase, IBusDevice, IEnergyHandler{

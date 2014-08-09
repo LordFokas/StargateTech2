@@ -1,13 +1,5 @@
 package lordfokas.stargatetech2.transport.block;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.common.MinecraftForge;
 import lordfokas.stargatetech2.api.ITabletAccess;
 import lordfokas.stargatetech2.api.bus.BusEvent;
 import lordfokas.stargatetech2.api.stargate.ITileStargate;
@@ -24,6 +16,16 @@ import lordfokas.stargatetech2.transport.rendering.RenderStargateBlock;
 import lordfokas.stargatetech2.transport.tileentity.TileStargate;
 import lordfokas.stargatetech2.transport.tileentity.TileStargateBase;
 import lordfokas.stargatetech2.transport.tileentity.TileStargateRing;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -56,7 +58,7 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
 
         @Override
         public boolean onTabletAccess(EntityPlayer player, World world, int x, int y, int z){
-                TileEntity te = world.getBlockTileEntity(x, y, z);
+                TileEntity te = world.getTileEntity(x, y, z);
                 if(te instanceof ITileStargate){
                 	PacketPrintAddress ppa = new PacketPrintAddress();
                 	ppa.x = x;
@@ -73,7 +75,7 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
                 Item item = stack != null ? stack.getItem() : null;
                 if(item instanceof IToolWrench){
                         IToolWrench wrench = (IToolWrench) item;
-                        TileEntity te = w.getBlockTileEntity(x, y, z);
+                        TileEntity te = w.getTileEntity(x, y, z);
                         if(te instanceof ITileStargateBase && wrench.canWrench(p, x, y, z)){
                                 TileStargate stargate = null;
                                 if(te instanceof TileStargateBase){
@@ -82,7 +84,7 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
                                         stargate = (TileStargate)te;
                                 }
                                 
-                                if (MinecraftForge.EVENT_BUS.post(new StargateEvent.StargateWrenched(stargate.getAddress(), stargate.worldObj, stargate.xCoord, stargate.yCoord, stargate.zCoord))) return false;
+                                if (MinecraftForge.EVENT_BUS.post(new StargateEvent.StargateWrenched(stargate.getAddress(), stargate.getWorldObj(), stargate.xCoord, stargate.yCoord, stargate.zCoord))) return false;
                                 stargate.destroyStargate();
                                 wrench.wrenchUsed(p, x, y, z);
                                 return true;
@@ -97,10 +99,10 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
         }
         
         public void setBaseOverride(){
-                Icon bottom = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
-                Icon top = IconRegistry.blockIcons.get(TextureReference.STARGATE_BASE_TOP);
-                Icon side = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
-                this.setOverride(new Icon[]{bottom, top, side, side, side, side});
+                IIcon bottom = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
+                IIcon top = IconRegistry.blockIcons.get(TextureReference.STARGATE_BASE_TOP);
+                IIcon side = IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
+                this.setOverride(new IIcon[]{bottom, top, side, side, side, side});
         }
         
         @Override
@@ -109,7 +111,7 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
         }
         
         @Override
-        public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side){
+        public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side){
                 return world.getBlockMetadata(x, y, z) != META_RING;
         }
         
@@ -121,8 +123,8 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
         }
         
         @Override
-        public void breakBlock(World w, int x, int y, int z, int i, int m){
-                super.breakBlock(w, x, y, z, i, m);
+        public void breakBlock(World w, int x, int y, int z, Block b, int m){
+                super.breakBlock(w, x, y, z, b, m);
                 if(m != META_RING) MinecraftForge.EVENT_BUS.post(new BusEvent.RemoveFromNetwork(w, x, y, z));
         }
 }

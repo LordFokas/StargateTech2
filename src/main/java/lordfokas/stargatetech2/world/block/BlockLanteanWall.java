@@ -4,8 +4,9 @@ import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,7 +23,7 @@ public class BlockLanteanWall extends BaseBlock {
 	
 	public BlockLanteanWall() {
 		super(BlockReference.LANTEAN_WALL, true, true);
-		MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
+		setHarvestLevel("pickaxe", 2);
 		setHardness(1.5F);
 		setResistance(15F);
 	}
@@ -33,9 +34,9 @@ public class BlockLanteanWall extends BaseBlock {
 	}
 	
 	@Override
-	public void getSubBlocks(int id, CreativeTabs tab, List list){
+	public void getSubBlocks(Item item, CreativeTabs tab, List list){
 		for(int i = 0; i < 16; i++){
-			list.add(new ItemStack(id, 1, i));
+			list.add(new ItemStack(this, 1, i));
 		}
 	}
 	
@@ -49,7 +50,7 @@ public class BlockLanteanWall extends BaseBlock {
 	}
 	
 	@Override
-	public Icon getBaseIcon(int side, int meta){
+	public IIcon getBaseIcon(int side, int meta){
 		return side < 2 ? IconRegistry.blockIcons.get(TextureReference.LANTEAN_BLOCK_CLEAN) : blockIcon;
 	}
 	

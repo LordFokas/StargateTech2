@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.ConfigCategory;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.Configuration;
 import lordfokas.stargatetech2.core.reference.ConfigReference;
 
 public class Config {
@@ -57,6 +57,7 @@ public class Config {
 		else return pc.getConfig();
 	}
 	
+	/*
 	public int getBlockID(String name){
 		while(Block.blocksList[blockIDs] != null){
 			blockIDs++;
@@ -70,6 +71,7 @@ public class Config {
 		}
 		return cfg.get(ConfigReference.KEY_IDS_ITEMS, name, itemIDs).getInt();
 	}
+	*/
 	
 	public void setServerConfigs(){
 		// BASE CONFIGS

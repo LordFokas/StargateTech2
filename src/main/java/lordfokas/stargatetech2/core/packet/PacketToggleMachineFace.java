@@ -19,7 +19,7 @@ public class PacketToggleMachineFace extends PacketCoordinates {
 	@Override
 	protected void readData(EntityPlayer player, Side side) throws Exception {
 		face = Face.values()[input.readInt()];
-		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
+		TileEntity te = player.worldObj.getTileEntity(x, y, z);
 		if(te instanceof TileMachine){
 			((TileMachine)te).toggleFace(face);
 		}

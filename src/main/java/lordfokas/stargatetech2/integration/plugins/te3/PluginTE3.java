@@ -1,5 +1,6 @@
 package lordfokas.stargatetech2.integration.plugins.te3;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,8 +21,8 @@ public class PluginTE3 extends BasePlugin {
 	protected void load() {
 		addPulverizerRecipe(4000, new ItemStack(ModuleCore.naquadahBlock), new ItemStack(ModuleCore.naquadahItem, 2, ItemNaquadah.DUST.ID));
 		addPulverizerRecipe(2400, new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.INGOT.ID), new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.DUST.ID));
-		addSmelterRecipe(4800, Stacks.naqIngot, new ItemStack(Item.netherQuartz, 3), Stacks.circuit);
-		addSmelterRecipe(3200, Stacks.naqDust, new ItemStack(Item.netherQuartz, 3), Stacks.circuit);
+		addSmelterRecipe(4800, Stacks.naqIngot, new ItemStack(Items.quartz, 3), Stacks.circuit);
+		addSmelterRecipe(3200, Stacks.naqDust, new ItemStack(Items.quartz, 3), Stacks.circuit);
 	}
 	
 	@Override
@@ -40,8 +41,8 @@ public class PluginTE3 extends BasePlugin {
 		NBTTagCompound toSend = new NBTTagCompound();
 		
 		toSend.setInteger("energy", energy);
-		toSend.setCompoundTag("input", new NBTTagCompound());
-		toSend.setCompoundTag("primaryOutput", new NBTTagCompound());
+		toSend.setTag("input", new NBTTagCompound());
+		toSend.setTag("primaryOutput", new NBTTagCompound());
 		
 		input.writeToNBT(toSend.getCompoundTag("input"));
 		primaryOutput.writeToNBT(toSend.getCompoundTag("primaryOutput"));
@@ -49,7 +50,7 @@ public class PluginTE3 extends BasePlugin {
 		if(secondaryOutput != null && secondaryChance > 0){
 			NBTTagCompound nbt = new NBTTagCompound();
 			secondaryOutput.writeToNBT(nbt);
-			toSend.setCompoundTag("secondaryOutput", nbt);
+			toSend.setTag("secondaryOutput", nbt);
 			toSend.setInteger("secondaryChance", secondaryChance);
 		}
 		
@@ -64,9 +65,9 @@ public class PluginTE3 extends BasePlugin {
 		NBTTagCompound toSend = new NBTTagCompound();
 
 		toSend.setInteger("energy", energy);
-		toSend.setCompoundTag("primaryInput", new NBTTagCompound());
-		toSend.setCompoundTag("secondaryInput", new NBTTagCompound());
-		toSend.setCompoundTag("primaryOutput", new NBTTagCompound());
+		toSend.setTag("primaryInput", new NBTTagCompound());
+		toSend.setTag("secondaryInput", new NBTTagCompound());
+		toSend.setTag("primaryOutput", new NBTTagCompound());
 
 		primaryInput.writeToNBT(toSend.getCompoundTag("primaryInput"));
 		secondaryInput.writeToNBT(toSend.getCompoundTag("secondaryInput"));
@@ -75,7 +76,7 @@ public class PluginTE3 extends BasePlugin {
 		if(secondaryOutput != null && secondaryChance > 0){
 			NBTTagCompound nbt = new NBTTagCompound();
 			secondaryOutput.writeToNBT(nbt);
-			toSend.setCompoundTag("secondaryOutput", nbt);
+			toSend.setTag("secondaryOutput", nbt);
 			toSend.setInteger("secondaryChance", secondaryChance);
 		}
 

@@ -35,7 +35,7 @@ public class ModuleWorld implements IContentModule {
 		}
 		
 		StargateTech2.proxy.registerRenderers(Module.WORLD);
-		GameRegistry.registerWorldGenerator(new AncientWorldGenerator());
+		GameRegistry.registerWorldGenerator(new AncientWorldGenerator(), 0);
 	}
 
 	@Override public void onServerStart(){}

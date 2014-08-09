@@ -18,7 +18,7 @@ public class PacketUpdateBusAddress extends PacketCoordinates {
 	@Override
 	protected void readData(EntityPlayer player, Side side) throws Exception {
 		address = input.readShort();
-		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
+		TileEntity te = player.worldObj.getTileEntity(x, y, z);
 		if(te instanceof ISyncBusDevice){
 			((ISyncBusDevice)te).setAddress(address);
 		}

@@ -2,9 +2,10 @@ package lordfokas.stargatetech2.transport.block;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import lordfokas.stargatetech2.core.base.BaseBlockContainer;
 import lordfokas.stargatetech2.core.reference.BlockReference;
@@ -21,7 +22,7 @@ public class BlockTransportRing extends BaseBlockContainer{
 	}
 	
 	@Override
-	public Icon getBaseIcon(int side, int meta){
+	public IIcon getBaseIcon(int side, int meta){
 		switch(side){
 			case 0: return IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
 			case 1: return blockIcon;
@@ -42,7 +43,7 @@ public class BlockTransportRing extends BaseBlockContainer{
 			IToolWrench wrench = (IToolWrench) item;
 			if(wrench.canWrench(p, x, y, z)){
 				dropBlockAsItem(w, x, y, z, 0, 0);
-				w.setBlock(x, y, z, 0, 0, 3);
+				w.setBlock(x, y, z, Blocks.air, 0, 3);
 				wrench.wrenchUsed(p, x, y, z);
 				return true;
 			}
@@ -53,7 +54,7 @@ public class BlockTransportRing extends BaseBlockContainer{
 	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase living, ItemStack stack){
 		if(w.isRemote) return;
-		TileTransportRing ring = (TileTransportRing) w.getBlockTileEntity(x, y, z);
+		TileTransportRing ring = (TileTransportRing) w.getTileEntity(x, y, z);
 		ring.link();
 	}
 	

@@ -19,7 +19,7 @@ public class PacketActivateRings extends PacketCoordinates {
 	@Override
 	protected void readData(EntityPlayer player, Side side) throws Exception {
 		up = input.readBoolean();
-		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
+		TileEntity te = player.worldObj.getTileEntity(x, y, z);
 		if(te instanceof TileTransportRing){
 			((TileTransportRing)te).teleport(up, 1);
 		}

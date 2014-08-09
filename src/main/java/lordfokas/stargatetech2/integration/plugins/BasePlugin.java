@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.integration.plugins;
 
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.core.reference.ConfigReference;
 import cpw.mods.fml.common.Loader;
