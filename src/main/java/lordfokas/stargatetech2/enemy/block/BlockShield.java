@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import lordfokas.stargatetech2.api.ITabletAccess;
@@ -70,7 +71,7 @@ public class BlockShield extends BaseBlockContainer implements ITabletAccess {
 			}else{
 				message = "\u00A79 A field of Ionized Particles. It seems to refuse your passage.";
 			}
-			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(message);
+			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(message));
 		}
 		return true;
 	}

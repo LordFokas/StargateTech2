@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public abstract class BaseTileEntity extends TileEntity {
@@ -30,10 +31,10 @@ public abstract class BaseTileEntity extends TileEntity {
 	@Retention(RetentionPolicy.SOURCE)
 	public @interface ClientLogic{}
 	
-	public final Packet132TileEntityData getDescriptionPacket(){
+	public final S35PacketUpdateTileEntity getDescriptionPacket(){
         NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
-        return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
     }
 	
 	public final void onDataPacket(INetworkManager net, Packet132TileEntityData packet){
@@ -45,7 +46,7 @@ public abstract class BaseTileEntity extends TileEntity {
 	
 	public final void updateClients(){
 		if(worldObj.isRemote) return;
-		Packet132TileEntityData packet = this.getDescriptionPacket();
+		S35PacketUpdateTileEntity packet = this.getDescriptionPacket();
 		PacketDispatcher.sendPacketToAllInDimension(packet, this.worldObj.provider.dimensionId);
 	}
 	

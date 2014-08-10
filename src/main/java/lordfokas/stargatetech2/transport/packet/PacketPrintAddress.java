@@ -2,6 +2,7 @@ package lordfokas.stargatetech2.transport.packet;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.ITileStargate;
@@ -20,7 +21,7 @@ public class PacketPrintAddress extends PacketCoordinates {
 		TileEntity te = player.worldObj.getTileEntity(x, y, z);
 		if(te instanceof ITileStargate){
 			Address address = ((ITileStargate)te).getAddress();
-			player.sendChatToPlayer(new ChatMessageComponent().addText("This Stargate uses the address: " +
+			player.addChatComponentMessage(new ChatComponentText("This Stargate uses the address: " +
 					EnumChatFormatting.GOLD + address.toString()));
 		}
 	}

@@ -7,9 +7,8 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet41EntityEffect;
-import net.minecraft.network.packet.Packet43Experience;
-import net.minecraft.network.packet.Packet9Respawn;
+import net.minecraft.network.play.server.S1DPacketEntityEffect;
+import net.minecraft.network.play.server.S1FPacketSetExperience;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
@@ -44,7 +43,7 @@ public class Teleporter{
 			player.closeScreen();
 			if(differentWorld){
 				player.dimension = world.provider.dimensionId;
-				player.playerNetServerHandler.sendPacketToPlayer(new Packet9Respawn(player.dimension, (byte)player.worldObj.difficultySetting, world.getWorldInfo().getTerrainType(), world.getHeight(), player.theItemInWorldManager.getGameType()));
+				player.playerNetServerHandler.sendPacketToPlayer(new Packet9Respawn(player.dimension, (byte)player.worldObj.difficultySetting.ordinal(), world.getWorldInfo().getTerrainType(), world.getHeight(), player.theItemInWorldManager.getGameType()));
 				((WorldServer)entity.worldObj).getPlayerManager().removePlayer(player);
 			}
 		}
@@ -105,9 +104,9 @@ public class Teleporter{
 			Iterator potions = player.getActivePotionEffects().iterator();
 			while (potions.hasNext()){
 				PotionEffect effect = (PotionEffect)potions.next();
-				player.playerNetServerHandler.sendPacketToPlayer(new Packet41EntityEffect(player.entityId, effect));
+				player.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(player.getEntityId(), effect));
 			}
-			player.playerNetServerHandler.sendPacketToPlayer(new Packet43Experience(player.experience, player.experienceTotal, player.experienceLevel));
+			player.playerNetServerHandler.sendPacket(new S1FPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
 		}
 		entity.setLocationAndAngles(position.x + 0.5D, position.y, position.z + 0.5D, yaw, entity.rotationPitch);
 		//##################################################################################

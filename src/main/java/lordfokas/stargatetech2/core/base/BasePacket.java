@@ -11,7 +11,8 @@ import java.lang.annotation.Target;
 import java.util.ArrayList;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.S3FPacketCustomPayload;
 import lordfokas.stargatetech2.core.packet.PacketOpenGUI;
 import lordfokas.stargatetech2.core.packet.PacketToggleMachineFace;
 import lordfokas.stargatetech2.core.packet.PacketUpdateBusAddress;
@@ -24,8 +25,6 @@ import lordfokas.stargatetech2.enemy.packet.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.transport.packet.PacketActivateRings;
 import lordfokas.stargatetech2.transport.packet.PacketPrintAddress;
 import lordfokas.stargatetech2.transport.packet.PacketWormhole;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
 
 public abstract class BasePacket{
@@ -86,11 +85,11 @@ public abstract class BasePacket{
 		input.readInt(); // skip packet id bytes in array.
 	}
 	
-	public final Packet250CustomPayload getPayload(){
+	public final S3FPacketCustomPayload getPayload(){
 		try {
 			output.writeInt(getPacketID());
 			onBeforeSend();
-			return new Packet250CustomPayload(PacketHandler.STARGATE_CHANNEL, baos.toByteArray());
+			return new S3FPacketCustomPayload(PacketHandler.STARGATE_CHANNEL, baos.toByteArray());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -98,17 +97,17 @@ public abstract class BasePacket{
 	}
 	
 	public final void sendToServer(){
-		Packet250CustomPayload payload = getPayload();
+		S3FPacketCustomPayload payload = getPayload();
 		if(payload != null) PacketDispatcher.sendPacketToServer(payload);
 	}
 	
-	public final void sendToPlayer(EntityPlayer player){
-		Packet250CustomPayload payload = getPayload();
-		if(payload != null) PacketDispatcher.sendPacketToPlayer(payload, (Player)player);
+	public final void sendToPlayer(EntityPlayerMP player){
+		S3FPacketCustomPayload payload = getPayload();
+		if(payload != null) player.playerNetServerHandler.sendPacket(payload);
 	}
 	
 	public final void sendToAllInDim(int dim){
-		Packet250CustomPayload payload = getPayload();
+		S3FPacketCustomPayload payload = getPayload();
 		if(payload != null) PacketDispatcher.sendPacketToAllInDimension(payload, dim);
 	}
 	
