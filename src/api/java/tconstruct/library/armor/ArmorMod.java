@@ -6,14 +6,14 @@ import java.util.UUID;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import tconstruct.library.modifier.IModifyable;
-import tconstruct.library.modifier.ItemModifier;
+import tconstruct.library.IModifyable;
+import tconstruct.library.tools.ItemModifier;
 
 public abstract class ArmorMod extends ItemModifier
 {
-    protected final EnumSet<ArmorPart> armorTypes;
+    protected final EnumSet<EnumArmorPart> armorTypes;
 
-    public ArmorMod(int effect, String dataKey, EnumSet<ArmorPart> armorTypes, ItemStack[] items)
+    public ArmorMod(int effect, String dataKey, EnumSet<EnumArmorPart> armorTypes, ItemStack[] items)
     {
         super(items, effect, dataKey);
         this.armorTypes = armorTypes;
@@ -28,13 +28,12 @@ public abstract class ArmorMod extends ItemModifier
         ArmorCore item = (ArmorCore) armor.getItem();
         if (armorTypes.contains(item.armorPart))
         {
-            NBTTagCompound tags = getModifierTag(armor);
+            NBTTagCompound tags = armor.getTagCompound().getCompoundTag(getTagName(armor));
             return tags.getInteger("Modifiers") > 0;
         }
         return false;
     }
-    
-    @Override
+
     public boolean validType (IModifyable type)
     {
         return type.getModifyType().equals("Armor");

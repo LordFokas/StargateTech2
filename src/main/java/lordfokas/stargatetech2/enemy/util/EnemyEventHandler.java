@@ -16,11 +16,11 @@ public class EnemyEventHandler {
 			EntityLivingBase living = evt.entityLiving;
 			if(living instanceof EntityPlayer && shield.blocksDamage(evt.source)){
 				EntityPlayer player = (EntityPlayer) living;
-				if(player.inventory.hasItem(shield.itemID)){
+				if(player.inventory.hasItem(shield)){
 					ItemStack shieldStack = null;
 					for(int slot = 0; slot < player.inventory.getSizeInventory(); slot++){
 						ItemStack stack = player.inventory.getStackInSlot(slot);
-						if(stack != null && stack.itemID == shield.itemID){
+						if(stack != null && stack.getItem() == shield){
 							stack.damageItem(1, player);
 							evt.setCanceled(true);
 							if(stack.stackSize == 0){

@@ -1,8 +1,7 @@
 package tconstruct.library.event;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.Cancelable;
-import net.minecraftforge.event.Event;
+import cpw.mods.fml.common.eventhandler.Event;
 
 /* This event fires after all of the other construction. The resulting nbttag is added to the tool 
  * Note: The tag is the base tag. toolTag.getCompoundTag("InfiTool") will have all of the tool's data.
@@ -19,7 +18,7 @@ public class PartBuilderEvent extends Event
     {
         this.material = material;
         this.pattern = pattern;
-        this.otherPattern = pattern;
+        this.otherPattern = otherPattern;
     }
 
     @HasResult
@@ -30,12 +29,11 @@ public class PartBuilderEvent extends Event
             super(material, pattern, otherPattern);
         }
 
-        /** Fires before other processing is done
+        /**
+         * Fires before other processing is done
          * 
-         * Result is significant:
-         *    DEFAULT: Allows part to be crafted normally 
-         *    ALLOW:   Uses resultStack instead 
-         *    DENY:    Stops part crafting altogether
+         * Result is significant: DEFAULT: Allows part to be crafted normally
+         * ALLOW: Uses resultStack instead DENY: Stops part crafting altogether
          */
 
         public void overrideResult (ItemStack[] result)
@@ -47,15 +45,6 @@ public class PartBuilderEvent extends Event
         public ItemStack[] getResultStacks ()
         {
             return resultStacks;
-        }
-    }
-
-    @HasResult
-    public static class BeginBuild extends PartBuilderEvent
-    {
-        public BeginBuild(ItemStack material, ItemStack pattern, ItemStack otherPattern)
-        {
-            super(material, pattern, otherPattern);
         }
     }
 }

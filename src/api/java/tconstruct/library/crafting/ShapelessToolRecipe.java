@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import tconstruct.library.tools.ToolCore;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import tconstruct.library.tools.ToolCore;
 
 public class ShapelessToolRecipe extends ShapelessRecipes
 {
@@ -40,8 +39,8 @@ public class ShapelessToolRecipe extends ShapelessRecipes
                     {
                         ItemStack itemstack1 = (ItemStack) iterator.next();
 
-                        //TConstruct.logger.info("Rawr! "+itemstack1.getItemDamage());
-                        if (itemstack.itemID == itemstack1.itemID && (itemstack1.getItemDamage() == Short.MAX_VALUE || itemstack.getItemDamage() == itemstack1.getItemDamage()))
+                        // TConstruct.logger.info("Rawr! "+itemstack1.getItemDamage());
+                        if (itemstack == itemstack1 && (itemstack1.getItemDamage() == Short.MAX_VALUE || itemstack.getItemDamage() == itemstack1.getItemDamage()))
                         {
                             if (itemstack.getItem() instanceof ToolCore)
                             {

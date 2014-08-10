@@ -2,16 +2,6 @@ package lordfokas.stargatetech2.enemy.tileentity;
 
 import java.util.LinkedList;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
 import lordfokas.stargatetech2.core.api.ParticleIonizerRecipes;
 import lordfokas.stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
 import lordfokas.stargatetech2.core.machine.FaceColor;
@@ -20,6 +10,16 @@ import lordfokas.stargatetech2.core.machine.TileMachine;
 import lordfokas.stargatetech2.enemy.ModuleEnemy;
 import lordfokas.stargatetech2.enemy.block.BlockParticleIonizer;
 import lordfokas.stargatetech2.enemy.util.IonizedParticles;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 
@@ -169,11 +169,11 @@ public class TileParticleIonizer extends TileMachine implements IFluidHandler, I
 	
 	@Override
 	protected void writeNBT(NBTTagCompound nbt){
-		nbt.setCompoundTag("ionizedParticles", ionizedParticles.writeToNBT(new NBTTagCompound()));
-		nbt.setCompoundTag("fluidIonizable", fluidIonizable.writeToNBT(new NBTTagCompound()));
-		nbt.setCompoundTag("solidIonizable", solidIonizable.writeToNBT(new NBTTagCompound()));
-		nbt.setCompoundTag("energy", energy.writeToNBT(new NBTTagCompound()));
-		nbt.setCompoundTag("facing", writeFacingNBT());
+		nbt.setTag("ionizedParticles", ionizedParticles.writeToNBT(new NBTTagCompound()));
+		nbt.setTag("fluidIonizable", fluidIonizable.writeToNBT(new NBTTagCompound()));
+		nbt.setTag("solidIonizable", solidIonizable.writeToNBT(new NBTTagCompound()));
+		nbt.setTag("energy", energy.writeToNBT(new NBTTagCompound()));
+		nbt.setTag("facing", writeFacingNBT());
 		nbt.setInteger("recipe", getRecipe());
 		nbt.setInteger("ticksLeft", ticksLeft);
 		nbt.setLong("nextSearch", nextSearch);
@@ -244,11 +244,6 @@ public class TileParticleIonizer extends TileMachine implements IFluidHandler, I
 	}
 
 	@Override
-	public boolean canInterface(ForgeDirection side) {
-		return true;
-	}
-
-	@Override
 	public int getEnergyStored(ForgeDirection side) {
 		return energy.getEnergyStored();
 	}
@@ -256,6 +251,11 @@ public class TileParticleIonizer extends TileMachine implements IFluidHandler, I
 	@Override
 	public int getMaxEnergyStored(ForgeDirection side) {
 		return energy.getMaxEnergyStored();
+	}
+	
+	@Override
+	public boolean canConnectEnergy(ForgeDirection from) {
+		return true;
 	}
 	
 	// ############################################################################################
@@ -304,11 +304,11 @@ public class TileParticleIonizer extends TileMachine implements IFluidHandler, I
 	}
 	
 	// useless stuff...  :c  (creeper face!)
-	@Override public void openChest(){}
-	@Override public void closeChest(){}
 	@Override public boolean isUseableByPlayer(EntityPlayer entityplayer){ return true; }
 	@Override public int getInventoryStackLimit(){ return 64; }
-	@Override public String getInvName(){ return "Particle ionizer"; }
-	@Override public boolean isInvNameLocalized(){ return true; }
 	@Override public ItemStack getStackInSlotOnClosing(int slot){ return null; }
+	@Override public String getInventoryName(){ return "Particle Ionizer"; }
+	@Override public boolean hasCustomInventoryName(){ return false; }
+	@Override public void openInventory(){}
+	@Override public void closeInventory(){}
 }

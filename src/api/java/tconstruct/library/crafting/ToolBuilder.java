@@ -5,17 +5,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event.Result;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.armor.ArmorCore;
+import tconstruct.library.armor.ArmorMod;
 import tconstruct.library.event.ToolCraftEvent;
+import tconstruct.library.tools.TToolMaterial;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.ToolMaterial;
-import tconstruct.library.tools.ToolMod;
+import tconstruct.library.tools.ItemModifier;
 import tconstruct.library.util.IToolPart;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class ToolBuilder
 {
@@ -24,6 +28,8 @@ public class ToolBuilder
     public HashMap<String, ToolRecipe> recipeList = new HashMap<String, ToolRecipe>();
     public List<ToolRecipe> combos = new ArrayList<ToolRecipe>();
     public HashMap<String, String> modifiers = new HashMap<String, String>();
+    public List<ItemModifier> toolMods = new ArrayList<ItemModifier>();
+    public List<ArmorMod> armorMods = new ArrayList<ArmorMod>();
 
     /* Build tools */
     public static void addNormalToolRecipe (ToolCore output, Item head, Item handle)
@@ -44,7 +50,7 @@ public class ToolBuilder
 
     public static void addNormalToolRecipe (ToolCore output, Item head, Item handle, Item accessory)
     {
-        //instance.combos.add(new ToolRecipe(head, accessory, output));
+        // instance.combos.add(new ToolRecipe(head, accessory, output));
         ToolRecipe recipe = instance.recipeList.get(output.getToolName());
         if (recipe != null)
         {
@@ -103,7 +109,7 @@ public class ToolBuilder
         return null;
     }
 
-    //Builds a tool from the parts given
+    // Builds a tool from the parts given
     public ItemStack buildTool (ItemStack headStack, ItemStack handleStack, ItemStack accessoryStack, String name)
     {
         return buildTool(headStack, handleStack, accessoryStack, null, name);
@@ -114,9 +120,9 @@ public class ToolBuilder
         if (stack == null)
             return -1;
         Item item = stack.getItem();
-        if (item == Item.stick)
+        if (item == Items.stick)
             return 0;
-        else if (item == Item.bone)
+        else if (item == Items.bone)
             return 5;
         else if (item instanceof IToolPart)
             return ((IToolPart) item).getMaterialID(stack);
@@ -126,10 +132,18 @@ public class ToolBuilder
 
     public ItemStack buildTool (ItemStack headStack, ItemStack handleStack, ItemStack accessoryStack, ItemStack extraStack, String name)
     {
-        /*if (headStack != null && headStack.getItem() instanceof ToolCore)
-            return modifyTool(headStack, new ItemStack[] { handleStack, accessoryStack, extraStack }, name);*/
+        if (headStack != null)
+        {
+            if (headStack.getItem() instanceof ToolCore)
+                return modifyTool(headStack, handleStack, accessoryStack, extraStack, name);
+            else if (headStack.getItem() instanceof ArmorCore)
+                return modifyArmor(headStack, new ItemStack[] { handleStack, accessoryStack, extraStack }, name);
+        }
 
-        if (headStack == null || handleStack == null) //Nothing to build without these. All tools need at least two parts!
+        if (headStack == null || handleStack == null) // Nothing to build
+                                                      // without these. All
+                                                      // tools need at least
+                                                      // two parts!
             return null;
 
         ToolCore item;
@@ -152,6 +166,12 @@ public class ToolBuilder
         }
         else
         {
+            /*
+             * if (accessoryStack.getItem() instanceof IToolPart) accessory =
+             * ((IToolPart)
+             * accessoryStack.getItem()).getMaterialID(accessoryStack); else
+             * return null;
+             */
 
             accessory = getMaterialID(accessoryStack);
             if (accessory == -1)
@@ -159,6 +179,11 @@ public class ToolBuilder
 
             if (extraStack != null)
             {
+                /*
+                 * if (extraStack.getItem() instanceof IToolPart) extra =
+                 * ((IToolPart) extraStack.getItem()).getMaterialID(extraStack);
+                 * else return null;
+                 */
 
                 extra = getMaterialID(extraStack);
                 if (extra == -1)
@@ -172,10 +197,12 @@ public class ToolBuilder
             }
         }
 
+        // TConstruct.logger.info("Valid: "+item);
+
         if (item == null)
             return null;
 
-        ToolMaterial headMat = null, handleMat = null, accessoryMat = null, extraMat = null;
+        TToolMaterial headMat = null, handleMat = null, accessoryMat = null, extraMat = null;
         headMat = TConstructRegistry.getMaterial(head);
         handleMat = TConstructRegistry.getMaterial(handle);
 
@@ -247,7 +274,7 @@ public class ToolBuilder
         ItemStack tool = new ItemStack(item);
         NBTTagCompound compound = new NBTTagCompound();
 
-        compound.setCompoundTag("InfiTool", new NBTTagCompound());
+        compound.setTag("InfiTool", new NBTTagCompound());
         compound.getCompoundTag("InfiTool").setInteger("Head", head);
         compound.getCompoundTag("InfiTool").setInteger("RenderHead", head);
 
@@ -265,11 +292,16 @@ public class ToolBuilder
             compound.getCompoundTag("InfiTool").setInteger("RenderExtra", extra);
         }
 
-        compound.getCompoundTag("InfiTool").setInteger("Damage", 0); //Damage is damage to the tool
+        compound.getCompoundTag("InfiTool").setInteger("Damage", 0); // Damage
+                                                                     // is
+                                                                     // damage
+                                                                     // to
+                                                                     // the
+                                                                     // tool
         compound.getCompoundTag("InfiTool").setInteger("TotalDurability", durability);
         compound.getCompoundTag("InfiTool").setInteger("BaseDurability", durability);
-        compound.getCompoundTag("InfiTool").setInteger("BonusDurability", 0); //Modifier
-        compound.getCompoundTag("InfiTool").setFloat("ModDurability", 0f); //Modifier
+        compound.getCompoundTag("InfiTool").setInteger("BonusDurability", 0); // Modifier
+        compound.getCompoundTag("InfiTool").setFloat("ModDurability", 0f); // Modifier
         compound.getCompoundTag("InfiTool").setBoolean("Broken", false);
         compound.getCompoundTag("InfiTool").setInteger("Attack", attack);
 
@@ -307,11 +339,11 @@ public class ToolBuilder
 
         if (name != null && !name.equals(""))
         {
-            compound.setCompoundTag("display", new NBTTagCompound());
+            compound.setTag("display", new NBTTagCompound());
             compound.getCompoundTag("display").setString("Name", "\u00A7f" + name);
         }
 
-        ToolCraftEvent.NormalTool event = new ToolCraftEvent.NormalTool(item, compound, new ToolMaterial[] { headMat, handleMat, accessoryMat, extraMat });
+        ToolCraftEvent.NormalTool event = new ToolCraftEvent.NormalTool(item, compound, new TToolMaterial[] { headMat, handleMat, accessoryMat, extraMat });
         MinecraftForge.EVENT_BUS.post(event);
 
         if (event.getResult() == Result.DEFAULT)
@@ -330,7 +362,69 @@ public class ToolBuilder
         return tool;
     }
 
-    /*@Deprecated
+    public ItemStack modifyTool (ItemStack input, ItemStack[] slots, String name)
+    {
+        ItemStack tool = input.copy();
+        NBTTagCompound tags = tool.getTagCompound().getCompoundTag("InfiTool");
+        tags.removeTag("Built");
+
+        boolean built = false;
+        for (ItemModifier mod : toolMods)
+        {
+            if (mod.matches(slots, tool))
+            {
+                built = true;
+                mod.addMatchingEffect(tool);
+                mod.modify(slots, tool);
+            }
+        }
+
+        tags = tool.getTagCompound();
+        if (name != null && !name.equals("") && !tags.hasKey("display"))
+        {
+            tags.setTag("display", new NBTTagCompound());
+            tags.getCompoundTag("display").setString("Name", "\u00A7f" + name);
+        }
+
+        if (built)
+            return tool;
+        else
+            return null;
+    }
+
+    public ItemStack modifyArmor (ItemStack input, ItemStack[] slots, String name)
+    {
+        ItemStack armor = input.copy();
+        if (!armor.hasTagCompound())
+            addArmorTag(input);
+        NBTTagCompound tags = armor.getTagCompound().getCompoundTag("TinkerArmor");
+        tags.removeTag("Built");
+
+        boolean built = false;
+        for (ArmorMod mod : armorMods)
+        {
+            if (mod.matches(slots, armor))
+            {
+                built = true;
+                mod.addMatchingEffect(armor);
+                mod.modify(slots, armor);
+            }
+        }
+
+        tags = armor.getTagCompound();
+        if (name != null && !name.equals("") && !tags.hasKey("display"))
+        {
+            tags.setTag("display", new NBTTagCompound());
+            tags.getCompoundTag("display").setString("Name", "\u00A7f" + name);
+        }
+
+        if (built)
+            return armor;
+        else
+            return null;
+    }
+
+    @Deprecated
     public ItemStack modifyTool (ItemStack input, ItemStack topSlot, ItemStack bottomSlot, ItemStack extraStack, String name)
     {
         if (extraStack != null)
@@ -344,7 +438,7 @@ public class ToolBuilder
             return tool;
 
         boolean built = false;
-        for (ToolMod mod : toolMods)
+        for (ItemModifier mod : toolMods)
         {
             ItemStack[] slots = new ItemStack[] { topSlot, bottomSlot };
             if (mod.matches(slots, tool))
@@ -358,7 +452,7 @@ public class ToolBuilder
         tags = tool.getTagCompound();
         if (name != null && !name.equals("") && !tags.hasKey("display"))
         {
-            tags.setCompoundTag("display", new NBTTagCompound());
+            tags.setTag("display", new NBTTagCompound());
             tags.getCompoundTag("display").setString("Name", "\u00A7f" + name);
         }
 
@@ -366,10 +460,21 @@ public class ToolBuilder
             return tool;
         else
             return null;
-    }*/
+    }
 
+    public void addArmorTag (ItemStack armor) // Not sure if temporary or not
+    {
+        NBTTagCompound baseTag = new NBTTagCompound();
+        NBTTagList list = new NBTTagList();
 
-    int buildReinforced (ToolMaterial headMat, ToolMaterial handleMat, ToolMaterial accessoryMat, ToolMaterial extraMat)
+        NBTTagCompound armorTag = new NBTTagCompound();
+        armorTag.setInteger("Modifiers", 30);
+        baseTag.setTag("TinkerArmor", armorTag);
+
+        armor.setTagCompound(baseTag);
+    }
+
+    int buildReinforced (TToolMaterial headMat, TToolMaterial handleMat, TToolMaterial accessoryMat, TToolMaterial extraMat)
     {
         int reinforced = 0;
 
@@ -394,7 +499,7 @@ public class ToolBuilder
         return reinforced;
     }
 
-    float buildShoddy (ToolMaterial headMat, ToolMaterial handleMat, ToolMaterial accessoryMat, ToolMaterial extraMat)
+    float buildShoddy (TToolMaterial headMat, TToolMaterial handleMat, TToolMaterial accessoryMat, TToolMaterial extraMat)
     {
         float sHead = headMat.shoddy();
         float sHandle = handleMat.shoddy();
@@ -412,11 +517,18 @@ public class ToolBuilder
         }
         return (sHead + sHandle) / 2f;
     }
-    
-    //Passthrough for now
-    @Deprecated
-    public static void registerToolMod(ToolMod mod)
+
+    public static void registerToolMod (ItemModifier mod)
     {
-        ModifyBuilder.registerModifier(mod);
+        if (mod == null)
+            throw new NullPointerException("Tool modifier cannot be null.");
+        instance.toolMods.add(mod);
+    }
+
+    public static void registerArmorMod (ArmorMod mod)
+    {
+        if (mod == null)
+            throw new NullPointerException("Armor modifier cannot be null.");
+        instance.armorMods.add(mod);
     }
 }

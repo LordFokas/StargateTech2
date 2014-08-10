@@ -2,6 +2,7 @@ package tconstruct.library.crafting;
 
 import java.util.LinkedList;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolCore;
@@ -19,10 +20,10 @@ public class ToolRecipe
     protected ToolCore result;
     protected Item toolRod = TConstructRegistry.getItem("toolRod");
 
-    /*public ToolRecipe(Item head, ToolCore tool)
-    {
-    	this(head, TContent.toolRod, null, null, tool);
-    }*/
+    /*
+     * public ToolRecipe(Item head, ToolCore tool) { this(head,
+     * TContent.toolRod, null, null, tool); }
+     */
 
     public ToolRecipe(Item head, Item handle, ToolCore tool)
     {
@@ -81,7 +82,7 @@ public class ToolRecipe
         {
             if (part == input)
                 return true;
-            if (toolRod != null && part == toolRod && (input == Item.stick || input == Item.bone))
+            if (toolRod != null && part == toolRod && (input == Items.stick || input == Items.bone))
                 return true;
         }
         return false;
@@ -99,7 +100,7 @@ public class ToolRecipe
         {
             if (part == input)
                 return true;
-            if (toolRod != null && part == toolRod && (input == Item.stick || input == Item.bone))
+            if (toolRod != null && part == toolRod && (input == Items.stick || input == Items.bone))
                 return true;
         }
         return false;
@@ -117,7 +118,7 @@ public class ToolRecipe
         {
             if (part == input)
                 return true;
-            if (toolRod != null && part == toolRod && (input == Item.stick || input == Item.bone))
+            if (toolRod != null && part == toolRod && (input == Items.stick || input == Items.bone))
                 return true;
         }
         return false;

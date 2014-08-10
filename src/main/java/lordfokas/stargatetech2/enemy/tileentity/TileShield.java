@@ -23,7 +23,7 @@ public class TileShield extends BaseTileEntity {
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		if(controller != null)
-			nbt.setCompoundTag("master", controller.toNBT());
+			nbt.setTag("master", controller.toNBT());
 	}
 	
 	public void setController(Vec3Int controller){
@@ -32,7 +32,7 @@ public class TileShield extends BaseTileEntity {
 	
 	public TileShieldController getController(){
 		if(controller != null){
-			TileEntity te = worldObj.getBlockTileEntity(controller.x, controller.y, controller.z);
+			TileEntity te = worldObj.getTileEntity(controller.x, controller.y, controller.z);
 			if(te instanceof TileShieldController)
 				return (TileShieldController) te;
 			}

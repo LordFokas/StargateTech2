@@ -4,16 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.api.shields.IShieldable;
@@ -28,6 +18,16 @@ import lordfokas.stargatetech2.enemy.block.BlockShield;
 import lordfokas.stargatetech2.enemy.bus.ShieldControllerBusDriver;
 import lordfokas.stargatetech2.enemy.util.IShieldControllerProvider;
 import lordfokas.stargatetech2.enemy.util.IonizedParticles;
+import net.minecraft.block.Block;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileShieldController extends TileOwnedMachine
 implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControllerProvider{
@@ -63,7 +63,7 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 	private void raiseShields(){
 		shields.clear();
 		for(Vec3Int pos : emitters){
-			TileEntity te = worldObj.getBlockTileEntity(pos.x, pos.y, pos.z);
+			TileEntity te = worldObj.getTileEntity(pos.x, pos.y, pos.z);
 			if(te instanceof TileShieldEmitter){
 				shields.addAll(((TileShieldEmitter)te).createShields());
 			}
@@ -73,7 +73,7 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 	
 	private void lowerShields(){
 		for(Vec3Int pos : shields){
-			Block b = Block.blocksList[worldObj.getBlockId(pos.x, pos.y, pos.z)];
+			Block b = worldObj.getBlock(pos.x, pos.y, pos.z);
 			if(b instanceof BlockShield){
 				worldObj.setBlockToAir(pos.x, pos.y, pos.z);
 			}else if(b instanceof IShieldable){
@@ -129,7 +129,7 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 				Vec3Int pos = new Vec3Int(nx, ny, nz);
 				if(!memory.contains(pos)){
 					memory.add(pos);
-					TileEntity te = w.getBlockTileEntity(nx, ny, nz);
+					TileEntity te = w.getTileEntity(nx, ny, nz);
 					if(te instanceof TileShieldEmitter){
 						found.add(pos);
 						recursiveRemap(w, nx, ny, nz, found, memory);
@@ -202,21 +202,21 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
-		nbt.setCompoundTag("tank", tank.writeToNBT(new NBTTagCompound()));
-		nbt.setCompoundTag("permissions", permissions.writeToNBT());
+		nbt.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
+		nbt.setTag("permissions", permissions.writeToNBT());
 		nbt.setShort("address", driver.getInterfaceAddress());
 		nbt.setBoolean("driverEnabled", driver.isInterfaceEnabled());
 		nbt.setInteger("emitters", emitters.size());
 		for(int i = 0; i < emitters.size(); i++){
-			nbt.setCompoundTag("emitter_" + i, emitters.get(i).toNBT());
+			nbt.setTag("emitter_" + i, emitters.get(i).toNBT());
 		}
 		nbt.setInteger("shields", shields.size());
 		for(int i = 0; i < shields.size(); i++){
-			nbt.setCompoundTag("shield_" + i, shields.get(i).toNBT());
+			nbt.setTag("shield_" + i, shields.get(i).toNBT());
 		}
 		nbt.setBoolean("active", active);
 		nbt.setBoolean("enabled", enabled);
-		nbt.setCompoundTag("facing", writeFacingNBT());
+		nbt.setTag("facing", writeFacingNBT());
 		writeOwnedMachineData(nbt);
 	}
 	

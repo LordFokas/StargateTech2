@@ -2,16 +2,6 @@ package lordfokas.stargatetech2.factory.tileentity;
 
 import java.util.LinkedList;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
-import net.minecraftforge.fluids.IFluidTank;
 import lordfokas.stargatetech2.core.machine.FaceColor;
 import lordfokas.stargatetech2.core.machine.TileMachine;
 import lordfokas.stargatetech2.factory.util.Buffer;
@@ -19,6 +9,16 @@ import lordfokas.stargatetech2.factory.util.Buffer.BufferType;
 import lordfokas.stargatetech2.factory.util.BufferEnergy;
 import lordfokas.stargatetech2.factory.util.BufferFluid;
 import lordfokas.stargatetech2.factory.util.BufferItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.IFluidTank;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyStorage;
 
@@ -95,10 +95,10 @@ public class TilePrioritizer extends TileMachine implements ISidedInventory, IFl
 		main.writeToNBT(m);
 		primary.writeToNBT(p);
 		secondary.writeToNBT(s);
-		nbt.setCompoundTag("main", m);
-		nbt.setCompoundTag("primary", p);
-		nbt.setCompoundTag("secondary", s);
-		nbt.setCompoundTag("faces", writeFacingNBT());
+		nbt.setTag("main", m);
+		nbt.setTag("primary", p);
+		nbt.setTag("secondary", s);
+		nbt.setTag("faces", writeFacingNBT());
 	}
 	
 	// #################################################################
@@ -106,13 +106,13 @@ public class TilePrioritizer extends TileMachine implements ISidedInventory, IFl
 	
 	@Override public int getSizeInventory(){ return 0; }
 	@Override public ItemStack getStackInSlotOnClosing(int slot){ return null; }
-	@Override public String getInvName(){ return "__prioritizer__"; } // is this even used outside stupid vanilla code?
-	@Override public boolean isInvNameLocalized(){ return false; }
 	@Override public int getInventoryStackLimit(){ return 64; }
 	@Override public boolean isUseableByPlayer(EntityPlayer entityplayer){ return false; }
-	@Override public void openChest(){}
-	@Override public void closeChest(){}
 	@Override public boolean isItemValidForSlot(int i, ItemStack itemstack){ return true; }
+	@Override public String getInventoryName(){ return "Prioritizer"; }
+	@Override public boolean hasCustomInventoryName(){ return false; }
+	@Override public void openInventory(){}
+	@Override public void closeInventory(){}
 	
 	@Override
 	public ItemStack getStackInSlot(int slot) {
@@ -201,7 +201,7 @@ public class TilePrioritizer extends TileMachine implements ISidedInventory, IFl
 	}
 
 	@Override
-	public boolean canInterface(ForgeDirection from) {
+	public boolean canConnectEnergy(ForgeDirection from) {
 		return getCapacitor(from) != null;
 	}
 

@@ -33,7 +33,7 @@ public abstract class BlockMachine extends BaseBlockContainer {
 		if(!owned){
 			this.setResistance(80000F);
 			this.setHardness(4.0F);
-			MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 0);
+			setHarvestLevel("pickaxe", 0);
 		}
 	}
 	

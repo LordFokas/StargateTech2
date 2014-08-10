@@ -67,10 +67,10 @@ public class TileStargateBase extends TileStargateRing implements ITileStargateB
 	}
 
 	@Override
-	public boolean canInterface(ForgeDirection from) {
+	public boolean canConnectEnergy(ForgeDirection from) {
 		TileStargate stargate = getStargate();
 		if(stargate == null) return false;
-		else return stargate.canInterface(from);
+		else return stargate.canConnectEnergy(from);
 	}
 
 	@Override

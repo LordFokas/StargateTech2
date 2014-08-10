@@ -1,8 +1,5 @@
 package tconstruct.library.tools;
 
-import ic2.api.item.IBoxable;
-import ic2.api.item.ICustomElectricItem;
-
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,69 +8,68 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import tconstruct.entity.FancyEntityItem;
 import tconstruct.library.ActiveToolMod;
+import tconstruct.library.IModifyable;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.ToolBuilder;
-import tconstruct.library.modifier.IModifyable;
-import tconstruct.library.modifier.ItemModifier;
-import tconstruct.library.util.MathUtils;
 import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/** NBTTags
- * Main tag - InfiTool
+/**
+ * NBTTags Main tag - InfiTool
+ * 
  * @see ToolBuilder
  * 
- * Required:
- * Head: Base and render tag, above the handle
- * Handle: Base and render tag, bottom layer
+ *      Required: Head: Base and render tag, above the handle Handle: Base and
+ *      render tag, bottom layer
  * 
- * Damage: Replacement for metadata
- * MaxDamage: ItemStacks only read setMaxDamage()
- * Broken: Represents whether the tool is broken (boolean)
- * Attack: How much damage a mob will take
- * MiningSpeed: The speed at which a tool mines
+ *      Damage: Replacement for metadata MaxDamage: ItemStacks only read
+ *      setMaxDamage() Broken: Represents whether the tool is broken (boolean)
+ *      Attack: How much damage a mob will take MiningSpeed: The speed at which
+ *      a tool mines
  * 
- * Others: 
- * Accessory: Base and tag, above head. Sword guards, binding, etc
- * Effects: Render tag, top layer. Fancy effects like moss or diamond edge.
- * Render order: Handle > Head > Accessory > Effect1 > Effect2 > Effect3 > etc
- * Unbreaking: Reinforced in-game, 10% chance to not use durability per level
- * Stonebound: Mines faster as the tool takes damage, but has less attack
- * Spiny: Opposite of stonebound
+ *      Others: Accessory: Base and tag, above head. Sword guards, binding, etc
+ *      Effects: Render tag, top layer. Fancy effects like moss or diamond edge.
+ *      Render order: Handle > Head > Accessory > Effect1 > Effect2 > Effect3 >
+ *      etc Unbreaking: Reinforced in-game, 10% chance to not use durability per
+ *      level Stonebound: Mines faster as the tool takes damage, but has less
+ *      attack Spiny: Opposite of stonebound
  * 
- * Modifiers have their own tags.
+ *      Modifiers have their own tags.
  * @see ItemModifier
  */
 
-public abstract class ToolCore extends Item implements IModifyable, IEnergyContainerItem, ICustomElectricItem, IBoxable
+public abstract class ToolCore extends Item implements IModifyable, IEnergyContainerItem
 {
-    //TE power constants -- TODO grab these from the 
+    // TE power constants -- TODO grab these from the items added
     protected int capacity = 400000;
-    protected int maxReceive = 5000;
-    protected int maxExtract = 2000;
+    protected int maxReceive = 80;
+    protected int maxExtract = 80;
 
     protected Random random = new Random();
     protected int damageVsEntity;
-    public static Icon blankSprite;
-    public static Icon emptyIcon;
+    public static IIcon blankSprite;
+    public static IIcon emptyIcon;
 
-    public ToolCore(int id, int baseDamage)
+    public ToolCore(int baseDamage)
     {
-        super(id);
+        super();
         this.maxStackSize = 1;
         this.setMaxDamage(100);
         this.setUnlocalizedName("InfiTool");
@@ -96,10 +92,11 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         return "Tool";
     }
 
-    /** Determines crafting behavior with regards to durability
-     * 0: None
-     * 1: Adds handle modifier
-     * 2: Averages part with the rest of the tool (head)
+
+    /**
+     * Determines crafting behavior with regards to durability 0: None 1: Adds
+     * handle modifier 2: Averages part with the rest of the tool (head)
+     * 
      * @return type
      */
 
@@ -130,12 +127,12 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
 
     /* Rendering */
 
-    public HashMap<Integer, Icon> headIcons = new HashMap<Integer, Icon>();
-    public HashMap<Integer, Icon> brokenIcons = new HashMap<Integer, Icon>();
-    public HashMap<Integer, Icon> handleIcons = new HashMap<Integer, Icon>();
-    public HashMap<Integer, Icon> accessoryIcons = new HashMap<Integer, Icon>();
-    public HashMap<Integer, Icon> effectIcons = new HashMap<Integer, Icon>();
-    public HashMap<Integer, Icon> extraIcons = new HashMap<Integer, Icon>();
+    public HashMap<Integer, IIcon> headIcons = new HashMap<Integer, IIcon>();
+    public HashMap<Integer, IIcon> brokenIcons = new HashMap<Integer, IIcon>();
+    public HashMap<Integer, IIcon> handleIcons = new HashMap<Integer, IIcon>();
+    public HashMap<Integer, IIcon> accessoryIcons = new HashMap<Integer, IIcon>();
+    public HashMap<Integer, IIcon> effectIcons = new HashMap<Integer, IIcon>();
+    public HashMap<Integer, IIcon> extraIcons = new HashMap<Integer, IIcon>();
 
     //Not liking this
     public HashMap<Integer, String> headStrings = new HashMap<Integer, String>();
@@ -159,13 +156,14 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         return 9;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean hasEffect (ItemStack par1ItemStack)
     {
         return false;
     }
 
-    //Override me please!
+    // Override me please!
     public int getPartAmount ()
     {
         return 3;
@@ -199,7 +197,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
     }
 
     @Override
-    public void registerIcons (IconRegister iconRegister)
+    public void registerIcons (IIconRegister iconRegister)
     {
         headIcons.clear();
         brokenIcons.clear();
@@ -260,14 +258,14 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Icon getIconFromDamage (int meta)
+    public IIcon getIconFromDamage (int meta)
     {
         return blankSprite;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Icon getIcon (ItemStack stack, int renderPass)
+    public IIcon getIcon (ItemStack stack, int renderPass)
     {
         NBTTagCompound tags = stack.getTagCompound();
 
@@ -352,25 +350,6 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
             return;
 
         NBTTagCompound tags = stack.getTagCompound();
-        if (tags.hasKey("charge"))
-        {
-            String color = "";
-            //double joules = this.getJoules(stack);
-            int power = tags.getInteger("charge");
-
-            if (power != 0)
-            {
-                if (power <= this.getMaxCharge(stack) / 3)
-                    color = "\u00a74";
-                else if (power > this.getMaxCharge(stack) * 2 / 3)
-                    color = "\u00a72";
-                else
-                    color = "\u00a76";
-            }
-
-            String charge = new StringBuilder().append(color).append(tags.getInteger("charge")).append("/").append(getMaxCharge(stack)).append(" EU").toString();
-            list.add(charge);
-        }
         if (tags.hasKey("Energy"))
         {
             String color = "";
@@ -448,6 +427,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         list.add("");
         int attack = (int) (tags.getCompoundTag("InfiTool").getInteger("Attack") * this.getDamageModifier());
         list.add("\u00A79+" + attack + " " + StatCollector.translateToLocalFormatted("attribute.name.generic.attackDamage"));
+
     }
 
     public static String getStyleForType (int type)
@@ -462,10 +442,10 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
 
     public String getReinforcedName (int head, int handle, int accessory, int extra, int unbreaking)
     {
-        ToolMaterial headMat = TConstructRegistry.getMaterial(head);
-        ToolMaterial handleMat = TConstructRegistry.getMaterial(handle);
-        ToolMaterial accessoryMat = TConstructRegistry.getMaterial(accessory);
-        ToolMaterial extraMat = TConstructRegistry.getMaterial(extra);
+        TToolMaterial headMat = TConstructRegistry.getMaterial(head);
+        TToolMaterial handleMat = TConstructRegistry.getMaterial(handle);
+        TToolMaterial accessoryMat = TConstructRegistry.getMaterial(accessory);
+        TToolMaterial extraMat = TConstructRegistry.getMaterial(extra);
 
         int reinforced = 0;
         String style = "";
@@ -550,7 +530,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         return ret;
     }
 
-    //Used for sounds and the like
+    // Used for sounds and the like
     public void onEntityDamaged (World world, EntityLivingBase player, Entity entity)
     {
 
@@ -558,13 +538,14 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
 
     /* Creative mode tools */
 
-    public void getSubItems (int id, CreativeTabs tab, List list)
+    @Override
+    public void getSubItems (Item id, CreativeTabs tab, List list)
     {
         Iterator iter = TConstructRegistry.toolMaterials.entrySet().iterator();
         while (iter.hasNext())
         {
             Map.Entry pairs = (Map.Entry) iter.next();
-            ToolMaterial material = (ToolMaterial) pairs.getValue();
+            TToolMaterial material = (TToolMaterial) pairs.getValue();
             buildTool((Integer) pairs.getKey(), material.displayName, list);
         }
     }
@@ -583,23 +564,24 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
             boolean supress = false;
             try
             {
-                clazz = Class.forName("tconstruct.common.TContent"); //TODO: Make sure this is still working in 1.7.
+                clazz = Class.forName("tconstruct.common.TRepo");
                 fld = clazz.getField("supressMissingToolLogs");
                 supress = fld.getBoolean(fld);
             }
             catch (Exception e)
             {
-                TConstructRegistry.logger.severe("TConstruct Library could not find parts of TContent");
+                TConstructRegistry.logger.error("TConstruct Library could not find parts of TContent");
                 e.printStackTrace();
             }
             if (!supress)
             {
-                TConstructRegistry.logger.severe("Creative builder failed tool for " + name + this.getToolName());
-                TConstructRegistry.logger.severe("Make sure you do not have item ID conflicts");
+                TConstructRegistry.logger.error("Creative builder failed tool for " + name + this.getToolName());
+                TConstructRegistry.logger.error("Make sure you do not have item ID conflicts");
             }
         }
         else
         {
+            tool.getTagCompound().getCompoundTag("InfiTool").setBoolean("Built", true);
             list.add(tool);
         }
     }
@@ -615,7 +597,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
 
     public Item getHandleItem ()
     {
-        return TConstructRegistry.getItem("toolRod");//TContent.toolRod;
+        return TConstructRegistry.getItem("toolRod");// TContent.toolRod;
     }
 
     /* Updating */
@@ -631,15 +613,10 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
 
     /* Tool uses */
 
-    //Types
-    @Deprecated
-    public String[] toolCategories()
-    {
-        return getTraits();
-    }
+    // Types
     public abstract String[] getTraits ();
 
-    //Mining
+    // Mining
     @Override
     public boolean onBlockStartBreak (ItemStack stack, int x, int y, int z, EntityPlayer player)
     {
@@ -654,18 +631,17 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
     }
 
     @Override
-    public boolean onBlockDestroyed (ItemStack itemstack, World world, int blockID, int x, int y, int z, EntityLivingBase player)
+    public boolean onBlockDestroyed (ItemStack itemstack, World world, Block block, int x, int y, int z, EntityLivingBase player)
     {
-        Block block = Block.blocksList[blockID];
         if (block != null && (double) block.getBlockHardness(world, x, y, z) != 0.0D)
         {
-            return AbilityHelper.onBlockChanged(itemstack, world, blockID, x, y, z, player, random);
+            return AbilityHelper.onBlockChanged(itemstack, world, block, x, y, z, player, random);
         }
         return true;
     }
 
     @Override
-    public float getStrVsBlock (ItemStack stack, Block block, int meta)
+    public float getDigSpeed (ItemStack stack, Block block, int meta)
     {
         NBTTagCompound tags = stack.getTagCompound();
         if (tags.getCompoundTag("InfiTool").getBoolean("Broken"))
@@ -702,7 +678,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         return this.damageVsEntity;
     }
 
-    //Changes how much durability the base tool has
+    // Changes how much durability the base tool has
     public float getDurabilityModifier ()
     {
         return 1f;
@@ -718,6 +694,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         return 1.0f;
     }
 
+    @Override
     public ItemStack onItemRightClick (ItemStack stack, World world, EntityPlayer player)
     {
         boolean used = false;
@@ -746,6 +723,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
     }
 
     /* Vanilla overrides */
+    @Override
     public boolean isItemTool (ItemStack par1ItemStack)
     {
         return false;
@@ -757,21 +735,25 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         return false;
     }
 
+    @Override
     public boolean isRepairable ()
     {
         return false;
     }
 
+    @Override
     public int getItemEnchantability ()
     {
         return 0;
     }
 
+    @Override
     public boolean isFull3D ()
     {
         return true;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean hasEffect (ItemStack par1ItemStack, int pass)
     {
@@ -785,13 +767,6 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         if (tags == null)
         {
             return 0;
-        }
-
-        if (tags.hasKey("charge"))
-        {
-            int charge = tags.getInteger("charge");
-            if (charge > 0)
-                return this.getMaxCharge(stack);
         }
         if (tags.hasKey("Energy"))
         {
@@ -808,13 +783,6 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         if (tags == null)
         {
             return 0;
-        }
-
-        if (tags.hasKey("charge"))
-        {
-            int charge = tags.getInteger("charge");
-            if (charge > 0)
-                return getMaxCharge(stack) - charge;
         }
         if (tags.hasKey("Energy"))
         {
@@ -833,147 +801,10 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
 
     public Entity createEntity (World world, Entity location, ItemStack itemstack)
     {
-        return new ToolEntityItem(world, location, itemstack);
+        return new FancyEntityItem(world, location, itemstack);
     }
 
-    /* IC2 Support
-     * Every tool can be an electric tool if you modify it right
-     */
-    @Override
-    public boolean canBeStoredInToolbox (ItemStack stack)
-    {
-        return true;
-    }
-
-    @Override
-    public boolean canProvideEnergy (ItemStack stack)
-    {
-        return false;
-        /*NBTTagCompound tags = stack.getTagCompound();
-        if (!tags.hasKey("charge"))
-            return false;
-
-        return true;*/
-    }
-
-    @Override
-    public int getChargedItemId (ItemStack stack)
-    {
-        return this.itemID;
-    }
-
-    @Override
-    public int getEmptyItemId (ItemStack stack)
-    {
-        return this.itemID;
-    }
-
-    @Override
-    public int getMaxCharge (ItemStack stack)
-    {
-        NBTTagCompound tags = stack.getTagCompound();
-        if (!tags.hasKey("charge"))
-            return 0;
-
-        return 10000;
-    }
-
-    @Override
-    public int getTier (ItemStack itemStack)
-    {
-        return 0;
-    }
-
-    @Override
-    public int getTransferLimit (ItemStack stack)
-    {
-        NBTTagCompound tags = stack.getTagCompound();
-        if (!tags.hasKey("charge"))
-            return 0;
-
-        return 32;
-    }
-
-    @Override
-    public int charge (ItemStack stack, int amount, int tier, boolean ignoreTransferLimit, boolean simulate)
-    {
-        NBTTagCompound tags = stack.getTagCompound();
-        if (!tags.hasKey("charge"))
-            return 0;
-
-        if (amount > 0)
-        {
-            if (amount > getTransferLimit(stack) && !ignoreTransferLimit)
-            {
-                amount = getTransferLimit(stack);
-            }
-
-            int charge = tags.getInteger("charge");
-
-            if (amount > getMaxCharge(stack) - charge)
-            {
-                amount = getMaxCharge(stack) - charge;
-            }
-
-            charge += amount;
-
-            if (!simulate)
-            {
-                tags.setInteger("charge", charge);
-                stack.setItemDamage(1 + (getMaxCharge(stack) - charge) * (stack.getMaxDamage() - 2) / getMaxCharge(stack));
-            }
-
-            return amount;
-        }
-
-        else
-            return 0;
-    }
-
-    @Override
-    public int discharge (ItemStack stack, int amount, int tier, boolean ignoreTransferLimit, boolean simulate)
-    {
-        NBTTagCompound tags = stack.getTagCompound();
-        if (tags == null || !tags.hasKey("charge"))
-            return 0;
-
-        if (amount > 0)
-        {
-            if (amount > getTransferLimit(stack) && !ignoreTransferLimit)
-            {
-                amount = getTransferLimit(stack);
-            }
-            int charge = tags.getInteger("charge");
-
-            if (amount > charge)
-            {
-                amount = charge;
-            }
-            charge -= amount;
-            if (!simulate)
-            {
-                tags.setInteger("charge", charge);
-                stack.setItemDamage(1 + (getMaxCharge(stack) - charge) * (stack.getMaxDamage() - 1) / getMaxCharge(stack));
-            }
-            return amount;
-        }
-        else
-            return 0;
-    }
-
-    @Override
-    public boolean canShowChargeToolTip (ItemStack itemStack)
-    {
-        return false;
-    }
-
-    @Override
-    public boolean canUse (ItemStack itemStack, int amount)
-    {
-        return false;
-    }
-
-    //TE support section -- from COFH core API reference section
+    // TE support section -- from COFH core API reference section
     public void setMaxTransfer (int maxTransfer)
     {
         setMaxReceive(maxTransfer);
@@ -998,7 +829,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         if (tags == null || !tags.hasKey("Energy"))
             return 0;
         int energy = tags.getInteger("Energy");
-        int energyReceived = MathUtils.minInt(capacity - energy, MathUtils.minInt(this.maxReceive, maxReceive));
+        int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
         if (!simulate)
         {
             energy += energyReceived;
@@ -1018,7 +849,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
             return 0;
         }
         int energy = tags.getInteger("Energy");
-        int energyExtracted = MathUtils.minInt(energy, MathUtils.minInt(this.maxExtract, maxExtract));
+        int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
         if (!simulate)
         {
             energy -= energyExtracted;
@@ -1048,5 +879,5 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
             return 0;
         return capacity;
     }
-    //end of TE support section
+    // end of TE support section
 }

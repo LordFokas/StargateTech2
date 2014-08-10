@@ -1,18 +1,13 @@
 package tconstruct.library.tools;
 
-import ic2.api.item.ICustomElectricItem;
-import ic2.api.item.IElectricItem;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentThorns;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
@@ -20,7 +15,7 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -32,13 +27,13 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.FakePlayer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event.Result;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import tconstruct.library.ActiveToolMod;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.util.PiercingEntityDamage;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class AbilityHelper
 {
@@ -46,7 +41,7 @@ public class AbilityHelper
     public static boolean necroticUHS;
 
     /* Normal interactions */
-    public static boolean onBlockChanged (ItemStack stack, World world, int bID, int x, int y, int z, EntityLivingBase player, Random random)
+    public static boolean onBlockChanged (ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase player, Random random)
     {
         if (!stack.hasTagCompound())
             return false;
@@ -78,9 +73,7 @@ public class AbilityHelper
             {
                 NBTTagCompound tags = stack.getTagCompound();
                 NBTTagCompound toolTags = stack.getTagCompound().getCompoundTag("InfiTool");
-                float attribute = (float) player.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
-                int damage = toolTags.getInteger("Attack") + baseDamage + 1;
-                damage += attribute;
+                int damage = toolTags.getInteger("Attack") + baseDamage;
                 boolean broken = toolTags.getBoolean("Broken");
 
                 int durability = tags.getCompoundTag("InfiTool").getInteger("Damage");
@@ -207,7 +200,7 @@ public class AbilityHelper
                         {
                             damageTool(stack, 1, tags, player, false);
                         }
-                        //damageTool(stack, 1, player, false);
+                        // damageTool(stack, 1, player, false);
                         tool.onEntityDamaged(player.worldObj, player, entity);
                         if (!necroticUHS || (entity instanceof IMob && entity instanceof EntityLivingBase && ((EntityLivingBase) entity).getHealth() <= 0))
                         {
@@ -247,7 +240,9 @@ public class AbilityHelper
 
                         if (entity instanceof EntityLivingBase)
                         {
-                            EnchantmentThorns.func_92096_a(player, (EntityLivingBase) entity, random);
+                            DamageSource.causeThornsDamage(entity);// (((EntityLivingBase)player,
+                                                                   // (EntityLivingBase)
+                                                                   // entity);
                         }
                     }
 
@@ -265,7 +260,7 @@ public class AbilityHelper
                         }
                         else
                         {
-                            Item.itemsList[stack.itemID].hitEntity(stack, (EntityLivingBase) entity, player);
+                            stack.getItem().hitEntity(stack, (EntityLivingBase) entity, player);
                         }
 
                         if ((fireAspect > 0 || toolTags.hasKey("Fiery") || toolTags.hasKey("Lava")) && causedDamage)
@@ -305,7 +300,7 @@ public class AbilityHelper
             {
                 EntityWolf var3 = (EntityWolf) living;
 
-                if (var3.isTamed() && player.username.equals(var3.getOwnerName()))
+                if (var3.isTamed() && player.getDisplayName().equals(var3.getOwnerName()))
                 {
                     return;
                 }
@@ -321,7 +316,7 @@ public class AbilityHelper
                 {
                     EntityWolf var5 = (EntityWolf) var4.next();
 
-                    if (var5.isTamed() && var5.getEntityToAttack() == null && player.username.equals(var5.getOwnerName()) && (!par2 || !var5.isSitting()))
+                    if (var5.isTamed() && var5.getEntityToAttack() == null && player.getDisplayName().equals(var5.getOwnerName()) && (!par2 || !var5.isSitting()))
                     {
                         var5.setSitting(false);
                         var5.setTarget(living);
@@ -392,16 +387,11 @@ public class AbilityHelper
 
     public static boolean damageElectricTool (ItemStack stack, NBTTagCompound tags, Entity entity)
     {
-        if (tags.hasKey("charge") || tags.hasKey("Energy"))
+        if (tags.hasKey("Energy"))
         {
 
             NBTTagCompound toolTag = stack.getTagCompound().getCompoundTag("InfiTool");
-            int charge = -1;
             int energy = -1;
-            if (tags.hasKey("charge"))
-            {
-                charge = tags.getInteger("charge");
-            }
             if (tags.hasKey("Energy"))
             {
                 energy = tags.getInteger("Energy");
@@ -433,22 +423,6 @@ public class AbilityHelper
             float bonusLog = (float) Math.log(durability / 72f + 1) * 2 * stonebound;
             trueSpeed += bonusLog;
             trueSpeed *= 6;
-            if (charge != -1)
-            {
-                if (charge < trueSpeed)
-                {
-                    if (charge > 0)
-                        tags.setInteger("charge", 0);
-                    return false;
-                }
-
-                charge -= trueSpeed;
-                ToolCore tool = (ToolCore) stack.getItem();
-                stack.setItemDamage(1 + (tool.getMaxCharge(stack) - charge) * (stack.getMaxDamage() - 1) / tool.getMaxCharge(stack));
-                tags.setInteger("charge", charge);
-                if (entity instanceof EntityPlayer)
-                    chargeFromArmor(stack, (EntityPlayer) entity);
-            }
             if (energy != -1)
             {
                 if (energy < trueSpeed * 2)
@@ -469,98 +443,6 @@ public class AbilityHelper
         {
             return false;
         }
-    }
-
-    static void chargeFromArmor (ItemStack stack, EntityPlayer player)
-    {
-        boolean inContainer = false;
-
-        for (int armorIter = 0; armorIter < 4; ++armorIter)
-        {
-            ItemStack armor = player.inventory.armorInventory[armorIter];
-
-            if (armor != null && armor.getItem() instanceof IElectricItem)
-            {
-                IElectricItem electricArmor = (IElectricItem) armor.getItem();
-                ToolCore tool = (ToolCore) stack.getItem();
-
-                if (electricArmor.canProvideEnergy(stack) && electricArmor.getTier(stack) >= ((IElectricItem) stack.getItem()).getTier(stack))
-                {
-                    int chargeAmount = tool.charge(stack, Integer.MAX_VALUE, Integer.MAX_VALUE, true, true);
-                    chargeAmount = discharge(armor, chargeAmount, Integer.MAX_VALUE, true, false);
-
-                    if (chargeAmount > 0)
-                    {
-                        tool.charge(stack, chargeAmount, Integer.MAX_VALUE, true, false);
-                        inContainer = true;
-                    }
-                }
-            }
-        }
-
-        if (inContainer)
-        {
-            player.openContainer.detectAndSendChanges();
-        }
-    }
-
-    public static int discharge (ItemStack stack, int amount, int tier, boolean ignoreTransferLimit, boolean simulate)
-    {
-        IElectricItem ielectricitem = (IElectricItem) stack.getItem();
-
-        if (ielectricitem instanceof ICustomElectricItem)
-        {
-            return ((ICustomElectricItem) ielectricitem).discharge(stack, amount, tier, ignoreTransferLimit, simulate);
-        }
-        else if (amount >= 0 && stack.stackSize <= 1 && ielectricitem.getTier(stack) <= tier)
-        {
-            if (amount > ielectricitem.getTransferLimit(stack) && !ignoreTransferLimit)
-            {
-                amount = ielectricitem.getTransferLimit(stack);
-            }
-
-            NBTTagCompound tags = stack.getTagCompound();
-            int charge = tags.getInteger("charge");
-
-            if (amount > charge)
-            {
-                amount = charge;
-            }
-
-            charge -= amount;
-
-            if (!simulate)
-            {
-                tags.setInteger("charge", charge);
-                stack.itemID = charge > 0 ? ielectricitem.getChargedItemId(stack) : ielectricitem.getEmptyItemId(stack);
-
-                if (stack.getItem() instanceof IElectricItem)
-                {
-                    ielectricitem = (IElectricItem) stack.getItem();
-
-                    if (stack.getMaxDamage() > 2)
-                    {
-                        if (stack.getItemDamage() + 1 < stack.getMaxDamage())
-                            stack.setItemDamage(1 + (ielectricitem.getMaxCharge(stack) - charge) * (stack.getMaxDamage() - 2) / ielectricitem.getMaxCharge(stack));
-                    }
-                    else
-                    {
-                        stack.setItemDamage(0);
-                    }
-                }
-                else
-                {
-                    stack.setItemDamage(0);
-                }
-            }
-
-            return amount;
-        }
-        else
-        {
-            return 0;
-        }
-
     }
 
     public static void breakTool (ItemStack stack, NBTTagCompound tags, Entity entity)
@@ -589,7 +471,7 @@ public class AbilityHelper
     public static void knockbackEntity (EntityLivingBase living, double boost)
     {
         living.motionX *= boost;
-        //living.motionY *= boost/2;
+        // living.motionY *= boost/2;
         living.motionZ *= boost;
     }
 
@@ -609,22 +491,23 @@ public class AbilityHelper
 
             if (event.getResult() == Result.ALLOW)
             {
-                onBlockChanged(stack, world, 0, x, y, z, player, random);
+
+                onBlockChanged(stack, world, Blocks.air, x, y, z, player, random);
                 return true;
             }
 
-            int bID = world.getBlockId(x, y, z);
-            int bIDabove = world.getBlockId(x, y + 1, z);
+            Block b = world.getBlock(x, y, z);
+            Block babove = world.getBlock(x, y + 1, z);
 
-            if ((side == 0 || bIDabove != 0 || bID != Block.grass.blockID) && bID != Block.dirt.blockID)
+            if ((side == 0 || babove != Blocks.air || b != Blocks.grass) && b != Blocks.dirt)
             {
                 return false;
             }
             else
             {
-                Block block = Block.tilledField;
-                world.playSoundEffect((double) ((float) x + 0.5F), (double) ((float) y + 0.5F), (double) ((float) z + 0.5F), block.stepSound.getStepSound(),
-                        (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+                Block block = Blocks.farmland;
+                world.playSoundEffect((double) ((float) x + 0.5F), (double) ((float) y + 0.5F), (double) ((float) z + 0.5F), block.stepSound.soundName, (block.stepSound.getVolume() + 1.0F) / 2.0F,
+                        block.stepSound.getPitch() * 0.8F);
 
                 if (world.isRemote)
                 {
@@ -632,8 +515,8 @@ public class AbilityHelper
                 }
                 else
                 {
-                    world.setBlock(x, y, z, block.blockID);
-                    onBlockChanged(stack, world, 0, x, y, z, player, random);
+                    world.setBlock(x, y, z, block);
+                    onBlockChanged(stack, world, Blocks.air, x, y, z, player, random);
                     return true;
                 }
             }
@@ -659,6 +542,7 @@ public class AbilityHelper
             if (!(player instanceof FakePlayer))
                 entityitem.onCollideWithPlayer(player);
         }
+
     }
 
     /* Ranged weapons */
@@ -750,6 +634,7 @@ public class AbilityHelper
             d3 = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
         }
         Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
-        return world.rayTraceBlocks_do_do(vec3, vec31, par3, !par3);
+        return world.func_147447_a(vec3, vec31, par3, !par3, par3);
     }
+
 }

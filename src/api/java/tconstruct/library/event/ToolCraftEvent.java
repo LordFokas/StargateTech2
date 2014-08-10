@@ -1,10 +1,10 @@
 package tconstruct.library.event;
 
-import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.ToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.event.Event;
+import tconstruct.library.tools.TToolMaterial;
+import tconstruct.library.tools.ToolCore;
+import cpw.mods.fml.common.eventhandler.Event;
 
 /* This event fires after all of the other construction. The resulting nbttag is added to the tool 
  * Note: The tag is the base tag. toolTag.getCompoundTag("InfiTool") will have all of the tool's data.
@@ -14,10 +14,10 @@ public class ToolCraftEvent extends Event
 {
     public final ToolCore tool;
     public final NBTTagCompound toolTag;
-    public final ToolMaterial[] materials;
+    public final TToolMaterial[] materials;
     protected ItemStack resultStack;
 
-    public ToolCraftEvent(ToolCore tool, NBTTagCompound toolTag, ToolMaterial[] materials)
+    public ToolCraftEvent(ToolCore tool, NBTTagCompound toolTag, TToolMaterial[] materials)
     {
         this.tool = tool;
         this.toolTag = toolTag;
@@ -27,17 +27,16 @@ public class ToolCraftEvent extends Event
     @HasResult
     public static class NormalTool extends ToolCraftEvent
     {
-        public NormalTool(ToolCore tool, NBTTagCompound toolTag, ToolMaterial[] materials)
+        public NormalTool(ToolCore tool, NBTTagCompound toolTag, TToolMaterial[] materials)
         {
             super(tool, toolTag, materials);
         }
 
-        /** Fires just before the tool is put together
+        /**
+         * Fires just before the tool is put together
          * 
-         * Result is significant:
-         *    DEFAULT: Allows tool to be crafted normally 
-         *    ALLOW:   Uses resultStack instead 
-         *    DENY:    Stops tool crafting altogether
+         * Result is significant: DEFAULT: Allows tool to be crafted normally
+         * ALLOW: Uses resultStack instead DENY: Stops tool crafting altogether
          */
 
         public void overrideResult (ItemStack result)

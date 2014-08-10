@@ -3,7 +3,7 @@ package tconstruct.library.event;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.Event;
+import cpw.mods.fml.common.eventhandler.Event;
 
 public class ToolCraftedEvent extends Event
 {

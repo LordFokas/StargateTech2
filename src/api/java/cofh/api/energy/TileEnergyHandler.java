@@ -2,7 +2,7 @@ package cofh.api.energy;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * Reference implementation of {@link IEnergyHandler}. Use/extend this or implement your own.
@@ -30,6 +30,12 @@ public class TileEnergyHandler extends TileEntity implements IEnergyHandler {
 
 	/* IEnergyHandler */
 	@Override
+	public boolean canConnectEnergy(ForgeDirection from) {
+
+		return true;
+	}
+
+	@Override
 	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
 
 		return storage.receiveEnergy(maxReceive, simulate);
@@ -39,12 +45,6 @@ public class TileEnergyHandler extends TileEntity implements IEnergyHandler {
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
 
 		return storage.extractEnergy(maxExtract, simulate);
-	}
-
-	@Override
-	public boolean canInterface(ForgeDirection from) {
-
-		return true;
 	}
 
 	@Override

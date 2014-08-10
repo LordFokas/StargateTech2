@@ -1,24 +1,25 @@
 package tconstruct.library.tools;
 
-import tconstruct.library.ActiveToolMod;
-import tconstruct.library.TConstructRegistry;
+import mantle.world.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
+import tconstruct.library.ActiveToolMod;
+import tconstruct.library.TConstructRegistry;
 
 /* Base class for tools that should be harvesting blocks */
 
 public abstract class HarvestTool extends ToolCore
 {
-    public HarvestTool(int itemID, int baseDamage)
+    public HarvestTool(int baseDamage)
     {
-        super(itemID, baseDamage);
+        super(baseDamage);
     }
 
     @Override
@@ -29,36 +30,90 @@ public abstract class HarvestTool extends ToolCore
 
         NBTTagCompound tags = stack.getTagCompound().getCompoundTag("InfiTool");
         World world = player.worldObj;
-        int bID = player.worldObj.getBlockId(x, y, z);
+        Block block = player.worldObj.getBlock(x, y, z);
         int meta = world.getBlockMetadata(x, y, z);
-        Block block = Block.blocksList[bID];
-        if (block == null || bID < 1)
+        // Block block = Block.blocksList[bID];
+        if (block == null || block == Blocks.air)
             return false;
-        int hlvl = MinecraftForge.getBlockHarvestLevel(block, meta, getHarvestType());
+        int hlvl = -1;
+        if (!(tags.getBoolean("Broken")))
+        {
+            Block localBlock = world.getBlock(x, y, z);
+            int localMeta = world.getBlockMetadata(x, y, z);
+            if (block.getHarvestTool(meta) != null && block.getHarvestTool(meta).equals(this.getHarvestType()))
+                hlvl = block.getHarvestLevel(meta);
+            int toolLevel = tags.getInteger("HarvestLevel");
+            float blockHardness = block.getBlockHardness(world, x, y, z);
+            float localHardness = localBlock == null ? Float.MAX_VALUE : localBlock.getBlockHardness(world, x, y, z);
 
-        if (hlvl <= tags.getInteger("HarvestLevel"))
-        {
-            boolean cancelHarvest = false;
-            for (ActiveToolMod mod : TConstructRegistry.activeModifiers)
+            if (hlvl <= toolLevel && localHardness - 1.5 <= blockHardness)
             {
-                if (mod.beforeBlockBreak(this, stack, x, y, z, player))
-                    cancelHarvest = true;
+                boolean cancelHarvest = false;
+                for (ActiveToolMod mod : TConstructRegistry.activeModifiers)
+                {
+                    if (mod.beforeBlockBreak(this, stack, x, y, z, player))
+                        cancelHarvest = true;
+                }
+
+                if (!cancelHarvest)
+                {
+                    if (localBlock != null && !(localHardness < 0))
+                    {
+
+                        boolean isEffective = false;
+
+                        for (int iter = 0; iter < getEffectiveMaterials().length; iter++)
+                        {
+                            if (getEffectiveMaterials()[iter] == localBlock.getMaterial() || localBlock == Blocks.monster_egg)
+                            {
+                                isEffective = true;
+                                break;
+                            }
+                        }
+
+                        if (localBlock.getMaterial().isToolNotRequired())
+                        {
+                            isEffective = true;
+                        }
+
+                        if (!player.capabilities.isCreativeMode)
+                        {
+                            if (isEffective)
+                            {
+                                if (localBlock.removedByPlayer(world, player, x, y, z))
+                                {
+                                    localBlock.onBlockDestroyedByPlayer(world, x, y, z, localMeta);
+                                }
+                                localBlock.harvestBlock(world, player, x, y, z, localMeta);
+                                localBlock.onBlockHarvested(world, x, y, z, localMeta, player);
+                                if (blockHardness > 0f)
+                                    onBlockDestroyed(stack, world, localBlock, x, y, z, player);
+                                world.func_147479_m(x, y, z);
+                            }
+                            else
+                            {
+                                WorldHelper.setBlockToAir(world, x, y, z);
+                                world.func_147479_m(x, y, z);
+                            }
+
+                        }
+                        else
+                        {
+                            WorldHelper.setBlockToAir(world, x, y, z);
+                            world.func_147479_m(x, y, z);
+                        }
+                    }
+                }
             }
-            return cancelHarvest;
         }
-        else
-        {
-            world.setBlockToAir(x, y, z);
-            if (!player.capabilities.isCreativeMode)
-                onBlockDestroyed(stack, world, bID, x, y, z, player);
-            if (!world.isRemote)
-                world.playAuxSFX(2001, x, y, z, bID + (meta << 12));
-            return true;
-        }
+        if (!world.isRemote)
+            world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
+        return true;
+
     }
 
     @Override
-    public float getStrVsBlock (ItemStack stack, Block block, int meta)
+    public float getDigSpeed (ItemStack stack, Block block, int meta)
     {
         if (!stack.hasTagCompound())
             return 1.0f;
@@ -70,16 +125,18 @@ public abstract class HarvestTool extends ToolCore
         Material[] materials = getEffectiveMaterials();
         for (int i = 0; i < materials.length; i++)
         {
-            if (materials[i] == block.blockMaterial)
+            if (materials[i] == block.getMaterial())
             {
                 return calculateStrength(tags, block, meta);
             }
         }
-        if (MinecraftForge.getBlockHarvestLevel(block, meta, getHarvestType()) > 0)
+        if (block.getHarvestLevel(meta) > 0)
         {
-            return calculateStrength(tags, block, meta); //No issue if the harvest level is too low
+            return calculateStrength(tags, block, meta); // No issue if the
+                                                         // harvest level is
+                                                         // too low
         }
-        return super.getStrVsBlock(stack, block, meta);
+        return super.getDigSpeed(stack, block, meta);
     }
 
     float calculateStrength (NBTTagCompound tags, Block block, int meta)
@@ -103,41 +160,38 @@ public abstract class HarvestTool extends ToolCore
             mineSpeed += tags.getInteger("MiningSpeedExtra");
             heads++;
         }
-        float trueSpeed = mineSpeed / (heads * 100f) * breakSpeedModifier();
-        int hlvl = MinecraftForge.getBlockHarvestLevel(block, meta, getHarvestType());
+        float trueSpeed = mineSpeed / (heads * 100f);
+        int hlvl = block.getHarvestLevel(meta);
         int durability = tags.getInteger("Damage");
 
         float stonebound = tags.getFloat("Shoddy");
-        float bonusLog = (float) Math.log(durability / stoneboundModifier() + 1) * 2 * stonebound;
+        float bonusLog = (float) Math.log(durability / 72f + 1) * 2 * stonebound;
         trueSpeed += bonusLog;
 
         if (hlvl <= tags.getInteger("HarvestLevel"))
             return trueSpeed;
         return 0.1f;
     }
-    
-    public float breakSpeedModifier()
-    {
-        return 1.0f;
-    }
-    
-    public float stoneboundModifier()
-    {
-        return 72f;
-    }
 
-    public boolean canHarvestBlock (Block block)
+    @Override
+    public boolean func_150897_b (Block block)
     {
-        if (block.blockMaterial.isToolNotRequired())
+        if (block.getMaterial().isToolNotRequired())
         {
             return true;
         }
         for (Material m : getEffectiveMaterials())
         {
-            if (m == block.blockMaterial)
+            if (m == block.getMaterial())
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean canHarvestBlock (Block block, ItemStack itemStack)
+    {
+        return func_150897_b(block);
     }
 
     @Override
@@ -220,11 +274,14 @@ public abstract class HarvestTool extends ToolCore
             }
         }
 
-        /*if (used) //Update client
-        {
-            Packet103SetSlot packet = new Packet103SetSlot(player.openContainer.windowId, itemSlot, nearbyStack);
-            ((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(packet);
-        }*/
+        /*
+          if (used) //Update client
+          {
+               Packet103SetSlot packet = new Packet103SetSlot(player.openContainer.windowId, itemSlot, nearbyStack);
+               ((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(packet); 
+          }
+         */
+
         return used;
     }
 }

@@ -2,8 +2,6 @@ package tconstruct.library.armor;
 
 import java.util.EnumSet;
 
-import tconstruct.library.modifier.IModifyable;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +15,7 @@ public class AModInteger extends ArmorMod
     public final String color;
     public final String tooltipName;
 
-    public AModInteger(int effect, String dataKey, EnumSet<ArmorPart> armorTypes, ItemStack[] items, int count, int increase, String c, String tip)
+    public AModInteger(int effect, String dataKey, EnumSet<EnumArmorPart> armorTypes, ItemStack[] items, int count, int increase, String c, String tip)
     {
         super(effect, dataKey, armorTypes, items);
         this.modifyCount = count;
@@ -32,11 +30,12 @@ public class AModInteger extends ArmorMod
         Item i = armor.getItem();
         if (!(i instanceof ArmorCore))
             return false;
+
         ArmorCore item = (ArmorCore) armor.getItem();
         if (armorTypes.contains(item.armorPart))
         {
             NBTTagCompound tags = armor.getTagCompound().getCompoundTag(getTagName(armor));
-            return tags.getInteger("Modifiers") > modifyCount;
+            return tags.getInteger("Modifiers") >= modifyCount;
         }
         return false;
     }

@@ -1,62 +1,45 @@
 package tconstruct.library.armor;
 
-import java.text.DecimalFormat;
-import java.util.List;
-
+import tconstruct.library.IModifyable;
 import net.minecraft.block.BlockDispenser;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
-import tconstruct.library.TConstructRegistry;
-import tconstruct.library.modifier.ActiveArmorMod;
-import tconstruct.library.modifier.IModifyable;
-import tconstruct.library.tools.ToolCore;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cofh.api.energy.IEnergyContainerItem;
 
-public abstract class ArmorCore extends ItemArmor implements ISpecialArmor, IModifyable
+/**
+ * NBTTags Main tag - InfiArmor
+ */
+public abstract class ArmorCore extends ItemArmor implements IEnergyContainerItem, ISpecialArmor, IModifyable
 {
-    public final ArmorPart armorPart;
+
+    public final EnumArmorPart armorPart;
     private static final IBehaviorDispenseItem dispenserBehavior = new BehaviorDispenseArmorCopy();
     public final int baseProtection;
-    protected final String modifyType;
-    protected final String textureFolder;
-    protected final String textureName;
 
-    public ArmorCore(int id, int baseProtection, ArmorPart part, String type, String textureFolder, String textureName)
+    // TE power constants -- TODO grab these from the items added
+    protected int capacity = 400000;
+    protected int maxReceive = 2000;
+    protected int maxExtract = 2000;
+
+    public ArmorCore(int baseProtection, EnumArmorPart part)
     {
-        super(id, EnumArmorMaterial.CHAIN, 0, part.getPartId());
+        super(ArmorMaterial.CHAIN, 0, part.getPartId());
         this.maxStackSize = 1;
         this.setMaxDamage(100);
+        this.setUnlocalizedName(getBaseTagName());
         this.armorPart = part;
         this.baseProtection = baseProtection;
-        this.modifyType = type;
-        this.textureFolder = textureFolder;
-        this.textureName = textureName;
         BlockDispenser.dispenseBehaviorRegistry.putObject(this, dispenserBehavior);
-        this.setCreativeTab(TConstructRegistry.equipableTab);
     }
-
-    public ArmorCore(int id, int baseProtection, ArmorPart part, String type, String textureName)
-    {
-        this(id, baseProtection, part, type, "armor", textureName);
-    }
-
-    //Temporary?
-    public abstract ItemStack getRepairMaterial (ItemStack input);
 
     public String getArmorName ()
     {
@@ -72,7 +55,7 @@ public abstract class ArmorCore extends ItemArmor implements ISpecialArmor, IMod
     @Override
     public String getModifyType ()
     {
-        return modifyType;
+        return "Armor";
     }
 
     @Override
@@ -82,267 +65,195 @@ public abstract class ArmorCore extends ItemArmor implements ISpecialArmor, IMod
     }
 
     @Override
-    public ItemStack onItemRightClick (ItemStack stack, World world, EntityPlayer player)
+    public ItemStack onItemRightClick (ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        int i = EntityLiving.getArmorPosition(stack) - 1;
-        ItemStack itemstack1 = player.getCurrentArmor(i);
+        int i = EntityLiving.getArmorPosition(par1ItemStack) - 1;
+        ItemStack itemstack1 = par3EntityPlayer.getCurrentArmor(i);
 
         if (itemstack1 == null)
         {
-            player.setCurrentItemOrArmor(i + 1, stack.copy()); //Forge: Vanilla bug fix associated with fixed setCurrentItemOrArmor indexs for players.
-            stack.stackSize = 0;
+            par3EntityPlayer.setCurrentItemOrArmor(i + 1, par1ItemStack.copy()); // Forge:
+                                                                                 // Vanilla
+                                                                                 // bug
+                                                                                 // fix
+                                                                                 // associated
+                                                                                 // with
+                                                                                 // fixed
+                                                                                 // setCurrentItemOrArmor
+                                                                                 // indexs
+                                                                                 // for
+                                                                                 // players.
+            par1ItemStack.stackSize = 0;
         }
 
-        return stack;
+        return par1ItemStack;
     }
 
-    @Override
-    public void onArmorTickUpdate (World world, EntityPlayer player, ItemStack itemStack)
-    {
-        for (ActiveArmorMod mod : TConstructRegistry.activeArmorModifiers)
-        {
-            mod.onArmorTick(world, player, itemStack, this, this.armorPart);
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public String getArmorTexture (ItemStack stack, Entity entity, int slot, int layer)
-    {
-        if (slot == 2)
-            return "tinker:textures/armor/" + textureName + "_" + 2 + ".png";
-        return "tinker:textures/armor/" + textureName + "_" + 1 + ".png";
-    }
-
-    @SideOnly(Side.CLIENT)
-    protected Icon[] modifiers;
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons (IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("tinker:" + textureFolder + "/" + textureName
-                + (this.armorType == 0 ? "helmet" : this.armorType == 1 ? "chestplate" : this.armorType == 2 ? "pants" : this.armorType == 3 ? "boots" : "helmet"));
-        registerModifiers(iconRegister);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public Icon getIcon (ItemStack stack, int renderPass)
-    {
-        if (renderPass > 0)
-        {
-            if (stack.hasTagCompound())
-            {
-                NBTTagCompound tags = stack.getTagCompound().getCompoundTag(getBaseTagName());
-                if (renderPass == 1 && tags.hasKey("Effect1"))
-                {
-                    return modifiers[tags.getInteger("Effect1")];
-                }
-                if (renderPass == 2 && tags.hasKey("Effect2"))
-                {
-                    return modifiers[tags.getInteger("Effect2")];
-                }
-                if (renderPass == 3 && tags.hasKey("Effect3"))
-                {
-                    return modifiers[tags.getInteger("Effect3")];
-                }
-            }
-            return ToolCore.blankSprite;
-        }
-
-        return itemIcon;
-    }
-
-    @SideOnly(Side.CLIENT)
-    protected void registerModifiers (IconRegister iconRegister)
-    {
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean requiresMultipleRenderPasses ()
-    {
-        return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderPasses (int metadata)
-    {
-        return 4;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean hasEffect (ItemStack par1ItemStack)
-    {
-        return false;
-    }
-
-    //ISpecialArmor overrides
+    // ISpecialArmor overrides
     @Override
     public ArmorProperties getProperties (EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot)
     {
-        //Priority, absorbRatio, max
-        if (!armor.hasTagCompound() || source.isUnblockable())
-            return new ArmorProperties(0, 0, 0);
+        if (player.worldObj.isRemote)
+        {
+            return new ArmorProperties(0, 0, baseProtection);
+        }
+        NBTTagCompound tags = armor.getTagCompound();
 
-        NBTTagCompound tags = armor.getTagCompound().getCompoundTag(getBaseTagName());
-        if (tags.getBoolean("Broken"))
-            return new ArmorProperties(0, 0, 0);
+        if (tags == null)
+        {
+            return new ArmorProperties(0, damage / baseProtection, baseProtection);
+        }
 
-        float maxDurability = tags.getInteger("TotalDurability");
-        float currentDurability = maxDurability - tags.getInteger("Damage");
-        float ratio = currentDurability / maxDurability;
-        double base = tags.getDouble("BaseDefense");
-        double max = tags.getDouble("MaxDefense");
-        double current = (max - base) * ratio + base;
+        NBTTagCompound data = tags.getCompoundTag(getBaseTagName());
 
-        return new ArmorProperties(0, current / 100, 100);
+        double amount = (data.getInteger("Defense") / damage) + (data.getDouble("Protection") / 100);
+        if (source.isUnblockable())
+            amount = 0;
+        clamp_double(amount, 0, 1);
+        return new ArmorProperties(0, amount, 100);
+    }
+
+    public static double clamp_double (double par0, double par1, double par2)
+    {
+        return par0 < par1 ? par1 : (par0 > par2 ? par2 : par0);
     }
 
     @Override
     public int getArmorDisplay (EntityPlayer player, ItemStack armor, int slot)
     {
-        if (slot != 1)
-        {
-            ItemStack stack = player.getCurrentArmor(1);
-            if (stack != null && stack.getItem() instanceof ArmorCore)
-                return 0;
-            return disconnectedArmorDisplay(player, armor, slot);
-        }
-
-        return combinedArmorDisplay(player, armor);
-    }
-
-    protected int disconnectedArmorDisplay (EntityPlayer player, ItemStack armor, int slot)
-    {
         if (!armor.hasTagCompound())
-            return 0;
-
+            return this.baseProtection;
         NBTTagCompound armorTag = armor.getTagCompound().getCompoundTag(getBaseTagName());
-        if (armorTag.getBoolean("Broken"))
-            return 0;
-
-        float max = armorTag.getInteger("TotalDurability");
-        float current = max - armorTag.getInteger("Damage");
-        float amount = current / max * 5 + 0.09F;
-        if (slot == 2 && amount < 1)
+        double amount = armorTag.getDouble("Protection") / 4;
+        if (amount > 0 && amount < 1)
             amount = 1;
-        return (int) amount;
-    }
-
-    protected int combinedArmorDisplay (EntityPlayer player, ItemStack legs)
-    {
-        ItemStack[] armors = new ItemStack[] { player.getCurrentArmor(3), player.getCurrentArmor(2), legs, player.getCurrentArmor(0) };
-        int types = 0;
-        int max = 0;
-        int damage = 0;
-        boolean anyAlive = false;
-        for (int i = 0; i < 4; i++)
-        {
-            ItemStack stack = armors[i];
-            if (stack != null && stack.hasTagCompound())
-            {
-                NBTTagCompound armorTag = stack.getTagCompound().getCompoundTag(getBaseTagName());
-                if (stack.getItem() instanceof ArmorCore)
-                {
-                    types++;
-                    max += armorTag.getInteger("TotalDurability");
-                    if (armorTag.getBoolean("Broken"))
-                    {
-                        damage += armorTag.getInteger("TotalDurability");
-                    }
-                    else
-                    {
-                        damage += armorTag.getInteger("Damage");
-                        anyAlive = true;
-                    }
-                }
-            }
-        }
-        float ratio = ((float) max - (float) damage) / (float) max * (types * 5) + 0.1f;
-        int minimum = anyAlive ? 1 : 0;
-        if (ratio < minimum)
-            ratio = minimum;
-        return (int) ratio;
+        return (int) (Math.floor(amount));
     }
 
     @Override
-    public void damageArmor (EntityLivingBase entity, ItemStack armor, DamageSource source, int damage, int slot)
+    public void damageArmor (EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot)
     {
-        if (armor.hasTagCompound())
+        NBTTagCompound tags = stack.getTagCompound();
+        NBTTagCompound data;
+
+        if (tags == null)
         {
-            NBTTagCompound tags = armor.getTagCompound().getCompoundTag(getBaseTagName());
-            if (!tags.getBoolean("Broken"))
+            tags = new NBTTagCompound();
+            stack.setTagCompound(tags);
+            data = new NBTTagCompound();
+            tags.setTag(getBaseTagName(), data);
+            data.setDouble("DamageReduction", baseProtection);
+        }
+
+        data = tags.getCompoundTag(getBaseTagName());
+
+        if (tags.hasKey("Energy"))
+        {
+            int energy = tags.getInteger("Energy");
+            if (energy > damage)
             {
-                int maxDurability = tags.getInteger("TotalDurability");
-                int currentDurability = tags.getInteger("Damage");
-                if (currentDurability + damage > maxDurability)
-                {
-                    tags.setInteger("Damage", 0);
-                    tags.setBoolean("Broken", true);
-                    armor.setItemDamage(0);
-                    entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, "random.break", 1f, 1f, true);
-                }
-                else
-                {
-                    tags.setInteger("Damage", currentDurability + damage);
-                    armor.setItemDamage(currentDurability + damage);
-                }
+                energy -= damage;
+                tags.setInteger("Energy", energy);
+                return;
             }
+            else
+            {
+                damage -= energy;
+                tags.setInteger("Energy", 0);
+                int dmg = data.getInteger("Damage");
+                dmg += damage;
+                data.setDouble("Damage", dmg);
+            }
+
+        }
+        else
+        {
+            int dmg = data.getInteger("Damage");
+            dmg += damage;
+            data.setInteger("Damage", dmg);
         }
     }
 
+    // TE support section -- from COFH core API reference section
+    public void setMaxTransfer (int maxTransfer)
+    {
+        setMaxReceive(maxTransfer);
+        setMaxExtract(maxTransfer);
+    }
+
+    public void setMaxReceive (int maxReceive)
+    {
+        this.maxReceive = maxReceive;
+    }
+
+    public void setMaxExtract (int maxExtract)
+    {
+        this.maxExtract = maxExtract;
+    }
+
+    /* IEnergyContainerItem */
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems (int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public int receiveEnergy (ItemStack container, int maxReceive, boolean simulate)
     {
-        par3List.add(getDefaultItem());
+        NBTTagCompound tags = container.getTagCompound();
+        if (tags == null || !tags.hasKey("Energy"))
+            return 0;
+        int energy = tags.getInteger("Energy");
+        int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
+        if (!simulate)
+        {
+            energy += energyReceived;
+            tags.setInteger("Energy", energy);
+            container.setItemDamage(1 + (getMaxEnergyStored(container) - energy) * (container.getMaxDamage() - 2) / getMaxEnergyStored(container));
+
+        }
+        return energyReceived;
     }
 
-    public ItemStack getDefaultItem ()
+    @Override
+    public int extractEnergy (ItemStack container, int maxExtract, boolean simulate)
     {
-        ItemStack gear = new ItemStack(this.itemID, 1, 0);
-        NBTTagCompound baseTag = new NBTTagCompound();
+        NBTTagCompound tags = container.getTagCompound();
+        if (tags == null || !tags.hasKey("Energy"))
+        {
+            return 0;
+        }
+        int energy = tags.getInteger("Energy");
+        int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
+        if (!simulate)
+        {
+            energy -= energyExtracted;
+            tags.setInteger("Energy", energy);
+            container.setItemDamage(1 + (getMaxEnergyStored(container) - energy) * (container.getMaxDamage() - 1) / getMaxEnergyStored(container));
 
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setInteger("Modifiers", 3);
-        double flat = getFlatDefense();
-        double base = getBaseDefense();
-        double max = getMaxDefense();
-        tag.setDouble("DamageReduction", flat);
-        tag.setDouble("BaseDefense", base);
-        tag.setDouble("MaxDefense", max);
-
-        int baseDurability = getDurability();
-
-        tag.setInteger("Damage", 0); //Damage is damage to the armor
-        tag.setInteger("TotalDurability", baseDurability);
-        tag.setInteger("BaseDurability", baseDurability);
-        tag.setInteger("BonusDurability", 0); //Modifier
-        tag.setFloat("ModDurability", 0f); //Modifier
-        tag.setBoolean("Broken", false);
-        tag.setBoolean("Built", true);
-
-        baseTag.setTag(getBaseTagName(), tag);
-        gear.setTagCompound(baseTag);
-        return gear;
+        }
+        return energyExtracted;
     }
 
-    protected double getFlatDefense ()
+    @Override
+    public int getEnergyStored (ItemStack container)
     {
-        return 0;
+        NBTTagCompound tags = container.getTagCompound();
+        if (tags == null || !tags.hasKey("Energy"))
+        {
+            return 0;
+        }
+        return tags.getInteger("Energy");
     }
 
-    protected abstract double getBaseDefense ();
+    @Override
+    public int getMaxEnergyStored (ItemStack container)
+    {
+        NBTTagCompound tags = container.getTagCompound();
+        if (tags == null || !tags.hasKey("Energy"))
+            return 0;
+        return capacity;
+    }
 
-    protected abstract double getMaxDefense ();
-
-    protected abstract int getDurability ();
+    // end of TE support section
 
     // Vanilla overrides
+    @Override
     public boolean isItemTool (ItemStack par1ItemStack)
     {
         return false;
@@ -354,21 +265,25 @@ public abstract class ArmorCore extends ItemArmor implements ISpecialArmor, IMod
         return false;
     }
 
+    @Override
     public boolean isRepairable ()
     {
         return false;
     }
 
+    @Override
     public int getItemEnchantability ()
     {
         return 0;
     }
 
+    @Override
     public boolean isFull3D ()
     {
         return true;
     }
 
+    @Override
     public boolean isValidArmor (ItemStack stack, int armorType, Entity entity)
     {
         return this.armorPart.getPartId() == armorType;
@@ -383,6 +298,15 @@ public abstract class ArmorCore extends ItemArmor implements ISpecialArmor, IMod
             return 0;
         }
 
+        if (tags.hasKey("Energy"))
+        {
+            int energy = tags.getInteger("Energy");
+            if (energy > 0)
+            {
+                return this.getMaxEnergyStored(stack);
+            }
+        }
+
         return tags.getCompoundTag(getBaseTagName()).getInteger("TotalDurability");
     }
 
@@ -394,47 +318,16 @@ public abstract class ArmorCore extends ItemArmor implements ISpecialArmor, IMod
             return 0;
         }
 
+        if (tags.hasKey("Energy"))
+        {
+            int energy = tags.getInteger("Energy");
+            if (energy > 0)
+            {
+                return this.getMaxEnergyStored(stack) - energy;
+            }
+        }
+
         return tags.getCompoundTag(getBaseTagName()).getInteger("Damage");
     }
 
-    DecimalFormat df = new DecimalFormat("##.#");
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation (ItemStack stack, EntityPlayer player, List list, boolean par4)
-    {
-        if (!stack.hasTagCompound())
-            return;
-        NBTTagCompound tags = stack.getTagCompound().getCompoundTag(getBaseTagName());
-        double protection = 0;
-        if (!tags.getBoolean("Broken"))
-        {
-            float maxDurability = tags.getInteger("TotalDurability");
-            float currentDurability = maxDurability - tags.getInteger("Damage");
-            float ratio = currentDurability / maxDurability;
-            double base = tags.getDouble("BaseDefense");
-            double max = tags.getDouble("MaxDefense");
-            protection = (max - base) * ratio + base;
-        }
-        if (protection > 0)
-            list.add("\u00a77Protection: " + df.format(protection) + "%");
-        else
-            list.add("\u00A7oBroken");
-
-        boolean displayToolTips = true;
-        int tipNum = 0;
-        while (displayToolTips)
-        {
-            tipNum++;
-            String tooltip = "Tooltip" + tipNum;
-            if (tags.hasKey(tooltip))
-            {
-                String tipName = tags.getString(tooltip);
-                if (!tipName.equals(""))
-                    list.add(tipName);
-            }
-            else
-                displayToolTips = false;
-        }
-    }
 }

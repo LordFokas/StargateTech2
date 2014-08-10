@@ -303,7 +303,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	}
 
 	@Override
-	public boolean canInterface(ForgeDirection from) {
+	public boolean canConnectEnergy(ForgeDirection from) {
 		return from != ForgeDirection.UP;
 	}
 

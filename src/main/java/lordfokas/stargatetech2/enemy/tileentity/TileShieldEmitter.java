@@ -2,10 +2,6 @@ package lordfokas.stargatetech2.enemy.tileentity;
 
 import java.util.LinkedList;
 
-import net.minecraft.block.Block;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
 import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.core.api.WeakBlockRegistry;
 import lordfokas.stargatetech2.core.machine.FaceColor;
@@ -14,13 +10,17 @@ import lordfokas.stargatetech2.core.util.ConfigServer;
 import lordfokas.stargatetech2.core.util.Vec3Int;
 import lordfokas.stargatetech2.enemy.ModuleEnemy;
 import lordfokas.stargatetech2.enemy.util.IShieldControllerProvider;
+import net.minecraft.block.Block;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileShieldEmitter extends TileMachine implements IShieldControllerProvider{
 	private Vec3Int controller;
 	
 	public void setController(Vec3Int controller){
 		this.controller = controller;
-		TileEntity te = worldObj.getBlockTileEntity(controller.x, controller.y, controller.z);
+		TileEntity te = worldObj.getTileEntity(controller.x, controller.y, controller.z);
 		if(te instanceof TileShieldController){
 			((TileShieldController)te).addEmitter(this);
 		}
@@ -30,7 +30,7 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 	public void invalidate(){
 		super.invalidate();
 		if(controller == null) return;
-		TileEntity te = worldObj.getBlockTileEntity(controller.x, controller.y, controller.z);
+		TileEntity te = worldObj.getTileEntity(controller.x, controller.y, controller.z);
 		if(te instanceof TileShieldController){
 			((TileShieldController)te).removeEmitter(this);
 		}
@@ -42,10 +42,10 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 		Vec3Int pos = new Vec3Int(xCoord, yCoord, zCoord);
 		for(int i = 0; i < ConfigServer.shieldEmitterRange; i++){
 			pos = pos.offset(fd);
-			Block b = Block.blocksList[worldObj.getBlockId(pos.x, pos.y, pos.z)];
-			if(b == null || WeakBlockRegistry.isRemovable(b.blockID, worldObj.getBlockMetadata(pos.x, pos.y, pos.z))){
-				worldObj.setBlock(pos.x, pos.y, pos.z, ModuleEnemy.shield.blockID, 0, 2);
-				((TileShield)worldObj.getBlockTileEntity(pos.x, pos.y, pos.z)).setController(controller);
+			Block b = worldObj.getBlock(pos.x, pos.y, pos.z);
+			if(b == null || WeakBlockRegistry.isRemovable(b, worldObj.getBlockMetadata(pos.x, pos.y, pos.z))){
+				worldObj.setBlock(pos.x, pos.y, pos.z, ModuleEnemy.shield, 0, 2);
+				((TileShield)worldObj.getTileEntity(pos.x, pos.y, pos.z)).setController(controller);
 				list.add(pos);
 			}else if(b instanceof IShieldable){
 				((IShieldable)b).onShield(worldObj, pos.x, pos.y, pos.z, controller.x, controller.y, controller.z);
@@ -67,7 +67,7 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt){
-		nbt.setCompoundTag("controller", controller.toNBT());
+		nbt.setTag("controller", controller.toNBT());
 	}
 	
 	@Override
