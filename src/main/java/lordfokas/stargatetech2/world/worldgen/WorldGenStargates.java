@@ -2,12 +2,12 @@ package lordfokas.stargatetech2.world.worldgen;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
+import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
+import lordfokas.stargatetech2.world.worldgen.lists.StargateBaseBuildList;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
-import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
-import lordfokas.stargatetech2.world.worldgen.lists.StargateBaseBuildList;
 
 public class WorldGenStargates {
 	private StargateBaseBuildList builder = new StargateBaseBuildList();
@@ -28,7 +28,7 @@ public class WorldGenStargates {
 			}
 		}
 		if(StargateNetwork.instance().canPlaceStargateAt(w, x+3, y+5, z)){
-			if(w.getBlockId(x, y-1, z) == Block.sand.blockID){
+			if(w.getBlock(x, y-1, z) == Blocks.sand){
 				builder.build(w, x, y, z, StargateBaseBuildList.MATERIAL);
 			}
 		}

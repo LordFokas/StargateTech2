@@ -1,23 +1,24 @@
 package lordfokas.stargatetech2.world.worldgen.lists;
 
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import lordfokas.stargatetech2.core.api.SeedingShip;
 import lordfokas.stargatetech2.world.worldgen.LootGenerator;
 import lordfokas.stargatetech2.world.worldgen.LootGenerator.LootLevel;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class StargateBaseBuildList extends BuildList {
 	public static final BuildMaterial[] MATERIAL = new BuildMaterial[]{
-		new BuildMaterial(Block.sandStone.blockID, 0),
-		new BuildMaterial(Block.sandStone.blockID, 2),
-		new BuildMaterial(Block.sandStone.blockID, 1),
-		new BuildMaterial(Block.torchWood.blockID),
-		new BuildMaterial(Block.stairsSandStone.blockID, 3),
-		new BuildMaterial(Block.stairsSandStone.blockID, 2),
-		new BuildMaterial(Block.stairsSandStone.blockID, 0),
-		new BuildMaterial(Block.stairsSandStone.blockID, 1),
-		new BuildMaterial(0, 0)
+		new BuildMaterial(Blocks.sandstone, 0),
+		new BuildMaterial(Blocks.sandstone, 2),
+		new BuildMaterial(Blocks.sandstone, 1),
+		new BuildMaterial(Blocks.torch, 0),
+		new BuildMaterial(Blocks.sandstone_stairs, 3),
+		new BuildMaterial(Blocks.sandstone_stairs, 2),
+		new BuildMaterial(Blocks.sandstone_stairs, 0),
+		new BuildMaterial(Blocks.sandstone_stairs, 1),
+		new BuildMaterial(Blocks.air, 0)
 	};
 	
 	public StargateBaseBuildList(){
@@ -106,9 +107,9 @@ public class StargateBaseBuildList extends BuildList {
 	private void destroyStairs(World w, int x, int y, int z){
 		for(int i = -2; i <= 2; i++){
 			for(int j = 5; j <= 8; j++){
-				if(!w.isBlockSolidOnSide(x + i, y-1, z + j, ForgeDirection.UP, false)) destroyColumn(w, x + i, y, z + j);
-				if(!w.isBlockSolidOnSide(x + i, y-1, z - j, ForgeDirection.UP, false)) destroyColumn(w, x + i, y, z - j);
-				if(!w.isBlockSolidOnSide(x - j, y-1, z + i, ForgeDirection.UP, false)) destroyColumn(w, x - j, y, z + i);
+				if(!w.isSideSolid(x + i, y-1, z + j, ForgeDirection.UP, false)) destroyColumn(w, x + i, y, z + j);
+				if(!w.isSideSolid(x + i, y-1, z - j, ForgeDirection.UP, false)) destroyColumn(w, x + i, y, z - j);
+				if(!w.isSideSolid(x - j, y-1, z + i, ForgeDirection.UP, false)) destroyColumn(w, x - j, y, z + i);
 			}
 		}
 	}

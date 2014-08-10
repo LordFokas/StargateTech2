@@ -1,12 +1,12 @@
 package lordfokas.stargatetech2.world;
 
-import net.minecraft.item.ItemStack;
 import lordfokas.stargatetech2.IContentModule;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.core.util.Color;
 import lordfokas.stargatetech2.core.util.Stacks;
 import lordfokas.stargatetech2.world.block.BlockLanteanWall;
 import lordfokas.stargatetech2.world.worldgen.AncientWorldGenerator;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModuleWorld implements IContentModule {

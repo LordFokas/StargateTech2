@@ -3,16 +3,16 @@ package lordfokas.stargatetech2.world.worldgen;
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.automation.ModuleAutomation;
 import lordfokas.stargatetech2.core.ModuleCore;
 import lordfokas.stargatetech2.core.item.ItemNaquadah;
 import lordfokas.stargatetech2.enemy.ModuleEnemy;
 import lordfokas.stargatetech2.transport.ModuleTransport;
+import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.world.World;
 
 public class LootGenerator {
 	public static final ArrayList<ItemStack> LOOT_COMMON, LOOT_RARE, LOOT_EPIC;
@@ -45,8 +45,8 @@ public class LootGenerator {
 	}
 	
 	public static void generateLootChest(World w, int x, int y, int z, LootLevel level){
-		w.setBlock(x, y, z, Block.chest.blockID);
-		populate((TileEntityChest)w.getBlockTileEntity(x, y, z), level);
+		w.setBlock(x, y, z, Blocks.chest);
+		populate((TileEntityChest)w.getTileEntity(x, y, z), level);
 	}
 	
 	private static void populate(IInventory inventory, LootLevel level){

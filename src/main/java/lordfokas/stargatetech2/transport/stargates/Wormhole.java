@@ -132,7 +132,7 @@ public final class Wormhole {
 			destination.setWormhole(this, false, false);
 		}catch(Exception e){
 			StargateNetwork.instance().removeWormhole(this);
-			StargateLogger.severe("Error while initializing a wormhole!");
+			StargateLogger.error("Error while initializing a wormhole!");
 			e.printStackTrace();
 		}
 	}

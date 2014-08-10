@@ -22,7 +22,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import tconstruct.entity.FancyEntityItem;
+// import tconstruct.entity.FancyEntityItem;
 import tconstruct.library.ActiveToolMod;
 import tconstruct.library.IModifyable;
 import tconstruct.library.TConstructRegistry;
@@ -73,7 +73,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         this.maxStackSize = 1;
         this.setMaxDamage(100);
         this.setUnlocalizedName("InfiTool");
-        this.setCreativeTab(TConstructRegistry.toolTab);
+//        this.setCreativeTab(TConstructRegistry.toolTab);
         damageVsEntity = baseDamage;
         TConstructRegistry.addToolMapping(this);
         setNoRepair();
@@ -635,7 +635,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
     {
         if (block != null && (double) block.getBlockHardness(world, x, y, z) != 0.0D)
         {
-            return AbilityHelper.onBlockChanged(itemstack, world, block, x, y, z, player, random);
+//            return AbilityHelper.onBlockChanged(itemstack, world, block, x, y, z, player, random);
         }
         return true;
     }
@@ -653,7 +653,7 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
     @Override
     public boolean onLeftClickEntity (ItemStack stack, EntityPlayer player, Entity entity)
     {
-        AbilityHelper.onLeftClickEntity(stack, player, entity, this, 0);
+//        AbilityHelper.onLeftClickEntity(stack, player, entity, this, 0);
         return false;
     }
 
@@ -799,10 +799,10 @@ public abstract class ToolCore extends Item implements IModifyable, IEnergyConta
         return true;
     }
 
-    public Entity createEntity (World world, Entity location, ItemStack itemstack)
+    /*public Entity createEntity (World world, Entity location, ItemStack itemstack)
     {
         return new FancyEntityItem(world, location, itemstack);
-    }
+    }*/
 
     // TE support section -- from COFH core API reference section
     public void setMaxTransfer (int maxTransfer)

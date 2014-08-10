@@ -65,7 +65,6 @@ public class StargateTech2 {
 		modules.add(transport);
 		modules.add(world);
 		modules.add(integration);
-		StargateLogger.init();
 		apiImplementation = new APIImplementation();
 		MinecraftForge.EVENT_BUS.register(this);
 		PacketHandler.server.register();
@@ -77,7 +76,7 @@ public class StargateTech2 {
 				StargateLogger.info("Pre-Initializing Module: " + module.getModuleName());
 				module.preInit();
 			}catch(Exception e){
-				StargateLogger.severe("An error occurred while Pre-Initializing module \"" + module.getModuleName() + "\"");
+				StargateLogger.error("An error occurred while Pre-Initializing module \"" + module.getModuleName() + "\"");
 				e.printStackTrace();
 			}
 		}
@@ -93,7 +92,7 @@ public class StargateTech2 {
 				StargateLogger.info("Initializing Module: " + module.getModuleName());
 				module.init();
 			}catch(Exception e){
-				StargateLogger.severe("An error occurred while Initializing module \"" + module.getModuleName() + "\"");
+				StargateLogger.error("An error occurred while Initializing module \"" + module.getModuleName() + "\"");
 				e.printStackTrace();
 			}
 		}
@@ -109,7 +108,7 @@ public class StargateTech2 {
 				StargateLogger.info("Post-Initializing Module: " + module.getModuleName());
 				module.postInit();
 			}catch(Exception e){
-				StargateLogger.severe("An error occurred while Post-Initializing module \"" + module.getModuleName() + "\"");
+				StargateLogger.error("An error occurred while Post-Initializing module \"" + module.getModuleName() + "\"");
 				e.printStackTrace();
 			}
 		}

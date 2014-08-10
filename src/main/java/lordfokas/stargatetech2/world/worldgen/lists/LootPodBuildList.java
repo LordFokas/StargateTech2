@@ -3,6 +3,7 @@ package lordfokas.stargatetech2.world.worldgen.lists;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import lordfokas.stargatetech2.core.util.Color;
 import lordfokas.stargatetech2.world.ModuleWorld;
@@ -16,19 +17,19 @@ public class LootPodBuildList extends BuildList {
 	
 	public LootPodBuildList(){
 		stone = new BuildMaterial[]{
-					new BuildMaterial(Block.stoneBrick.blockID, 0),
-					new BuildMaterial(Block.stoneBrick.blockID, 3),
-					new BuildMaterial(Block.stoneBrick.blockID, 3),
-					new BuildMaterial(ModuleWorld.lanteanWall.blockID, Color.LIGHT_GRAY.id),
-					new BuildMaterial(43)
+					new BuildMaterial(Blocks.stonebrick, 0),
+					new BuildMaterial(Blocks.stonebrick, 3),
+					new BuildMaterial(Blocks.stonebrick, 3),
+					new BuildMaterial(ModuleWorld.lanteanWall, Color.LIGHT_GRAY.id),
+					new BuildMaterial(Blocks.stone_slab)
 				};
 		
 		sands = new BuildMaterial[]{
-					new BuildMaterial(Block.sandStone.blockID, 0),
-					new BuildMaterial(Block.sandStone.blockID, 2),
-					new BuildMaterial(Block.sandStone.blockID, 1),
-					new BuildMaterial(ModuleWorld.lanteanWall.blockID, Color.ORANGE.id),
-					new BuildMaterial(Block.sandStone.blockID, 0)
+					new BuildMaterial(Blocks.sandstone, 0),
+					new BuildMaterial(Blocks.sandstone, 2),
+					new BuildMaterial(Blocks.sandstone, 1),
+					new BuildMaterial(ModuleWorld.lanteanWall, Color.ORANGE.id),
+					new BuildMaterial(Blocks.sandstone, 0)
 				};
 		
 		for(int i = -1; i < 2; i++){

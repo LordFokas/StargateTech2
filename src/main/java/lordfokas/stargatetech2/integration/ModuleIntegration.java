@@ -39,7 +39,7 @@ public class ModuleIntegration implements IContentModule {
 				StargateLogger.info("Loading Integration Plugin: " + plugin.getModID());
 				plugin.init();
 			}catch(Exception exception){
-				StargateLogger.severe("An error ocurred while loading the Integration Plugin.");
+				StargateLogger.error("An error ocurred while loading the Integration Plugin.");
 				exception.printStackTrace();
 			}
 		}
@@ -51,7 +51,7 @@ public class ModuleIntegration implements IContentModule {
 				StargateLogger.info("Post-Loading Integration Plugin: " + plugin.getModID());
 				plugin.postInit();
 			}catch(Exception exception){
-				StargateLogger.severe("An error ocurred while post-loading the Integration Plugin.");
+				StargateLogger.error("An error ocurred while post-loading the Integration Plugin.");
 				exception.printStackTrace();
 			}
 		}

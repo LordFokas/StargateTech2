@@ -393,7 +393,7 @@ public class StargateNetwork implements IStargateNetwork{
 				readAddresses(addressFile);
 				readPrefixes(prefixFile);
 			}else if(hasWormhole || hasAddress || hasPrefix){
-				StargateLogger.severe("Some Stargate Network data files are missing. This may be a very serious problem!");
+				StargateLogger.error("Some Stargate Network data files are missing. This may be a very serious problem!");
 				FMLCommonHandler.instance().raiseException(new Exception("StargateTech2 detected save corruption!"), "StargateTech2 detected save corruption!", false);
 			}else{
 				StargateLogger.warning("All Stargate Network data files are missing. This is normal when saves are first created.");
@@ -403,7 +403,7 @@ public class StargateNetwork implements IStargateNetwork{
 				prefixFile.createNewFile();
 			}
 		}catch(Exception e){
-			StargateLogger.severe("There was an error while trying to read Stargate Network files");
+			StargateLogger.error("There was an error while trying to read Stargate Network files");
 			e.printStackTrace();
 		}
 	}
@@ -490,7 +490,7 @@ public class StargateNetwork implements IStargateNetwork{
 			writeAddresses(addressFile);
 			writePrefixes(prefixFile);
 		}catch(Exception e){
-			StargateLogger.severe("There was an error while trying to write Stargate Network files");
+			StargateLogger.error("There was an error while trying to write Stargate Network files");
 			e.printStackTrace();
 		}
 	}

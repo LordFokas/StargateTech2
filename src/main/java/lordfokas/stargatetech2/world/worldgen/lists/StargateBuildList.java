@@ -9,8 +9,8 @@ import lordfokas.stargatetech2.transport.tileentity.TileStargateRing;
 
 public class StargateBuildList extends BuildList {
 	private static final BuildMaterial[] MATERIAL = new BuildMaterial[]{
-		new BuildMaterial(ModuleTransport.stargate.blockID, BlockStargate.META_BASE),
-		new BuildMaterial(ModuleTransport.stargate.blockID, BlockStargate.META_RING)
+		new BuildMaterial(ModuleTransport.stargate, BlockStargate.META_BASE),
+		new BuildMaterial(ModuleTransport.stargate, BlockStargate.META_RING)
 	};
 	
 	public static StargateBuildList SGX = new StargateBuildList(1, 0);
@@ -37,7 +37,7 @@ public class StargateBuildList extends BuildList {
 	@Override
 	protected void afterBlock(World w, int x, int y, int z, Object o){
 		Vec3Int sg = (Vec3Int) o;
-		TileEntity te = w.getBlockTileEntity(x, y, z);
+		TileEntity te = w.getTileEntity(x, y, z);
 		if(te instanceof TileStargateRing){
 			((TileStargateRing)te).setSGPosition(sg.x, sg.y, sg.z);
 		}

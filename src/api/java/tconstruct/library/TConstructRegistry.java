@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import mantle.lib.TabTools;
+// import mantle.lib.TabTools;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -37,11 +37,11 @@ public class TConstructRegistry
     public static Logger logger = LogManager.getLogger("TCon-API");
 
     /* Creative tabs */
-    public static TabTools toolTab;
-    public static TabTools partTab;
-    public static TabTools materialTab;
-    public static TabTools blockTab;
-    public static TabTools equipableTab;
+//    public static TabTools toolTab;
+//    public static TabTools partTab;
+//    public static TabTools materialTab;
+//    public static TabTools blockTab;
+//    public static TabTools equipableTab;
 
 
     /* Items */

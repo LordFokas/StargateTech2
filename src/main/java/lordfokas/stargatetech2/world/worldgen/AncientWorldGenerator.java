@@ -5,11 +5,11 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event.Result;
 import lordfokas.stargatetech2.api.world.EventWorldGen;
 import lordfokas.stargatetech2.api.world.EventWorldGen.GenType;
 import lordfokas.stargatetech2.core.util.ConfigServer;
 import cpw.mods.fml.common.IWorldGenerator;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class AncientWorldGenerator implements IWorldGenerator{
 	private static final FeatureRarity RARITY_LOOT_POD = new FeatureRarity(ConfigServer.wgLootPodGap, ConfigServer.wgLootPodGap, ConfigServer.wgLootPodOdd);

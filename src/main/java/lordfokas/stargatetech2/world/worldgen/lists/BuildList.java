@@ -2,9 +2,10 @@ package lordfokas.stargatetech2.world.worldgen.lists;
 
 import java.util.ArrayList;
 
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.core.api.WeakBlockRegistry;
 import lordfokas.stargatetech2.core.util.Vec3Int;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
 
 public abstract class BuildList {
 	protected static class BuildBlock extends Vec3Int{
@@ -17,15 +18,16 @@ public abstract class BuildList {
 	}
 	
 	public static class BuildMaterial{
-		public final int id, meta;
+		public final Block bl;
+		public final int meta;
 		
-		public BuildMaterial(int i, int m){
-			this.id = i;
+		public BuildMaterial(Block b, int m){
+			this.bl = b;
 			this.meta = m;
 		}
 		
-		public BuildMaterial(int i){
-			this(i, 0);
+		public BuildMaterial(Block b){
+			this(b, 0);
 		}
 	}
 	
@@ -36,9 +38,9 @@ public abstract class BuildList {
 			int bx = block.x + x;
 			int by = block.y + y;
 			int bz = block.z + z;
-			int id = w.getBlockId(bx, by, bz);
+			Block b = w.getBlock(bx, by, bz);
 			int meta = w.getBlockMetadata(bx, by, bz);
-			if(!(w.isAirBlock(bx, by, bz) || WeakBlockRegistry.isRemovable(id, meta))){
+			if(!(w.isAirBlock(bx, by, bz) || WeakBlockRegistry.isRemovable(b, meta))){
 				return false;
 			}
 		}
@@ -52,7 +54,7 @@ public abstract class BuildList {
 	public final void build(World w, int x, int y, int z, BuildMaterial[] materials, Object obj){
 		for(BuildBlock block : blocks){
 			BuildMaterial material = materials[block.id];
-			w.setBlock(block.x + x, block.y + y, block.z + z, material.id, material.meta, 3);
+			w.setBlock(block.x + x, block.y + y, block.z + z, material.bl, material.meta, 3);
 			afterBlock(w, block.x + x, block.y + y, block.z + z, obj);
 		}
 		afterBuild(w, x, y, z, obj);

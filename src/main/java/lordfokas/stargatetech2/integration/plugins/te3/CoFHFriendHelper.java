@@ -29,7 +29,7 @@ public final class CoFHFriendHelper {
 			}
 			StargateLogger.info("Unable to find CoFH Friend Registry: " + CLASS_NAME + "->" + METHOD_NAME + "()");
 		}catch(Exception e){
-			StargateLogger.severe("Error while attempting to find CoFH Friend Registry:");
+			StargateLogger.error("Error while attempting to find CoFH Friend Registry:");
 			e.printStackTrace();
 		}
 	}

@@ -1,24 +1,16 @@
 package lordfokas.stargatetech2.core.util;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import lordfokas.stargatetech2.core.reference.ModReference;
-import cpw.mods.fml.common.FMLLog;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class StargateLogger {
-	private static Logger logger = Logger.getLogger(ModReference.MOD_ID);
-
-	public static void init() {
-		logger.setParent(FMLLog.getLogger());
-	}
+	private static Logger logger = LogManager.getLogger(ModReference.MOD_NAME);
 	
 	public static void log(Level level, String message) {
 		logger.log(level, message);
-	}
-	
-	public static void config(String msg){
-		logger.log(Level.CONFIG, msg);
 	}
 	
 	public static void info(String msg){
@@ -26,10 +18,10 @@ public class StargateLogger {
 	}
 	
 	public static void warning(String msg){
-		logger.log(Level.WARNING, msg);
+		logger.log(Level.WARN, msg);
 	}
 	
-	public static void severe(String msg){
-		logger.log(Level.SEVERE, msg);
+	public static void error(String msg){
+		logger.log(Level.ERROR, msg);
 	}
 }
