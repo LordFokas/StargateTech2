@@ -23,7 +23,7 @@ else
     ext.buildNumber = 0
 //build numbers in the file names for jenkins stuff, else it's 0
 
-version = "1.7.10-0.8.0"
+version = "ALPHA-0.7.5-MC1.7.10-FORGE1180"  //LordFokas you change this line
 group= "lordfokas.stargatetech2" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "stargatetech2"
 
@@ -31,7 +31,7 @@ minecraft {
     version = "1.7.10-10.13.0.1180"
     runDir = "run/assets"
 }
-
+version = "${version}-B${project.ext.buildNumber}"
 dependencies {
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
