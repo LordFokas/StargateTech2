@@ -1,44 +1,38 @@
 package lordfokas.stargatetech2.transport.util;
 
-import java.util.EnumSet;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import lordfokas.stargatetech2.transport.packet.PacketActivateRings;
 import lordfokas.stargatetech2.transport.tileentity.TileTransportRing;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
-import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
-public class RingKeyHandler extends KeyHandler {
+public class RingKeyHandler{
+	private static final RingKeyHandler INSTANCE = new RingKeyHandler();
 	private static final KeyBinding RING_UP = new KeyBinding("[SGTech2] Activate rings (Up)", 200, "SGTech2");
 	private static final KeyBinding RING_DOWN = new KeyBinding("[SGTech2] Activate rings (Down)", 208, "SGTech2");
 	
-	public RingKeyHandler(){
-		super(new KeyBinding[]{RING_UP, RING_DOWN}, new boolean[]{true, true});
+	private RingKeyHandler(){}
+	
+	public static void register(){
+		ClientRegistry.registerKeyBinding(RING_DOWN);
+		ClientRegistry.registerKeyBinding(RING_UP);
+		MinecraftForge.EVENT_BUS.register(INSTANCE);
 	}
 	
-	@Override
-	public String getLabel(){
-		return "StargateTech2:RingKeyHandler";
-	}
-	
-	@Override
-	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat){}
-	
-	@Override
-	public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd){
-		if(!tickEnd) return;
-		if(kb.getKeyCode() == RING_UP.getKeyCode()){
-			makePlayerTriggerRings(true);
-		}else if(kb.getKeyCode() == RING_DOWN.getKeyCode()){
-			makePlayerTriggerRings(false);
+	@SubscribeEvent
+	public void keyUp(KeyInputEvent evt){
+		if (!FMLClientHandler.instance().isGUIOpen(GuiScreen.class)){
+			if(RING_UP.isPressed()){
+				makePlayerTriggerRings(true);
+			}else if(RING_DOWN.isPressed()){
+				makePlayerTriggerRings(false);
+			}
 		}
-	}
-	
-	@Override
-	public EnumSet<TickType> ticks(){
-		return EnumSet.of(TickType.CLIENT);
 	}
 	
 	private void makePlayerTriggerRings(boolean up){

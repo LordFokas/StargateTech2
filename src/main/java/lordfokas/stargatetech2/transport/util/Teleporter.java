@@ -2,18 +2,19 @@ package lordfokas.stargatetech2.transport.util;
 
 import java.util.Iterator;
 
+import lordfokas.stargatetech2.core.util.Vec3Int;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.S07PacketRespawn;
 import net.minecraft.network.play.server.S1DPacketEntityEffect;
 import net.minecraft.network.play.server.S1FPacketSetExperience;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import lordfokas.stargatetech2.core.util.Vec3Int;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class Teleporter{
@@ -43,7 +44,7 @@ public class Teleporter{
 			player.closeScreen();
 			if(differentWorld){
 				player.dimension = world.provider.dimensionId;
-				player.playerNetServerHandler.sendPacketToPlayer(new Packet9Respawn(player.dimension, (byte)player.worldObj.difficultySetting.ordinal(), world.getWorldInfo().getTerrainType(), world.getHeight(), player.theItemInWorldManager.getGameType()));
+				player.playerNetServerHandler.sendPacket(new S07PacketRespawn(player.dimension, player.worldObj.difficultySetting, world.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
 				((WorldServer)entity.worldObj).getPlayerManager().removePlayer(player);
 			}
 		}

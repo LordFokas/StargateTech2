@@ -6,7 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerManager;
 import net.minecraft.tileentity.TileEntity;
 
 public abstract class BaseTileEntity extends TileEntity {
@@ -31,14 +34,16 @@ public abstract class BaseTileEntity extends TileEntity {
 	@Retention(RetentionPolicy.SOURCE)
 	public @interface ClientLogic{}
 	
+	@Override
 	public final S35PacketUpdateTileEntity getDescriptionPacket(){
         NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
     }
 	
-	public final void onDataPacket(INetworkManager net, Packet132TileEntityData packet){
-		NBTTagCompound nbt = packet.data;
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+		NBTTagCompound nbt = pkt.func_148857_g();
 		if(nbt != null){
 			this.readFromNBT(nbt);
 		}
@@ -46,8 +51,7 @@ public abstract class BaseTileEntity extends TileEntity {
 	
 	public final void updateClients(){
 		if(worldObj.isRemote) return;
-		S35PacketUpdateTileEntity packet = this.getDescriptionPacket();
-		PacketDispatcher.sendPacketToAllInDimension(packet, this.worldObj.provider.dimensionId);
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 	
 	@Override

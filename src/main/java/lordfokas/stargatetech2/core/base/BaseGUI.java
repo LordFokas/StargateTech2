@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -548,6 +549,6 @@ public abstract class BaseGUI extends GuiContainer {
 	}
 	
 	public final void playClick(float pitch){
-		mc.sndManager.playSoundFX("random.click", 1.0F, pitch);
+		mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
 	}
 }

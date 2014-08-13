@@ -88,7 +88,7 @@ public abstract class BasePacket implements IMessage{
 		network.registerMessage(PacketHandler.Client.class, BasePacket.class, 0, Side.CLIENT);
 	}
 	
-	private static class PacketHandler implements IMessageHandler<BasePacket, BasePacket>{
+	public static class PacketHandler implements IMessageHandler<BasePacket, BasePacket>{
 		private final Side side;
 		
 		protected PacketHandler(Side side){
@@ -101,13 +101,13 @@ public abstract class BasePacket implements IMessage{
 			return null;
 		}
 		
-		private static final class Client extends PacketHandler{
+		public static final class Client extends PacketHandler{
 			public Client(){
 				super(Side.CLIENT);
 			}
 		}
 		
-		private static final class Server extends PacketHandler{
+		public static final class Server extends PacketHandler{
 			public Server(){
 				super(Side.SERVER);
 			}
