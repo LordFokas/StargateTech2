@@ -93,7 +93,7 @@ public abstract class TileMachine extends BaseTileEntity {
 			update.x = xCoord;
 			update.y = yCoord;
 			update.z = zCoord;
-			update.sendToAllInDim(worldObj.provider.dimensionId);
+			update.sendToClientsInDim(worldObj.provider.dimensionId);
 			worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType());
 		}
 	}

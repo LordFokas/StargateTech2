@@ -1,14 +1,14 @@
 package lordfokas.stargatetech2.core.packet;
 
-import net.minecraft.entity.player.EntityPlayer;
 import lordfokas.stargatetech2.core.base.BasePacket;
+import net.minecraft.entity.player.EntityPlayerMP;
 import cpw.mods.fml.relauncher.Side;
 
 public abstract class PacketCoordinates extends BasePacket {
 	public int x, y, z;
 	
 	@Override
-	protected final void onBeforeSend() throws Exception {
+	protected final void serialize() throws Exception {
 		output.writeInt(x);
 		output.writeInt(y);
 		output.writeInt(z);
@@ -16,13 +16,13 @@ public abstract class PacketCoordinates extends BasePacket {
 	}
 	
 	@Override
-	public final void onReceive(EntityPlayer player, Side side) throws Exception {
+	public final BasePacket unserialize(EntityPlayerMP player, Side side) throws Exception {
 		x = input.readInt();
 		y = input.readInt();
 		z = input.readInt();
-		readData(player, side);
+		return readData(player, side);
 	}
 	
 	protected abstract void writeData() throws Exception;
-	protected abstract void readData(EntityPlayer player, Side side) throws Exception;
+	protected abstract BasePacket readData(EntityPlayerMP player, Side side) throws Exception;
 }

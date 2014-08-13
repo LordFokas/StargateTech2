@@ -169,7 +169,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	public void setWormhole(Wormhole wormhole, boolean isSource, boolean broadcast){
 		this.wormhole = wormhole;
 		this.isSource = isSource;
-		PacketWormhole.sendSync(xCoord, yCoord, zCoord, true).sendToAllInDim(worldObj.provider.dimensionId);
+		PacketWormhole.sendSync(xCoord, yCoord, zCoord, true).sendToClientsInDim(worldObj.provider.dimensionId);
 		Address address = isSource ? wormhole.getDestinationAddress() : wormhole.getSourceAddress();
 		if(broadcast){
 			if(isSource && address.length() == 8){
@@ -198,7 +198,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	@ServerLogic
 	public void onDisconnect(){
 		wormhole = null;
-		PacketWormhole.sendSync(xCoord, yCoord, zCoord, false).sendToAllInDim(worldObj.provider.dimensionId);
+		PacketWormhole.sendSync(xCoord, yCoord, zCoord, false).sendToClientsInDim(worldObj.provider.dimensionId);
 		BusPacketLIP packet = new BusPacketLIP(networkDriver.getInterfaceAddress(), (short)0xFFFF);
 		packet.setMetadata(new LIPMetadata(ModReference.MOD_ID, "Stargate", ""));
 		packet.set(".protocol", "Stargate Protocol");

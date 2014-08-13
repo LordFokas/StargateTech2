@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import lordfokas.stargatetech2.automation.ModuleAutomation;
 import lordfokas.stargatetech2.core.ModuleCore;
 import lordfokas.stargatetech2.core.api.APIImplementation;
+import lordfokas.stargatetech2.core.base.BasePacket;
 import lordfokas.stargatetech2.core.reference.ModReference;
 import lordfokas.stargatetech2.core.util.Config;
 import lordfokas.stargatetech2.core.util.IconRegistry;
-import lordfokas.stargatetech2.core.util.PacketHandler;
 import lordfokas.stargatetech2.core.util.StargateLogger;
 import lordfokas.stargatetech2.enemy.ModuleEnemy;
 import lordfokas.stargatetech2.energy.ModuleEnergy;
@@ -29,11 +29,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid=ModReference.MOD_ID, name=ModReference.MOD_NAME, version=ModReference.MOD_VERSION, dependencies=ModReference.DEPENDENCIES)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class StargateTech2 {
 	@Instance(ModReference.MOD_ID)
 	public static StargateTech2 instance;
@@ -67,8 +67,7 @@ public class StargateTech2 {
 		modules.add(integration);
 		apiImplementation = new APIImplementation();
 		MinecraftForge.EVENT_BUS.register(this);
-		PacketHandler.server.register();
-		PacketHandler.client.register();
+		BasePacket.registerAll();
 		
 		StargateLogger.info("Pre-Initializing Modules");
 		for(IContentModule module : modules){

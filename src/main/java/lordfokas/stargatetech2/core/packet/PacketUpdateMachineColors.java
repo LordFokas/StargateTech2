@@ -1,10 +1,11 @@
 package lordfokas.stargatetech2.core.packet;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
+import lordfokas.stargatetech2.core.base.BasePacket;
 import lordfokas.stargatetech2.core.base.BasePacket.ServerToClient;
 import lordfokas.stargatetech2.core.machine.FaceColor;
 import lordfokas.stargatetech2.core.machine.TileMachine;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.relauncher.Side;
 
 @ServerToClient
@@ -27,7 +28,7 @@ public class PacketUpdateMachineColors extends PacketCoordinates {
 	}
 
 	@Override
-	protected void readData(EntityPlayer player, Side side) throws Exception {
+	protected BasePacket readData(EntityPlayerMP player, Side side) throws Exception {
 		for(int s = 0; s < 6; s++){
 			colors[s] = FaceColor.values()[input.readByte()];
 		}
@@ -35,5 +36,6 @@ public class PacketUpdateMachineColors extends PacketCoordinates {
 		if(te instanceof TileMachine){
 			((TileMachine)te).updateColors(colors);
 		}
+		return null;
 	}
 }
