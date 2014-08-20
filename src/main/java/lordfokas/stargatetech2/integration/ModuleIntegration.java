@@ -36,7 +36,8 @@ public class ModuleIntegration implements IContentModule {
 	public void init(){
 		for(BasePlugin plugin : plugins){
 			try{
-				StargateLogger.info("Loading Integration Plugin: " + plugin.getModID());
+				String action = plugin.shouldLoad() ? "Loading" : "Skipping";
+				StargateLogger.info(action + " Integration Plugin: " + plugin.getModID());
 				plugin.init();
 			}catch(Exception exception){
 				StargateLogger.error("An error ocurred while loading the Integration Plugin.");
@@ -48,8 +49,10 @@ public class ModuleIntegration implements IContentModule {
 	@Override public void postInit(){
 		for(BasePlugin plugin : plugins){
 			try{
-				StargateLogger.info("Post-Loading Integration Plugin: " + plugin.getModID());
-				plugin.postInit();
+				if(plugin.shouldLoad()){
+					StargateLogger.info("Post-Loading Integration Plugin: " + plugin.getModID());
+					plugin.postInit();
+				}
 			}catch(Exception exception){
 				StargateLogger.error("An error ocurred while post-loading the Integration Plugin.");
 				exception.printStackTrace();
