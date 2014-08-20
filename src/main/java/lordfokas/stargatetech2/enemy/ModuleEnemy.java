@@ -1,10 +1,5 @@
 package lordfokas.stargatetech2.enemy;
 
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import lordfokas.stargatetech2.IContentModule;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.core.api.ParticleIonizerRecipes;
@@ -22,6 +17,11 @@ import lordfokas.stargatetech2.enemy.tileentity.TileShieldController;
 import lordfokas.stargatetech2.enemy.tileentity.TileShieldEmitter;
 import lordfokas.stargatetech2.enemy.util.EnemyEventHandler;
 import lordfokas.stargatetech2.enemy.util.IonizedParticles;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModuleEnemy implements IContentModule {
@@ -58,7 +58,7 @@ public class ModuleEnemy implements IContentModule {
 	}
 
 	@Override
-	public void postInit(){
+	public void postInit(){		
 		GameRegistry.addShapedRecipe(new ItemStack(shieldController), "-B-", "CMC", "PAP", 'B', Stacks.bucket, 'C', Stacks.circuit, 'M', Stacks.machine, 'P', Stacks.naqPlate, 'A', Stacks.busCable);
 		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "-B-", "SMS", "NCN", 'M', Stacks.machine, 'C', Stacks.coilNaq, 'B', Stacks.bucket, 'N', Stacks.naqIngot, 'S', Stacks.circuit);
 		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "-C-", "BMB", "NPN", 'P', Stacks.coilGold, 'C', Stacks.chest, 'B', Stacks.bucket, 'M', Stacks.machine, 'N', Stacks.naqIngot);

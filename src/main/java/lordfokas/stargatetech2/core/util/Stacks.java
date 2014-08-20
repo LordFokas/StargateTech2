@@ -39,7 +39,7 @@ public class Stacks {
 		
 		//##########################################################################################
 		// THERMAl EXPANSION 3
-		machine =	fromTE3("machineFrame");
+		machine =	fromTE3("frameMachineBasic");
 		coilGold =	fromTE3("powerCoilGold");
 		
 		//##########################################################################################
