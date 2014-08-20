@@ -1,14 +1,12 @@
 package lordfokas.stargatetech2.core.util;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import lordfokas.stargatetech2.automation.ModuleAutomation;
 import lordfokas.stargatetech2.core.ModuleCore;
 import lordfokas.stargatetech2.core.block.BlockNaquadah;
 import lordfokas.stargatetech2.core.item.ItemNaquadah;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Stacks {
@@ -52,11 +50,7 @@ public class Stacks {
 		circuit		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.CIRCUIT.ID);
 		coilNaq		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_NAQ.ID);
 		coilEnd		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_END.ID);
-		
-		//Item i = Item.getItemFromBlock(ModuleAutomation.busCable);
-		int i = Block.getIdFromBlock(ModuleAutomation.busCable);
-		System.err.println("Item: " + i);
-		busCable	= new ItemStack(ModuleAutomation.busCable, 1, 0);
+		busCable	= new ItemStack(ModuleAutomation.busCable);
 	}
 	
 	private static ItemStack fromTE3(String name){
