@@ -29,7 +29,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -85,7 +84,6 @@ public class StargateTech2 {
 	@EventHandler
 	public void init(FMLInitializationEvent event){
 		StargateLogger.info("Initializing Modules");
-		proxy.registerHandlers();
 		for(IContentModule module : modules){
 			try{
 				StargateLogger.info("Initializing Module: " + module.getModuleName());
@@ -112,6 +110,7 @@ public class StargateTech2 {
 			}
 		}
 		StargateLogger.info("All Modules Post-Initalized.");
+		proxy.registerHandlers();
 		config.save();
 	}
 	

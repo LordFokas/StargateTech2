@@ -31,7 +31,6 @@ public class BaseBlock extends Block{
 	
 	public BaseBlock(String uName, boolean breakable, Material material){
 		super(material);
-		// StargateTech2.config.getBlockID(uName)
 		unlocalized = uName;
 		this.setBlockTextureName(ModReference.MOD_ID + ":" + uName);
 		if(!breakable){
@@ -41,9 +40,10 @@ public class BaseBlock extends Block{
 		this.setCreativeTab(StargateTab.instance);
 	}
 	
+	// MEH
 	@Override
 	public String getUnlocalizedName(){
-		return ModReference.MOD_ID + ":block." + unlocalized;
+		return "block." + unlocalized;
 	}
 	
 	@Override

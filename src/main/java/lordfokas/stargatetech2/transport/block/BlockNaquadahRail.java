@@ -53,7 +53,7 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	
 	@Override
 	public String getUnlocalizedName(){
-		return ModReference.MOD_ID + ":block." + BlockReference.NAQUADAH_RAIL;
+		return "block." + BlockReference.NAQUADAH_RAIL;
 	}
 	
 	@Override

@@ -10,19 +10,21 @@ public abstract class BaseItem extends Item {
 	private String unlocalized;
 	
 	public BaseItem(String uName) {
-		// super(StargateTech2.config.getItemID(uName));
 		unlocalized = uName;
 		this.setTextureName(ModReference.MOD_ID + ":" + uName);
 		this.setCreativeTab(StargateTab.instance);
 	}
 	
+	/*
+	// WHY?
 	@Override
 	public String getUnlocalizedName(){
-		return ModReference.MOD_ID + ":item." + unlocalized;
+		return "item." + unlocalized;
 	}
 	
+	// NO, SRSLY, WHY?
 	@Override
 	public String getUnlocalizedName(ItemStack stack){
-		return ModReference.MOD_ID + ":item." + unlocalized;
-	}
+		return "item." + unlocalized;
+	}*/
 }

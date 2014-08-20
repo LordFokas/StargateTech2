@@ -62,7 +62,7 @@ public class ProxyClient implements ISidedProxy{
 
 	@Override
 	public void registerHandlers() {
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GUIHandlerClient());
+		NetworkRegistry.INSTANCE.registerGuiHandler(StargateTech2.instance, new GUIHandlerClient());
 		RingKeyHandler.register();
 	}
 	

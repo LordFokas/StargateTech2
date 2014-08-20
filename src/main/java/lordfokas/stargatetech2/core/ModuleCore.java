@@ -5,7 +5,6 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import lordfokas.stargatetech2.IContentModule;
 import lordfokas.stargatetech2.StargateTech2;
-import lordfokas.stargatetech2.core.api.StackManager;
 import lordfokas.stargatetech2.core.block.BlockNaquadah;
 import lordfokas.stargatetech2.core.item.ItemNaquadah;
 import lordfokas.stargatetech2.core.item.ItemNaquadah.Metadata;
@@ -32,14 +31,6 @@ public final class ModuleCore implements IContentModule{
 	@Override
 	public void init(){
 		naquadahBlock.registerBlock();
-		
-		StackManager manager = StackManager.instance;
-		manager.addStack("naquadahOre", new ItemStack(naquadahBlock));
-		manager.addStack("tabletPC", new ItemStack(tabletPC));
-		for(Metadata meta : naquadahItem.DATA){
-			manager.addStack(meta.name, new ItemStack(naquadahItem, 1, meta.ID));
-		}
-		
 		Stacks.init();
 	}
 

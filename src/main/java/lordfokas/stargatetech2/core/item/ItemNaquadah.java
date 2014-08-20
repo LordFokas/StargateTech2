@@ -54,12 +54,12 @@ public class ItemNaquadah extends BaseItem{
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean ignored){
-		int meta = stack.getItemDamage();
+		// int meta = stack.getItemDamage();
 	}
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack){
-		return ModReference.MOD_ID + ":item." + DATA[stack.getItemDamage()].name;
+		return "item." + DATA[stack.getItemDamage()].name;
 	}
 	
 	static{

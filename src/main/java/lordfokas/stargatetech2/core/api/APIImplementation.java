@@ -44,9 +44,4 @@ public final class APIImplementation extends StargateTechAPI {
 	public IFactory getFactory() {
 		return factory;
 	}
-
-	@Override
-	public IStackManager getStackManager() {
-		return StackManager.instance;
-	}
 }

@@ -7,8 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import lordfokas.stargatetech2.automation.ModuleAutomation;
 import lordfokas.stargatetech2.core.ModuleCore;
-import lordfokas.stargatetech2.core.api.StackManager;
 import lordfokas.stargatetech2.core.block.BlockNaquadah;
+import lordfokas.stargatetech2.core.item.ItemNaquadah;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Stacks {
@@ -44,15 +44,14 @@ public class Stacks {
 		
 		//##########################################################################################
 		// STARGATETECH 2
-		naqIngot	= StackManager.instance.get("naquadahIngot");
-		naqDust		= StackManager.instance.get("naquadahDust");
-		naqPlate	= StackManager.instance.get("naquadahPlate");
+		naqIngot	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.INGOT.ID);
+		naqDust		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.DUST.ID);
+		naqPlate	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.PLATE.ID);
 		naqOre		= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.ORE);
 		naqBlock	= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.BLOCK);
-		lattice		= StackManager.instance.get("lattice");
-		circuit		= StackManager.instance.get("circuitCrystal");
-		coilNaq		= StackManager.instance.get("coilNaquadah");
-		coilEnd		= StackManager.instance.get("coilEnder");
+		circuit		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.CIRCUIT.ID);
+		coilNaq		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_NAQ.ID);
+		coilEnd		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_END.ID);
 		busCable	= new ItemStack(ModuleAutomation.busCable);
 	}
 	
