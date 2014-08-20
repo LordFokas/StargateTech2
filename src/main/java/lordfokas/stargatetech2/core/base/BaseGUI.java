@@ -346,6 +346,7 @@ public abstract class BaseGUI extends GuiContainer {
 		bindBaseImage();
 		drawTabBackgrounds();
 		isNativeRender = true;
+		GL11.glEnable(GL11.GL_BLEND);
 		drawLocalQuad(0, 0, 0, 24, 0, 24, 24, 24);
 		drawLocalQuad(xSize-24, 0, 40, 64, 0, 24, 24, 24);
 		drawLocalQuad(0, ySize-24, 0, 24, 40, 64, 24, 24);
@@ -385,6 +386,7 @@ public abstract class BaseGUI extends GuiContainer {
 			int ty = wrapper.tab.getColor().y;
 			int sx = 19 + wrapper.getX(-16);
 			int sy = 16 + wrapper.getY(-16);
+			GL11.glEnable(GL11.GL_BLEND);
 			drawLocalQuad(-7-sx, off + 15, tx, tx + 3, ty, ty + 3, 3, 3);
 			drawLocalQuad(-7-sx, off + 18+sy, tx, tx + 3, ty + 13, ty + 16, 3, 3);
 			drawLocalQuad(-7-sx, off + 18, tx, tx + 3, ty + 3, ty + 13, 3, sy);

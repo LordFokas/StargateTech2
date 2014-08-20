@@ -1,5 +1,9 @@
 package lordfokas.stargatetech2.core.base;
 
+import lordfokas.stargatetech2.api.bus.BusEvent;
+import lordfokas.stargatetech2.core.reference.ModReference;
+import lordfokas.stargatetech2.core.util.MaterialNaquadah;
+import lordfokas.stargatetech2.core.util.StargateTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -8,11 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import lordfokas.stargatetech2.StargateTech2;
-import lordfokas.stargatetech2.api.bus.BusEvent;
-import lordfokas.stargatetech2.core.reference.ModReference;
-import lordfokas.stargatetech2.core.util.MaterialNaquadah;
-import lordfokas.stargatetech2.core.util.StargateTab;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BaseBlock extends Block{

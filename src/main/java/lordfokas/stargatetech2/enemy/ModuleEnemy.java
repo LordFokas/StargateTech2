@@ -59,9 +59,9 @@ public class ModuleEnemy implements IContentModule {
 
 	@Override
 	public void postInit(){		
-		GameRegistry.addShapedRecipe(new ItemStack(shieldController), "-B-", "CMC", "PAP", 'B', Stacks.bucket, 'C', Stacks.circuit, 'M', Stacks.machine, 'P', Stacks.naqPlate, 'A', Stacks.busCable);
-		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "-B-", "SMS", "NCN", 'M', Stacks.machine, 'C', Stacks.coilNaq, 'B', Stacks.bucket, 'N', Stacks.naqIngot, 'S', Stacks.circuit);
-		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "-C-", "BMB", "NPN", 'P', Stacks.coilGold, 'C', Stacks.chest, 'B', Stacks.bucket, 'M', Stacks.machine, 'N', Stacks.naqIngot);
+		GameRegistry.addShapedRecipe(new ItemStack(shieldController), "-B-", "CMC", "PAP", 'B', Stacks.bucket, 'C', Stacks.circuit, 'M', Stacks.machine_0, 'P', Stacks.naqPlate, 'A', Stacks.busCable);
+		GameRegistry.addShapedRecipe(new ItemStack(shieldEmitter), "-B-", "SMS", "NCN", 'M', Stacks.machine_0, 'C', Stacks.coilNaq, 'B', Stacks.bucket, 'N', Stacks.naqIngot, 'S', Stacks.circuit);
+		GameRegistry.addShapedRecipe(new ItemStack(particleIonizer), "-C-", "BMB", "NPN", 'P', Stacks.coilGold, 'C', Stacks.chest, 'B', Stacks.bucket, 'M', Stacks.machine_0, 'N', Stacks.naqIngot);
 		
 		Fluid water = FluidRegistry.WATER;
 		ParticleIonizerRecipes.recipes().addRecipe(new IonizerRecipe(new FluidStack(water,  500), Stacks.redDust,    1200,  10, 10));

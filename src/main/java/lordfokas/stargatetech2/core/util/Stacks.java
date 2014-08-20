@@ -16,7 +16,7 @@ public class Stacks {
 	public static ItemStack book, bucket, chest, glass, glowDust, glowBlock, pearl, redDust, redBlock, slab, stick, stone;
 	
 	// ThermalExpansion Stacks
-	public static ItemStack machine, coilGold;
+	public static ItemStack machine_0, coilGold;
 	
 	// StargateTech 2 Stacks
 	public static ItemStack naqIngot, naqDust, naqPlate, naqOre, naqBlock, lattice, circuit, coilNaq, coilEnd, busCable;
@@ -39,7 +39,7 @@ public class Stacks {
 		
 		//##########################################################################################
 		// THERMAl EXPANSION 3
-		machine =	fromTE3("frameMachineBasic");
+		machine_0 =	fromTE3("frameMachineBasic");
 		coilGold =	fromTE3("powerCoilGold");
 		
 		//##########################################################################################
@@ -52,7 +52,11 @@ public class Stacks {
 		circuit		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.CIRCUIT.ID);
 		coilNaq		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_NAQ.ID);
 		coilEnd		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_END.ID);
-		busCable	= new ItemStack(ModuleAutomation.busCable);
+		
+		//Item i = Item.getItemFromBlock(ModuleAutomation.busCable);
+		int i = Block.getIdFromBlock(ModuleAutomation.busCable);
+		System.err.println("Item: " + i);
+		busCable	= new ItemStack(ModuleAutomation.busCable, 1, 0);
 	}
 	
 	private static ItemStack fromTE3(String name){

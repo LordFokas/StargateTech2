@@ -27,7 +27,8 @@ public class TabAbstractBus extends BaseTab{
 	}
 	
 	public TabAbstractBus(ISyncBusDevice device) {
-		super("Abstract Bus", Stacks.busCable, TabColor.BLUE);
+		// TEMPORARY
+		super("Abstract Bus", Stacks.stick, TabColor.BLUE);
 		this.device = device;
 		update();
 	}
