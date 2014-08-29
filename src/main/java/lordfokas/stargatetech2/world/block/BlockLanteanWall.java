@@ -55,7 +55,7 @@ public class BlockLanteanWall extends BaseBlock {
 	}
 	
 	@Override
-	public void registerBlock(){
+	protected void registerBlock(){
 		GameRegistry.registerBlock(this, ItemBlockLanteanWall.class, getUnlocalizedName());
 	}
 	

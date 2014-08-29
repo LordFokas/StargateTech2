@@ -30,17 +30,16 @@ public final class ModuleCore implements IContentModule{
 
 	@Override
 	public void init(){
-		naquadahBlock.registerBlock();
 		Stacks.init();
+		MinecraftForge.EVENT_BUS.register(new CoreEventHandler());
+		GameRegistry.registerWorldGenerator(new CoreWorldGenerator(), 0);
+		ChunkLoader.register();
 	}
 
 	@Override
 	public void postInit(){
-		MinecraftForge.EVENT_BUS.register(new CoreEventHandler());
 		StargateTech2.proxy.registerLanguages();
 		StargateTech2.proxy.registerRenderers(Module.CORE);
-		GameRegistry.registerWorldGenerator(new CoreWorldGenerator(), 0);
-		ChunkLoader.register();
 		
 		FurnaceRecipes.smelting().func_151394_a(new ItemStack(naquadahBlock, BlockNaquadah.ORE), Stacks.naqIngot, 0);
 		FurnaceRecipes.smelting().func_151394_a(new ItemStack(naquadahItem, ItemNaquadah.DUST.ID), Stacks.naqIngot, 0);

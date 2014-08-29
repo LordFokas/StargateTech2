@@ -17,6 +17,6 @@ public class ItemBlockLanteanWall extends ItemBlock {
 	@Override
 	public String getUnlocalizedName(ItemStack stack){
 		Color color = ModuleWorld.lanteanWall.getColor(stack.getItemDamage());
-		return ModReference.MOD_ID + ":block.lanteanWall_" + color.name.toLowerCase().replace(' ', '_');
+		return "block.lanteanWall_" + color.name.toLowerCase().replace(' ', '_');
 	}
 }

@@ -28,15 +28,12 @@ public class ModuleTransport implements IContentModule {
 		transportRing = new BlockTransportRing();
 		invisible = new BlockInvisible();
 		stargate = new BlockStargate();
+		
+		naquadahRail.registerBlock();
 	}
 
 	@Override
 	public void init(){
-		naquadahRail.registerBlock();
-		transportRing.registerBlock();
-		invisible.registerBlock();
-		stargate.registerBlock();
-		
 		GameRegistry.registerTileEntity(TileTransportRing.class, TileEntityReference.TILE_TRANSPORT_RING);
 		GameRegistry.registerTileEntity(TileStargate.class, TileEntityReference.TILE_STARGATE);
 		GameRegistry.registerTileEntity(TileStargateRing.class, TileEntityReference.TILE_STARGATE_RING);

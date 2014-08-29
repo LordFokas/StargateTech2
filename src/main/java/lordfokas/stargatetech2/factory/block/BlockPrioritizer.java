@@ -32,7 +32,7 @@ public class BlockPrioritizer extends BlockMachine {
 	}
 	
 	@Override
-	public void registerBlock(){
+	protected void registerBlock(){
 		GameRegistry.registerBlock(this, ItemBlockPrioritizer.class, getUnlocalizedName());
 	}
 }

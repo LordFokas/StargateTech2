@@ -37,6 +37,7 @@ public class BaseBlock extends Block{
 			this.setResistance(20000000F);
 		}
 		this.setCreativeTab(StargateTab.instance);
+		registerBlock();
 	}
 	
 	// MEH
@@ -54,7 +55,7 @@ public class BaseBlock extends Block{
 		isAbstractBus = true;
 	}
 	
-	public void registerBlock(){
+	protected void registerBlock(){
 		GameRegistry.registerBlock(this, getUnlocalizedName());
 	}
 	

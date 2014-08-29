@@ -106,7 +106,7 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
         }
         
         @Override
-        public void registerBlock(){
+        protected void registerBlock(){
                 GameRegistry.registerBlock(this, ItemBlockStargate.class, getUnlocalizedName());
         }
         

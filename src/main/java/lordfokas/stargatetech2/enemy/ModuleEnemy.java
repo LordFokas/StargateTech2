@@ -46,11 +46,6 @@ public class ModuleEnemy implements IContentModule {
 	public void init(){
 		FluidRegistry.registerFluid(IonizedParticles.fluid);
 		
-		shieldController.registerBlock();
-		shieldEmitter.registerBlock();
-		particleIonizer.registerBlock();
-		shield.registerBlock();
-		
 		GameRegistry.registerTileEntity(TileShieldController.class, TileEntityReference.TILE_SHIELD_CONTROLLER);
 		GameRegistry.registerTileEntity(TileShieldEmitter.class, TileEntityReference.TILE_SHIELD_EMITTER);
 		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);

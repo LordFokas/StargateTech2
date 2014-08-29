@@ -17,10 +17,7 @@ public class ModuleAutomation implements IContentModule {
 		busCable = new BlockBusCable();
 	}
 
-	@Override
-	public void init(){
-		busCable.registerBlock();
-	}
+	@Override public void init(){}
 
 	@Override
 	public void postInit(){

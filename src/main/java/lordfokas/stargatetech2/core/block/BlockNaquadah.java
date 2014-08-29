@@ -58,7 +58,7 @@ public class BlockNaquadah extends BaseBlock {
 	}
 	
 	@Override
-	public void registerBlock(){
+	protected void registerBlock(){
 		GameRegistry.registerBlock(this, ItemBlockNaquadah.class, getUnlocalizedName());
 	}
 }
