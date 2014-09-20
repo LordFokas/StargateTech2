@@ -4,6 +4,9 @@
 StargateTech2:block.busAdapter.name=Abstract Bus Adapter
 StargateTech2:block.busCable.name=Abstract Bus Cable
 StargateTech2:block.crossover.name=Crossover
+StargateTech2:block.prioritizer.energy.name=Energie Priorisierer
+StargateTech2:block.prioritizer.fluid.name=Wasser Priorisierer
+StargateTech2:block.prioritizer.items.name=Item Priorisierer
 
 StargateTech2:block.lanteanWall_white.name=Weiße Lanteanische Wand
 StargateTech2:block.lanteanWall_orange.name=Orange Lanteanische Wand
@@ -22,8 +25,13 @@ StargateTech2:block.lanteanWall_green.name=Grüne Lanteanische Wand
 StargateTech2:block.lanteanWall_red.name=Rote Lanteanische Wand
 StargateTech2:block.lanteanWall_black.name=Schwarze Lanteanische Wand
 
+# this one is temporary:
+StargateTech2:block.invisible.name=Ringtransporter
+
 StargateTech2:block.naquadahOre.name=Naquadah Erz
 StargateTech2:block.naquadahRail.name=Naquadah Schiene
+StargateTech2:block.naquadah.block.name=Naquadah Block
+
 StargateTech2:block.particleIonizer.name=Partikel Ionisierer
 StargateTech2:block.shieldController.name=Schild Steuercomputer
 StargateTech2:block.shieldEmitter.name=Schild Emitter
@@ -50,3 +58,12 @@ StargateTech2:item.personalShield.name=Personen Schild
 # MISC
 
 StargateTech2:fluid.ionizedParticles=Ionisierte Partikel
+StargateTech2:fluid.moltenNaquadah=Geschmolzenes Naquadah
+
+# Dirty workaround for Tinker's Construct bad code. Why, mDiyo, why!?
+fluid.molten_naquadah=Geschmolzenes Naquadah
+
+# COMMANDS
+commands.tpgate.usage=/tpgate [player] <address>
+commands.tpgate.badaddress=Konnte die gegebene Adresse nicht finden!
+commands.tpgate.nogate=Konnte kein Stargate fürdie gegebene Adresse finden!
