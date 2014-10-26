@@ -67,4 +67,4 @@ fluid.molten_naquadah=Geschmolzenes Naquadah
 # COMMANDS
 commands.tpgate.usage=/tpgate [player] <address>
 commands.tpgate.badaddress=Konnte die gegebene Adresse nicht finden!
-commands.tpgate.nogate=Konnte kein Stargate fürdie gegebene Adresse finden!
+commands.tpgate.nogate=Konnte kein Stargate für die gegebene Adresse finden!
