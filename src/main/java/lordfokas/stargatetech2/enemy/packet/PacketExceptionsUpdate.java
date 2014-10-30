@@ -1,10 +1,10 @@
 package lordfokas.stargatetech2.enemy.packet;
 
-import lordfokas.stargatetech2.core.base.BasePacket;
 import lordfokas.stargatetech2.core.base.BasePacket.ClientToServer;
 import lordfokas.stargatetech2.core.packet.PacketCoordinates;
 import lordfokas.stargatetech2.enemy.tileentity.TileShieldController;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.Side;
 
 @ClientToServer
@@ -15,13 +15,26 @@ public class PacketExceptionsUpdate extends PacketCoordinates {
 	@Override
 	protected void writeData() throws Exception {
 		output.writeBoolean(isSetting);
-		output.writeUTF(playerName);
+		writeUTF(playerName);
 	}
 
+	public void writeUTF(final String name){
+		byte[] temp = name.getBytes();
+		output.writeInt(temp.length);
+		output.writeBytes(temp);
+	}
+	
+	public String readUTF(){
+		int size=input.readInt();
+		byte[] nameByte= new byte[size];
+		input.readBytes(nameByte);
+		return new String(nameByte);
+	}
+	
 	@Override
-	protected BasePacket readData(EntityPlayerMP player, Side side) throws Exception {
+	protected IMessage readData(EntityPlayer player, Side side) throws Exception {
 		isSetting = input.readBoolean();
-		playerName = input.readUTF();
+		playerName = readUTF();
 		TileShieldController controller = (TileShieldController) player.worldObj.getTileEntity(x, y, z);
 		controller.updateExceptions(isSetting, playerName);
 		return null;

@@ -1,11 +1,11 @@
 package lordfokas.stargatetech2.transport.packet;
 
-import lordfokas.stargatetech2.core.base.BasePacket;
 import lordfokas.stargatetech2.core.base.BasePacket.ClientToServer;
 import lordfokas.stargatetech2.core.packet.PacketCoordinates;
 import lordfokas.stargatetech2.transport.tileentity.TileTransportRing;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.Side;
 
 @ClientToServer
@@ -18,7 +18,7 @@ public class PacketActivateRings extends PacketCoordinates {
 	}
 
 	@Override
-	protected BasePacket readData(EntityPlayerMP player, Side side) throws Exception {
+	protected IMessage readData(EntityPlayer player, Side side) throws Exception {
 		up = input.readBoolean();
 		TileEntity te = player.worldObj.getTileEntity(x, y, z);
 		if(te instanceof TileTransportRing){

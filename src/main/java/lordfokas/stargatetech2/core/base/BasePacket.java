@@ -2,31 +2,26 @@ package lordfokas.stargatetech2.core.base;
 
 import io.netty.buffer.ByteBuf;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.play.server.S3FPacketCustomPayload;
 import lordfokas.stargatetech2.core.packet.PacketOpenGUI;
 import lordfokas.stargatetech2.core.packet.PacketToggleMachineFace;
 import lordfokas.stargatetech2.core.packet.PacketUpdateBusAddress;
 import lordfokas.stargatetech2.core.packet.PacketUpdateBusEnabled;
 import lordfokas.stargatetech2.core.packet.PacketUpdateMachineColors;
 import lordfokas.stargatetech2.core.reference.ModReference;
-import lordfokas.stargatetech2.core.util.ByteUtil;
 import lordfokas.stargatetech2.enemy.packet.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.enemy.packet.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.transport.packet.PacketActivateRings;
 import lordfokas.stargatetech2.transport.packet.PacketPrintAddress;
 import lordfokas.stargatetech2.transport.packet.PacketWormhole;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -35,35 +30,21 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 
-public abstract class BasePacket implements IMessage{
+public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessage> implements IMessage,IMessageHandler<T, RES>{
 	/** Marks packets the server sends to the clients. */
 	@Target(ElementType.TYPE)
-	@Retention(RetentionPolicy.SOURCE)
+	@Retention(RetentionPolicy.RUNTIME)
 	public @interface ServerToClient{}
 	
 	/** Marks packets the client sends to the server. */
 	@Target(ElementType.TYPE)
-	@Retention(RetentionPolicy.SOURCE)
+	@Retention(RetentionPolicy.RUNTIME)
 	public @interface ClientToServer{}
-	
-	private static ArrayList<Class<? extends BasePacket>> packetMap = new ArrayList<Class<? extends BasePacket>>();
+	//Class<T extends BasePacket<T,IMessage>>
+	private static ArrayList<Class<? extends BasePacket<?,? extends IMessage>>> packetMap = new ArrayList<Class<? extends BasePacket<?,? extends IMessage>>>();
 	private static SimpleNetworkWrapper network;
-	private ByteArrayOutputStream baos;
-	private ByteArrayInputStream bais;
-	protected DataOutputStream output;
-	protected DataInputStream input;
-	private BasePacket packet;
-	
-	private static BasePacket fromData(byte[] data){
-		int pktID = ByteUtil.readInt(data, 0);
-		Class<? extends BasePacket> pktClass = packetMap.get(pktID);
-		try {
-			return pktClass.newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+	protected ByteBuf output;
+	protected ByteBuf input;
 	
 	protected final int getPacketID(){
 		return packetMap.indexOf(this.getClass());
@@ -84,46 +65,44 @@ public abstract class BasePacket implements IMessage{
 	
 	public static void registerAll(){
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(ModReference.MOD_ID);
-		network.registerMessage(PacketHandler.Server.class, BasePacket.class, 0, Side.SERVER);
-		network.registerMessage(PacketHandler.Client.class, BasePacket.class, 0, Side.CLIENT);
-	}
-	
-	public static class PacketHandler implements IMessageHandler<BasePacket, BasePacket>{
-		private final Side side;
 		
-		protected PacketHandler(Side side){
-			this.side = side;
-		}
-		
-		@Override public BasePacket onMessage(BasePacket message, MessageContext ctx) {
-			try{ return message.unserialize(ctx.getServerHandler().playerEntity, side); }
-			catch(Exception e){ e.printStackTrace(); }
-			return null;
-		}
-		
-		public static final class Client extends PacketHandler{
-			public Client(){
-				super(Side.CLIENT);
+		for( Class<? extends BasePacket<?,? extends IMessage>>clazz: packetMap ){
+			if(clazz.isAnnotationPresent(ServerToClient.class)){
+				registerPacket(clazz, Side.CLIENT);
 			}
-		}
-		
-		public static final class Server extends PacketHandler{
-			public Server(){
-				super(Side.SERVER);
+			
+			if(clazz.isAnnotationPresent(ClientToServer.class)){
+				registerPacket(clazz, Side.SERVER);
 			}
 		}
 	}
 	
-	protected abstract BasePacket unserialize(EntityPlayerMP p, Side s) throws Exception;
+	
+	@Override 
+	public RES onMessage(T message, MessageContext ctx) {
+		try{ 
+			if(ctx.side == Side.SERVER){
+				return message.unserialize(ctx.getServerHandler().playerEntity, ctx.side);
+			}else{
+				return message.unserialize(Minecraft.getMinecraft().thePlayer, ctx.side);
+			}
+		}catch(Exception e){ e.printStackTrace(); }
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T extends BasePacket<?,U>, U extends IMessage> void registerPacket(Class<T> clazz,Side side){
+		network.registerMessage((Class<? extends IMessageHandler<T,U>>)clazz, clazz, packetMap.indexOf(clazz), side);
+	}
+	
+	protected abstract RES unserialize(EntityPlayer p, Side s) throws Exception;
 	protected abstract void serialize() throws Exception;
 	
 	@Override
 	public final void toBytes(ByteBuf buf){
 		try{
-			baos = new ByteArrayOutputStream();
-			output = new DataOutputStream(baos);
+			output = buf;
 			serialize();
-			buf.writeBytes(baos.toByteArray());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -131,9 +110,7 @@ public abstract class BasePacket implements IMessage{
 	
 	@Override
 	public final void fromBytes(ByteBuf buf){
-		byte[] data = buf.array();
-		packet = fromData(data);
-		packet.input = new DataInputStream(new ByteArrayInputStream(data));
+		input = buf;
 	}
 	
 	public final void sendToAllClients(){ network.sendToAll(this); }
