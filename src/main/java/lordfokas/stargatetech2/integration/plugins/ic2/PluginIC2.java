@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.integration.plugins.ic2;
 
-import ic2.api.item.Items;
+import ic2.api.item.IC2Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -22,7 +22,7 @@ public class PluginIC2 extends BasePlugin {
 	
 	@Override
 	protected void postLoad(){
-		scrap = Items.getItem("scrap");
+		scrap = IC2Items.getItem("scrap");
 		uuMatter = FluidRegistry.getFluid("uumatter");
 		
 		IonizerRecipe scrapRecipe = new IonizerRecipe(scrap, 1800, 25, 250);
