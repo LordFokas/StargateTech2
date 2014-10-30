@@ -32,6 +32,7 @@ public final class ModuleCore implements IContentModule{
 	public void init(){
 		Stacks.init();
 		MinecraftForge.EVENT_BUS.register(new CoreEventHandler());
+		GameRegistry.registerItem(naquadahItem, ItemReference.NAQUADAH);
 		GameRegistry.registerItem(tabletPC, ItemReference.TABLET_PC);
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator(), 0);
 		ChunkLoader.register();
