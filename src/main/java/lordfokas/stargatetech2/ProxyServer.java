@@ -11,7 +11,6 @@ public class ProxyServer implements ISidedProxy{
 	/* Unimplemented Client-Side methods. */
 	@Override public void registerRenderers(Module module){}
 	@Override public boolean isLocalPlayerInAABB(World world, AxisAlignedBB aabb){ return false; }
-	@Override public void registerLanguages(){}
 
 	@Override
 	public void registerHandlers() {
