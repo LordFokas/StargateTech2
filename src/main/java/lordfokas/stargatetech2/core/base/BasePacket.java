@@ -63,10 +63,11 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 		packetMap.add(PacketUpdateBusEnabled.class);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void registerAll(){
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(ModReference.MOD_ID);
 		
-		for( Class<? extends BasePacket<?,? extends IMessage>>clazz: packetMap ){
+		for( Class clazz: packetMap ){
 			if(clazz.isAnnotationPresent(ServerToClient.class)){
 				registerPacket(clazz, Side.CLIENT);
 			}
@@ -91,8 +92,8 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static <T extends BasePacket<?,U>, U extends IMessage> void registerPacket(Class<T> clazz,Side side){
-		network.registerMessage((Class<? extends IMessageHandler<T,U>>)clazz, clazz, packetMap.indexOf(clazz), side);
+	private static <Z extends BasePacket<Z,Q>, Q extends IMessage> void registerPacket(Class<Z> clazz,Side side){
+		network.registerMessage(clazz, clazz, packetMap.indexOf(clazz), side);
 	}
 	
 	protected abstract RES unserialize(EntityPlayer p, Side s) throws Exception;
