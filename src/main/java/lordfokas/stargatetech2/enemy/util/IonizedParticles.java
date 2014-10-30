@@ -14,9 +14,4 @@ public class IonizedParticles extends Fluid{
 		// setViscosity(1000); // Unable to determine a good value.
 		setTemperature(800); // 800K ~= 525C
 	}
-	
-	@Override
-	public String getUnlocalizedName(){
-		return "StargateTech2:fluid.ionizedParticles";
-	}
 }
