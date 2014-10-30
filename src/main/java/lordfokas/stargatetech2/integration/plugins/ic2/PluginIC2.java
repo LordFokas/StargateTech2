@@ -23,7 +23,7 @@ public class PluginIC2 extends BasePlugin {
 	@Override
 	protected void postLoad(){
 		scrap = IC2Items.getItem("scrap");
-		uuMatter = FluidRegistry.getFluid("uumatter");
+		uuMatter = FluidRegistry.getFluid("ic2uumatter");
 		
 		IonizerRecipe scrapRecipe = new IonizerRecipe(scrap, 1800, 25, 250);
 		IonizerRecipe uuRecipe = new IonizerRecipe(new FluidStack(uuMatter, 100), 6000, 1, 500);
