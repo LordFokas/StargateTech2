@@ -35,11 +35,11 @@ public class PluginTiCo extends BasePlugin {
 		
 		FluidRegistry.registerFluid(MoltenNaquadah.instance);
 		
-		Smeltery.addMelting0(new ItemStack(ModuleCore.naquadahBlock), 800, new FluidStack(MoltenNaquadah.instance, INGOT * 2));
-		Smeltery.addMelting0(Stacks.naqIngot, 450, new FluidStack(MoltenNaquadah.instance, INGOT * 1));
-		Smeltery.addMelting0(Stacks.naqDust, 350, new FluidStack(MoltenNaquadah.instance, INGOT * 1));
-		Smeltery.addMelting0(Stacks.naqPlate, 800, new FluidStack(MoltenNaquadah.instance, INGOT * 2));
-		Smeltery.addMelting0(Stacks.naqBlock, 1000, new FluidStack(MoltenNaquadah.instance, BLOCK));
+		Smeltery.addMelting(new ItemStack(ModuleCore.naquadahBlock), 800, new FluidStack(MoltenNaquadah.instance, INGOT * 2));
+		Smeltery.addMelting(Stacks.naqIngot, 450, new FluidStack(MoltenNaquadah.instance, INGOT * 1));
+		Smeltery.addMelting(Stacks.naqDust, 350, new FluidStack(MoltenNaquadah.instance, INGOT * 1));
+		Smeltery.addMelting(Stacks.naqPlate, 800, new FluidStack(MoltenNaquadah.instance, INGOT * 2));
+		Smeltery.addMelting(Stacks.naqBlock, 1000, new FluidStack(MoltenNaquadah.instance, BLOCK));
 		
 		LiquidCasting tableCasting = TConstructRegistry.getTableCasting();
 		tableCasting.addCastingRecipe(Stacks.naqIngot, new FluidStack(MoltenNaquadah.instance, INGOT * 1), ingotCast, 50);
