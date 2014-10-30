@@ -16,6 +16,7 @@ import lordfokas.stargatetech2.automation.bus.AddressHelper;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
 import lordfokas.stargatetech2.core.reference.ModReference;
 import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 
@@ -76,11 +77,12 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 	}
 
 	@Override
-	public synchronized Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception {
+	public synchronized Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws LuaException {
 		ComputerMethod m = ComputerMethod.values()[method];
+		try{
 		switch(m){
 			case SCANNETWORK:
-				if(arguments.length > 2) throw new Exception("Too many args! USAGE: scanNetwork([options [, address]])");
+				if(arguments.length > 2) throw new LuaException("Too many args! USAGE: scanNetwork([options [, address]])");
 				boolean status, location, name, desc, addr;
 				short address = (short)0xFFFF;
 				if(arguments.length == 2) try{
@@ -119,13 +121,13 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 				return new Object[]{received.size()};
 				
 			case SENDPACKET: // SENDS A PACKET TO THE REST OF THE NETWORK
-				if(arguments.length < 2) throw new Exception("Not enough arguments (min. 2 args)");
+				if(arguments.length < 2) throw new LuaException("Not enough arguments (min. 2 args)");
 				BusPacketLIP output = new BusPacketLIP(networkDriver.getInterfaceAddress(), AddressHelper.convert((String)arguments[0]));
 				output.setMetadata(new LIPMetadata(ModReference.MOD_ID, "BusAdapter", ""));
 				for(int i = 1; i < arguments.length; i++){
 					String arg = (String) arguments[i];
 					int split = arg.indexOf(": ");
-					if(split < 0) throw new Exception("Bad argument #" + i);
+					if(split < 0) throw new LuaException("Bad argument #" + i);
 					output.set(arg.substring(0, split), arg.substring(split+2));
 				}
 				output.finish();
@@ -156,6 +158,9 @@ public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPerip
 			case LISTMETHODS:
 				return getMethodNames();
 			default: break;
+		}
+		}catch(Exception e){
+			throw new LuaException(e.getMessage());
 		}
 		return null;
 	}
