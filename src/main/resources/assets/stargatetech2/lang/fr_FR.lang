@@ -1,52 +1,52 @@
 ###################################################################################################
 # BLOCKS
 
-StargateTech2:block.busAdapter.name=Adaptateur de Bus Abstrait
-StargateTech2:block.busCable.name=Cable de bus Abstrait
-StargateTech2:block.crossover.name=Croisement
+block.busAdapter.name=Adaptateur de Bus Abstrait
+block.busCable.name=Cable de bus Abstrait
+block.crossover.name=Croisement
 
-StargateTech2:block.lanteanWall_white.name=Mur Lantien blanc
-StargateTech2:block.lanteanWall_orange.name=Mur Lantien orange
-StargateTech2:block.lanteanWall_magenta.name=Mur Lantien magenta
-StargateTech2:block.lanteanWall_light_blue.name=Mur lantien bleu clair
-StargateTech2:block.lanteanWall_yellow.name=Mur lantien jaune
-StargateTech2:block.lanteanWall_lime.name=Mur Lantien vert clair
-StargateTech2:block.lanteanWall_pink.name=Mur Lantien rose
-StargateTech2:block.lanteanWall_dark_gray.name=Mur Lantien gris foncé
-StargateTech2:block.lanteanWall_light_gray.name=Mur Lantien gris clair
-StargateTech2:block.lanteanWall_cyan.name=Mur Lantien cyan
-StargateTech2:block.lanteanWall_purple.name=Mur Lantien violet
-StargateTech2:block.lanteanWall_blue.name=Mur Lantien bleu
-StargateTech2:block.lanteanWall_brown.name=Mur Lantien marron
-StargateTech2:block.lanteanWall_green.name=Mur Lantien vert
-StargateTech2:block.lanteanWall_red.name=Mur Lantien rouge
-StargateTech2:block.lanteanWall_black.name=Mur Lantien noire
+block.lanteanWall_white.name=Mur Lantien blanc
+block.lanteanWall_orange.name=Mur Lantien orange
+block.lanteanWall_magenta.name=Mur Lantien magenta
+block.lanteanWall_light_blue.name=Mur lantien bleu clair
+block.lanteanWall_yellow.name=Mur lantien jaune
+block.lanteanWall_lime.name=Mur Lantien vert clair
+block.lanteanWall_pink.name=Mur Lantien rose
+block.lanteanWall_dark_gray.name=Mur Lantien gris foncé
+block.lanteanWall_light_gray.name=Mur Lantien gris clair
+block.lanteanWall_cyan.name=Mur Lantien cyan
+block.lanteanWall_purple.name=Mur Lantien violet
+block.lanteanWall_blue.name=Mur Lantien bleu
+block.lanteanWall_brown.name=Mur Lantien marron
+block.lanteanWall_green.name=Mur Lantien vert
+block.lanteanWall_red.name=Mur Lantien rouge
+block.lanteanWall_black.name=Mur Lantien noire
 
-StargateTech2:block.naquadahOre.name=Minerai de Naquadah
-StargateTech2:block.naquadahRail.name=Rail en Naquadah
-StargateTech2:block.particleIonizer.name=Ionizeur de particules
-StargateTech2:block.shieldController.name=Contrôleur de bouclier
-StargateTech2:block.shieldEmitter.name=Émetteur de bouclier
-StargateTech2:block.stargate.name=Porte des étoiles
-StargateTech2:block.transportRing.name=Anneaux de transport
+block.naquadahOre.name=Minerai de Naquadah
+block.naquadahRail.name=Rail en Naquadah
+block.particleIonizer.name=Ionizeur de particules
+block.shieldController.name=Contrôleur de bouclier
+block.shieldEmitter.name=Émetteur de bouclier
+block.stargate.name=Porte des étoiles
+block.transportRing.name=Anneaux de transport
 
 
 
 ###################################################################################################
 # ITEMS
 
-StargateTech2:item.tabletPC.name=Tablette PC
-StargateTech2:item.naquadahIngot.name=Lingot Naquadah
-StargateTech2:item.naquadahDust.name=Poussière de Naquadah
-StargateTech2:item.naquadahPlate.name=Plaque de Naquadah
-StargateTech2:item.circuitCrystal.name=Circuit de cristal
-StargateTech2:item.coilNaquadah.name=Bobine d'induction magnétique
-StargateTech2:item.coilEnder.name=Bobine conductrice de matière
-StargateTech2:item.personalShield.name=Bouclier personnel
+item.tabletPC.name=Tablette PC
+item.naquadahIngot.name=Lingot Naquadah
+item.naquadahDust.name=Poussière de Naquadah
+item.naquadahPlate.name=Plaque de Naquadah
+item.circuitCrystal.name=Circuit de cristal
+item.coilNaquadah.name=Bobine d'induction magnétique
+item.coilEnder.name=Bobine conductrice de matière
+item.personalShield.name=Bouclier personnel
 
 
 
 ###################################################################################################
 # MISC
 
-StargateTech2:fluid.ionizedParticles=Particules Ionisées
+fluid.ionizedParticles=Particules Ionisées
