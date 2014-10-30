@@ -4,6 +4,7 @@ import lordfokas.stargatetech2.IContentModule;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.core.api.ParticleIonizerRecipes;
 import lordfokas.stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
+import lordfokas.stargatetech2.core.reference.ItemReference;
 import lordfokas.stargatetech2.core.reference.TileEntityReference;
 import lordfokas.stargatetech2.core.util.Stacks;
 import lordfokas.stargatetech2.enemy.block.BlockParticleIonizer;
@@ -45,7 +46,7 @@ public class ModuleEnemy implements IContentModule {
 	@Override
 	public void init(){
 		FluidRegistry.registerFluid(IonizedParticles.fluid);
-		
+		GameRegistry.registerItem(personalShield, ItemReference.PERSONAL_SHIELD);
 		GameRegistry.registerTileEntity(TileShieldController.class, TileEntityReference.TILE_SHIELD_CONTROLLER);
 		GameRegistry.registerTileEntity(TileShieldEmitter.class, TileEntityReference.TILE_SHIELD_EMITTER);
 		GameRegistry.registerTileEntity(TileParticleIonizer.class, TileEntityReference.TILE_PARTICLE_IONIZER);

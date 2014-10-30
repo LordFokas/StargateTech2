@@ -5,6 +5,7 @@ import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.core.block.BlockNaquadah;
 import lordfokas.stargatetech2.core.item.ItemNaquadah;
 import lordfokas.stargatetech2.core.item.ItemTabletPC;
+import lordfokas.stargatetech2.core.reference.ItemReference;
 import lordfokas.stargatetech2.core.util.ChunkLoader;
 import lordfokas.stargatetech2.core.util.CoreEventHandler;
 import lordfokas.stargatetech2.core.util.CoreWorldGenerator;
@@ -31,6 +32,7 @@ public final class ModuleCore implements IContentModule{
 	public void init(){
 		Stacks.init();
 		MinecraftForge.EVENT_BUS.register(new CoreEventHandler());
+		GameRegistry.registerItem(tabletPC, ItemReference.TABLET_PC);
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator(), 0);
 		ChunkLoader.register();
 	}
