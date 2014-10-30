@@ -29,6 +29,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessage> implements IMessage,IMessageHandler<T, RES>{
 	/** Marks packets the server sends to the clients. */
@@ -83,12 +84,22 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 	public RES onMessage(T message, MessageContext ctx) {
 		try{ 
 			if(ctx.side == Side.SERVER){
-				return message.unserialize(ctx.getServerHandler().playerEntity, ctx.side);
+				return onMessageServer(message,ctx);
 			}else{
-				return message.unserialize(Minecraft.getMinecraft().thePlayer, ctx.side);
+				return onMessageClient(message,ctx);
 			}
 		}catch(Exception e){ e.printStackTrace(); }
 		return null;
+	}
+	
+	@SideOnly(Side.SERVER)
+	public RES onMessageServer(T message, MessageContext ctx) throws Exception{
+		return message.unserialize(ctx.getServerHandler().playerEntity, ctx.side);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public RES onMessageClient(T message, MessageContext ctx) throws Exception{
+		return message.unserialize(Minecraft.getMinecraft().thePlayer, ctx.side);
 	}
 	
 	@SuppressWarnings("unchecked")

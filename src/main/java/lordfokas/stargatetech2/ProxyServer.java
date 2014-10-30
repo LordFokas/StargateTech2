@@ -14,6 +14,6 @@ public class ProxyServer implements ISidedProxy{
 
 	@Override
 	public void registerHandlers() {
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GUIHandler());
+		NetworkRegistry.INSTANCE.registerGuiHandler(StargateTech2.instance, new GUIHandler());
 	}
 }
