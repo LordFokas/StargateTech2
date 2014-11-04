@@ -11,6 +11,7 @@ public abstract class BaseItem extends Item {
 	
 	public BaseItem(String uName) {
 		unlocalized = uName;
+		this.setUnlocalizedName(uName);
 		this.setTextureName(ModReference.MOD_ID + ":" + uName);
 		this.setCreativeTab(StargateTab.instance);
 	}

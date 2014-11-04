@@ -8,5 +8,4 @@ public interface ISidedProxy {
 	public void registerRenderers(Module module);
 	public void registerHandlers();
 	public boolean isLocalPlayerInAABB(World world, AxisAlignedBB aabb);
-	public void registerLanguages();
 }

@@ -1,12 +1,12 @@
 package lordfokas.stargatetech2.transport.packet;
 
-import lordfokas.stargatetech2.core.base.BasePacket;
 import lordfokas.stargatetech2.core.base.BasePacket.ClientToServer;
 import lordfokas.stargatetech2.core.base.BasePacket.ServerToClient;
 import lordfokas.stargatetech2.core.packet.PacketCoordinates;
 import lordfokas.stargatetech2.transport.tileentity.TileStargate;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.Side;
 
 @ClientToServer
@@ -41,7 +41,7 @@ public class PacketWormhole extends PacketCoordinates {
 	}
 
 	@Override
-	protected BasePacket readData(EntityPlayerMP player, Side side) throws Exception {
+	protected IMessage readData(EntityPlayer player, Side side) throws Exception {
 		type = input.readByte();
 		switch(type){
 		case SYNC_REQUEST:

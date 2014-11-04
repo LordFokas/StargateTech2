@@ -75,9 +75,4 @@ public class ProxyClient implements ISidedProxy{
 		List<Entity> players = world.getEntitiesWithinAABB(EntityClientPlayerMP.class, aabb);
 		return players.size() == 1;
 	}
-
-	@Override
-	public void registerLanguages() {
-		LanguageRegistry.instance().loadLocalization("/assets/stargatetech2/lang/en_US.lang", "en_US", false);
-	}
 }

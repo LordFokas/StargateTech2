@@ -1,63 +1,63 @@
 ###################################################################################################
 # BLOCKS
 
-StargateTech2:block.busAdapter.name=Speciální spojovací adaptér
-StargateTech2:block.busCable.name=Speciální spojovací kabel
-StargateTech2:block.crossover.name=Oddělovač
-StargateTech2:block.prioritizer.energy.name=Energetický řadič
-StargateTech2:block.prioritizer.fluid.name=Kapalinový řadič
-StargateTech2:block.prioritizer.items.name=Řadič předmětů
-StargateTech2:block.naquadah.ore.name=Naquadahová ruda
-StargateTech2:block.naquadah.block.name=Naquadahový blok
-StargateTech2:block.naquadahRail.name=Naquadahová kolej
-StargateTech2:block.particleIonizer.name=Ionizátor částic
-StargateTech2:block.shieldController.name=Ovládání štítů
-StargateTech2:block.shieldEmitter.name=Emitor štítů
-StargateTech2:block.stargate.name=Hvězdná brána
-StargateTech2:block.shield.name=Štít
-StargateTech2:block.transportRing.name=Platforma transportních kruhů
+block.busAdapter.name=Speciální spojovací adaptér
+block.busCable.name=Speciální spojovací kabel
+block.crossover.name=Oddělovač
+block.prioritizer.energy.name=Energetický řadič
+block.prioritizer.fluid.name=Kapalinový řadič
+block.prioritizer.items.name=Řadič předmětů
+block.naquadah.ore.name=Naquadahová ruda
+block.naquadah.block.name=Naquadahový blok
+block.naquadahRail.name=Naquadahová kolej
+block.particleIonizer.name=Ionizátor částic
+block.shieldController.name=Ovládání štítů
+block.shieldEmitter.name=Emitor štítů
+block.stargate.name=Hvězdná brána
+block.shield.name=Štít
+block.transportRing.name=Platforma transportních kruhů
 
 # this one is temporary:
-StargateTech2:block.invisible.name=Transportní kruhy
+block.invisible.name=Transportní kruhy
 
-StargateTech2:block.lanteanWall_white.name=Bílá zeď předků
-StargateTech2:block.lanteanWall_orange.name=Oranžová zeď předků
-StargateTech2:block.lanteanWall_magenta.name=Purpurová zeď předků
-StargateTech2:block.lanteanWall_light_blue.name=Svetle modrá zeď předků
-StargateTech2:block.lanteanWall_yellow.name=Žlutá zeď předků
-StargateTech2:block.lanteanWall_lime.name=Světle zelená zeď předků
-StargateTech2:block.lanteanWall_pink.name=Růžová zeď předků
-StargateTech2:block.lanteanWall_dark_gray.name=Šedá zeď předků
-StargateTech2:block.lanteanWall_light_gray.name=Světle šedá zeď předků
-StargateTech2:block.lanteanWall_cyan.name=Azurová zeď předků
-StargateTech2:block.lanteanWall_purple.name=Fialová zeď předků
-StargateTech2:block.lanteanWall_blue.name=Modrá zeď předků
-StargateTech2:block.lanteanWall_brown.name=Hnědá zeď předků
-StargateTech2:block.lanteanWall_green.name=Zelená zeď předků
-StargateTech2:block.lanteanWall_red.name=Červená zeď předků
-StargateTech2:block.lanteanWall_black.name=Černá zeď předků
+block.lanteanWall_white.name=Bílá zeď předků
+block.lanteanWall_orange.name=Oranžová zeď předků
+block.lanteanWall_magenta.name=Purpurová zeď předků
+block.lanteanWall_light_blue.name=Svetle modrá zeď předků
+block.lanteanWall_yellow.name=Žlutá zeď předků
+block.lanteanWall_lime.name=Světle zelená zeď předků
+block.lanteanWall_pink.name=Růžová zeď předků
+block.lanteanWall_dark_gray.name=Šedá zeď předků
+block.lanteanWall_light_gray.name=Světle šedá zeď předků
+block.lanteanWall_cyan.name=Azurová zeď předků
+block.lanteanWall_purple.name=Fialová zeď předků
+block.lanteanWall_blue.name=Modrá zeď předků
+block.lanteanWall_brown.name=Hnědá zeď předků
+block.lanteanWall_green.name=Zelená zeď předků
+block.lanteanWall_red.name=Červená zeď předků
+block.lanteanWall_black.name=Černá zeď předků
 
 
 
 ###################################################################################################
 # ITEMS
 
-StargateTech2:item.tabletPC.name=TabletPC
-StargateTech2:item.naquadahIngot.name=Naquadahový ingot
-StargateTech2:item.naquadahDust.name=Prášek naquadahu
-StargateTech2:item.naquadahPlate.name=Plát naquadahu
-StargateTech2:item.circuitCrystal.name=Obvodový krystal
-StargateTech2:item.coilNaquadah.name=Magnetická indukční cívka
-StargateTech2:item.coilEnder.name=Hmotnostní kondukční cívka
-StargateTech2:item.personalShield.name=Osobní štít
+item.tabletPC.name=TabletPC
+item.naquadahIngot.name=Naquadahový ingot
+item.naquadahDust.name=Prášek naquadahu
+item.naquadahPlate.name=Plát naquadahu
+item.circuitCrystal.name=Obvodový krystal
+item.coilNaquadah.name=Magnetická indukční cívka
+item.coilEnder.name=Hmotnostní kondukční cívka
+item.personalShield.name=Osobní štít
 
 
 
 ###################################################################################################
 # MISC
 
-StargateTech2:fluid.ionizedParticles=Ionizované částice
-StargateTech2:fluid.moltenNaquadah=Kapalný naquadah
+fluid.ionizedParticles=Ionizované částice
+fluid.moltenNaquadah=Kapalný naquadah
 
 # Dirty workaround for Tinker's Construct bad code. Why, mDiyo, why!?
 fluid.molten_naquadah=Kapalný naquadah

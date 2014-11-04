@@ -1,18 +1,18 @@
 package lordfokas.stargatetech2.core;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraftforge.common.MinecraftForge;
 import lordfokas.stargatetech2.IContentModule;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.core.block.BlockNaquadah;
 import lordfokas.stargatetech2.core.item.ItemNaquadah;
-import lordfokas.stargatetech2.core.item.ItemNaquadah.Metadata;
 import lordfokas.stargatetech2.core.item.ItemTabletPC;
+import lordfokas.stargatetech2.core.reference.ItemReference;
 import lordfokas.stargatetech2.core.util.ChunkLoader;
 import lordfokas.stargatetech2.core.util.CoreEventHandler;
 import lordfokas.stargatetech2.core.util.CoreWorldGenerator;
 import lordfokas.stargatetech2.core.util.Stacks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public final class ModuleCore implements IContentModule{
@@ -30,15 +30,16 @@ public final class ModuleCore implements IContentModule{
 
 	@Override
 	public void init(){
-		Stacks.init();
 		MinecraftForge.EVENT_BUS.register(new CoreEventHandler());
+		GameRegistry.registerItem(naquadahItem, ItemReference.NAQUADAH);
+		GameRegistry.registerItem(tabletPC, ItemReference.TABLET_PC);
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator(), 0);
+		Stacks.init();
 		ChunkLoader.register();
 	}
 
 	@Override
 	public void postInit(){
-		StargateTech2.proxy.registerLanguages();
 		StargateTech2.proxy.registerRenderers(Module.CORE);
 		
 		FurnaceRecipes.smelting().func_151394_a(new ItemStack(naquadahBlock, BlockNaquadah.ORE), Stacks.naqIngot, 0);

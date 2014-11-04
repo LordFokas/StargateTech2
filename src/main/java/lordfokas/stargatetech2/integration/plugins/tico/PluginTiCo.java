@@ -1,6 +1,7 @@
 package lordfokas.stargatetech2.integration.plugins.tico;
 
 import lordfokas.stargatetech2.core.ModuleCore;
+import lordfokas.stargatetech2.core.block.BlockNaquadah;
 import lordfokas.stargatetech2.core.item.ItemNaquadah;
 import lordfokas.stargatetech2.core.reference.ConfigReference;
 import lordfokas.stargatetech2.core.util.Stacks;
@@ -35,11 +36,11 @@ public class PluginTiCo extends BasePlugin {
 		
 		FluidRegistry.registerFluid(MoltenNaquadah.instance);
 		
-		Smeltery.addMelting0(new ItemStack(ModuleCore.naquadahBlock), 800, new FluidStack(MoltenNaquadah.instance, INGOT * 2));
-		Smeltery.addMelting0(Stacks.naqIngot, 450, new FluidStack(MoltenNaquadah.instance, INGOT * 1));
-		Smeltery.addMelting0(Stacks.naqDust, 350, new FluidStack(MoltenNaquadah.instance, INGOT * 1));
-		Smeltery.addMelting0(Stacks.naqPlate, 800, new FluidStack(MoltenNaquadah.instance, INGOT * 2));
-		Smeltery.addMelting0(Stacks.naqBlock, 1000, new FluidStack(MoltenNaquadah.instance, BLOCK));
+		Smeltery.addMelting(new ItemStack(ModuleCore.naquadahBlock), 800, new FluidStack(MoltenNaquadah.instance, INGOT * 2));
+		Smeltery.addMelting(Stacks.naqIngot, ModuleCore.naquadahBlock, BlockNaquadah.BLOCK, 450, new FluidStack(MoltenNaquadah.instance, INGOT * 1));
+		Smeltery.addMelting(Stacks.naqDust, ModuleCore.naquadahBlock, BlockNaquadah.BLOCK, 350, new FluidStack(MoltenNaquadah.instance, INGOT * 1));
+		Smeltery.addMelting(Stacks.naqPlate, ModuleCore.naquadahBlock, BlockNaquadah.BLOCK, 800, new FluidStack(MoltenNaquadah.instance, INGOT * 2));
+		Smeltery.addMelting(Stacks.naqBlock, ModuleCore.naquadahBlock, BlockNaquadah.BLOCK, 1000, new FluidStack(MoltenNaquadah.instance, BLOCK));
 		
 		LiquidCasting tableCasting = TConstructRegistry.getTableCasting();
 		tableCasting.addCastingRecipe(Stacks.naqIngot, new FluidStack(MoltenNaquadah.instance, INGOT * 1), ingotCast, 50);

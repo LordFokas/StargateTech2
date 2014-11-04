@@ -1,65 +1,65 @@
 ###################################################################################################
 # BLOCKS
 
-StargateTech2:block.busAdapter.name=Abstrakter Bus Adapter
-StargateTech2:block.busCable.name=Abstraktes Bus Kabel
-StargateTech2:block.crossover.name=Crossover
+block.busAdapter.name=Abstrakter Bus Adapter
+block.busCable.name=Abstraktes Bus Kabel
+block.crossover.name=Crossover
 
-StargateTech2:block.prioritizer.energy.name=Energie Priorisierer
-StargateTech2:block.prioritizer.fluid.name=Wasser Priorisierer
-StargateTech2:block.prioritizer.items.name=Item Priorisierer
+block.prioritizer.energy.name=Energie Priorisierer
+block.prioritizer.fluid.name=Wasser Priorisierer
+block.prioritizer.items.name=Item Priorisierer
 
-StargateTech2:block.lanteanWall_white.name=Weiße Lanteanische Wand
-StargateTech2:block.lanteanWall_orange.name=Orange Lanteanische Wand
-StargateTech2:block.lanteanWall_magenta.name=Magenta Lanteanische Wand
-StargateTech2:block.lanteanWall_light_blue.name=Hellblaue Lanteanische Wand
-StargateTech2:block.lanteanWall_yellow.name=Gelbe Lanteanische Wand
-StargateTech2:block.lanteanWall_lime.name=Hellgrüne Lanteanische Wand
-StargateTech2:block.lanteanWall_pink.name=Posa Lanteanische Wand
-StargateTech2:block.lanteanWall_dark_gray.name=Dunkelgraue Lanteanische Wand
-StargateTech2:block.lanteanWall_light_gray.name=Hellgraue Lanteanische Wand
-StargateTech2:block.lanteanWall_cyan.name=Cyan Lanteanische Wand
-StargateTech2:block.lanteanWall_purple.name=Lila Lanteanische Wand
-StargateTech2:block.lanteanWall_blue.name=Blaue Lanteanische Wand
-StargateTech2:block.lanteanWall_brown.name=Braune Lanteanische Wand
-StargateTech2:block.lanteanWall_green.name=Grüne Lanteanische Wand
-StargateTech2:block.lanteanWall_red.name=Rote Lanteanische Wand
-StargateTech2:block.lanteanWall_black.name=Schwarze Lanteanische Wand
+block.lanteanWall_white.name=Weiße Lanteanische Wand
+block.lanteanWall_orange.name=Orange Lanteanische Wand
+block.lanteanWall_magenta.name=Magenta Lanteanische Wand
+block.lanteanWall_light_blue.name=Hellblaue Lanteanische Wand
+block.lanteanWall_yellow.name=Gelbe Lanteanische Wand
+block.lanteanWall_lime.name=Hellgrüne Lanteanische Wand
+block.lanteanWall_pink.name=Posa Lanteanische Wand
+block.lanteanWall_dark_gray.name=Dunkelgraue Lanteanische Wand
+block.lanteanWall_light_gray.name=Hellgraue Lanteanische Wand
+block.lanteanWall_cyan.name=Cyan Lanteanische Wand
+block.lanteanWall_purple.name=Lila Lanteanische Wand
+block.lanteanWall_blue.name=Blaue Lanteanische Wand
+block.lanteanWall_brown.name=Braune Lanteanische Wand
+block.lanteanWall_green.name=Grüne Lanteanische Wand
+block.lanteanWall_red.name=Rote Lanteanische Wand
+block.lanteanWall_black.name=Schwarze Lanteanische Wand
 
 # this one is temporary:
-StargateTech2:block.invisible.name=Ringtransporter
+block.invisible.name=Ringtransporter
 
-StargateTech2:block.naquadahOre.name=Naquadah Erz
-StargateTech2:block.naquadahRail.name=Naquadah Schiene
-StargateTech2:block.naquadah.block.name=Naquadah Block
+block.naquadahOre.name=Naquadah Erz
+block.naquadahRail.name=Naquadah Schiene
+block.naquadah.block.name=Naquadah Block
 
-StargateTech2:block.particleIonizer.name=Partikel Ionisierer
-StargateTech2:block.shieldController.name=Schild Steuercomputer
-StargateTech2:block.shieldEmitter.name=Schild Emitter
-StargateTech2:block.stargate.name=Stargate
-StargateTech2:block.transportRing.name=Ringtransporter
+block.particleIonizer.name=Partikel Ionisierer
+block.shieldController.name=Schild Steuercomputer
+block.shieldEmitter.name=Schild Emitter
+block.stargate.name=Stargate
+block.transportRing.name=Ringtransporter
 
 
 
 ###################################################################################################
 # ITEMS
 
-StargateTech2:item.tabletPC.name=Tablet
-StargateTech2:item.naquadahIngot.name=Naquadah Barren
-StargateTech2:item.naquadahDust.name=Naquadah Staub
-StargateTech2:item.naquadahPlate.name=Naquadah Platte
-StargateTech2:item.circuitCrystal.name=Kristall Schlateinheit
-StargateTech2:item.coilNaquadah.name=Magnetische Inductionsspule
-StargateTech2:item.coilEnder.name=Matterie Leiterspule
-StargateTech2:item.personalShield.name=Personen Schild
+item.tabletPC.name=Tablet
+item.naquadahIngot.name=Naquadah Barren
+item.naquadahDust.name=Naquadah Staub
+item.naquadahPlate.name=Naquadah Platte
+item.circuitCrystal.name=Kristall Schlateinheit
+item.coilNaquadah.name=Magnetische Inductionsspule
+item.coilEnder.name=Matterie Leiterspule
+item.personalShield.name=Personen Schild
 
 
 
 ###################################################################################################
 # MISC
 
-StargateTech2:fluid.ionizedParticles=Ionisierte Partikel
-StargateTech2:fluid.moltenNaquadah=Geschmolzenes Naquadah
+fluid.ionizedParticles=Ionisierte Partikel
+fluid.moltenNaquadah=Geschmolzenes Naquadah
 
 # Dirty workaround for Tinker's Construct bad code. Why, mDiyo, why!?
 fluid.molten_naquadah=Geschmolzenes Naquadah
