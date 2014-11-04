@@ -92,7 +92,6 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 		return null;
 	}
 	
-	@SideOnly(Side.SERVER)
 	public RES onMessageServer(T message, MessageContext ctx) throws Exception{
 		return message.unserialize(ctx.getServerHandler().playerEntity, ctx.side);
 	}
