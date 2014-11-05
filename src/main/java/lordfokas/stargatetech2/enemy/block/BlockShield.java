@@ -2,6 +2,12 @@ package lordfokas.stargatetech2.enemy.block;
 
 import java.util.List;
 
+import lordfokas.stargatetech2.api.ITabletAccess;
+import lordfokas.stargatetech2.api.shields.ShieldPermissions;
+import lordfokas.stargatetech2.core.base.BaseBlockContainer;
+import lordfokas.stargatetech2.core.reference.BlockReference;
+import lordfokas.stargatetech2.enemy.tileentity.TileShield;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,12 +16,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import lordfokas.stargatetech2.api.ITabletAccess;
-import lordfokas.stargatetech2.api.shields.ShieldPermissions;
-import lordfokas.stargatetech2.core.base.BaseBlockContainer;
-import lordfokas.stargatetech2.core.reference.BlockReference;
-import lordfokas.stargatetech2.enemy.tileentity.TileShield;
 
 public class BlockShield extends BaseBlockContainer implements ITabletAccess { 
 	public BlockShield() {
@@ -54,6 +56,20 @@ public class BlockShield extends BaseBlockContainer implements ITabletAccess {
 			}
 		}
 	}
+	
+    @Override
+    public boolean shouldSideBeRendered(IBlockAccess access, int x, int y, int z, int s) {
+        Block b = access.getBlock(x,y,z);
+        if(b instanceof BlockShield){
+            return false;
+        }
+        
+        TileEntity te = access.getTileEntity(x, y, z);
+        if(te instanceof TileShield && ((TileShield)te).getController()!=null){
+            return !((TileShield)te).getController().isShieldOn();
+        }
+        return true;
+    }
 	
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z){
