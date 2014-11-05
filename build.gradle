@@ -31,7 +31,7 @@ minecraft {
     version = "1.7.10-10.13.2.1232"
     runDir = "run/assets"
 }
-version = "${version}-B${project.ext.buildNumber}"
+version = "${version}-Build${project.ext.buildNumber}"
 dependencies {
 	compile files("TConstruct-1.7.10-1.7.1c-API.jar")
     // you may put jars on which you depend on in ./libs
