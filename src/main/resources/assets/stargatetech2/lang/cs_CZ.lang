@@ -1,0 +1,68 @@
+###################################################################################################
+# BLOCKS
+
+block.busAdapter.name=Speciální spojovací adaptér
+block.busCable.name=Speciální spojovací kabel
+block.crossover.name=Oddělovač
+block.prioritizer.energy.name=Energetický řadič
+block.prioritizer.fluid.name=Kapalinový řadič
+block.prioritizer.items.name=Řadič předmětů
+block.naquadah.ore.name=Naquadahová ruda
+block.naquadah.block.name=Naquadahový blok
+block.naquadahRail.name=Naquadahová kolej
+block.particleIonizer.name=Ionizátor částic
+block.shieldController.name=Ovládání štítů
+block.shieldEmitter.name=Emitor štítů
+block.stargate.name=Hvězdná brána
+block.shield.name=Štít
+block.transportRing.name=Platforma transportních kruhů
+
+# this one is temporary:
+block.invisible.name=Transportní kruhy
+
+block.lanteanWall_white.name=Bílá zeď předků
+block.lanteanWall_orange.name=Oranžová zeď předků
+block.lanteanWall_magenta.name=Purpurová zeď předků
+block.lanteanWall_light_blue.name=Svetle modrá zeď předků
+block.lanteanWall_yellow.name=Žlutá zeď předků
+block.lanteanWall_lime.name=Světle zelená zeď předků
+block.lanteanWall_pink.name=Růžová zeď předků
+block.lanteanWall_dark_gray.name=Šedá zeď předků
+block.lanteanWall_light_gray.name=Světle šedá zeď předků
+block.lanteanWall_cyan.name=Azurová zeď předků
+block.lanteanWall_purple.name=Fialová zeď předků
+block.lanteanWall_blue.name=Modrá zeď předků
+block.lanteanWall_brown.name=Hnědá zeď předků
+block.lanteanWall_green.name=Zelená zeď předků
+block.lanteanWall_red.name=Červená zeď předků
+block.lanteanWall_black.name=Černá zeď předků
+
+
+
+###################################################################################################
+# ITEMS
+
+item.tabletPC.name=TabletPC
+item.naquadahIngot.name=Naquadahový ingot
+item.naquadahDust.name=Prášek naquadahu
+item.naquadahPlate.name=Plát naquadahu
+item.circuitCrystal.name=Obvodový krystal
+item.coilNaquadah.name=Magnetická indukční cívka
+item.coilEnder.name=Hmotnostní kondukční cívka
+item.personalShield.name=Osobní štít
+
+
+
+###################################################################################################
+# MISC
+
+fluid.ionizedParticles=Ionizované částice
+fluid.moltenNaquadah=Kapalný naquadah
+
+# Dirty workaround for Tinker's Construct bad code. Why, mDiyo, why!?
+fluid.molten_naquadah=Kapalný naquadah
+
+# COMMANDS
+commands.tpgate.usage=/tpgate [hrac] <addresa>
+commands.tpgate.badaddress=Nelze zpracovat zadanou adresu!
+commands.tpgate.nogate=Nelze nalézt bránu na zadané adrese!

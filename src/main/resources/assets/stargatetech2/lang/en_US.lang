@@ -1,0 +1,69 @@
+###################################################################################################
+# BLOCKS
+
+block.busAdapter.name=Abstract Bus Adapter
+block.busCable.name=Abstract Bus Cable
+block.crossover.name=Crossover
+block.prioritizer.energy.name=Energy Prioritizer
+block.prioritizer.fluid.name=Fluid Prioritizer
+block.prioritizer.items.name=Item Prioritizer
+block.naquadah.ore.name=Naquadah Ore
+block.naquadah.block.name=Naquadah Block
+block.naquadahRail.name=Naquadah Rail
+block.particleIonizer.name=Particle Ionizer
+block.shieldController.name=Shield Controller
+block.shieldEmitter.name=Shield Emitter
+block.stargate.name=Stargate
+block.shield.name=Shield
+block.transportRing.name=Transport Ring Platform
+
+# this one is temporary:
+block.invisible.name=Transport Rings
+
+block.lanteanWall_white.name=White Lantean Wall
+block.lanteanWall_orange.name=Orange Lantean Wall
+block.lanteanWall_magenta.name=Magenta Lantean Wall
+block.lanteanWall_light_blue.name=Light Blue Lantean Wall
+block.lanteanWall_yellow.name=Yellow Lantean Wall
+block.lanteanWall_lime.name=Lime Lantean Wall
+block.lanteanWall_pink.name=Pink Lantean Wall
+block.lanteanWall_dark_gray.name=Dark Gray Lantean Wall
+block.lanteanWall_light_gray.name=Light Gray Lantean Wall
+block.lanteanWall_cyan.name=Cyan Lantean Wall
+block.lanteanWall_purple.name=Purple Lantean Wall
+block.lanteanWall_blue.name=Blue Lantean Wall
+block.lanteanWall_brown.name=Brown Lantean Wall
+block.lanteanWall_green.name=Green Lantean Wall
+block.lanteanWall_red.name=Red Lantean Wall
+block.lanteanWall_black.name=Black Lantean Wall
+
+
+
+###################################################################################################
+# ITEMS
+
+item.tabletPC.name=TabletPC
+item.naquadahIngot.name=Naquadah Ingot
+item.naquadahDust.name=Pulverized Naquadah
+item.naquadahPlate.name=Naquadah Plate
+item.circuitCrystal.name=Circuit Crystal
+item.coilNaquadah.name=Magnetic Induction Coil
+item.coilEnder.name=Matter Conductance Coil
+item.personalShield.name=Personal Shield
+
+
+
+###################################################################################################
+# MISC
+
+fluid.ionizedParticles=Ionized Particles
+fluid.moltenNaquadah=Molten Naquadah
+
+# Dirty workaround for Tinker's Construct bad code. Why, mDiyo, why!?
+fluid.molten_naquadah=Molten Naquadah
+
+# COMMANDS
+commands.tpgate.usage=/tpgate [player] <address>
+commands.tpgate.badaddress=Could not parse the given address!
+commands.tpgate.nogate=Could not find a Stargate for the specified address!
+

@@ -1,0 +1,70 @@
+###################################################################################################
+# BLOCKS
+
+block.busAdapter.name=Abstrakter Bus Adapter
+block.busCable.name=Abstraktes Bus Kabel
+block.crossover.name=Crossover
+
+block.prioritizer.energy.name=Energie Priorisierer
+block.prioritizer.fluid.name=Wasser Priorisierer
+block.prioritizer.items.name=Item Priorisierer
+
+block.lanteanWall_white.name=Weiße Lanteanische Wand
+block.lanteanWall_orange.name=Orange Lanteanische Wand
+block.lanteanWall_magenta.name=Magenta Lanteanische Wand
+block.lanteanWall_light_blue.name=Hellblaue Lanteanische Wand
+block.lanteanWall_yellow.name=Gelbe Lanteanische Wand
+block.lanteanWall_lime.name=Hellgrüne Lanteanische Wand
+block.lanteanWall_pink.name=Posa Lanteanische Wand
+block.lanteanWall_dark_gray.name=Dunkelgraue Lanteanische Wand
+block.lanteanWall_light_gray.name=Hellgraue Lanteanische Wand
+block.lanteanWall_cyan.name=Cyan Lanteanische Wand
+block.lanteanWall_purple.name=Lila Lanteanische Wand
+block.lanteanWall_blue.name=Blaue Lanteanische Wand
+block.lanteanWall_brown.name=Braune Lanteanische Wand
+block.lanteanWall_green.name=Grüne Lanteanische Wand
+block.lanteanWall_red.name=Rote Lanteanische Wand
+block.lanteanWall_black.name=Schwarze Lanteanische Wand
+
+# this one is temporary:
+block.invisible.name=Ringtransporter
+
+block.naquadahOre.name=Naquadah Erz
+block.naquadahRail.name=Naquadah Schiene
+block.naquadah.block.name=Naquadah Block
+
+block.particleIonizer.name=Partikel Ionisierer
+block.shieldController.name=Schild Steuercomputer
+block.shieldEmitter.name=Schild Emitter
+block.stargate.name=Stargate
+block.transportRing.name=Ringtransporter
+
+
+
+###################################################################################################
+# ITEMS
+
+item.tabletPC.name=Tablet
+item.naquadahIngot.name=Naquadah Barren
+item.naquadahDust.name=Naquadah Staub
+item.naquadahPlate.name=Naquadah Platte
+item.circuitCrystal.name=Kristall Schlateinheit
+item.coilNaquadah.name=Magnetische Inductionsspule
+item.coilEnder.name=Matterie Leiterspule
+item.personalShield.name=Personen Schild
+
+
+
+###################################################################################################
+# MISC
+
+fluid.ionizedParticles=Ionisierte Partikel
+fluid.moltenNaquadah=Geschmolzenes Naquadah
+
+# Dirty workaround for Tinker's Construct bad code. Why, mDiyo, why!?
+fluid.molten_naquadah=Geschmolzenes Naquadah
+
+# COMMANDS
+commands.tpgate.usage=/tpgate [player] <address>
+commands.tpgate.badaddress=Konnte die gegebene Adresse nicht finden!
+commands.tpgate.nogate=Konnte kein Stargate für die gegebene Adresse finden!
