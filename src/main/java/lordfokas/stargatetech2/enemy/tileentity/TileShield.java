@@ -50,6 +50,8 @@ public class TileShield extends BaseTileEntity {
 	}
 	
 	public String getOwner(){
-		return getController().getOwner();
+		TileShieldController controller = getController();
+		if(controller == null) return "";
+		else return controller.getOwner();
 	}
 }
