@@ -21,6 +21,7 @@ public class ItemPersonalShield extends BaseItem {
 		super(ItemReference.PERSONAL_SHIELD);
 		this.setMaxStackSize(1);
 		this.setMaxDamage(MAX_DMG);
+		this.setNoRepair();
 	}
 	
 	public boolean blocksDamage(DamageSource source){
