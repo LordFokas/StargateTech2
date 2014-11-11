@@ -1,0 +1,68 @@
+###################################################################################################
+# BLOCKS
+
+block.busAdapter.name=抽象总线适配器
+block.busCable.name=抽象总线
+block.crossover.name=交叉线
+block.prioritizer.energy.name=能量排序器
+block.prioritizer.fluid.name=流体排序器
+block.prioritizer.items.name=物品排序器
+block.naquadah.ore.name=硅岩金矿石
+block.naquadah.block.name=硅岩金块
+block.naquadahRail.name=硅岩金轨道
+block.particleIonizer.name=电离器
+block.shieldController.name=护盾控制器
+block.shieldEmitter.name=护盾释放器
+block.stargate.name=星门
+block.shield.name=护盾
+block.transportRing.name=传送环站台
+
+# this one is temporary:
+block.invisible.name=传送环
+
+block.lanteanWall_white.name=白色兰特墙
+block.lanteanWall_orange.name=橙色兰特墙
+block.lanteanWall_magenta.name=品红色兰特墙
+block.lanteanWall_light_blue.name=淡蓝色兰特墙
+block.lanteanWall_yellow.name=黄色兰特墙
+block.lanteanWall_lime.name=黄绿色兰特墙
+block.lanteanWall_pink.name=粉色兰特墙
+block.lanteanWall_dark_gray.name=深灰色兰特墙
+block.lanteanWall_light_gray.name=淡灰色兰特墙
+block.lanteanWall_cyan.name=青色兰特墙
+block.lanteanWall_purple.name=紫色兰特墙
+block.lanteanWall_blue.name=蓝色兰特墙
+block.lanteanWall_brown.name=棕色兰特墙
+block.lanteanWall_green.name=绿色兰特墙
+block.lanteanWall_red.name=红色兰特墙
+block.lanteanWall_black.name=黑色兰特墙
+
+
+
+###################################################################################################
+# ITEMS
+
+item.tabletPC.name=平板电脑
+item.naquadahIngot.name=硅岩金锭
+item.naquadahDust.name=硅岩金粉末
+item.naquadahPlate.name=硅岩金板
+item.circuitCrystal.name=电路晶体
+item.coilNaquadah.name=磁感应线圈
+item.coilEnder.name=超导线圈
+item.personalShield.name=私人护盾
+
+
+
+###################################################################################################
+# MISC
+
+fluid.ionizedParticles=电离粒子
+fluid.moltenNaquadah=熔融硅岩金属
+
+# Dirty workaround for Tinker's Construct bad code. Why, mDiyo, why!?
+fluid.molten_naquadah=熔融硅岩金属
+
+# COMMANDS
+commands.tpgate.usage=/tpgate [player] <address>
+commands.tpgate.badaddress=无法解析的地址!
+commands.tpgate.nogate=在指定的地址未找到星门!
