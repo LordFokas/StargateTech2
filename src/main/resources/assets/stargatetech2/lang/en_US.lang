@@ -3,10 +3,6 @@
 
 block.busAdapter.name=Abstract Bus Adapter
 block.busCable.name=Abstract Bus Cable
-block.crossover.name=Crossover
-block.prioritizer.energy.name=Energy Prioritizer
-block.prioritizer.fluid.name=Fluid Prioritizer
-block.prioritizer.items.name=Item Prioritizer
 block.naquadah.ore.name=Naquadah Ore
 block.naquadah.block.name=Naquadah Block
 block.naquadahRail.name=Naquadah Rail
