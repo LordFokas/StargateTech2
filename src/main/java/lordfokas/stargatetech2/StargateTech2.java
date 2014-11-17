@@ -12,7 +12,6 @@ import lordfokas.stargatetech2.core.util.IconRegistry;
 import lordfokas.stargatetech2.core.util.StargateLogger;
 import lordfokas.stargatetech2.enemy.ModuleEnemy;
 import lordfokas.stargatetech2.energy.ModuleEnergy;
-import lordfokas.stargatetech2.factory.ModuleFactory;
 import lordfokas.stargatetech2.integration.ModuleIntegration;
 import lordfokas.stargatetech2.transport.ModuleTransport;
 import lordfokas.stargatetech2.world.ModuleWorld;
@@ -48,7 +47,6 @@ public class StargateTech2 {
 	public static ModuleAutomation automation = new ModuleAutomation();
 	public static ModuleEnergy energy = new ModuleEnergy();
 	public static ModuleEnemy enemy = new ModuleEnemy();
-	public static ModuleFactory factory = new ModuleFactory();
 	public static ModuleTransport transport = new ModuleTransport();
 	public static ModuleWorld world = new ModuleWorld();
 	public static ModuleIntegration integration = new ModuleIntegration();
@@ -60,7 +58,6 @@ public class StargateTech2 {
 		modules.add(automation);
 		modules.add(enemy);
 		modules.add(energy);
-		modules.add(factory);
 		modules.add(transport);
 		modules.add(world);
 		modules.add(integration);
