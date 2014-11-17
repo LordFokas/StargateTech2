@@ -3,7 +3,6 @@ package lordfokas.stargatetech2.core.api;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fluids.Fluid;
 import lordfokas.stargatetech2.api.IFactory;
-import lordfokas.stargatetech2.api.IStackManager;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.stargate.IStargateNetwork;
 import lordfokas.stargatetech2.api.stargate.IStargatePlacer;

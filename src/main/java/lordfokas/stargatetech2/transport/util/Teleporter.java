@@ -34,7 +34,7 @@ public class Teleporter{
 			mount = teleport(world, mount, position, yaw);
 		}
 		// check if we're moving to a different world.
-		boolean differentWorld = entity.worldObj != world; // TODO: temp
+		boolean differentWorld = entity.worldObj != world;
 		
 		
 		//##################################################################################
