@@ -18,17 +18,17 @@ public final class APIImplementation extends StargateTechAPI {
 		StargateLogger.info("Enabling StargateTech2 API.");
 		apiInstance = this;
 	}
-
+	
 	@Override
 	public Fluid getIonizedParticlesFluidInstance() {
 		return IonizedParticles.fluid;
 	}
-
+	
 	@Override
 	public CreativeTabs getStargateTab() {
 		return StargateTab.instance;
 	}
-
+	
 	@Override
 	public IStargateNetwork getStargateNetwork() {
 		return StargateNetwork.instance();
