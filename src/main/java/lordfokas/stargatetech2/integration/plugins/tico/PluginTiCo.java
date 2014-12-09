@@ -3,10 +3,9 @@ package lordfokas.stargatetech2.integration.plugins.tico;
 import lordfokas.stargatetech2.core.ModuleCore;
 import lordfokas.stargatetech2.core.block.BlockNaquadah;
 import lordfokas.stargatetech2.core.item.ItemNaquadah;
-import lordfokas.stargatetech2.core.reference.ConfigReference;
 import lordfokas.stargatetech2.core.util.Stacks;
 import lordfokas.stargatetech2.core.util.StargateLogger;
-import lordfokas.stargatetech2.integration.plugins.BasePlugin;
+import lordfokas.stargatetech2.integration.plugins.IPlugin;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -14,19 +13,15 @@ import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.LiquidCasting;
 import tconstruct.library.crafting.Smeltery;
 
-public class PluginTiCo extends BasePlugin {
+public class PluginTiCo implements IPlugin{
 	private static final int NUGGET = 16; // mB
 	private static final int INGOT = NUGGET * 9; // 144 mB
 	private static final int BLOCK = INGOT * 9; // 1296 mB
 	
-	public PluginTiCo(){
-		super("TConstruct", ConfigReference.KEY_PLUGINS_TICO);
-	}
-	
-	@Override protected void load(){}
+	@Override public void load(){}
 	
 	@Override
-	protected void postLoad(){
+	public void postload(){
 		ItemStack ingotCast = TConstructRegistry.getItemStack("ingotCast");
 		ItemStack plateCast = TConstructRegistry.getItemStack("largePlateCast");
 		if(ingotCast == null || plateCast == null){
@@ -50,5 +45,5 @@ public class PluginTiCo extends BasePlugin {
 		basinCasting.addCastingRecipe(Stacks.naqBlock, new FluidStack(MoltenNaquadah.instance, BLOCK), 50);
 	}
 
-	@Override protected void fallback(){}
+	@Override public void fallback(){}
 }

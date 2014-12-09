@@ -1,24 +1,17 @@
 package lordfokas.stargatetech2.integration.plugins.te3;
 
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import lordfokas.stargatetech2.core.ModuleCore;
 import lordfokas.stargatetech2.core.item.ItemNaquadah;
-import lordfokas.stargatetech2.core.reference.ConfigReference;
 import lordfokas.stargatetech2.core.util.Stacks;
-import lordfokas.stargatetech2.integration.plugins.BasePlugin;
+import lordfokas.stargatetech2.integration.plugins.IPlugin;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.event.FMLInterModComms;
 
-public class PluginTE3 extends BasePlugin {
-
-	public PluginTE3() {
-		super("ThermalExpansion", ConfigReference.KEY_PLUGINS_TE3);
-	}
-
+public class PluginTE3 implements IPlugin{
 	@Override
-	protected void load() {
+	public void load() {
 		addPulverizerRecipe(4000, new ItemStack(ModuleCore.naquadahBlock), new ItemStack(ModuleCore.naquadahItem, 2, ItemNaquadah.DUST.ID));
 		addPulverizerRecipe(2400, new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.INGOT.ID), new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.DUST.ID));
 		addSmelterRecipe(4800, Stacks.naqIngot, new ItemStack(Items.quartz, 3), Stacks.circuit);
@@ -26,12 +19,12 @@ public class PluginTE3 extends BasePlugin {
 	}
 	
 	@Override
-	protected void postLoad(){
+	public void postload(){
 		// TODO: re-enable in MC 1.7 when CoFH add list sync.
 		// CoFHFriendHelper.init();
 	}
 	
-	@Override protected void fallback(){}
+	@Override public void fallback(){}
 	
 	private void addPulverizerRecipe(int energy, ItemStack input, ItemStack output){
 		addPulverizerRecipe(energy, input, output, null, 0);
