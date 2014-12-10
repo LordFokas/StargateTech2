@@ -10,70 +10,75 @@ public final class PluginProxy {
 	private static final String PACKAGE = PluginProxy.class.getPackage().getName() + ".";
 	
 	protected final String cfgKey;
-	protected String modID;
-	protected Configuration cfg;
-	private boolean enabled;
-	private String concrete;
+	protected final String modID;
+	protected final Configuration cfg;
+	private final boolean enabled, modPresent;
+	private final String main, fallback;
+	private IPlugin plugin;
 	
-	public enum Callback{
-		LOAD, POSTLOAD, FALLBACK
+	public enum Stage{
+		LOAD, POSTLOAD
 	}
 	
-	public PluginProxy(String modID, String cfgKey, String concrete){
+	public PluginProxy(String modID, String cfgKey, String main){
+		this(modID, cfgKey, main, null);
+	}
+	
+	public PluginProxy(String modID, String cfgKey, String main, String fallback){
 		this.modID = modID;
 		this.cfgKey = cfgKey;
 		this.cfg = StargateTech2.config.cfg;
 		this.enabled = cfg.get(cfgKey, ConfigReference.PLUGIN_ENABLE, true).getBoolean(true);
-		this.concrete = PACKAGE + concrete;
-		
+		this.modPresent = Loader.isModLoaded(modID);
+		this.main = PACKAGE + main;
+		if(fallback != null){
+			this.fallback = PACKAGE + fallback;
+		}else{
+			this.fallback = null;
+		}
+		this.plugin = getPluginInstance();
 	}
 	
-	public final boolean shouldLoad(){
-		return(Loader.isModLoaded(modID) && enabled);
+	public boolean shouldLoad(){
+		return modPresent && enabled;
 	}
 	
-	public final String getModID(){
+	public String getModID(){
 		return modID;
 	}
 	
-	public final void init(){
-		if(shouldLoad()){
-			run(Callback.LOAD);
-		}else{
-			run(Callback.FALLBACK);
-		}
-	}
+	public void     init(){ run(Stage.LOAD);     }
+	public void postInit(){ run(Stage.POSTLOAD); }
 	
-	public final void postInit(){
-		if(shouldLoad()){
-			run(Callback.POSTLOAD);
-		}
-	}
-	
-	private void run(Callback callback){
-		try{
-			if(concrete == null || concrete.isEmpty()) return;
-			Class cls = Class.forName(concrete);
-			Object obj = cls.newInstance();
-			if(obj instanceof IPlugin){
-				switch(callback){
-				case FALLBACK:
-					((IPlugin)obj).fallback();
-					break;
-				case LOAD:
-					((IPlugin)obj).load();
-					break;
-				case POSTLOAD:
-					((IPlugin)obj).postload();
-					break;
+	private IPlugin getPluginInstance(){
+		IPlugin plugin = null;
+		String className = shouldLoad() ? main : fallback;
+		if(className != null){
+			try{
+				Class cls = Class.forName(className);
+				Object obj = cls.newInstance();
+				if(obj instanceof IPlugin){
+					plugin = (IPlugin) obj;
+				}else{
+					StargateLogger.warning("Class " + className + "is not a valid IPlugin");
 				}
-			}else{
-				StargateLogger.warning("Provided class isn't IPlugin: " + concrete);
+			}catch(Exception e){
+				StargateLogger.error("Error instancing plugin class: " + className);
+				e.printStackTrace();
 			}
-		}catch(Exception e){
-			StargateLogger.error("Error running IPlugin callback: " + concrete);
-			e.printStackTrace();
 		}
-		
+		return plugin;
+	}
+	
+	private void run(Stage stage){
+		if(plugin == null) return;
+		switch(stage){
+			case LOAD:
+				plugin.load();
+				break;
+			case POSTLOAD:
+				plugin.postload();
+				break;
+		}
 	}
 }

@@ -24,8 +24,6 @@ public class PluginTE3 implements IPlugin{
 		// CoFHFriendHelper.init();
 	}
 	
-	@Override public void fallback(){}
-	
 	private void addPulverizerRecipe(int energy, ItemStack input, ItemStack output){
 		addPulverizerRecipe(energy, input, output, null, 0);
 	}

@@ -26,6 +26,4 @@ public class PluginIC2 implements IPlugin{
 		ParticleIonizerRecipes.recipes().addRecipe(scrapRecipe);
 		ParticleIonizerRecipes.recipes().addRecipe(uuRecipe);
 	}
-
-	@Override public void fallback(){}
 }

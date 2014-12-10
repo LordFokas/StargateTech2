@@ -44,6 +44,4 @@ public class PluginTiCo implements IPlugin{
 		LiquidCasting basinCasting = TConstructRegistry.getBasinCasting();
 		basinCasting.addCastingRecipe(Stacks.naqBlock, new FluidStack(MoltenNaquadah.instance, BLOCK), 50);
 	}
-
-	@Override public void fallback(){}
 }
