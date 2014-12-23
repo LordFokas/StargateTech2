@@ -76,6 +76,16 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 		}
 	}
 	
+	@ClientLogic
+	public boolean hasUp(){
+		return getPair(pairUp) != null;
+	}
+	
+	@ClientLogic
+	public boolean hasDown(){
+		return getPair(pairDn) != null;
+	}
+	
 	@ServerLogic
 	private TileTransportRing getPair(Vec3Int pair){
 		if(pair != null){
@@ -219,6 +229,8 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 				((TileTransportRing)te).pairUp = me;
 				pairDn = new Vec3Int(xCoord, y, zCoord);
 			}
+			((TileTransportRing) te).updateClients();
+			this.updateClients();
 			return true;
 		}
 		return false;
