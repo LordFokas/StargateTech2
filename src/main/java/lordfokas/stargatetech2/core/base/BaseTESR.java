@@ -34,10 +34,10 @@ public abstract class BaseTESR extends TileEntitySpecialRenderer {
 		tessellator = Tessellator.instance;
 		GL11.glPushMatrix();
 		GL11.glTranslated(x+0.5D, y, z+0.5D);
+		GL11.glColor3f(1, 1, 1);
 		if(useLocalizedLighting()){
 			Vec3Int light = pos.offset(ForgeDirection.UNKNOWN);
 			light = getLightCoordinates(te, light);
-			// float b = block.getBlockBrightness(w, light.x, light.y, light.z);
 			float b = block.getMixedBrightnessForBlock(w, light.x, light.y, light.z);
 			int sky = w.getLightBrightnessForSkyBlocks(light.x, light.y, light.z, 0);
 			int sky0 = sky % SKY_LIGHT_CONST;
