@@ -15,6 +15,7 @@ import lordfokas.stargatetech2.transport.RenderTransportRing;
 import lordfokas.stargatetech2.transport.RingKeyHandler;
 import lordfokas.stargatetech2.transport.TileStargate;
 import lordfokas.stargatetech2.transport.TileTransportRing;
+import lordfokas.stargatetech2.transport.RingOverlay;
 import lordfokas.stargatetech2.world.RenderLanteanWall;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.Entity;
@@ -58,11 +59,12 @@ public class ProxyClient implements ISidedProxy{
 				break;
 		}
 	}
-
+	
 	@Override
 	public void registerHandlers() {
 		NetworkRegistry.INSTANCE.registerGuiHandler(StargateTech2.instance, new GUIHandlerClient());
 		RingKeyHandler.register();
+		RingOverlay.register();
 	}
 	
 	private void registerRenderer(BaseISBRH renderer){

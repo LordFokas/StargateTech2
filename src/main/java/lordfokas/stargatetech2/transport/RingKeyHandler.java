@@ -1,5 +1,6 @@
 package lordfokas.stargatetech2.transport;
 
+import net.java.games.input.Keyboard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.KeyBinding;
@@ -15,6 +16,14 @@ public class RingKeyHandler{
 	private static final KeyBinding RING_DOWN = new KeyBinding("[SGTech2] Activate rings (Down)", 208, "SGTech2");
 	
 	private RingKeyHandler(){}
+	
+	public static String up(){
+		return RING_UP.getKeyCode() + "";
+	}
+	
+	public static String down(){
+		return RING_DOWN.getKeyCode() + "";
+	}
 	
 	public static void register(){
 		ClientRegistry.registerKeyBinding(RING_DOWN);

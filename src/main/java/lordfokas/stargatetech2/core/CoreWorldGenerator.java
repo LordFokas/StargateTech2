@@ -16,8 +16,9 @@ public class CoreWorldGenerator implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int cX, int cZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
-		if(world.provider.dimensionId == 1 || world.provider.dimensionId == -1) return;
-		
+		if(world.provider.dimensionId == 1 || world.provider.dimensionId == -1 || ConfigServer.wgNaquadah < 1) return;
+		if((random.nextInt() % ConfigServer.wgNaquadah) != 0) return;
+			
 		EventWorldGen event = new EventWorldGen(world, cX, cZ, GenType.VEIN_NAQUADAH);
 		MinecraftForge.ORE_GEN_BUS.post(event);
 		if (event.getResult() == Result.DENY) return;

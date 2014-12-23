@@ -35,6 +35,7 @@ public class AncientWorldGenerator implements IWorldGenerator{
 	@Override
 	public void generate(Random r, int cX, int cZ, World w, IChunkProvider chunkGen, IChunkProvider provider){
 		if(w.provider.dimensionId == 1 || w.provider.dimensionId == -1) return;
+		if(ConfigServer.wgLootPodOdd != 0)
 		generateLootPod(r, cX, cZ, w, chunkGen, provider);
 		generateStargate(r, cX, cZ, w, chunkGen, provider);
 	}

@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import lordfokas.stargatetech2.core.reference.ConfigReference;
 
 public class Config {
@@ -33,8 +34,6 @@ public class Config {
 		cfg.addCustomCategoryComment(ConfigReference.KEY_CFG_CLIENT, "Client Side options that affect key handling and rendering.");
 		cfg.addCustomCategoryComment(ConfigReference.KEY_CFG_SERVER, "Server Side options that affect game logic.");
 		cfg.addCustomCategoryComment(ConfigReference.KEY_CFG_SV_WGEN, "World Generation settings.");
-		cfg.addCustomCategoryComment(ConfigReference.KEY_IDS_BLOCKS, "ID Values for blocks.");
-		cfg.addCustomCategoryComment(ConfigReference.KEY_IDS_ITEMS, "ID Values for items.");
 		cfg.addCustomCategoryComment(ConfigReference.KEY_PLUGINS, "Configuration values for Integration Plugins.");
 		
 		for(String plugin : ConfigReference.PLUGIN_LIST) addPlugin(cfg, plugin);
@@ -57,43 +56,20 @@ public class Config {
 		else return pc.getConfig();
 	}
 	
-	/*
-	public int getBlockID(String name){
-		while(Block.blocksList[blockIDs] != null){
-			blockIDs++;
-		}
-		return cfg.get(ConfigReference.KEY_IDS_BLOCKS, name, blockIDs).getInt();
-	}
-	
-	public int getItemID(String name){
-		while(Item.itemsList[itemIDs + 256] != null){
-			itemIDs++;
-		}
-		return cfg.get(ConfigReference.KEY_IDS_ITEMS, name, itemIDs).getInt();
-	}
-	*/
-	
 	public void setServerConfigs(){
 		// BASE CONFIGS
-		int range = cfg.get(ConfigReference.KEY_CFG_SERVER, "shieldEmitterRange", 5).getInt();
-		if(range < 3) range = 3;
-		if(range > 12)range = 12;
-		ConfigServer.shieldEmitterRange = range;
-		cfg.getCategory(ConfigReference.KEY_CFG_SERVER).get("shieldEmitterRange").set(range);
-		
-		int minDistance = cfg.get(ConfigReference.KEY_CFG_SERVER, "stargateMinDistance", 150).getInt();
-		if(minDistance < 50) minDistance = 50;
-		cfg.getCategory(ConfigReference.KEY_CFG_SERVER).get("stargateMinDistance").set(minDistance);
+		ConfigServer.shieldEmitterRange = cfg.getInt("shieldEmitterRange", ConfigReference.KEY_CFG_SERVER, ConfigServer.shieldEmitterRange, 3, 12, "The maximum gap between Shield Emitter pairs.");
+		int minDistance = cfg.getInt("stargateMinDistance", ConfigReference.KEY_CFG_SERVER, 150, 50, 100000000, "The minimum diagonal distance, in blocks, between two stargates.");
 		ConfigServer.stargateMinDistance = minDistance * minDistance;
 		
 		// WORLDGEN CONFIGS
-		int podGap = cfg.get(ConfigReference.KEY_CFG_SV_WGEN, "lootPodSpacing", 6).getInt();
-		ConfigServer.wgLootPodGap = podGap < 6 ? 6 : podGap;
-		cfg.getCategory(ConfigReference.KEY_CFG_SV_WGEN).get("lootPodSpacing").set(ConfigServer.wgLootPodGap);
-		int podOdd = cfg.get(ConfigReference.KEY_CFG_SV_WGEN, "lootPodChance", 10).getInt();
-		ConfigServer.wgLootPodOdd = podOdd < 5 ? 5 : podOdd;
-		cfg.getCategory(ConfigReference.KEY_CFG_SV_WGEN).get("lootPodChance").set(ConfigServer.wgLootPodOdd);
+		ConfigServer.wgLootPodGap = cfg.getInt("lootPodSpacing", ConfigReference.KEY_CFG_SV_WGEN, ConfigServer.wgLootPodGap, 6, 100, "The minimum distance, in chunks, between two Loot Pods.");
+		ConfigServer.wgLootPodOdd = cfg.getInt("lootPodRarity", ConfigReference.KEY_CFG_SV_WGEN, ConfigServer.wgLootPodOdd, 0, 100, "Loot Pod Rarity. 0 = Don't generate Loot Pods.");
+		ConfigServer.wgNaquadah = cfg.getInt("naquadahRarity", ConfigReference.KEY_CFG_SV_WGEN, ConfigServer.wgNaquadah, 0, 2500, "Naquadah Rarity. 0 = Don't generate Naquadah.");
 	}
 	
-	public void setClientConfigs(){}
+	public void setClientConfigs(){
+		String comment = "If enabled it will display a green overlay on your screen when you walk over a Transport Ring platform.";
+		ConfigClient.enableRingGUIOverlay = cfg.getBoolean("enableRingGUIOverlay", ConfigReference.KEY_CFG_CLIENT, ConfigClient.enableRingGUIOverlay, comment);
+	}
 }

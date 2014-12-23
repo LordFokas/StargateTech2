@@ -195,13 +195,13 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	public void link(){
 		Vec3Int me0 = new Vec3Int(xCoord, yCoord, zCoord);
 		Vec3Int me1 = me0.offset(ForgeDirection.UNKNOWN);
-		for(int y = yCoord - 10; y > 0; y--){
+		for(int y = yCoord - 5; y > 0; y--){
 			if(findPair(me0, y, false)){
 				y = 0;
 			}
 		}
 		int max = worldObj.getHeight();
-		for(int y = yCoord + 10; y < max; y++){
+		for(int y = yCoord + 5; y < max; y++){
 			if(findPair(me1, y, true)){
 				y = max;
 			}
@@ -252,7 +252,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	}
 	
 	private void refreshAABB(){
-		myAABB = AxisAlignedBB.getBoundingBox(xCoord - 1, yCoord + 2, zCoord - 1, xCoord + 2, yCoord + 5, zCoord + 2);
+		myAABB = AxisAlignedBB.getBoundingBox(((double)xCoord) - 0.5, yCoord + 2, ((double)zCoord) - 0.5, ((double)xCoord) + 1.5, yCoord + 5, ((double)zCoord) + 1.5);
 	}
 	
 	@Override
