@@ -6,11 +6,9 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import lordfokas.stargatetech2.api.stargate.Address;
-import lordfokas.stargatetech2.core.util.Vec3Int;
+import lordfokas.stargatetech2.core.Vec3Int;
 import lordfokas.stargatetech2.transport.stargates.AddressMapping;
 import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
-import lordfokas.stargatetech2.transport.util.Teleporter;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

@@ -2,19 +2,12 @@ package lordfokas.stargatetech2;
 
 import java.util.ArrayList;
 
-import lordfokas.stargatetech2.automation.ModuleAutomation;
-import lordfokas.stargatetech2.core.ModuleCore;
+import lordfokas.stargatetech2.core.Config;
+import lordfokas.stargatetech2.core.IconRegistry;
+import lordfokas.stargatetech2.core.StargateLogger;
 import lordfokas.stargatetech2.core.api.APIImplementation;
 import lordfokas.stargatetech2.core.base.BasePacket;
 import lordfokas.stargatetech2.core.reference.ModReference;
-import lordfokas.stargatetech2.core.util.Config;
-import lordfokas.stargatetech2.core.util.IconRegistry;
-import lordfokas.stargatetech2.core.util.StargateLogger;
-import lordfokas.stargatetech2.enemy.ModuleEnemy;
-import lordfokas.stargatetech2.energy.ModuleEnergy;
-import lordfokas.stargatetech2.integration.ModuleIntegration;
-import lordfokas.stargatetech2.transport.ModuleTransport;
-import lordfokas.stargatetech2.world.ModuleWorld;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;

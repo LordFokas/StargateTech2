@@ -1,8 +1,8 @@
 package lordfokas.stargatetech2.core.machine.tabs;
 
+import lordfokas.stargatetech2.core.Stacks;
 import lordfokas.stargatetech2.core.base.BaseGUI.Arrow;
 import lordfokas.stargatetech2.core.base.BaseTab;
-import lordfokas.stargatetech2.core.util.Stacks;
 
 public class TabMachineRecipes extends BaseTab{
 	public static interface IMachineRecipe{

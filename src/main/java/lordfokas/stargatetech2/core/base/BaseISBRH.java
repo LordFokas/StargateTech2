@@ -8,7 +8,7 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
-import lordfokas.stargatetech2.core.util.Color;
+import lordfokas.stargatetech2.core.Color;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 

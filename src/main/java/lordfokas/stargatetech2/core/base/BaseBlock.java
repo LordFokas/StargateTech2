@@ -1,9 +1,9 @@
 package lordfokas.stargatetech2.core.base;
 
 import lordfokas.stargatetech2.api.bus.BusEvent;
+import lordfokas.stargatetech2.core.MaterialNaquadah;
+import lordfokas.stargatetech2.core.StargateTab;
 import lordfokas.stargatetech2.core.reference.ModReference;
-import lordfokas.stargatetech2.core.util.MaterialNaquadah;
-import lordfokas.stargatetech2.core.util.StargateTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;

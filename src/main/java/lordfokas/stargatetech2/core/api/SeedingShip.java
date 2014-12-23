@@ -4,9 +4,9 @@ import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 
+import lordfokas.stargatetech2.ModuleTransport;
 import lordfokas.stargatetech2.api.stargate.IStargatePlacer;
-import lordfokas.stargatetech2.transport.ModuleTransport;
-import lordfokas.stargatetech2.transport.item.ItemBlockStargate;
+import lordfokas.stargatetech2.transport.ItemBlockStargate;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;

@@ -10,9 +10,9 @@ import net.minecraftforge.fluids.IFluidTank;
 
 import org.lwjgl.opengl.GL11;
 
+import lordfokas.stargatetech2.core.Helper;
 import lordfokas.stargatetech2.core.base.BaseGUI.IGauge;
 import lordfokas.stargatetech2.core.base.BaseGUI.IHoverHandler;
-import lordfokas.stargatetech2.core.util.Helper;
 import cofh.api.energy.EnergyStorage;
 
 public abstract class BaseGauge implements IGauge{

@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.enemy.gui;
 
 import lordfokas.stargatetech2.core.base.BaseContainer;
-import lordfokas.stargatetech2.enemy.tileentity.TileShieldController;
+import lordfokas.stargatetech2.enemy.TileShieldController;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

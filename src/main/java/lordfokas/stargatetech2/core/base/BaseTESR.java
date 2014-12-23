@@ -11,8 +11,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import lordfokas.stargatetech2.core.ModuleCore;
-import lordfokas.stargatetech2.core.util.Vec3Int;
+import lordfokas.stargatetech2.ModuleCore;
+import lordfokas.stargatetech2.core.Vec3Int;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

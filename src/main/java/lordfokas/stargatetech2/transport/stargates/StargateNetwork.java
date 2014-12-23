@@ -25,12 +25,12 @@ import lordfokas.stargatetech2.api.stargate.DialEvent;
 import lordfokas.stargatetech2.api.stargate.IDynamicWorldLoader;
 import lordfokas.stargatetech2.api.stargate.IStargateNetwork;
 import lordfokas.stargatetech2.api.stargate.Symbol;
+import lordfokas.stargatetech2.core.ChunkLoader;
+import lordfokas.stargatetech2.core.ConfigServer;
+import lordfokas.stargatetech2.core.Helper;
+import lordfokas.stargatetech2.core.StargateLogger;
 import lordfokas.stargatetech2.core.api.SeedingShip;
-import lordfokas.stargatetech2.core.util.ChunkLoader;
-import lordfokas.stargatetech2.core.util.ConfigServer;
-import lordfokas.stargatetech2.core.util.Helper;
-import lordfokas.stargatetech2.core.util.StargateLogger;
-import lordfokas.stargatetech2.transport.tileentity.TileStargate;
+import lordfokas.stargatetech2.transport.TileStargate;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 

@@ -1,13 +1,13 @@
 package lordfokas.stargatetech2.core.machine.tabs;
 
 import lordfokas.stargatetech2.api.bus.IBusDevice;
-import lordfokas.stargatetech2.automation.bus.AddressHelper;
+import lordfokas.stargatetech2.automation.AddressHelper;
+import lordfokas.stargatetech2.core.Stacks;
 import lordfokas.stargatetech2.core.base.BaseGUI.Arrow;
 import lordfokas.stargatetech2.core.base.BaseGUI.Toggle;
 import lordfokas.stargatetech2.core.base.BaseTab;
-import lordfokas.stargatetech2.core.packet.PacketUpdateBusAddress;
-import lordfokas.stargatetech2.core.packet.PacketUpdateBusEnabled;
-import lordfokas.stargatetech2.core.util.Stacks;
+import lordfokas.stargatetech2.core.packets.PacketUpdateBusAddress;
+import lordfokas.stargatetech2.core.packets.PacketUpdateBusEnabled;
 
 public class TabAbstractBus extends BaseTab{
 	private static final int TOGGLE_X = 20;

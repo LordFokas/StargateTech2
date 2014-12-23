@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import lordfokas.stargatetech2.core.IconRegistry;
 import lordfokas.stargatetech2.core.base.BaseISBRH;
 import lordfokas.stargatetech2.core.reference.TextureReference;
-import lordfokas.stargatetech2.core.util.IconRegistry;
 
 public class RenderBlockMachine extends BaseISBRH {
 	private static final RenderBlockMachine INSTANCE = new RenderBlockMachine();

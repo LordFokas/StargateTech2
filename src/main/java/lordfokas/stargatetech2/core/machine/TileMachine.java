@@ -3,7 +3,7 @@ package lordfokas.stargatetech2.core.machine;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
-import lordfokas.stargatetech2.core.packet.PacketUpdateMachineColors;
+import lordfokas.stargatetech2.core.packets.PacketUpdateMachineColors;
 
 public abstract class TileMachine extends BaseTileEntity {
 	private FaceColor[] colors = new FaceColor[]{

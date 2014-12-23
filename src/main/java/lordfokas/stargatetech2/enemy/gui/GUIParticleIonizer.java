@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fluids.FluidStack;
+import lordfokas.stargatetech2.core.Helper;
 import lordfokas.stargatetech2.core.api.ParticleIonizerRecipes;
 import lordfokas.stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
 import lordfokas.stargatetech2.core.base.BaseGUI;
@@ -18,8 +19,7 @@ import lordfokas.stargatetech2.core.machine.tabs.TabMachineRecipes;
 import lordfokas.stargatetech2.core.machine.tabs.TabMachineRecipes.IMachineRecipe;
 import lordfokas.stargatetech2.core.reference.BlockReference;
 import lordfokas.stargatetech2.core.reference.TextureReference;
-import lordfokas.stargatetech2.core.util.Helper;
-import lordfokas.stargatetech2.enemy.tileentity.TileParticleIonizer;
+import lordfokas.stargatetech2.enemy.TileParticleIonizer;
 
 public class GUIParticleIonizer extends BaseGUI {
 	private TileParticleIonizer ionizer;

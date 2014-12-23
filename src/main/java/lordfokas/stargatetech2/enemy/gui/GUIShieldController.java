@@ -11,10 +11,10 @@ import lordfokas.stargatetech2.core.machine.tabs.TabAbstractBus;
 import lordfokas.stargatetech2.core.machine.tabs.TabConfiguration;
 import lordfokas.stargatetech2.core.reference.BlockReference;
 import lordfokas.stargatetech2.core.reference.TextureReference;
-import lordfokas.stargatetech2.enemy.packet.PacketExceptionsUpdate;
-import lordfokas.stargatetech2.enemy.packet.PacketPermissionsUpdate;
-import lordfokas.stargatetech2.enemy.tileentity.TileShieldController;
-import lordfokas.stargatetech2.integration.plugins.te3.CoFHFriendHelper;
+import lordfokas.stargatetech2.enemy.PacketExceptionsUpdate;
+import lordfokas.stargatetech2.enemy.PacketPermissionsUpdate;
+import lordfokas.stargatetech2.enemy.TileShieldController;
+import lordfokas.stargatetech2.integration.te3.CoFHFriendHelper;
 
 public class GUIShieldController extends BaseGUI {
 	private TileShieldController shieldController;
