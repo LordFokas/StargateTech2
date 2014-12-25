@@ -14,7 +14,7 @@ import lordfokas.stargatetech2.core.reference.TextureReference;
 import lordfokas.stargatetech2.enemy.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.enemy.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.enemy.TileShieldController;
-import lordfokas.stargatetech2.integration.te3.CoFHFriendHelper;
+import lordfokas.stargatetech2.integration.te4.CoFHFriendHelper;
 
 public class GUIShieldController extends BaseGUI {
 	private TileShieldController shieldController;

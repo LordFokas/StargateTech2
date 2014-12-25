@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.ITileStargate;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity.ClientLogic;
 
 public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 	protected int sgx, sgy, sgz;
@@ -60,5 +61,15 @@ public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 		nbt.setInteger("sgx", sgx);
 		nbt.setInteger("sgy", sgy);
 		nbt.setInteger("sgz", sgz);
+	}
+
+	@Override
+	@ClientLogic
+	public String getClientAddress() {
+		TileStargate stargate = getStargate();
+		if(stargate != null){
+			return stargate.getClientAddress();
+		}
+		return "Invalid Address";
 	}
 }

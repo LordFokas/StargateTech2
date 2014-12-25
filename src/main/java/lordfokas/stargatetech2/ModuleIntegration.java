@@ -6,24 +6,32 @@ import java.util.List;
 import lordfokas.stargatetech2.core.StargateLogger;
 import lordfokas.stargatetech2.core.reference.ConfigReference;
 import lordfokas.stargatetech2.integration.PluginProxy;
+import lordfokas.stargatetech2.integration.cc.PluginCC;
+import lordfokas.stargatetech2.integration.ic2.PluginIC2;
+import lordfokas.stargatetech2.integration.te4.PluginTE4;
+import lordfokas.stargatetech2.integration.tico.PluginTiCo;
+import lordfokas.stargatetech2.integration.waila.PluginWaila;
 
 public class ModuleIntegration implements IContentModule {
 	private List<PluginProxy> proxies = new LinkedList<PluginProxy>();
 	
-	public static PluginProxy tico;
-	public static PluginProxy te3;
-	public static PluginProxy ic2;
-	public static PluginProxy cc;
+	public static PluginProxy<PluginWaila> waila;
+	public static PluginProxy<PluginTiCo> tico;
+	public static PluginProxy<PluginTE4> te4;
+	public static PluginProxy<PluginIC2> ic2;
+	public static PluginProxy<PluginCC> cc;
 	
 	@Override
 	public void preInit(){
-		tico = new PluginProxy("TConstruct", ConfigReference.KEY_PLUGINS_TICO, "tico.PluginTiCo");
-		te3  = new PluginProxy("ThermalExpansion", ConfigReference.KEY_PLUGINS_TE3, "te3.PluginTE3");
-		ic2  = new PluginProxy("IC2", ConfigReference.KEY_PLUGINS_IC2, "ic2.PluginIC2");
-		cc   = new PluginProxy("ComputerCraft", ConfigReference.KEY_PLUGINS_CC, "cc.PluginCC");
+		waila	= new PluginProxy("Waila", ConfigReference.KEY_PLUGINS_WAILA, "waila.PluginWaila");
+		tico	= new PluginProxy("TConstruct", ConfigReference.KEY_PLUGINS_TICO, "tico.PluginTiCo");
+		te4		= new PluginProxy("ThermalExpansion", ConfigReference.KEY_PLUGINS_TE4, "te4.PluginTE4");
+		ic2		= new PluginProxy("IC2", ConfigReference.KEY_PLUGINS_IC2, "ic2.PluginIC2");
+		cc		= new PluginProxy("ComputerCraft", ConfigReference.KEY_PLUGINS_CC, "cc.PluginCC");
 		
+		proxies.add(waila);
 		proxies.add(tico);
-		proxies.add(te3);
+		proxies.add(te4);
 		proxies.add(ic2);
 		proxies.add(cc);
 	}

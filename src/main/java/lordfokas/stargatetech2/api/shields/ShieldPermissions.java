@@ -10,7 +10,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import lordfokas.stargatetech2.integration.te3.CoFHFriendHelper;
+import lordfokas.stargatetech2.integration.te4.CoFHFriendHelper;
 
 
 public class ShieldPermissions {

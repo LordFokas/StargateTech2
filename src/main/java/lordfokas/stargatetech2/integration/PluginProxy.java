@@ -6,7 +6,7 @@ import lordfokas.stargatetech2.core.StargateLogger;
 import lordfokas.stargatetech2.core.reference.ConfigReference;
 import cpw.mods.fml.common.Loader;
 
-public final class PluginProxy {
+public final class PluginProxy<Plugin extends IPlugin>{
 	private static final String PACKAGE = PluginProxy.class.getPackage().getName() + ".";
 	
 	protected final String cfgKey;
@@ -14,7 +14,7 @@ public final class PluginProxy {
 	protected final Configuration cfg;
 	private final boolean enabled, modPresent;
 	private final String main, fallback;
-	private IPlugin plugin;
+	private final Plugin plugin;
 	
 	public enum Stage{
 		LOAD, POSTLOAD
@@ -39,6 +39,10 @@ public final class PluginProxy {
 		this.plugin = getPluginInstance();
 	}
 	
+	public Plugin getPlugin(){
+		return null;
+	}
+	
 	public boolean shouldLoad(){
 		return modPresent && enabled;
 	}
@@ -50,15 +54,15 @@ public final class PluginProxy {
 	public void     init(){ run(Stage.LOAD);     }
 	public void postInit(){ run(Stage.POSTLOAD); }
 	
-	private IPlugin getPluginInstance(){
-		IPlugin plugin = null;
+	private Plugin getPluginInstance(){
+		Plugin plugin = null;
 		String className = shouldLoad() ? main : fallback;
 		if(className != null){
 			try{
 				Class cls = Class.forName(className);
 				Object obj = cls.newInstance();
 				if(obj instanceof IPlugin){
-					plugin = (IPlugin) obj;
+					plugin = (Plugin) obj;
 				}else{
 					StargateLogger.warning("Class " + className + "is not a valid IPlugin");
 				}

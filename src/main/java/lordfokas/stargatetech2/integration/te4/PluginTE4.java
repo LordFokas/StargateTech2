@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.integration.te3;
+package lordfokas.stargatetech2.integration.te4;
 
 import lordfokas.stargatetech2.ModuleCore;
 import lordfokas.stargatetech2.core.ItemNaquadah;
@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.event.FMLInterModComms;
 
-public class PluginTE3 implements IPlugin{
+public class PluginTE4 implements IPlugin{
 	@Override
 	public void load() {
 		addPulverizerRecipe(4000, new ItemStack(ModuleCore.naquadahBlock), new ItemStack(ModuleCore.naquadahItem, 2, ItemNaquadah.DUST.ID));
