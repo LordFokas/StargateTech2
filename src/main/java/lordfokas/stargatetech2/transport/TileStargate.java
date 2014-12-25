@@ -71,7 +71,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	public void validate(){
 		super.validate();
 		Address addr = getAddress(); // forces the Stargate Network to generate an address for this Stargate.
-		if(addr != null){
+		if(addr != null){ // Stashes the address so it's visible on the client side.
 			String address = addr.toString();
 			if(this.address == null || !address.equals(this.address)){
 				this.address = address;

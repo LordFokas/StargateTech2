@@ -18,11 +18,5 @@ public class StargateDataProvider extends ProviderBody{
 		if(te instanceof ITileStargate){
 			list.add(SpecialChars.GOLD + ((ITileStargate)te).getClientAddress());
 		}
-		if(te instanceof IEnergyHandler){
-			IEnergyHandler energyHandler = ((IEnergyHandler)te);
-			int curr = energyHandler.getEnergyStored(null);
-			int max = energyHandler.getMaxEnergyStored(null);
-			list.add(Helper.prettyNumber(curr) + "/" + Helper.prettyNumber(max) + " RF");
-		}
 	}
 }

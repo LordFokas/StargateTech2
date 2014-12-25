@@ -6,19 +6,13 @@ import lordfokas.stargatetech2.transport.BlockInvisible;
 import lordfokas.stargatetech2.transport.BlockNaquadahRail;
 import lordfokas.stargatetech2.transport.BlockStargate;
 import lordfokas.stargatetech2.transport.BlockTransportRing;
-import lordfokas.stargatetech2.transport.CommandGateTP;
 import lordfokas.stargatetech2.transport.TileStargate;
 import lordfokas.stargatetech2.transport.TileStargateBase;
 import lordfokas.stargatetech2.transport.TileStargateRing;
 import lordfokas.stargatetech2.transport.TileTransportRing;
 import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
-import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.client.MinecraftForgeClient;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.server.FMLServerHandler;
 
 public class ModuleTransport implements IContentModule {
 	public static BlockNaquadahRail naquadahRail;

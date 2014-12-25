@@ -142,4 +142,8 @@ public final class BusInterface implements IBusInterface{
 		}
 		rebuildAddressCache();
 	}
+	
+	public short getAddress(){
+		return driver.getInterfaceAddress();
+	}
 }
