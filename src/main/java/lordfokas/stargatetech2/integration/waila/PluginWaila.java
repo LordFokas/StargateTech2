@@ -19,6 +19,8 @@ public class PluginWaila implements IPlugin{
 	
 	public static void register(IWailaRegistrar waila){
 		waila.registerBodyProvider(new StargateDataProvider(), ITileStargate.class);
-		waila.registerBodyProvider(new CommonDataProvider(), BaseTileEntity.class);
+		
+		// TODO: get key sync working first.
+		// waila.registerBodyProvider(new CommonDataProvider(), BaseTileEntity.class);
 	}
 }

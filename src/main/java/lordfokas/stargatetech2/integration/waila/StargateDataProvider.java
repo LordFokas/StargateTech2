@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import cofh.api.energy.IEnergyHandler;
 
-public class StargateDataProvider extends ProviderBody{
+public class StargateDataProvider extends Provider.Body{
 	@Override
 	public void addToBody(ItemStack stack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler configHandler) {
 		TileEntity te = accessor.getTileEntity();
