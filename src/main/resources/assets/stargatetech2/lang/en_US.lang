@@ -1,6 +1,8 @@
 ###################################################################################################
 # BLOCKS
 
+block.beaconTransceiver.name=Transport Beacon Transceiver
+block.beaconAntenna.name=Transport Beacon Antenna
 block.busAdapter.name=Abstract Bus Adapter
 block.busCable.name=Abstract Bus Cable
 block.naquadah.ore.name=Naquadah Ore

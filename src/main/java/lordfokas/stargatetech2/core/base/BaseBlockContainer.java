@@ -5,11 +5,11 @@ import net.minecraft.world.World;
 
 public abstract class BaseBlockContainer extends BaseBlock implements ITileEntityProvider{
 	
-	protected BaseBlockContainer(String name){
+	public BaseBlockContainer(String name){
 		super(name);
 	}
 	
-	protected BaseBlockContainer(String name, boolean breakable, boolean requiresTool) {
+	public BaseBlockContainer(String name, boolean breakable, boolean requiresTool) {
 		super(name, breakable, requiresTool);
 	}
 	

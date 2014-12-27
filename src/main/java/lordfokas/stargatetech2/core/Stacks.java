@@ -12,7 +12,7 @@ public class Stacks {
 	public static ItemStack book, bucket, chest, glass, glowDust, glowBlock, pearl, redDust, redBlock, slab, stick, stone;
 	
 	// ThermalExpansion Stacks
-	public static ItemStack machine_0, coilGold;
+	public static ItemStack machine_0, machine_1, machine_2, signalum, coilGold;
 	
 	// StargateTech 2 Stacks
 	public static ItemStack naqIngot, naqDust, naqPlate, naqOre, naqBlock, lattice, circuit, coilNaq, coilEnd, busCable;
@@ -34,9 +34,12 @@ public class Stacks {
 		stone = new ItemStack(Blocks.stone);
 		
 		//##########################################################################################
-		// THERMAl EXPANSION 3
-		machine_0 =	fromTE3("frameMachineBasic");
-		coilGold =	fromTE3("powerCoilGold");
+		// THERMAl EXPANSION 4
+		machine_0 =	fromTE4("frameMachineBasic");
+		machine_1 =	fromTE4("frameMachineHardened");
+		machine_2 =	fromTE4("frameMachineReinforced");
+		signalum = GameRegistry.findItemStack("ThermalFoundation", "ingotSignalum", 1);
+		coilGold =	fromTE4("powerCoilGold");
 		
 		//##########################################################################################
 		// STARGATETECH 2
@@ -51,7 +54,7 @@ public class Stacks {
 		busCable	= new ItemStack(ModuleAutomation.busCable);
 	}
 	
-	private static ItemStack fromTE3(String name){
+	private static ItemStack fromTE4(String name){
 		return GameRegistry.findItemStack("ThermalExpansion", name, 1);
 	}
 }

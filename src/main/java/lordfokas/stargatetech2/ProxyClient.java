@@ -8,6 +8,7 @@ import lordfokas.stargatetech2.core.GUIHandlerClient;
 import lordfokas.stargatetech2.core.RenderNaquadah;
 import lordfokas.stargatetech2.core.base.BaseISBRH;
 import lordfokas.stargatetech2.core.machine.RenderBlockMachine;
+import lordfokas.stargatetech2.transport.RenderBeacon;
 import lordfokas.stargatetech2.transport.RenderNaquadahRail;
 import lordfokas.stargatetech2.transport.RenderStargateBlock;
 import lordfokas.stargatetech2.transport.RenderStargateTile;
@@ -49,6 +50,7 @@ public class ProxyClient implements ISidedProxy{
 			case INTEGRATION:
 				break;
 			case TRANSPORT:
+				registerRenderer(RenderBeacon.instance());
 				registerRenderer(RenderNaquadahRail.instance());
 				registerRenderer(RenderStargateBlock.instance());
 				ClientRegistry.bindTileEntitySpecialRenderer(TileTransportRing.class, new RenderTransportRing());

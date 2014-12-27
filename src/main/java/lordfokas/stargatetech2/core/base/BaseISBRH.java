@@ -65,12 +65,16 @@ public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 	}
 	
 	protected final void renderInventoryCuboid(Block block, int meta, RenderBlocks renderer){
+		renderInventoryCuboid(block, meta, renderer, true);
+	}
+	
+	protected final void renderInventoryCuboid(Block block, int meta, RenderBlocks renderer, boolean useBlockBounds){
 		IIcon[] tmap = new IIcon[6];
 		for(int i = 0; i < 6; i++){
 			tmap[i] = block.getIcon(i, meta);
 		}
 		
-		renderer.setRenderBoundsFromBlock(block);
+		if(useBlockBounds) renderer.setRenderBoundsFromBlock(block);
 		Tessellator tessellator = Tessellator.instance;
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		tessellator.startDrawingQuads();

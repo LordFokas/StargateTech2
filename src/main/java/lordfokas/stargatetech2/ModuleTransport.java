@@ -2,6 +2,7 @@ package lordfokas.stargatetech2;
 
 import lordfokas.stargatetech2.core.Stacks;
 import lordfokas.stargatetech2.core.reference.TileEntityReference;
+import lordfokas.stargatetech2.transport.BlockBeacon;
 import lordfokas.stargatetech2.transport.BlockInvisible;
 import lordfokas.stargatetech2.transport.BlockNaquadahRail;
 import lordfokas.stargatetech2.transport.BlockStargate;
@@ -15,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModuleTransport implements IContentModule {
+	public static BlockBeacon beacon;
 	public static BlockNaquadahRail naquadahRail;
 	public static BlockTransportRing transportRing;
 	public static BlockInvisible invisible;
@@ -22,6 +24,7 @@ public class ModuleTransport implements IContentModule {
 	
 	@Override
 	public void preInit(){
+		beacon = new BlockBeacon();
 		naquadahRail = new BlockNaquadahRail();
 		transportRing = new BlockTransportRing();
 		invisible = new BlockInvisible();
@@ -43,8 +46,10 @@ public class ModuleTransport implements IContentModule {
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahRail, 2), "N-N", "NSN", "N-N", 'N', Stacks.naqIngot, 'S', Stacks.stick);
 		GameRegistry.addShapedRecipe(new ItemStack(transportRing), "-S-", "PMP", "NCN", 'S', Stacks.slab, 'N', Stacks.naqIngot, 'P', Stacks.naqPlate, 'C', Stacks.coilEnd, 'M', Stacks.machine_0);
 		
-		StargateTech2.proxy.registerRenderers(Module.TRANSPORT);
+		GameRegistry.addShapedRecipe(new ItemStack(beacon, 1, BlockBeacon.META_TRANSCEIVER), "ISI", "SMS", "ICI", 'I', Stacks.coilNaq, 'C', Stacks.circuit, 'M', Stacks.machine_2, 'S', Stacks.signalum);
+		GameRegistry.addShapedRecipe(new ItemStack(beacon, 1, BlockBeacon.META_ANTENNA), "-N-", "NSN", "-N-", 'N', Stacks.naqIngot, 'S', Stacks.signalum);
 		
+		StargateTech2.proxy.registerRenderers(Module.TRANSPORT);
 	}
 
 	@Override public void onServerStart(){

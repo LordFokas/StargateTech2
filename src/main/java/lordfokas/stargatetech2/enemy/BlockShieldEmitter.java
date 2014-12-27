@@ -51,7 +51,6 @@ public class BlockShieldEmitter extends BlockMachine{
 					if(prvdr instanceof IShieldControllerProvider){
 						Vec3Int controller = ((IShieldControllerProvider)prvdr).getShieldControllerCoords();
 						if(controller != null){
-							System.out.println("SETTING CONTROLLER: " + controller);
 							((TileShieldEmitter)te).setController(controller);
 							return;
 						}
