@@ -48,11 +48,6 @@ public class BlockBeacon extends BaseBlockContainer{
 		return blockIcon;
 	}
 	
-	/*@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase e, ItemStack stack){
-		w.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
-	}*/
-	
 	@Override
 	public int damageDropped(int meta){
 		return meta;

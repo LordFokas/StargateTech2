@@ -22,6 +22,7 @@ public class ItemBlockBeacon extends ItemBlock{
 		return "UNKNOWN_BEACON_BLOCK";
 	}
 	
+	@Override
 	public int getMetadata(int meta){
         return meta;
     }
