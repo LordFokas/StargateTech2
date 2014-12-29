@@ -54,6 +54,8 @@ public class ModuleTransport implements IContentModule {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(beacon, 1, BlockBeacon.META_TRANSCEIVER), "ISI", "SMS", "ICI", 'I', Stacks.coilNaq, 'C', Stacks.circuit, 'M', Stacks.machine_2, 'S', Stacks.signalum);
 		GameRegistry.addShapedRecipe(new ItemStack(beacon, 1, BlockBeacon.META_ANTENNA), "-N-", "NSN", "-N-", 'N', Stacks.naqIngot, 'S', Stacks.signalum);
+		GameRegistry.addShapedRecipe(new ItemStack(beacon, 1, BlockBeacon.META_CONSOLE), "-C-", "GMG", "NPN", 'N', Stacks.naqIngot, 'C', Stacks.circuit, 'G', Stacks.glass, 'M', Stacks.machine_0, 'P', Stacks.coilGold);
+		GameRegistry.addShapedRecipe(new ItemStack(beacon, 4, BlockBeacon.META_MATTERGRID), "ECE", "CMC", "ECE", 'E', Stacks.coilEnd, 'C', Stacks.circuit, 'M', Stacks.machine_1);
 		
 		StargateTech2.proxy.registerRenderers(Module.TRANSPORT);
 	}

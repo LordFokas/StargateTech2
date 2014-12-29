@@ -1,14 +1,13 @@
 package lordfokas.stargatetech2.transport;
 
+import lordfokas.stargatetech2.api.StargateTechAPI;
+import lordfokas.stargatetech2.api.bus.IBusDriver;
+import lordfokas.stargatetech2.api.bus.IBusInterface;
 import net.minecraft.nbt.NBTTagCompound;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
 
-public class TileBeaconMatterGrid extends BaseTileEntity {
-	
-	@Override
-	public boolean canUpdate(){
-		return false;
-	}
+public class TileBeaconMatterGrid extends TileBeacon {
+	private IBusDriver driver = null;
+	private IBusInterface iface = StargateTechAPI.api().getFactory().getIBusInterface(this, driver);
 	
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
@@ -21,5 +20,9 @@ public class TileBeaconMatterGrid extends BaseTileEntity {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	@Override
+	public IBusInterface[] getInterfaces(int side) {
+		return side == 0 ? new IBusInterface[]{iface} : null;
+	}
 }
