@@ -1,8 +1,10 @@
 ###################################################################################################
 # BLOCKS
 
-block.beaconTransceiver.name=Transport Beacon Transceiver
-block.beaconAntenna.name=Transport Beacon Antenna
+block.beacon.transceiver.name=Transport Beacon Transceiver
+block.beacon.antenna.name=Transport Beacon Antenna
+block.beacon.console.name=Transport Beacon Console
+block.beacon.mattergrid.name=Transport Beacon Matter Grid
 block.busAdapter.name=Abstract Bus Adapter
 block.busCable.name=Abstract Bus Cable
 block.naquadah.ore.name=Naquadah Ore

@@ -15,11 +15,10 @@ public class TileEntityReference {
 	
 	// ENERGY
 	
-	// FACTORY
-	public static final String TILE_CROSSOVER = "tileCrossover";
-	public static final String TILE_PRIORITIZER = "tilePrioritizer";
-	
 	// TRANSPORT
+	public static final String TILE_BEACON_CONSOLE = "tileBeaconConsole";
+	public static final String TILE_BEACON_MATTERGRID = "tileBeaconMatterGrid";
+	public static final String TILE_BEACON_TRANSCEIVER = "tileBeaconTransceiver";
 	public static final String TILE_STARGATE = "tileStargate";
 	public static final String TILE_STARGATE_RING = "tileStargateRing";
 	public static final String TILE_STARGATE_BASE = "tileStargateBase";

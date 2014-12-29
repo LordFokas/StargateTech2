@@ -9,12 +9,14 @@ import lordfokas.stargatetech2.core.RenderNaquadah;
 import lordfokas.stargatetech2.core.base.BaseISBRH;
 import lordfokas.stargatetech2.core.machine.RenderBlockMachine;
 import lordfokas.stargatetech2.transport.RenderBeacon;
+import lordfokas.stargatetech2.transport.RenderBeaconMatterGrid;
 import lordfokas.stargatetech2.transport.RenderNaquadahRail;
 import lordfokas.stargatetech2.transport.RenderStargateBlock;
 import lordfokas.stargatetech2.transport.RenderStargateTile;
 import lordfokas.stargatetech2.transport.RenderTransportRing;
 import lordfokas.stargatetech2.transport.RingKeyHandler;
 import lordfokas.stargatetech2.transport.RingOverlay;
+import lordfokas.stargatetech2.transport.TileBeaconMatterGrid;
 import lordfokas.stargatetech2.transport.TileStargate;
 import lordfokas.stargatetech2.transport.TileTransportRing;
 import lordfokas.stargatetech2.world.RenderLanteanWall;
@@ -45,14 +47,13 @@ public class ProxyClient implements ISidedProxy{
 				break;
 			case ENERGY:
 				break;
-			case FACTORY:
-				break;
 			case INTEGRATION:
 				break;
 			case TRANSPORT:
 				registerRenderer(RenderBeacon.instance());
 				registerRenderer(RenderNaquadahRail.instance());
 				registerRenderer(RenderStargateBlock.instance());
+				ClientRegistry.bindTileEntitySpecialRenderer(TileBeaconMatterGrid.class, new RenderBeaconMatterGrid());
 				ClientRegistry.bindTileEntitySpecialRenderer(TileTransportRing.class, new RenderTransportRing());
 				ClientRegistry.bindTileEntitySpecialRenderer(TileStargate.class, new RenderStargateTile());
 				break;

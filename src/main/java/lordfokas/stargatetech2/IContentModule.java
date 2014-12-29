@@ -6,7 +6,6 @@ public interface IContentModule {
 		CORE,
 		ENEMY,
 		ENERGY,
-		FACTORY,
 		INTEGRATION,
 		TRANSPORT,
 		WORLD

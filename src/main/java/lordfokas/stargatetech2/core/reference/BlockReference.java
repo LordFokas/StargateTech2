@@ -21,7 +21,7 @@ public class BlockReference {
 	
 	
 	// TRANSPORT
-	public static final String BEACON_ANTENNA = "beaconAntenna";
+	public static final String BEACON = "beacon";
 	public static final String STARGATE = "stargate";
 	public static final String NAQUADAH_RAIL = "naquadahRail";
 	public static final String TRANSPORT_RING = "transportRing";

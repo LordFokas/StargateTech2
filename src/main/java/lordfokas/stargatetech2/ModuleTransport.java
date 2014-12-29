@@ -7,6 +7,9 @@ import lordfokas.stargatetech2.transport.BlockInvisible;
 import lordfokas.stargatetech2.transport.BlockNaquadahRail;
 import lordfokas.stargatetech2.transport.BlockStargate;
 import lordfokas.stargatetech2.transport.BlockTransportRing;
+import lordfokas.stargatetech2.transport.TileBeaconConsole;
+import lordfokas.stargatetech2.transport.TileBeaconMatterGrid;
+import lordfokas.stargatetech2.transport.TileBeaconTransceiver;
 import lordfokas.stargatetech2.transport.TileStargate;
 import lordfokas.stargatetech2.transport.TileStargateBase;
 import lordfokas.stargatetech2.transport.TileStargateRing;
@@ -35,6 +38,9 @@ public class ModuleTransport implements IContentModule {
 
 	@Override
 	public void init(){
+		GameRegistry.registerTileEntity(TileBeaconConsole.class, TileEntityReference.TILE_BEACON_CONSOLE);
+		GameRegistry.registerTileEntity(TileBeaconMatterGrid.class, TileEntityReference.TILE_BEACON_MATTERGRID);
+		GameRegistry.registerTileEntity(TileBeaconTransceiver.class, TileEntityReference.TILE_BEACON_TRANSCEIVER);
 		GameRegistry.registerTileEntity(TileTransportRing.class, TileEntityReference.TILE_TRANSPORT_RING);
 		GameRegistry.registerTileEntity(TileStargate.class, TileEntityReference.TILE_STARGATE);
 		GameRegistry.registerTileEntity(TileStargateRing.class, TileEntityReference.TILE_STARGATE_RING);

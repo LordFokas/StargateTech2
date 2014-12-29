@@ -3,11 +3,14 @@ package lordfokas.stargatetech2.transport;
 import java.util.List;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lordfokas.stargatetech2.core.IconRegistry;
 import lordfokas.stargatetech2.core.base.BaseBlockContainer;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
 import lordfokas.stargatetech2.core.reference.BlockReference;
 import lordfokas.stargatetech2.core.reference.TextureReference;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -19,31 +22,36 @@ import net.minecraft.world.World;
 public class BlockBeacon extends BaseBlockContainer{
 	public static final int META_TRANSCEIVER = 0;
 	public static final int META_ANTENNA = 1;
+	public static final int META_CONSOLE = 2;
+	public static final int META_MATTERGRID = 3;
 	
 	public BlockBeacon() {
-		super(BlockReference.BEACON_ANTENNA);
+		super(BlockReference.BEACON);
 		setIsAbstractBusBlock();
 	}
 	
 	@Override
 	public IIcon getBaseIcon(int side, int meta){
 		if(meta == META_ANTENNA) return IconRegistry.blockIcons.get(TextureReference.BEACON_ANTENNA);
-		if(meta == META_TRANSCEIVER){
-			if(side == 0){
-				return IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
-			}else if(side == 1){
-				return IconRegistry.blockIcons.get(TextureReference.BEACON_TRANSCEIVER_T);
-			}else{
-				return IconRegistry.blockIcons.get(TextureReference.BEACON_TRANSCEIVER);
-			}
-		}
+		if(meta == META_TRANSCEIVER)
+			if(side == 0) return IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
+			else if(side == 1) return IconRegistry.blockIcons.get(TextureReference.BEACON_TRANSCEIVER_T);
+			else return IconRegistry.blockIcons.get(TextureReference.BEACON_TRANSCEIVER);
+		if(meta == META_CONSOLE)
+			if(side == 0) return IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
+			else if(side == 1) return IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP);
+			else return IconRegistry.blockIcons.get(TextureReference.BEACON_CONSOLE);
+		if(meta == META_MATTERGRID)
+			if(side == 0) return IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
+			else if(side == 1) return IconRegistry.blockIcons.get(TextureReference.BEACON_MATTERGRID);
+			else return IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
 		return blockIcon;
 	}
 	
-	@Override
+	/*@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase e, ItemStack stack){
 		w.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
-	}
+	}*/
 	
 	@Override
 	public int damageDropped(int meta){
@@ -74,6 +82,8 @@ public class BlockBeacon extends BaseBlockContainer{
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		list.add(new ItemStack(item, 1, META_TRANSCEIVER));
 		list.add(new ItemStack(item, 1, META_ANTENNA));
+		list.add(new ItemStack(item, 1, META_CONSOLE));
+		list.add(new ItemStack(item, 1, META_MATTERGRID));
 	}
 	
 	@Override
@@ -84,7 +94,13 @@ public class BlockBeacon extends BaseBlockContainer{
 	@Override
 	protected BaseTileEntity createTileEntity(int metadata){
 		if(metadata == META_TRANSCEIVER){
-			return null; // Soon (tm);
+			return new TileBeaconTransceiver();
+		}
+		if(metadata == META_CONSOLE){
+			return new TileBeaconConsole();
+		}
+		if(metadata == META_MATTERGRID){
+			return new TileBeaconMatterGrid();
 		}
 		return null;
 	}

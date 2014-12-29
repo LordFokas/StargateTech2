@@ -42,6 +42,8 @@ public class TextureReference {
 	@Block public static final String INTERFACE_STRIPES = "interfaceStripes";
 	
 	@Block public static final String BEACON_ANTENNA = "beaconAntenna";
+	@Block public static final String BEACON_CONSOLE = "beaconConsole";
+	@Block public static final String BEACON_MATTERGRID = "beaconMatterGrid";
 	@Block public static final String BEACON_TRANSCEIVER = "beaconTransceiver";
 	@Block public static final String BEACON_TRANSCEIVER_T = "beaconTransceiver_T";
 	
