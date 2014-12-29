@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.transport;
+package lordfokas.stargatetech2.transport.stargates;
 
 public class SymbolCoordinates {
 	

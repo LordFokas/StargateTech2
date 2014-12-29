@@ -12,6 +12,7 @@ import lordfokas.stargatetech2.api.stargate.ITileStargateBase;
 import lordfokas.stargatetech2.api.stargate.StargateEvent;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
 import lordfokas.stargatetech2.core.reference.ModReference;
+import lordfokas.stargatetech2.transport.bus.BusDriverStargate;
 import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
 import lordfokas.stargatetech2.transport.stargates.Wormhole;
 import lordfokas.stargatetech2.world.genlists.StargateBuildList;
@@ -37,7 +38,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	@ClientLogic private RenderData renderData = new RenderData();
 	@ClientLogic private String address;
 	
-	private StargateBusDriver networkDriver = new StargateBusDriver(this);
+	private BusDriverStargate networkDriver = new BusDriverStargate(this);
 	private IBusInterface[] interfaces = new IBusInterface[]{ StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver) };
 	private EnergyStorage capacitor = new EnergyStorage(400000, 10000);
 	

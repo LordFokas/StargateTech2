@@ -5,6 +5,7 @@ import lordfokas.stargatetech2.core.base.BaseTESR;
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import lordfokas.stargatetech2.transport.TileStargate.RenderData;
 import lordfokas.stargatetech2.transport.TileStargate.RenderData.ChevronData;
+import lordfokas.stargatetech2.transport.stargates.SymbolCoordinates;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.tileentity.TileEntity;

@@ -1,11 +1,10 @@
-package lordfokas.stargatetech2.transport;
+package lordfokas.stargatetech2.transport.bus;
 
 import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.IBusDriver;
 
-public class BusDriverTransceiverB implements IBusDriver{
-	private short address = (short) 0xFFFF;
-	
+public class BusDriverTransceiverA implements IBusDriver{
+
 	@Override
 	public boolean canHandlePacket(short sender, int protocolID, boolean hasLIP) {
 		return false;
@@ -28,16 +27,16 @@ public class BusDriverTransceiverB implements IBusDriver{
 
 	@Override
 	public short getInterfaceAddress() {
-		return address;
+		return 0x0000; // We're sniffing on this interface.
 	}
 
 	@Override
 	public String getShortName() {
-		return "Beacon Transceiver - Common Interface";
+		return "Beacon Transceiver - Antenna Interface";
 	}
 
 	@Override
 	public String getDescription() {
-		return "The entry point for teleportation messages from the Transport Beacon Console.";
+		return "Is used to / can only communicate with other beacon Transceivers.";
 	}
 }

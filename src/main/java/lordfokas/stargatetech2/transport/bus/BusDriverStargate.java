@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.transport;
+package lordfokas.stargatetech2.transport.bus;
 
 import java.util.LinkedList;
 
@@ -9,13 +9,14 @@ import lordfokas.stargatetech2.api.bus.IBusDriver;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.DialError;
 import lordfokas.stargatetech2.api.stargate.ITileStargateBase.DialMethod;
+import lordfokas.stargatetech2.transport.TileStargate;
 import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
 
-public class StargateBusDriver implements IBusDriver{
+public class BusDriverStargate implements IBusDriver{
 	private LinkedList<BusPacket> queue = new LinkedList();
 	private TileStargate stargate;
 	
-	public StargateBusDriver(TileStargate stargate){
+	public BusDriverStargate(TileStargate stargate){
 		this.stargate = stargate;
 	}
 	

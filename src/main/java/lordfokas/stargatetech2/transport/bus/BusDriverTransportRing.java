@@ -1,14 +1,15 @@
-package lordfokas.stargatetech2.transport;
+package lordfokas.stargatetech2.transport.bus;
 
 import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP;
 import lordfokas.stargatetech2.api.bus.BusProtocols;
 import lordfokas.stargatetech2.api.bus.IBusDriver;
+import lordfokas.stargatetech2.transport.TileTransportRing;
 
-public class TransportRingBusDriver implements IBusDriver{
+public class BusDriverTransportRing implements IBusDriver{
 	private TileTransportRing rings;
 	
-	public TransportRingBusDriver(TileTransportRing rings){
+	public BusDriverTransportRing(TileTransportRing rings){
 		this.rings = rings;
 	}
 	

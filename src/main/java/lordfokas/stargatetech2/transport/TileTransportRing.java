@@ -11,6 +11,7 @@ import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.core.Vec3Int;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.transport.bus.BusDriverTransportRing;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -38,7 +39,7 @@ public class TileTransportRing extends BaseTileEntity implements IBusDevice{
 	private int teleportCooldown = 0;
 	private boolean isTeleporting = false;
 	private int teleportCountdown = 0;
-	private TransportRingBusDriver networkDriver = new TransportRingBusDriver(this);
+	private BusDriverTransportRing networkDriver = new BusDriverTransportRing(this);
 	private IBusInterface[] interfaces = new IBusInterface[]{
 			StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver)
 	};
