@@ -12,7 +12,7 @@ public class BusPacketBeacons extends BusPacket<BeaconData>{
 	public final String beaconID;
 	
 	public enum RequestMode{
-		GET_ALL_BEACONS, GET_BEACON
+		GET_ALL_BEACONS, GET_BEACON, SCAN_BEACONS
 	}
 	
 	public BusPacketBeacons(short sender, short target){
@@ -23,7 +23,7 @@ public class BusPacketBeacons extends BusPacket<BeaconData>{
 		this(sender, target, RequestMode.GET_BEACON, beaconID);
 	}
 	
-	private BusPacketBeacons(short sender, short target, RequestMode mode, String beaconID) {
+	public BusPacketBeacons(short sender, short target, RequestMode mode, String beaconID) {
 		super(sender, target, false);
 		this.mode = mode;
 		this.beaconID = beaconID;

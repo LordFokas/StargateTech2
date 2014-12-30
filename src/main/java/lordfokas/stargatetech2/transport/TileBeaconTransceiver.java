@@ -7,16 +7,19 @@ import lordfokas.stargatetech2.ModuleTransport;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.transport.beacons.BeaconData;
+import lordfokas.stargatetech2.transport.beacons.BeaconRegistry;
 import lordfokas.stargatetech2.transport.bus.BusDriverTransceiverA;
 import lordfokas.stargatetech2.transport.bus.BusDriverTransceiverB;
+import lordfokas.stargatetech2.transport.bus.BusPacketBeacons;
+import lordfokas.stargatetech2.transport.bus.BusPacketBeacons.RequestMode;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileBeaconTransceiver extends TileBeacon{
+	public static final int CON_NONE = 0, CON_BUS = 1, CON_SUBSPACE = 2; 
 	private static int _counter_ = 0xF0000000;
 	private final String TRANSCEIVER_ID = "BT-" + Integer.toHexString(++_counter_).toUpperCase();
-	private final int CON_NONE = 0, CON_BUS = 1, CON_SUBSPACE = 2; 
 	
-	private BusDriverTransceiverA antennaDriver = new BusDriverTransceiverA();
+	private BusDriverTransceiverA antennaDriver = new BusDriverTransceiverA(this);
 	private BusDriverTransceiverB beaconDriver = new BusDriverTransceiverB(this);
 	private IBusInterface antennaInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, antennaDriver);
 	private IBusInterface beaconInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, beaconDriver);
@@ -31,7 +34,19 @@ public class TileBeaconTransceiver extends TileBeacon{
 	
 	public LinkedList<BeaconData> findAllBeacons(){
 		LinkedList<BeaconData> beacons = new LinkedList();
-		
+		int mode = getConnectionMode();
+		if(mode == CON_SUBSPACE){
+			LinkedList<BeaconData> list = BeaconRegistry.forWorld(worldObj).getBeaconsInNetwork("");
+			for(BeaconData beacon : list){
+				if(!beacon.beaconID.equals(TRANSCEIVER_ID)){
+					beacons.add(beacon);
+				}
+			}
+		}else if(mode == CON_BUS){
+			BusPacketBeacons packet = new BusPacketBeacons(antennaDriver.getInterfaceAddress(), (short)0xFFFF, RequestMode.SCAN_BEACONS, null);
+			antennaInterface.sendAllPackets();
+			return packet.getResponses();
+		}
 		return beacons;
 	}
 	
@@ -39,7 +54,7 @@ public class TileBeaconTransceiver extends TileBeacon{
 		return new BeaconData(this, TRANSCEIVER_ID, 0xFFFFFF, 0);
 	}
 	
-	public int isConnected(){
+	public int getConnectionMode(){
 		if(worldObj.getBlock(xCoord, yCoord+1, zCoord) == ModuleAutomation.busCable) return CON_BUS;
 		for(int i = 1; i <= 3; i++){
 			boolean block = worldObj.getBlock(xCoord, yCoord+i, zCoord) == ModuleTransport.beacon;
