@@ -11,19 +11,16 @@ public class TileBeaconConsole extends TileBeacon{
 	
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
-		// TODO Auto-generated method stub
-		
+		iface.readFromNBT(nbt, "interface");
 	}
 
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
-		// TODO Auto-generated method stub
-		
+		iface.writeToNBT(nbt, "interface");
 	}
 
 	@Override
 	public IBusInterface[] getInterfaces(int side) {
 		return new IBusInterface[]{iface};
 	}
-
 }
