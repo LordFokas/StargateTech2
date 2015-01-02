@@ -2,7 +2,6 @@ package lordfokas.stargatetech2.world;
 
 import lordfokas.stargatetech2.ModuleWorld;
 import lordfokas.stargatetech2.core.Color;
-import lordfokas.stargatetech2.core.reference.ModReference;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

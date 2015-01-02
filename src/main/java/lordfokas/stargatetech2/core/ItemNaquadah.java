@@ -2,15 +2,14 @@ package lordfokas.stargatetech2.core;
 
 import java.util.List;
 
+import lordfokas.stargatetech2.core.base.BaseItem;
+import lordfokas.stargatetech2.core.reference.ItemReference;
+import lordfokas.stargatetech2.core.reference.TextureReference;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import lordfokas.stargatetech2.core.base.BaseItem;
-import lordfokas.stargatetech2.core.reference.ItemReference;
-import lordfokas.stargatetech2.core.reference.ModReference;
-import lordfokas.stargatetech2.core.reference.TextureReference;
 
 public class ItemNaquadah extends BaseItem{
 	public static final Metadata DATA[] = new Metadata[6];

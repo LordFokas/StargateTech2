@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import lordfokas.stargatetech2.core.base.BaseGUI.ITab.TabColor;
+import lordfokas.stargatetech2.core.machine.FaceColor;
+import lordfokas.stargatetech2.core.reference.TextureReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -13,10 +16,6 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-
-import lordfokas.stargatetech2.core.base.BaseGUI.ITab.TabColor;
-import lordfokas.stargatetech2.core.machine.FaceColor;
-import lordfokas.stargatetech2.core.reference.TextureReference;
 
 public abstract class BaseGUI extends GuiContainer {
 	private int _xoff = 0, _yoff = 0;

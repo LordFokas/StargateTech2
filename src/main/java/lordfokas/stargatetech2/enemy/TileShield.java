@@ -1,10 +1,10 @@
 package lordfokas.stargatetech2.enemy;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.core.Vec3Int;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
 public class TileShield extends BaseTileEntity {
 	private Vec3Int controller;

@@ -3,8 +3,8 @@ package lordfokas.stargatetech2.world;
 import java.util.ArrayList;
 import java.util.Random;
 
-import lordfokas.stargatetech2.world.genlists.LootPodBuildList;
 import lordfokas.stargatetech2.world.genlists.BuildList.BuildMaterial;
+import lordfokas.stargatetech2.world.genlists.LootPodBuildList;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;

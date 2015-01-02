@@ -1,12 +1,12 @@
 package lordfokas.stargatetech2.core;
 
+import lordfokas.stargatetech2.core.base.BaseISBRH;
+import lordfokas.stargatetech2.core.reference.TextureReference;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-import lordfokas.stargatetech2.core.base.BaseISBRH;
-import lordfokas.stargatetech2.core.reference.TextureReference;
 
 public class RenderNaquadah extends BaseISBRH {
 	private static final RenderNaquadah INSTANCE = new RenderNaquadah();

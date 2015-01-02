@@ -3,13 +3,13 @@ package lordfokas.stargatetech2.enemy;
 import java.util.ArrayList;
 import java.util.List;
 
+import lordfokas.stargatetech2.core.base.BaseItem;
+import lordfokas.stargatetech2.core.reference.ItemReference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
-import lordfokas.stargatetech2.core.base.BaseItem;
-import lordfokas.stargatetech2.core.reference.ItemReference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

@@ -1,5 +1,9 @@
 package lordfokas.stargatetech2.transport;
 
+import lordfokas.stargatetech2.core.Vec3Int;
+import lordfokas.stargatetech2.core.base.BaseTESR;
+import lordfokas.stargatetech2.core.reference.TextureReference;
+import lordfokas.stargatetech2.transport.TileTransportRing.RingRenderData;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -7,11 +11,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
-
-import lordfokas.stargatetech2.core.Vec3Int;
-import lordfokas.stargatetech2.core.base.BaseTESR;
-import lordfokas.stargatetech2.core.reference.TextureReference;
-import lordfokas.stargatetech2.transport.TileTransportRing.RingRenderData;
 
 public class RenderTransportRing extends BaseTESR{
 	private static final double ANGLE = 1.0D / 9.0D;

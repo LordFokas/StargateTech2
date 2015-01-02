@@ -1,9 +1,9 @@
 package lordfokas.stargatetech2.api;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.fluids.Fluid;
 import lordfokas.stargatetech2.api.stargate.IStargateNetwork;
 import lordfokas.stargatetech2.api.stargate.IStargatePlacer;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.fluids.Fluid;
 
 public interface IStargateTechAPI {
 	/**

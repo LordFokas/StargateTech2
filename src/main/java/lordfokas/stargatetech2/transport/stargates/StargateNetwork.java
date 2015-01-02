@@ -13,12 +13,6 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.WorldEvent;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.DialError;
 import lordfokas.stargatetech2.api.stargate.DialEvent;
@@ -31,6 +25,12 @@ import lordfokas.stargatetech2.core.Helper;
 import lordfokas.stargatetech2.core.StargateLogger;
 import lordfokas.stargatetech2.core.api.SeedingShip;
 import lordfokas.stargatetech2.transport.TileStargate;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.WorldEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 

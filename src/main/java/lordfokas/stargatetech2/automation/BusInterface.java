@@ -2,9 +2,6 @@ package lordfokas.stargatetech2.automation;
 
 import java.util.ArrayList;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.BusPacketNetScan;
 import lordfokas.stargatetech2.api.bus.BusPacketNetScan.Device;
@@ -13,6 +10,9 @@ import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusDriver;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.core.Vec4Int;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public final class BusInterface implements IBusInterface{
 	private static final byte BROADCAST		= (byte) 0xFF;

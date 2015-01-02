@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.core.base;
 
-import net.minecraft.item.ItemStack;
 import lordfokas.stargatetech2.core.base.BaseGUI.ITab;
+import net.minecraft.item.ItemStack;
 
 public abstract class BaseTab implements ITab{
 	private final TabColor color;

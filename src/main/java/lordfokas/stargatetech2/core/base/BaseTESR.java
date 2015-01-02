@@ -1,5 +1,7 @@
 package lordfokas.stargatetech2.core.base;
 
+import lordfokas.stargatetech2.ModuleCore;
+import lordfokas.stargatetech2.core.Vec3Int;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -11,8 +13,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import lordfokas.stargatetech2.ModuleCore;
-import lordfokas.stargatetech2.core.Vec3Int;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

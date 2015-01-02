@@ -1,9 +1,9 @@
 package lordfokas.stargatetech2.core;
 
+import lordfokas.stargatetech2.ModuleTransport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import lordfokas.stargatetech2.ModuleTransport;
 
 public class StargateTab extends CreativeTabs {
 	public static final StargateTab instance = new StargateTab();

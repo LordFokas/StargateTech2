@@ -2,6 +2,14 @@ package lordfokas.stargatetech2.transport;
 
 import java.util.List;
 
+import lordfokas.stargatetech2.api.shields.IShieldable;
+import lordfokas.stargatetech2.api.shields.ShieldPermissions;
+import lordfokas.stargatetech2.core.StargateTab;
+import lordfokas.stargatetech2.core.Vec3Int;
+import lordfokas.stargatetech2.core.reference.BlockReference;
+import lordfokas.stargatetech2.core.reference.ModReference;
+import lordfokas.stargatetech2.enemy.TileShield;
+import lordfokas.stargatetech2.enemy.TileShieldController;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
@@ -14,15 +22,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import lordfokas.stargatetech2.StargateTech2;
-import lordfokas.stargatetech2.api.shields.IShieldable;
-import lordfokas.stargatetech2.api.shields.ShieldPermissions;
-import lordfokas.stargatetech2.core.StargateTab;
-import lordfokas.stargatetech2.core.Vec3Int;
-import lordfokas.stargatetech2.core.reference.BlockReference;
-import lordfokas.stargatetech2.core.reference.ModReference;
-import lordfokas.stargatetech2.enemy.TileShield;
-import lordfokas.stargatetech2.enemy.TileShieldController;
 import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.common.registry.GameRegistry;
 

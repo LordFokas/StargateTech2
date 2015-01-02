@@ -1,5 +1,9 @@
 package lordfokas.stargatetech2.transport;
 
+import lordfokas.stargatetech2.core.IconRegistry;
+import lordfokas.stargatetech2.core.base.BaseBlockContainer;
+import lordfokas.stargatetech2.core.reference.BlockReference;
+import lordfokas.stargatetech2.core.reference.TextureReference;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -7,10 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import lordfokas.stargatetech2.core.IconRegistry;
-import lordfokas.stargatetech2.core.base.BaseBlockContainer;
-import lordfokas.stargatetech2.core.reference.BlockReference;
-import lordfokas.stargatetech2.core.reference.TextureReference;
 import buildcraft.api.tools.IToolWrench;
 
 public class BlockTransportRing extends BaseBlockContainer{

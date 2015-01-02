@@ -1,10 +1,8 @@
 package lordfokas.stargatetech2.transport;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
-import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import net.minecraft.world.World;
 
 public abstract class TileBeacon extends BaseTileEntity implements IBusDevice{
 	

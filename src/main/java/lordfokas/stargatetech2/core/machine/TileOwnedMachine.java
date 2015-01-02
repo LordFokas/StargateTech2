@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.core.machine;
 
-import net.minecraft.nbt.NBTTagCompound;
 import lordfokas.stargatetech2.integration.te4.CoFHFriendHelper;
+import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class TileOwnedMachine extends TileMachine implements IOwnedMachine{
 	private static final String NO_OWNER = "__*";

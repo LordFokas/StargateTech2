@@ -2,8 +2,6 @@ package lordfokas.stargatetech2.core.api;
 
 import java.util.UUID;
 
-import com.mojang.authlib.GameProfile;
-
 import lordfokas.stargatetech2.ModuleTransport;
 import lordfokas.stargatetech2.api.stargate.IStargatePlacer;
 import lordfokas.stargatetech2.transport.ItemBlockStargate;
@@ -11,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+
+import com.mojang.authlib.GameProfile;
 
 public class SeedingShip implements IStargatePlacer{
 	public static final SeedingShip SHIP = new SeedingShip();

@@ -3,9 +3,6 @@ package lordfokas.stargatetech2.transport;
 import java.nio.FloatBuffer;
 import java.util.Random;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GLAllocation;
@@ -13,9 +10,8 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import lordfokas.stargatetech2.core.Vec3Int;
-import lordfokas.stargatetech2.core.base.BaseTESR;
+
+import org.lwjgl.opengl.GL11;
 
 public class RenderBeaconMatterGrid extends TileEntitySpecialRenderer{
 	private static final ResourceLocation ender_sky = new ResourceLocation("textures/environment/end_sky.png");

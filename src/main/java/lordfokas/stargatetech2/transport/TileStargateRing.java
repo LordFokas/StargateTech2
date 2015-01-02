@@ -1,11 +1,10 @@
 package lordfokas.stargatetech2.transport;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.ITileStargate;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
-import lordfokas.stargatetech2.core.base.BaseTileEntity.ClientLogic;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
 public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 	protected int sgx, sgy, sgz;

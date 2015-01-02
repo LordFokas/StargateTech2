@@ -2,12 +2,9 @@ package lordfokas.stargatetech2.core;
 
 import java.util.HashMap;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import lordfokas.stargatetech2.core.reference.ConfigReference;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
-import lordfokas.stargatetech2.core.reference.ConfigReference;
 
 public class Config {
 	public Configuration cfg;

@@ -1,8 +1,8 @@
 package lordfokas.stargatetech2.transport;
 
-import net.minecraft.world.IBlockAccess;
 import lordfokas.stargatetech2.core.base.BaseBlock;
 import lordfokas.stargatetech2.core.reference.BlockReference;
+import net.minecraft.world.IBlockAccess;
 
 public class BlockInvisible extends BaseBlock {
 

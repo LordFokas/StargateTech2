@@ -1,5 +1,11 @@
 package lordfokas.stargatetech2.core.machine;
 
+import lordfokas.stargatetech2.StargateTech2;
+import lordfokas.stargatetech2.core.GUIHandler.Screen;
+import lordfokas.stargatetech2.core.Helper;
+import lordfokas.stargatetech2.core.IconRegistry;
+import lordfokas.stargatetech2.core.base.BaseBlockContainer;
+import lordfokas.stargatetech2.core.reference.TextureReference;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,14 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
-import lordfokas.stargatetech2.StargateTech2;
-import lordfokas.stargatetech2.core.Helper;
-import lordfokas.stargatetech2.core.IconRegistry;
-import lordfokas.stargatetech2.core.GUIHandler.Screen;
-import lordfokas.stargatetech2.core.base.BaseBlockContainer;
-import lordfokas.stargatetech2.core.reference.TextureReference;
 import buildcraft.api.tools.IToolWrench;
 
 public abstract class BlockMachine extends BaseBlockContainer {

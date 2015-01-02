@@ -1,9 +1,9 @@
 package lordfokas.stargatetech2.transport;
 
+import lordfokas.stargatetech2.core.base.BaseISBRH;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
-import lordfokas.stargatetech2.core.base.BaseISBRH;
 
 public class RenderStargateBlock extends BaseISBRH {
 	private static final RenderStargateBlock INSTANCE = new RenderStargateBlock();

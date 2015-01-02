@@ -1,7 +1,5 @@
 package lordfokas.stargatetech2.enemy;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.core.GUIHandler.Screen;
 import lordfokas.stargatetech2.core.machine.BlockMachine;
 import lordfokas.stargatetech2.core.machine.TileMachine;

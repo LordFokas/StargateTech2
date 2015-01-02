@@ -2,12 +2,12 @@ package lordfokas.stargatetech2.core;
 
 import java.util.HashMap;
 
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.IIcon;
 import lordfokas.stargatetech2.core.reference.ModReference;
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import lordfokas.stargatetech2.enemy.IonizedParticles;
 import lordfokas.stargatetech2.integration.tico.MoltenNaquadah;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.util.IIcon;
 
 public class IconRegistry {
 	public static final HashMap<String, IIcon> blockIcons = new HashMap<String, IIcon>();

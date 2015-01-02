@@ -1,7 +1,5 @@
 package lordfokas.stargatetech2.core.machine.tabs;
 
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.IIcon;
 import lordfokas.stargatetech2.core.IconRegistry;
 import lordfokas.stargatetech2.core.Stacks;
 import lordfokas.stargatetech2.core.base.BaseTab;
@@ -10,6 +8,8 @@ import lordfokas.stargatetech2.core.machine.FaceColor;
 import lordfokas.stargatetech2.core.machine.TileMachine;
 import lordfokas.stargatetech2.core.packets.PacketToggleMachineFace;
 import lordfokas.stargatetech2.core.reference.TextureReference;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.util.IIcon;
 
 public class TabConfiguration extends BaseTab{
 	private static final Side[] sides = new Side[]{

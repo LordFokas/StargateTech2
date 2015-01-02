@@ -11,7 +11,6 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.FluidTankInfo;
 import cofh.api.energy.IEnergyHandler;
 
 public class CommonDataProvider extends Provider.Body{

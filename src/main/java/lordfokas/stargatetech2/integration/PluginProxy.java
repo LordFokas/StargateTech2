@@ -1,9 +1,9 @@
 package lordfokas.stargatetech2.integration;
 
-import net.minecraftforge.common.config.Configuration;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.core.StargateLogger;
 import lordfokas.stargatetech2.core.reference.ConfigReference;
+import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Loader;
 
 public final class PluginProxy<Plugin extends IPlugin>{

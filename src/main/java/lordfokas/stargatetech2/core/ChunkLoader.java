@@ -8,7 +8,8 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import lordfokas.stargatetech2.StargateTech2;
+import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -19,8 +20,7 @@ import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
-import lordfokas.stargatetech2.StargateTech2;
-import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public final class ChunkLoader implements LoadingCallback{
 	public static final ChunkLoader instance = new ChunkLoader();

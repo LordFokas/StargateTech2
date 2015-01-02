@@ -1,11 +1,8 @@
 package lordfokas.stargatetech2.transport.bus;
 
-import java.util.LinkedList;
-
 import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.IBusDriver;
 import lordfokas.stargatetech2.transport.TileBeaconTransceiver;
-import lordfokas.stargatetech2.transport.beacons.BeaconData;
 import lordfokas.stargatetech2.transport.bus.BusPacketBeacons.RequestMode;
 
 public class BusDriverTransceiverA implements IBusDriver{

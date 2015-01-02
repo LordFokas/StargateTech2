@@ -2,8 +2,6 @@ package lordfokas.stargatetech2.core;
 
 import java.util.List;
 
-import javax.swing.Icon;
-
 import lordfokas.stargatetech2.core.base.BaseBlock;
 import lordfokas.stargatetech2.core.reference.BlockReference;
 import lordfokas.stargatetech2.core.reference.TextureReference;
@@ -14,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockNaquadah extends BaseBlock {

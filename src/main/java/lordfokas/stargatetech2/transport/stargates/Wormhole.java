@@ -4,10 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.List;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.core.ChunkLoader;
 import lordfokas.stargatetech2.core.StargateLogger;
@@ -15,6 +11,10 @@ import lordfokas.stargatetech2.core.Vec3Int;
 import lordfokas.stargatetech2.core.Vec4Int;
 import lordfokas.stargatetech2.transport.Teleporter;
 import lordfokas.stargatetech2.transport.TileStargate;
+import net.minecraft.entity.Entity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 
 public final class Wormhole {
 	private Vec4Int tmpSrc, tmpDst;

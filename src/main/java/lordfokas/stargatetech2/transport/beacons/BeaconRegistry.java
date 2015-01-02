@@ -2,10 +2,12 @@ package lordfokas.stargatetech2.transport.beacons;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 
 import lordfokas.stargatetech2.core.Vec3Int;
 import lordfokas.stargatetech2.transport.TileBeaconTransceiver;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -82,41 +84,73 @@ public class BeaconRegistry{
 	
 	
 	// REGISTRY DATA // #####################################
-	public static class RegistryData extends WorldSavedData{
-		public HashMap<String, BeaconNetwork> networks = new HashMap();
+	private static class RegistryData extends WorldSavedData{
+		private HashMap<String, BeaconNetwork> networks = new HashMap();
 		
-		public RegistryData(String key){
+		private RegistryData(String key){
 			super(key);
 		}
 		
 		@Override
 		public void readFromNBT(NBTTagCompound nbt){
-			
+			networks = new HashMap();
+			NBTTagList list = nbt.getTagList("networks", 10);
+			for(int i = 0; i < list.tagCount(); i++){
+				NBTTagCompound tag = list.getCompoundTagAt(i);
+				NBTTagCompound net = tag.getCompoundTag("network");
+				String name = tag.getString("name");
+				BeaconNetwork network = new BeaconNetwork(name);
+				network.readFromNBT(net);
+				networks.put(name, network);
+			}
 		}
 		
 		@Override
 		public void writeToNBT(NBTTagCompound nbt){
-			
+			NBTTagList list = new NBTTagList();
+			for(Entry<String, BeaconNetwork> e : networks.entrySet()){
+				NBTTagCompound tag = new NBTTagCompound();
+				NBTTagCompound net = new NBTTagCompound();
+				
+				// If a network is empty, don't save it.
+				// This automatically removes unused nets on save/load
+				if(!e.getValue().writeToNBT(net)) continue;
+				
+				tag.setString("name", e.getKey());
+				tag.setTag("network", net);
+				list.appendTag(tag);
+			}
+			nbt.setTag("networks", list);
 		}
 	}
 	
 	
 	
 	// BEACON NETWORK // ####################################
-	public static class BeaconNetwork{
-		public final String networkName;
+	private static class BeaconNetwork{
+		private final String networkName;
 		private LinkedList<Vec3Int> beacons = new LinkedList();
 		
-		public BeaconNetwork(String name){
+		private BeaconNetwork(String name){
 			this.networkName = name;
 		}
 		
-		public void readFromNBT(NBTTagCompound nbt){
-			
+		private void readFromNBT(NBTTagCompound nbt){
+			beacons = new LinkedList();
+			int size = nbt.getInteger("size");
+			for(int i = 0; i < size; i++){
+				beacons.add(Vec3Int.fromNBT(nbt.getCompoundTag("b" + i)));
+			}
 		}
 		
-		public void writeToNBT(NBTTagCompound nbt){
-			
+		private boolean writeToNBT(NBTTagCompound nbt){
+			int size = beacons.size();
+			if(size == 0) return false;
+			for(int i = 0; i < size; i++){
+				nbt.setTag("b" + i, beacons.get(i).toNBT());
+			}
+			nbt.setInteger("size", size);
+			return true;
 		}
 	}
 }

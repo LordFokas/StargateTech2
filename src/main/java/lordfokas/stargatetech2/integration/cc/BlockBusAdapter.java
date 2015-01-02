@@ -1,13 +1,13 @@
 package lordfokas.stargatetech2.integration.cc;
 
+import lordfokas.stargatetech2.core.base.BaseBlockContainer;
+import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.reference.BlockReference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import lordfokas.stargatetech2.core.base.BaseBlockContainer;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
-import lordfokas.stargatetech2.core.reference.BlockReference;
 import buildcraft.api.tools.IToolWrench;
 
 public class BlockBusAdapter extends BaseBlockContainer {

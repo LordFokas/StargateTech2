@@ -2,8 +2,6 @@ package lordfokas.stargatetech2.integration.cc;
 
 import java.util.LinkedList;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP;
@@ -15,6 +13,8 @@ import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.automation.AddressHelper;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
 import lordfokas.stargatetech2.core.reference.ModReference;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.peripheral.IComputerAccess;

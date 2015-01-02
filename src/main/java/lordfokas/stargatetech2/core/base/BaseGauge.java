@@ -1,5 +1,8 @@
 package lordfokas.stargatetech2.core.base;
 
+import lordfokas.stargatetech2.core.Helper;
+import lordfokas.stargatetech2.core.base.BaseGUI.IGauge;
+import lordfokas.stargatetech2.core.base.BaseGUI.IHoverHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.EnumChatFormatting;
@@ -10,9 +13,6 @@ import net.minecraftforge.fluids.IFluidTank;
 
 import org.lwjgl.opengl.GL11;
 
-import lordfokas.stargatetech2.core.Helper;
-import lordfokas.stargatetech2.core.base.BaseGUI.IGauge;
-import lordfokas.stargatetech2.core.base.BaseGUI.IHoverHandler;
 import cofh.api.energy.EnergyStorage;
 
 public abstract class BaseGauge implements IGauge{

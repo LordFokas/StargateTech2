@@ -1,11 +1,11 @@
 package lordfokas.stargatetech2.world;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.world.IBlockAccess;
 import lordfokas.stargatetech2.ModuleWorld;
 import lordfokas.stargatetech2.core.Color;
 import lordfokas.stargatetech2.core.base.BaseISBRH;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.world.IBlockAccess;
 
 public class RenderLanteanWall extends BaseISBRH {
 	private static final RenderLanteanWall INSTANCE = new RenderLanteanWall();

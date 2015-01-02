@@ -2,8 +2,6 @@ package lordfokas.stargatetech2.enemy.gui;
 
 import java.util.List;
 
-import org.lwjgl.input.Mouse;
-
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.core.base.BaseGUI;
 import lordfokas.stargatetech2.core.base.BaseGauge.TankGauge;
@@ -15,6 +13,8 @@ import lordfokas.stargatetech2.enemy.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.enemy.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.enemy.TileShieldController;
 import lordfokas.stargatetech2.integration.te4.CoFHFriendHelper;
+
+import org.lwjgl.input.Mouse;
 
 public class GUIShieldController extends BaseGUI {
 	private TileShieldController shieldController;

@@ -1,11 +1,9 @@
 package lordfokas.stargatetech2.integration.waila;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.event.FMLInterModComms;
 import lordfokas.stargatetech2.api.stargate.ITileStargate;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
 import lordfokas.stargatetech2.integration.IPlugin;
 import mcp.mobius.waila.api.IWailaRegistrar;
+import cpw.mods.fml.common.event.FMLInterModComms;
 
 public class PluginWaila implements IPlugin{
 	

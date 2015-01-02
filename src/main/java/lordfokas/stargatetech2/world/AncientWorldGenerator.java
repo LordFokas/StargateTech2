@@ -2,12 +2,12 @@ package lordfokas.stargatetech2.world;
 
 import java.util.Random;
 
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraftforge.common.MinecraftForge;
 import lordfokas.stargatetech2.api.world.EventWorldGen;
 import lordfokas.stargatetech2.api.world.EventWorldGen.GenType;
 import lordfokas.stargatetech2.core.ConfigServer;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 

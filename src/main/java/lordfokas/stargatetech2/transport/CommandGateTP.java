@@ -3,8 +3,6 @@ package lordfokas.stargatetech2.transport;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.core.Vec3Int;
 import lordfokas.stargatetech2.transport.stargates.AddressMapping;
@@ -17,6 +15,8 @@ import net.minecraft.command.SyntaxErrorException;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class CommandGateTP extends CommandBase {
 

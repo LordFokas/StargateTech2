@@ -1,11 +1,11 @@
 package lordfokas.stargatetech2.world.genlists;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.ModuleTransport;
 import lordfokas.stargatetech2.core.Vec3Int;
 import lordfokas.stargatetech2.transport.BlockStargate;
 import lordfokas.stargatetech2.transport.TileStargateRing;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class StargateBuildList extends BuildList {
 	private static final BuildMaterial[] MATERIAL = new BuildMaterial[]{

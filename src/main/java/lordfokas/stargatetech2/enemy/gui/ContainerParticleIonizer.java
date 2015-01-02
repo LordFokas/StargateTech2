@@ -1,12 +1,12 @@
 package lordfokas.stargatetech2.enemy.gui;
 
+import lordfokas.stargatetech2.core.base.BaseContainer;
+import lordfokas.stargatetech2.enemy.IonizedParticles;
+import lordfokas.stargatetech2.enemy.TileParticleIonizer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import lordfokas.stargatetech2.core.base.BaseContainer;
-import lordfokas.stargatetech2.enemy.IonizedParticles;
-import lordfokas.stargatetech2.enemy.TileParticleIonizer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

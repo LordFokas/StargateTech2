@@ -1,10 +1,8 @@
 package lordfokas.stargatetech2.core.base;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.core.StargateTab;
 import lordfokas.stargatetech2.core.reference.ModReference;
+import net.minecraft.item.Item;
 
 public abstract class BaseItem extends Item {
 	private String unlocalized;

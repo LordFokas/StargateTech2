@@ -3,7 +3,6 @@ package lordfokas.stargatetech2.world.genlists;
 import lordfokas.stargatetech2.core.api.SeedingShip;
 import lordfokas.stargatetech2.world.LootGenerator;
 import lordfokas.stargatetech2.world.LootGenerator.LootLevel;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;

@@ -1,7 +1,5 @@
 package lordfokas.stargatetech2.core.api;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.fluids.Fluid;
 import lordfokas.stargatetech2.api.IFactory;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.stargate.IStargateNetwork;
@@ -10,6 +8,8 @@ import lordfokas.stargatetech2.core.StargateLogger;
 import lordfokas.stargatetech2.core.StargateTab;
 import lordfokas.stargatetech2.enemy.IonizedParticles;
 import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.fluids.Fluid;
 
 public final class APIImplementation extends StargateTechAPI {
 	private final IFactory factory = new Factory();

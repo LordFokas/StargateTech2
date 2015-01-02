@@ -1,12 +1,11 @@
 package lordfokas.stargatetech2.transport;
 
+import lordfokas.stargatetech2.ModuleTransport;
+import lordfokas.stargatetech2.core.base.BaseISBRH;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-import lordfokas.stargatetech2.ModuleTransport;
-import lordfokas.stargatetech2.core.IconRegistry;
-import lordfokas.stargatetech2.core.base.BaseISBRH;
 
 public class RenderBeacon extends BaseISBRH{
 	private static final RenderBeacon INSTANCE = new RenderBeacon();
