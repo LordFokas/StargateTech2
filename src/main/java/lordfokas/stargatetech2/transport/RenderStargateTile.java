@@ -170,10 +170,12 @@ public class RenderStargateTile extends BaseTESR {
 	
 	private void renderSymbols(){
 		GL11.glPushMatrix();
+		GL11.glColor3d(0.2, 0.2, 0.2);
 		for(int i = 0; i < RING_SEGMENTS; i++){
 			renderSymbolSegment(i);
 			GL11.glRotated(ANGLE_RING * 360D, 0, 0, 360);
 		}
+		GL11.glColor3d(1, 1, 1);
 		GL11.glPopMatrix();
 	}
 	

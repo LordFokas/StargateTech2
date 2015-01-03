@@ -10,11 +10,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class StargateDataProvider extends Provider.Body{
+	
 	@Override
 	public void addToBody(ItemStack stack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler configHandler) {
 		TileEntity te = accessor.getTileEntity();
 		if(te instanceof ITileStargate){
 			list.add(SpecialChars.GOLD + ((ITileStargate)te).getClientAddress());
+			list.add(SpecialChars.RENDER + "{sgtech2Symbols}");
 		}
 	}
 }
