@@ -1,5 +1,7 @@
 package lordfokas.stargatetech2.enemy;
 
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
 import lordfokas.stargatetech2.core.GUIHandler.Screen;
 import lordfokas.stargatetech2.core.machine.BlockMachine;
 import lordfokas.stargatetech2.core.machine.TileMachine;
@@ -15,4 +17,9 @@ public class BlockShieldController extends BlockMachine {
 	protected TileMachine createTileEntity(int metadata) {
 		return new TileShieldController();
 	}
+	
+	/*@Override // We'll use this later to turn shields on and off depending on RS state.
+	public void onNeighborBlockChange(World w, int x, int y, int z, Block n) {
+		boolean power = w.isBlockIndirectlyGettingPowered(x, y, z);
+	}*/
 }
