@@ -1,2 +1,1 @@
-All assets in this project are public domain.
-All code in this project has no license (which means "All Rights Reserved")
+﻿This repository is ©2015 LordFokas ("the author") under the “Don’t Be a Jerk” non-commercial care-free license available at https://github.com/LordFokas/DBaJ/blob/master/LICENSE.md
