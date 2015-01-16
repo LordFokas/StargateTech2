@@ -1,2 +1,0 @@
-All assets in this project are public domain.
-All code in this project has no license (which means "All Rights Reserved")
