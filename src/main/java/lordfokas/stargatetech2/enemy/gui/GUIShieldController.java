@@ -17,6 +17,7 @@ import cofh.lib.gui.element.listbox.IListBoxElement;
 
 public class GUIShieldController extends BaseGUI {
 	private static final String INFO = "Control who or what can go through the shields!\n\nOpen exceptions!\n\nControl how the Controller is controlled!";
+	
 	private TileShieldController shieldController;
 	private ElementListBox listBox;
 	private ElementTextBox text;
@@ -50,6 +51,13 @@ public class GUIShieldController extends BaseGUI {
 		monsters = new ElementCheckBox(this, 8, 89, "PermMobs", 244, 48, 232, 48, 12, "StargateTech2:textures/gui/shieldController.png");
 		vessels = new ElementCheckBox(this, 8, 103, "PermVess", 244, 48, 232, 48, 12, "StargateTech2:textures/gui/shieldController.png");
 		
+		cofh.setToolTip("Allow your Friends through the Shield").setToolTipLocalized(true);
+		players.setToolTip("Allow other Players through the Shield").setToolTipLocalized(true);
+		villagers.setToolTip("Allow Villagers through the Shield").setToolTipLocalized(true);
+		animals.setToolTip("Allow Animals through the Shield").setToolTipLocalized(true);
+		monsters.setToolTip("Allow Monsters through the Shield").setToolTipLocalized(true);
+		vessels.setToolTip("Allow Vessels (like Minecarts) through the Shield").setToolTipLocalized(true);
+		
 		ElementFluidTank tank = new ElementFluidTank(this, 9, 132, shieldController.tank);
 		
 		add = new ElementButton(this, 167, 33, "Add", 224, 0, 224, 16, 224, 32, 16, 16, "StargateTech2:textures/gui/shieldController.png");
@@ -58,6 +66,9 @@ public class GUIShieldController extends BaseGUI {
 		text.setFilter(16, "abcdefghijklmnopqrstuvwxyz1234567890_").setAction("Add");
 		listBox = new ElementListBox(this, 104, 51, 95, 141);
 		listBox.selectedLineColor = 0xFF0F0F0F;
+		
+		add.setToolTip("Add a player to the Exception List").setToolTipLocalized(true);
+		rem.setToolTip("Remove the selected player from the Exception List").setToolTipLocalized(true);
 		
 		addElement(cofh.setLabel("CoFH Friends"));
 		addElement(players.setLabel("Other Players"));
