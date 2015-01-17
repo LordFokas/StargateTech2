@@ -13,6 +13,7 @@ public class ConfigReference {
 	public static final String KEY_PLUGINS			= "plugins";
 	public static final String KEY_PLUGINS_CC		= "plugins.computercraft";
 	public static final String KEY_PLUGINS_IC2		= "plugins.industrialcraft2";
+	public static final String KEY_PLUGINS_OC		= "plugins.opencomputers";
 	public static final String KEY_PLUGINS_TE4		= "plugins.thermalexpansion4";
 	public static final String KEY_PLUGINS_TICO		= "plugins.tinkersconstruct";
 	public static final String KEY_PLUGINS_WAILA	= "plugins.waila";
@@ -35,7 +36,9 @@ public class ConfigReference {
 	static{
 		PLUGIN_LIST.add(KEY_PLUGINS_CC);
 		PLUGIN_LIST.add(KEY_PLUGINS_IC2);
+		PLUGIN_LIST.add(KEY_PLUGINS_OC);
 		PLUGIN_LIST.add(KEY_PLUGINS_TE4);
 		PLUGIN_LIST.add(KEY_PLUGINS_TICO);
+		PLUGIN_LIST.add(KEY_PLUGINS_WAILA);
 	}
 }
