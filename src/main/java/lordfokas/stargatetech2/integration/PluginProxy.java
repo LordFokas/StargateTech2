@@ -40,7 +40,7 @@ public final class PluginProxy<Plugin extends IPlugin>{
 	}
 	
 	public Plugin getPlugin(){
-		return null;
+		return plugin;
 	}
 	
 	public boolean shouldLoad(){
