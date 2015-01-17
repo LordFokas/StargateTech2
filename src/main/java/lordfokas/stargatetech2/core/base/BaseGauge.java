@@ -1,8 +1,8 @@
 package lordfokas.stargatetech2.core.base;
 
 import lordfokas.stargatetech2.core.Helper;
-import lordfokas.stargatetech2.core.base.BaseGUI.IGauge;
-import lordfokas.stargatetech2.core.base.BaseGUI.IHoverHandler;
+import lordfokas.stargatetech2.core.base.BaseGUI__OLD_AND_FLAWED.IGauge;
+import lordfokas.stargatetech2.core.base.BaseGUI__OLD_AND_FLAWED.IHoverHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.EnumChatFormatting;
@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11;
 import cofh.api.energy.EnergyStorage;
 
 public abstract class BaseGauge implements IGauge{
-	protected BaseGUI master;
+	protected BaseGUI__OLD_AND_FLAWED master;
 	protected GaugeHoverHandler hoverHandler;
 	protected int cVal, mVal;
 	protected int xPos, yPos;
@@ -52,7 +52,7 @@ public abstract class BaseGauge implements IGauge{
 	}
 	
 	@Override
-	public void register(BaseGUI gui){
+	public void register(BaseGUI__OLD_AND_FLAWED gui){
 		master = gui;
 		master.addHoverHandler(hoverHandler, xPos, yPos, 16, 64);
 	}

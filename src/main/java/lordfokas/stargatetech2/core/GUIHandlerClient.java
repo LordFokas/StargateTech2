@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.core;
 
-import lordfokas.stargatetech2.core.base.BaseGUI;
+import lordfokas.stargatetech2.core.base.BaseGUI__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.enemy.TileParticleIonizer;
 import lordfokas.stargatetech2.enemy.TileShieldController;
 import lordfokas.stargatetech2.enemy.gui.ContainerParticleIonizer;
@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 public class GUIHandlerClient extends GUIHandler {
 	
 	@Override
-	public BaseGUI getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z){
+	public GUIShieldController getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z){
 		TileEntity te = world.getTileEntity(x, y, z);
-		BaseGUI gui = null;
+		GUIShieldController gui = null;
 		switch(Screen.values()[ID]){
 			case SHIELD_CONTROLLER:
 				if(te instanceof TileShieldController)
@@ -24,7 +24,7 @@ public class GUIHandlerClient extends GUIHandler {
 				break;
 			case PARTICLE_IONIZER:
 				if(te instanceof TileParticleIonizer)
-					gui = new GUIParticleIonizer(new ContainerParticleIonizer((TileParticleIonizer)te, player));
+					//gui = new GUIParticleIonizer(new ContainerParticleIonizer((TileParticleIonizer)te, player));
 				break;
 			default: break;
 		}

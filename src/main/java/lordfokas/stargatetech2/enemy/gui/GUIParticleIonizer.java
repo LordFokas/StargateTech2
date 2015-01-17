@@ -5,8 +5,8 @@ import java.util.List;
 import lordfokas.stargatetech2.core.Helper;
 import lordfokas.stargatetech2.core.api.ParticleIonizerRecipes;
 import lordfokas.stargatetech2.core.api.ParticleIonizerRecipes.IonizerRecipe;
-import lordfokas.stargatetech2.core.base.BaseGUI;
-import lordfokas.stargatetech2.core.base.BaseGUI.ITab.TabColor;
+import lordfokas.stargatetech2.core.base.BaseGUI__OLD_AND_FLAWED;
+import lordfokas.stargatetech2.core.base.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
 import lordfokas.stargatetech2.core.base.BaseGauge.PowerGauge;
 import lordfokas.stargatetech2.core.base.BaseGauge.TankGauge;
 import lordfokas.stargatetech2.core.machine.FaceColor;
@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fluids.FluidStack;
 
-public class GUIParticleIonizer extends BaseGUI {
+public class GUIParticleIonizer extends BaseGUI__OLD_AND_FLAWED {
 	private TileParticleIonizer ionizer;
 	private ProgressHover progressHover;
 	private TankGauge fluidIonizable, ionizedParticles;

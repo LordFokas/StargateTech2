@@ -40,6 +40,10 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 	private boolean active = false;
 	private boolean enabled = false;
 	
+	// TODO: get a better mechanism going on here.
+	public boolean permissionsUpdated = false;
+	public boolean exceptionsUpdated = false;
+	
 	@Override
 	public void updateEntity(){
 		if(worldObj.isRemote || (worldObj.getTotalWorldTime() % 100) != 0) return;
@@ -194,6 +198,11 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 		enabled = nbt.getBoolean("enabled");
 		readFacingNBT(nbt.getCompoundTag("facing"));
 		readOwnedMachineData(nbt);
+		
+		if(worldObj != null && worldObj.isRemote == true){
+			permissionsUpdated = true;
+			exceptionsUpdated = true;
+		}
 	}
 
 	@Override

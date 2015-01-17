@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import lordfokas.stargatetech2.core.base.BaseGUI.ITab.TabColor;
+import lordfokas.stargatetech2.core.base.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
 import lordfokas.stargatetech2.core.machine.FaceColor;
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-public abstract class BaseGUI extends GuiContainer {
+public abstract class BaseGUI__OLD_AND_FLAWED extends GuiContainer {
 	private int _xoff = 0, _yoff = 0;
 	private boolean onBackground;
 	private boolean isNativeRender;
@@ -30,7 +30,7 @@ public abstract class BaseGUI extends GuiContainer {
 	private ArrayList<HandlerWrapper<IHoverHandler>> hoverHandlers = new ArrayList();
 	
 	public static interface ITab{
-		public void register(BaseGUI gui);
+		public void register(BaseGUI__OLD_AND_FLAWED gui);
 		public TabColor getColor();
 		public ItemStack getIcon();
 		public String getName();
@@ -55,7 +55,7 @@ public abstract class BaseGUI extends GuiContainer {
 	}
 	
 	public static interface IGauge{
-		public void register(BaseGUI gui);
+		public void register(BaseGUI__OLD_AND_FLAWED gui);
 		public void renderGauge();
 		public void renderTooltip();
 		public void update();
@@ -73,14 +73,14 @@ public abstract class BaseGUI extends GuiContainer {
 	private static class TabWrapper{
 		public int _hx, _hy;
 		public final ITab tab;
-		private BaseGUI gui;
+		private BaseGUI__OLD_AND_FLAWED gui;
 		private int size;
 		private long lastUpdate = 0;
 		private int grow;
 		private boolean isHover = false;
 		private static final int GROWTH_FACTOR = 25;
 		
-		public TabWrapper(ITab tab, BaseGUI gui){
+		public TabWrapper(ITab tab, BaseGUI__OLD_AND_FLAWED gui){
 			this.tab = tab;
 			this.gui = gui;
 		}
@@ -213,7 +213,7 @@ public abstract class BaseGUI extends GuiContainer {
 		}
 	}
 	
-	protected BaseGUI(BaseContainer container, int x, int y, boolean useText) {
+	protected BaseGUI__OLD_AND_FLAWED(BaseContainer container, int x, int y, boolean useText) {
 		super(container != null ? container : new BaseContainer());
 		xSize = x + 18;
 		ySize = y + 18;

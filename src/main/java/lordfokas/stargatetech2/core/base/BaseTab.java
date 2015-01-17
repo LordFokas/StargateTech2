@@ -1,13 +1,13 @@
 package lordfokas.stargatetech2.core.base;
 
-import lordfokas.stargatetech2.core.base.BaseGUI.ITab;
+import lordfokas.stargatetech2.core.base.BaseGUI__OLD_AND_FLAWED.ITab;
 import net.minecraft.item.ItemStack;
 
 public abstract class BaseTab implements ITab{
 	private final TabColor color;
 	private final ItemStack icon;
 	private final String name;
-	protected BaseGUI gui;
+	protected BaseGUI__OLD_AND_FLAWED gui;
 	
 	public BaseTab(String name, ItemStack icon, TabColor color){
 		this.name = name;
@@ -16,7 +16,7 @@ public abstract class BaseTab implements ITab{
 	}
 	
 	@Override
-	public final void register(BaseGUI gui) {
+	public final void register(BaseGUI__OLD_AND_FLAWED gui) {
 		this.gui = gui;
 	}
 	
