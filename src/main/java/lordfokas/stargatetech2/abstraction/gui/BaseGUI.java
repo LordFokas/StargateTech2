@@ -66,4 +66,8 @@ public class BaseGUI extends GuiBaseAdv{
 			}
 		}
 	}
+	
+	public void playTonedClick(boolean positive){
+		playSound("random.click", 1F, positive ? 0.8F : 0.6F);
+	}
 }

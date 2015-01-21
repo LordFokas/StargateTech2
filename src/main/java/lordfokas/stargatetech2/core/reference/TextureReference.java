@@ -84,6 +84,8 @@ public class TextureReference {
 	public static final ResourceLocation GUI_SHIELD_CONTROLLER = getTexture("gui/shieldController.png");
 	public static final ResourceLocation GUI_PARTICLE_IONIZER = getTexture("gui/particleIonizer.png");
 	public static final ResourceLocation GUI_RING_OVERLAY = getTexture("gui/ringOverlay.png");
+	public static final ResourceLocation GUI_ELEM_ABUS_ADDR = getTexture("gui/tabAbstractBus.png");
+	public static final ResourceLocation GUI_ELEM_TOGGLE = getTexture("gui/elementToggle.png");
 	
 	public static final ResourceLocation TESR_TRANSPORT_RING = getTexture("special/transportRing.png");
 	public static final ResourceLocation TESR_STARGATE = getTexture("special/stargate.png");

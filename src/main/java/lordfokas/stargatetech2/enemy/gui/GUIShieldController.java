@@ -5,14 +5,17 @@ import lordfokas.stargatetech2.abstraction.gui.ElementCheckBox;
 import lordfokas.stargatetech2.abstraction.gui.ElementListBox;
 import lordfokas.stargatetech2.abstraction.gui.ElementTextBox;
 import lordfokas.stargatetech2.abstraction.gui.ListBoxText;
+import lordfokas.stargatetech2.abstraction.gui.TabAbstractBus;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import lordfokas.stargatetech2.enemy.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.enemy.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.enemy.TileShieldController;
+import cofh.core.gui.element.TabConfiguration;
 import cofh.core.gui.element.TabInfo;
 import cofh.lib.gui.element.ElementButton;
 import cofh.lib.gui.element.ElementFluidTank;
+import cofh.lib.gui.element.TabBase;
 import cofh.lib.gui.element.listbox.IListBoxElement;
 
 public class GUIShieldController extends BaseGUI {
@@ -85,6 +88,7 @@ public class GUIShieldController extends BaseGUI {
 		addElement(listBox);
 		
 		addTab(new TabInfo(this, INFO));
+		addTab(new TabAbstractBus(this, TabBase.RIGHT, shieldController));
 		
 		updatePermissions();
 	}
@@ -128,8 +132,10 @@ public class GUIShieldController extends BaseGUI {
 			p.permissionFlag = ShieldPermissions.PERM_VESSEL;
 		}
 		if(packetToSend == 1){
+			playTonedClick(p.isSetting);
 			p.sendToServer();
 		}else if(packetToSend == 2){
+			playTonedClick(e.isSetting);
 			e.sendToServer();
 		}
 	}
