@@ -61,14 +61,4 @@ public class TileStargateRing extends BaseTileEntity implements ITileStargate{
 		nbt.setInteger("sgy", sgy);
 		nbt.setInteger("sgz", sgz);
 	}
-
-	@Override
-	@ClientLogic
-	public String getClientAddress() {
-		TileStargate stargate = getStargate();
-		if(stargate != null){
-			return stargate.getClientAddress();
-		}
-		return "Invalid Address";
-	}
 }

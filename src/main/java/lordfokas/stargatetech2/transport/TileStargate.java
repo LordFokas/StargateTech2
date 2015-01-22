@@ -10,6 +10,7 @@ import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.DialError;
 import lordfokas.stargatetech2.api.stargate.ITileStargateBase;
 import lordfokas.stargatetech2.api.stargate.StargateEvent;
+import lordfokas.stargatetech2.api.stargate.Symbol;
 import lordfokas.stargatetech2.core.base.BaseTileEntity;
 import lordfokas.stargatetech2.core.reference.ModReference;
 import lordfokas.stargatetech2.transport.bus.BusDriverStargate;
@@ -36,7 +37,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	@ServerLogic private boolean useXBuilder;
 	
 	@ClientLogic private RenderData renderData = new RenderData();
-	@ClientLogic private String address;
+	@ClientLogic private Address address;
 	
 	private BusDriverStargate networkDriver = new BusDriverStargate(this);
 	private IBusInterface[] interfaces = new IBusInterface[]{ StargateTechAPI.api().getFactory().getIBusInterface(this, networkDriver) };
@@ -73,10 +74,7 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 		super.validate();
 		Address addr = getAddress(); // forces the Stargate Network to generate an address for this Stargate.
 		if(addr != null){ // Stashes the address so it's visible on the client side.
-			String address = addr.toString();
-			if(this.address == null || !address.equals(this.address)){
-				this.address = address;
-			}
+			address = addr;
 		}
 	}
 	
@@ -139,16 +137,10 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 	@Override
 	public Address getAddress(){
 		if(worldObj.isRemote){
-			return null;
+			return address;
 		}else{
 			return StargateNetwork.instance().getMyAddress(worldObj, xCoord, yCoord, zCoord);
 		}
-	}
-	
-	@Override
-	@ClientLogic
-	public String getClientAddress(){
-		return this.address;
 	}
 	
 	@Override
@@ -267,7 +259,12 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 		useXBuilder = nbt.getBoolean("useXBuilder");
 		renderData.hasWormhole = nbt.getBoolean("hasWormhole");
 		capacitor.readFromNBT(nbt);
-		address = nbt.getString("clientAddress");
+		int[] ids = nbt.getIntArray("address");
+		Symbol[] syms = new Symbol[ids.length];
+		for(int i = 0; i < ids.length; i++){
+			syms[i] = Symbol.get(ids[i]);
+		}
+		address = Address.create(syms);
 	}
 
 	@Override
@@ -276,7 +273,11 @@ public class TileStargate extends BaseTileEntity implements ITileStargateBase, I
 		nbt.setBoolean("useXBuilder", useXBuilder);
 		nbt.setBoolean("hasWormhole", hasActiveWormhole());
 		capacitor.writeToNBT(nbt);
-		nbt.setString("clientAddress", address);
+		int[] syms = new int[address.length()];
+		for(int i = 0; i < address.length(); i++){
+			syms[i] = address.getSymbol(i).ordinal();
+		}
+		nbt.setIntArray("address", syms);
 	}
 
 	@Override

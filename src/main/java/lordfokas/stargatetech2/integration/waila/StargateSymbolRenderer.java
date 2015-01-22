@@ -3,13 +3,14 @@ package lordfokas.stargatetech2.integration.waila;
 import java.awt.Dimension;
 
 import lordfokas.stargatetech2.api.stargate.Address;
+import lordfokas.stargatetech2.api.stargate.ITileStargate;
 import lordfokas.stargatetech2.core.Color;
 import lordfokas.stargatetech2.core.reference.TextureReference;
-import lordfokas.stargatetech2.transport.stargates.LoreAddresses;
 import lordfokas.stargatetech2.transport.stargates.SymbolCoordinates;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.tileentity.TileEntity;
 
 import org.lwjgl.opengl.GL11;
 
@@ -24,7 +25,11 @@ public class StargateSymbolRenderer implements IWailaTooltipRenderer{
 	public void draw(String[] params, IWailaCommonAccessor accessor, int x, int y) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureReference.SYMBOLS);
 		Color c = Color.ORANGE;
-		Address addr = LoreAddresses.EARTH;
+		TileEntity te = accessor.getTileEntity();
+		Address addr = Address.ERROR;
+		if(te instanceof ITileStargate){
+			addr = ((ITileStargate)te).getAddress();
+		}
 		GL11.glPushMatrix();
 		GL11.glColor3f(c.r(), c.g(), c.b());
 		GL11.glTranslatef(x, y, 0);

@@ -1,6 +1,7 @@
 package lordfokas.stargatetech2.api.stargate;
 
 public class Address {
+	public static final Address ERROR = new Address(new Symbol[]{Symbol.MIG, Symbol.MIG, Symbol.MIG, Symbol.MIG, Symbol.MIG});
 	private Symbol[] symbols;
 	
 	public static Address create(Symbol[] symbols){
@@ -22,7 +23,7 @@ public class Address {
 			}
 			return new Address(symbols);
 		}catch(Exception e){
-			return null;
+			return ERROR;
 		}
 	}
 	

@@ -15,7 +15,7 @@ public class StargateDataProvider extends Provider.Body{
 	public void addToBody(ItemStack stack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler configHandler) {
 		TileEntity te = accessor.getTileEntity();
 		if(te instanceof ITileStargate){
-			list.add(SpecialChars.GOLD + ((ITileStargate)te).getClientAddress());
+			list.add(SpecialChars.GOLD + ((ITileStargate)te).getAddress().toString());
 			list.add(SpecialChars.RENDER + "{sgtech2Symbols}");
 		}
 	}

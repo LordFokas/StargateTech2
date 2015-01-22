@@ -13,9 +13,4 @@ public interface ITileStargate {
 	 * @return This Stargate's address. null values are possible on the client side.
 	 */
 	public Address getAddress();
-	
-	/**
-	 * @return A stored string with the address as seen from the client side.
-	 */
-	public String getClientAddress();
 }
