@@ -2,9 +2,6 @@ package lordfokas.stargatetech2.integration.waila;
 
 import java.awt.Dimension;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.Minecraft;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.core.Color;
 import lordfokas.stargatetech2.core.reference.TextureReference;
@@ -12,6 +9,9 @@ import lordfokas.stargatetech2.transport.stargates.LoreAddresses;
 import lordfokas.stargatetech2.transport.stargates.SymbolCoordinates;
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
+import net.minecraft.client.Minecraft;
+
+import org.lwjgl.opengl.GL11;
 
 public class StargateSymbolRenderer implements IWailaTooltipRenderer{
 	

@@ -1,11 +1,8 @@
 package lordfokas.stargatetech2.core;
 
-import lordfokas.stargatetech2.core.base.BaseGUI__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.enemy.TileParticleIonizer;
 import lordfokas.stargatetech2.enemy.TileShieldController;
-import lordfokas.stargatetech2.enemy.gui.ContainerParticleIonizer;
 import lordfokas.stargatetech2.enemy.gui.ContainerShieldController;
-import lordfokas.stargatetech2.enemy.gui.GUIParticleIonizer;
 import lordfokas.stargatetech2.enemy.gui.GUIShieldController;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;

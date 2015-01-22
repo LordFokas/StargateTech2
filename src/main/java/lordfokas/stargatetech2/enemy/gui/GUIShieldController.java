@@ -11,7 +11,6 @@ import lordfokas.stargatetech2.core.reference.TextureReference;
 import lordfokas.stargatetech2.enemy.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.enemy.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.enemy.TileShieldController;
-import cofh.core.gui.element.TabConfiguration;
 import cofh.core.gui.element.TabInfo;
 import cofh.lib.gui.element.ElementButton;
 import cofh.lib.gui.element.ElementFluidTank;
@@ -41,6 +40,31 @@ public class GUIShieldController extends BaseGUI {
 		fontRendererObj.drawString("Permissions", 8, 24, 0x404040);
 		fontRendererObj.drawString("Status", 8, 122, 0x404040);
 		fontRendererObj.drawString("Exceptions", 103, 24, 0x404040);
+		
+		String enabled = shieldController.isShieldOn() ? "Active" : "Inactive";
+		int e_color = shieldController.isShieldOn() ? 0x0088FF : 0x880000;
+		fontRendererObj.drawString("Shield:", 30, 132, 0x404040);
+		fontRendererObj.drawString(enabled, 33, 142, e_color);
+		
+		int consumption = 120;
+		fontRendererObj.drawString("Consumption:", 30, 153, 0x404040);
+		fontRendererObj.drawString(consumption + " mB/t", 33, 163, 0x0088FF);
+		
+		String mode;
+		int m_color;
+		boolean redstone = false;
+		if(redstone){
+			mode = "Redstone";
+			m_color = 0xD00000;
+		}else if(shieldController.getEnabled()){
+			mode = "Abstract Bus";
+			m_color = 0x0088FF;
+		}else{
+			mode = "None";
+			m_color = 0x505050;
+		}
+		fontRendererObj.drawString("Control Mode:", 30, 174, 0x404040);
+		fontRendererObj.drawString(mode, 33, 184, m_color);
 	}
 	
 	@Override

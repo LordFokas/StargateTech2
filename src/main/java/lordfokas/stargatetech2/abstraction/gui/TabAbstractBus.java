@@ -3,15 +3,15 @@ package lordfokas.stargatetech2.abstraction.gui;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-
 import lordfokas.stargatetech2.automation.AddressHelper;
 import lordfokas.stargatetech2.core.Stacks;
 import lordfokas.stargatetech2.core.machine.tabs.TabAbstractBus.ISyncBusDevice;
 import lordfokas.stargatetech2.core.packets.PacketUpdateBusAddress;
 import lordfokas.stargatetech2.core.packets.PacketUpdateBusEnabled;
 import lordfokas.stargatetech2.core.reference.TextureReference;
-import cofh.lib.gui.GuiBase;
+
+import org.lwjgl.opengl.GL11;
+
 import cofh.lib.gui.element.ElementBase;
 import cofh.lib.gui.element.TabBase;
 import cofh.lib.render.RenderHelper;

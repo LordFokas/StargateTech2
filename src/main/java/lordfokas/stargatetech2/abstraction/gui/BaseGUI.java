@@ -1,10 +1,11 @@
 package lordfokas.stargatetech2.abstraction.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL11;
+
 import cofh.core.gui.GuiBaseAdv;
 import cofh.lib.gui.element.ElementBase;
 import cofh.lib.gui.element.ElementButton;
