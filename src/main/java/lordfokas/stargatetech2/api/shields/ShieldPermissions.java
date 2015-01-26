@@ -3,7 +3,7 @@ package lordfokas.stargatetech2.api.shields;
 import java.util.LinkedList;
 import java.util.List;
 
-import lordfokas.stargatetech2.integration.te4.CoFHFriendHelper;
+import lordfokas.stargatetech2.modules.integration.te4.CoFHFriendHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.monster.EntityMob;
