@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.integration.cc;
 
 import lordfokas.stargatetech2.core.base.BaseBlockContainer;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.core.reference.BlockReference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -18,7 +18,7 @@ public class BlockBusAdapter extends BaseBlockContainer {
 	}
 
 	@Override
-	protected BaseTileEntity createTileEntity(int metadata) {
+	protected BaseTileEntity__OLD_AND_FLAWED createTileEntity(int metadata) {
 		return new TileBusAdapter();
 	}
 	

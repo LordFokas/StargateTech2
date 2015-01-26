@@ -7,7 +7,7 @@ import lordfokas.stargatetech2.api.stargate.ITileStargateBase;
 import lordfokas.stargatetech2.api.stargate.StargateEvent;
 import lordfokas.stargatetech2.core.IconRegistry;
 import lordfokas.stargatetech2.core.base.BaseBlockContainer;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.core.reference.BlockReference;
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import net.minecraft.block.Block;
@@ -42,7 +42,7 @@ public class BlockStargate extends BaseBlockContainer implements ITabletAccess{
         }
         
         @Override
-        protected BaseTileEntity createTileEntity(int metadata){
+        protected BaseTileEntity__OLD_AND_FLAWED createTileEntity(int metadata){
                 switch(metadata){
                         case META_BASE: return new TileStargateBase();
                         case META_RING: return new TileStargateRing();

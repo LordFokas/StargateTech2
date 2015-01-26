@@ -2,11 +2,11 @@ package lordfokas.stargatetech2.transport;
 
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.ITileStargate;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity__OLD_AND_FLAWED;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileStargateRing extends BaseTileEntity implements ITileStargate{
+public class TileStargateRing extends BaseTileEntity__OLD_AND_FLAWED implements ITileStargate{
 	protected int sgx, sgy, sgz;
 	
 	@Override

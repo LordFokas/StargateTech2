@@ -10,7 +10,7 @@ import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.core.Vec3Int;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.transport.bus.BusDriverTransportRing;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -20,7 +20,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileTransportRing extends BaseTileEntity implements IBusDevice{
+public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements IBusDevice{
 	@ClientLogic private static Vec3Int LAST_IN_RANGE;
 	@ClientLogic public final static int RING_MOV = 5;
 	@ClientLogic public final static int PAUSE = 30;

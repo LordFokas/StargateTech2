@@ -1,11 +1,11 @@
 package lordfokas.stargatetech2.core.machine;
 
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.core.packets.PacketUpdateMachineColors;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public abstract class TileMachine extends BaseTileEntity {
+public abstract class TileMachine extends BaseTileEntity__OLD_AND_FLAWED {
 	private FaceColor[] colors = new FaceColor[]{
 			FaceColor.VOID, FaceColor.VOID,
 			FaceColor.VOID, FaceColor.VOID,

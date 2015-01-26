@@ -4,7 +4,7 @@ import java.util.List;
 
 import lordfokas.stargatetech2.core.IconRegistry;
 import lordfokas.stargatetech2.core.base.BaseBlockContainer;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.core.reference.BlockReference;
 import lordfokas.stargatetech2.core.reference.TextureReference;
 import net.minecraft.creativetab.CreativeTabs;
@@ -83,7 +83,7 @@ public class BlockBeacon extends BaseBlockContainer{
 	}
 	
 	@Override
-	protected BaseTileEntity createTileEntity(int metadata){
+	protected BaseTileEntity__OLD_AND_FLAWED createTileEntity(int metadata){
 		if(metadata == META_TRANSCEIVER){
 			return new TileBeaconTransceiver();
 		}

@@ -11,7 +11,7 @@ import lordfokas.stargatetech2.api.bus.BusPacketNetScan.Device;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.automation.AddressHelper;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.core.reference.ModReference;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -20,7 +20,7 @@ import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 
-public class TileBusAdapter extends BaseTileEntity implements IBusDevice, IPeripheral{
+public class TileBusAdapter extends BaseTileEntity__OLD_AND_FLAWED implements IBusDevice, IPeripheral{
 	private LinkedList<BusPacket> outputQueue = new LinkedList();
 	private LinkedList<BusPacketLIP> received = new LinkedList();
 	private CCBusDriver networkDriver = new CCBusDriver(this);

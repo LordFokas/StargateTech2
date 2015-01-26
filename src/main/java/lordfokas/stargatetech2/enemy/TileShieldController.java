@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import lordfokas.stargatetech2.ModuleEnemy;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
@@ -43,6 +44,11 @@ implements ISyncBusDevice, IFluidHandler, ITileShieldController, IShieldControll
 	// TODO: get a better mechanism going on here.
 	public boolean permissionsUpdated = false;
 	public boolean exceptionsUpdated = false;
+	
+	@Override
+	public boolean canUpdate() {
+		return super.canUpdate();
+	}
 	
 	@Override
 	public void updateEntity(){

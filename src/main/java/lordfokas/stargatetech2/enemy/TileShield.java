@@ -2,11 +2,11 @@ package lordfokas.stargatetech2.enemy;
 
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.core.Vec3Int;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity__OLD_AND_FLAWED;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileShield extends BaseTileEntity {
+public class TileShield extends BaseTileEntity__OLD_AND_FLAWED {
 	private Vec3Int controller;
 	
 	@Override

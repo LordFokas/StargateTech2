@@ -14,14 +14,14 @@ public abstract class BaseBlockContainer extends BaseBlock implements ITileEntit
 	}
 	
 	@Override
-	public final BaseTileEntity createTileEntity(World world, int metadata){
+	public final BaseTileEntity__OLD_AND_FLAWED createTileEntity(World world, int metadata){
 		return createTileEntity(metadata);
 	}
 	
 	@Override
-	public final BaseTileEntity createNewTileEntity(World world, int metadata){
+	public final BaseTileEntity__OLD_AND_FLAWED createNewTileEntity(World world, int metadata){
 		return createTileEntity(metadata);
 	}
 	
-	protected abstract BaseTileEntity createTileEntity(int metadata);
+	protected abstract BaseTileEntity__OLD_AND_FLAWED createTileEntity(int metadata);
 }

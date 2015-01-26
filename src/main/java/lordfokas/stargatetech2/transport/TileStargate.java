@@ -11,7 +11,7 @@ import lordfokas.stargatetech2.api.stargate.DialError;
 import lordfokas.stargatetech2.api.stargate.ITileStargateBase;
 import lordfokas.stargatetech2.api.stargate.StargateEvent;
 import lordfokas.stargatetech2.api.stargate.Symbol;
-import lordfokas.stargatetech2.core.base.BaseTileEntity;
+import lordfokas.stargatetech2.core.base.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.core.reference.ModReference;
 import lordfokas.stargatetech2.transport.bus.BusDriverStargate;
 import lordfokas.stargatetech2.transport.stargates.StargateNetwork;
@@ -27,7 +27,7 @@ import cofh.api.energy.IEnergyHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileStargate extends BaseTileEntity implements ITileStargateBase, IBusDevice, IEnergyHandler{
+public class TileStargate extends BaseTileEntity__OLD_AND_FLAWED implements ITileStargateBase, IBusDevice, IEnergyHandler{
 	private static final int DIAL_COST_8 = 20000;		// 20k
 	private static final int DIAL_COST_9 = 100000000;	// 100M
 	

@@ -12,6 +12,7 @@ import lordfokas.stargatetech2.enemy.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.enemy.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.enemy.TileShieldController;
 import cofh.core.gui.element.TabInfo;
+import cofh.core.gui.element.TabRedstone;
 import cofh.lib.gui.element.ElementButton;
 import cofh.lib.gui.element.ElementFluidTank;
 import cofh.lib.gui.element.TabBase;
@@ -113,6 +114,7 @@ public class GUIShieldController extends BaseGUI {
 		
 		addTab(new TabInfo(this, INFO));
 		addTab(new TabAbstractBus(this, TabBase.RIGHT, shieldController));
+		addTab(new TabRedstone(this, TabBase.RIGHT, null));
 		
 		updatePermissions();
 	}
