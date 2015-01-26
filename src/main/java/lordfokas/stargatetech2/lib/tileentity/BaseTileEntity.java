@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 
-public class BaseTileEntity<C extends Client, S extends Server> extends TileEntity implements ITile.Client, ITile.Server{
+public class BaseTileEntity<C extends Client, S extends Server> extends TileEntity implements ITile.Client, ITile.Server, ISyncedGUI.Flow{
 	private ITileContext context = null;
 	
 	public BaseTileEntity(Class<? extends C> client, Class<? extends S> server){
@@ -117,5 +117,28 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 	@Override
 	public int z() {
 		return zCoord;
+	}
+	
+	
+	// ##################################################################
+	// ISyncedGUI
+	
+	@Override
+	public int getValueCount(){
+		if(context instanceof ISyncedGUI.Source){
+			return ((ISyncedGUI.Source)context).getValueCount();
+		} else return 0;
+	}
+
+	@Override
+	public int getValue(int key) {
+		return ((ISyncedGUI.Source)context).getValue(key);
+	}
+
+	@Override
+	public void setValue(int key, int val) {
+		if(context instanceof ISyncedGUI.Sink){
+			((ISyncedGUI.Sink)context).setValue(key, val);
+		}
 	}
 }
