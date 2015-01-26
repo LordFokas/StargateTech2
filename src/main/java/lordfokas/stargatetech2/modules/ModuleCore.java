@@ -33,8 +33,6 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.registerItem(naquadahItem, ItemReference.NAQUADAH);
 		GameRegistry.registerItem(tabletPC, ItemReference.TABLET_PC);
 		GameRegistry.registerWorldGenerator(new CoreWorldGenerator(), 0);
-		Stacks.init();
-		ChunkLoader.register();
 	}
 
 	@Override

@@ -12,8 +12,10 @@ import lordfokas.stargatetech2.modules.ModuleIntegration;
 import lordfokas.stargatetech2.modules.ModuleTransport;
 import lordfokas.stargatetech2.modules.ModuleWorld;
 import lordfokas.stargatetech2.reference.ModReference;
+import lordfokas.stargatetech2.util.ChunkLoader;
 import lordfokas.stargatetech2.util.Config;
 import lordfokas.stargatetech2.util.IconRegistry;
+import lordfokas.stargatetech2.util.Stacks;
 import lordfokas.stargatetech2.util.StargateLogger;
 import lordfokas.stargatetech2.util.api.APIImplementation;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -81,6 +83,8 @@ public class StargateTech2 {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event){
+		Stacks.init();
+		ChunkLoader.register();
 		StargateLogger.info("Initializing Modules");
 		for(IContentModule module : modules){
 			try{
