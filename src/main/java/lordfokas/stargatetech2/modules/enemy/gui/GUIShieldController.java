@@ -30,8 +30,7 @@ public class GUIShieldController extends BaseGUI {
 	public GUIShieldController(ContainerShieldController container) {
 		super(container, 200, 193, TextureReference.GUI_SHIELD_CONTROLLER);
 		shieldController = container.controller;
-		shieldController.permissionsUpdated = true;
-		shieldController.exceptionsUpdated = true;
+		shieldController.getClientContext().hasUpdated = true;
 		title = "Shield Controller";
 	}
 	
@@ -42,8 +41,8 @@ public class GUIShieldController extends BaseGUI {
 		fontRendererObj.drawString("Status", 8, 122, 0x404040);
 		fontRendererObj.drawString("Exceptions", 103, 24, 0x404040);
 		
-		String enabled = shieldController.isShieldOn() ? "Active" : "Inactive";
-		int e_color = shieldController.isShieldOn() ? 0x0088FF : 0x880000;
+		String enabled = shieldController.getClientContext().isShieldOn() ? "Active" : "Inactive";
+		int e_color = shieldController.getClientContext().isShieldOn() ? 0x0088FF : 0x880000;
 		fontRendererObj.drawString("Shield:", 30, 132, 0x404040);
 		fontRendererObj.drawString(enabled, 33, 142, e_color);
 		
@@ -57,7 +56,7 @@ public class GUIShieldController extends BaseGUI {
 		if(redstone){
 			mode = "Redstone";
 			m_color = 0xD00000;
-		}else if(shieldController.getEnabled()){
+		}else if(shieldController.getClientContext().getEnabled()){
 			mode = "Abstract Bus";
 			m_color = 0x0088FF;
 		}else{
@@ -86,7 +85,7 @@ public class GUIShieldController extends BaseGUI {
 		monsters.setToolTip("Allow Monsters through the Shield").setToolTipLocalized(true);
 		vessels.setToolTip("Allow Vessels (like Minecarts) through the Shield").setToolTipLocalized(true);
 		
-		ElementFluidTank tank = new ElementFluidTank(this, 9, 132, shieldController.tank);
+		ElementFluidTank tank = new ElementFluidTank(this, 9, 132, shieldController.getClientContext().getTank());
 		
 		add = new ElementButton(this, 167, 33, "Add", 224, 0, 224, 16, 224, 32, 16, 16, "StargateTech2:textures/gui/shieldController.png");
 		rem = new ElementButton(this, 184, 33, "Rem", 240, 0, 240, 16, 240, 32, 16, 16, "StargateTech2:textures/gui/shieldController.png");
@@ -113,7 +112,7 @@ public class GUIShieldController extends BaseGUI {
 		addElement(listBox);
 		
 		addTab(new TabInfo(this, INFO));
-		addTab(new TabAbstractBus(this, TabBase.RIGHT, shieldController));
+		addTab(new TabAbstractBus(this, TabBase.RIGHT, shieldController.getClientContext()));
 		addTab(new TabRedstone(this, TabBase.RIGHT, null));
 		
 		updatePermissions();
@@ -166,17 +165,16 @@ public class GUIShieldController extends BaseGUI {
 		}
 	}
 	
+	@SuppressWarnings("null")
 	private void updatePermissions(){
-		if(shieldController.exceptionsUpdated){
-			shieldController.exceptionsUpdated = false;
+		if(shieldController.getClientContext().hasUpdated){
+			shieldController.getClientContext().hasUpdated = false;
 			listBox.clear();
-			for(String player : shieldController.getPermissions().getExceptionList()){
+			ShieldPermissions perms = null;
+			// TODO: fix this shit
+			for(String player : perms.getExceptionList()){
 				listBox.add(new ListBoxText(player));
 			}
-		}
-		if(shieldController.permissionsUpdated){
-			shieldController.permissionsUpdated = false;
-			ShieldPermissions perms = shieldController.getPermissions();
 			cofh.setChecked(perms.hasBit(ShieldPermissions.PERM_FRIEND));
 			players.setChecked(perms.hasBit(ShieldPermissions.PERM_PLAYER));
 			villagers.setChecked(perms.hasBit(ShieldPermissions.PERM_VILLAGER));

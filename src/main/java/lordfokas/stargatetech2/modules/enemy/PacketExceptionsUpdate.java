@@ -35,7 +35,7 @@ public class PacketExceptionsUpdate extends PacketCoordinates {
 		isSetting = input.readBoolean();
 		playerName = readUTF();
 		TileShieldController controller = (TileShieldController) player.worldObj.getTileEntity(x, y, z);
-		controller.updateExceptions(isSetting, playerName);
+		controller.getServerContext().updateExceptions(isSetting, playerName);
 		return null;
 	}
 }

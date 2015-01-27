@@ -7,10 +7,10 @@ import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGauge__OLD_AND_FLAWED.PowerGauge;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGauge__OLD_AND_FLAWED.TankGauge;
-import lordfokas.stargatetech2.modules.core.machine.FaceColor;
-import lordfokas.stargatetech2.modules.core.machine.tabs__THRASH.TabConfiguration;
-import lordfokas.stargatetech2.modules.core.machine.tabs__THRASH.TabMachineRecipes;
-import lordfokas.stargatetech2.modules.core.machine.tabs__THRASH.TabMachineRecipes.IMachineRecipe;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.FaceColor__THRASH;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.tabs__THRASH.TabConfiguration__THRASH;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.tabs__THRASH.TabMachineRecipes__THRASH;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.tabs__THRASH.TabMachineRecipes__THRASH.IMachineRecipe;
 import lordfokas.stargatetech2.modules.enemy.TileParticleIonizer;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.reference.TextureReference;
@@ -89,8 +89,8 @@ public class GUIParticleIonizer extends BaseGUI__OLD_AND_FLAWED {
 		for(int r = 0; r < recipes.size(); r ++){
 			tabRecipes[r] = new MachineRecipe(this, recipes.get(r));
 		}
-		super.addTab(new TabMachineRecipes(tabRecipes));
-		super.addTab(new TabConfiguration(ionizer));
+		super.addTab(new TabMachineRecipes__THRASH(tabRecipes));
+		super.addTab(new TabConfiguration__THRASH(ionizer));
 	}
 	
 	@Override
@@ -101,12 +101,12 @@ public class GUIParticleIonizer extends BaseGUI__OLD_AND_FLAWED {
 		drawQuad(4, 3.5F, 0, 1, 0, 1, 8, 8);
 		drawLeft("Particle Ionizer", 16, 4, 0x444444);
 		drawLeft("Inventory", 130, 85, 0x444444);
-		if(ionizer.hasColor(FaceColor.BLUE)){
-			this.drawFrame(FaceColor.BLUE, 27, 19, 20, 68);
-			this.drawFrame(FaceColor.BLUE, 51, 19, 56, 56);
+		if(ionizer.hasColor(FaceColor__THRASH.BLUE)){
+			this.drawFrame(FaceColor__THRASH.BLUE, 27, 19, 20, 68);
+			this.drawFrame(FaceColor__THRASH.BLUE, 51, 19, 56, 56);
 		}
-		if(ionizer.hasColor(FaceColor.ORANGE)){
-			this.drawFrame(FaceColor.ORANGE, 174, 9, 20, 68);
+		if(ionizer.hasColor(FaceColor__THRASH.ORANGE)){
+			this.drawFrame(FaceColor__THRASH.ORANGE, 174, 9, 20, 68);
 		}
 		IonizerRecipe recipe = ionizer.getRecipeInstance();
 		int ticksLeft = ((ContainerParticleIonizer)this.inventorySlots).getWorkLeft();

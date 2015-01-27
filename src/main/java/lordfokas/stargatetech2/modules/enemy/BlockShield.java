@@ -65,7 +65,7 @@ public class BlockShield extends BaseBlockContainer__OLD_AND_FLAWED implements I
         
         TileEntity te = access.getTileEntity(x, y, z);
         if(te instanceof TileShield && ((TileShield)te).getController()!=null){
-            return !((TileShield)te).getController().isShieldOn();
+            return !((TileShield)te).getController().getClientContext().isShieldOn();
         }
         return true;
     }

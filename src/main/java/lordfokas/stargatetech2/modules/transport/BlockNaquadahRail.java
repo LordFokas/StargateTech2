@@ -6,6 +6,7 @@ import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.modules.enemy.TileShield;
 import lordfokas.stargatetech2.modules.enemy.TileShieldController;
+import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerCommon;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.reference.ModReference;
 import lordfokas.stargatetech2.util.StargateTab;
@@ -132,9 +133,9 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 		TileEntity te = w.getTileEntity(x, y, z);
 		if(te instanceof TileShield){
 			TileShieldController controller = ((TileShield)te).getController();
-			if(controller == null || !controller.isShieldOn()) return;
-			ShieldPermissions permissions = controller.getPermissions();
-			if(!permissions.isEntityAllowed(e, true, controller.getOwner())){
+			if(controller == null || !((ShieldControllerCommon)controller.getContext()).isShieldOn()) return;
+			ShieldPermissions permissions = ((ShieldControllerCommon)controller.getContext()).getPermissions();
+			if(!permissions.isEntityAllowed(e, true, /*controller.getOwner()*/ "")){ // TODO: fix this shit
 				this.setBlockBounds(0, 0, 0, 1, 1, 1);
 				super.addCollisionBoxesToList(w, x, y, z, aabb, l, e);
 				this.setBlockBoundsBasedOnState(w, x, y, z);

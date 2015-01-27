@@ -22,7 +22,7 @@ public class PacketPermissionsUpdate extends PacketCoordinates {
 		isSetting = input.readBoolean();
 		permissionFlag = input.readInt();
 		TileShieldController controller = (TileShieldController) player.worldObj.getTileEntity(x, y, z);
-		controller.updatePermissions(isSetting, permissionFlag);
+		controller.getServerContext().updatePermissions(isSetting, permissionFlag);
 		return null;
 	}
 }

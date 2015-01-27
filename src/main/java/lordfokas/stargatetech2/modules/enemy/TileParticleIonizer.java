@@ -4,8 +4,8 @@ import java.util.LinkedList;
 
 import lordfokas.stargatetech2.lib.util.Inventory;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
-import lordfokas.stargatetech2.modules.core.machine.FaceColor;
-import lordfokas.stargatetech2.modules.core.machine.TileMachine;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.FaceColor__THRASH;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.util.api.ParticleIonizerRecipes;
 import lordfokas.stargatetech2.util.api.ParticleIonizerRecipes.IonizerRecipe;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 
-public class TileParticleIonizer extends TileMachine implements IFluidHandler, IEnergyHandler, ISidedInventory{
+public class TileParticleIonizer extends TileMachine__THRASH implements IFluidHandler, IEnergyHandler, ISidedInventory{
 	public final FluidTank ionizedParticles = new FluidTank(8000);		// orange
 	public final FluidTank fluidIonizable = new FluidTank(8000);		// blue
 	public final Inventory solidIonizable = new Inventory(9);			// blue
@@ -178,8 +178,8 @@ public class TileParticleIonizer extends TileMachine implements IFluidHandler, I
 	}
 	
 	@Override
-	protected FaceColor[] getPossibleFaceColors() {
-		return new FaceColor[]{FaceColor.VOID, FaceColor.BLUE, FaceColor.ORANGE, FaceColor.STRIPES};
+	protected FaceColor__THRASH[] getPossibleFaceColors() {
+		return new FaceColor__THRASH[]{FaceColor__THRASH.VOID, FaceColor__THRASH.BLUE, FaceColor__THRASH.ORANGE, FaceColor__THRASH.STRIPES};
 	}
 	
 	// ############################################################################################
@@ -219,7 +219,7 @@ public class TileParticleIonizer extends TileMachine implements IFluidHandler, I
 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection side) {
-		FaceColor color = getColor(side);
+		FaceColor__THRASH color = getColor(side);
 		if(color.isInput() && color.isOutput()){
 			return new FluidTankInfo[]{fluidIonizable.getInfo(), ionizedParticles.getInfo()};
 		}else if(color.isInput()){

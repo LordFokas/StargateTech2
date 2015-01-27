@@ -13,21 +13,5 @@ public class ContainerShieldController extends BaseContainer{
 		this.controller = tsc;
 	}
 	
-	@Override
-	public void detectAndSendChanges(){
-		super.detectAndSendChanges();
-		int particles = controller.getIonAmount();
-		if(particles != lastParticles){
-			lastParticles = particles;
-			sendUpdate(0, particles);
-		}
-	}
 	
-	@Override
-	@SideOnly(Side.CLIENT)
-    public void updateProgressBar(int key, int value){
-		if(key == 0){
-			controller.setIonAmount(value);
-		}
-	}
 }

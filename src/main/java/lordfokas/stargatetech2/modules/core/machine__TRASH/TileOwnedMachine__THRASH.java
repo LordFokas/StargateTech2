@@ -1,9 +1,10 @@
-package lordfokas.stargatetech2.modules.core.machine;
+package lordfokas.stargatetech2.modules.core.machine__TRASH;
 
+import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
 import lordfokas.stargatetech2.modules.integration.te4.CoFHFriendHelper;
 import net.minecraft.nbt.NBTTagCompound;
 
-public abstract class TileOwnedMachine extends TileMachine implements IOwnedMachine{
+public abstract class TileOwnedMachine__THRASH extends TileMachine__THRASH implements IOwnedMachine{
 	private static final String NO_OWNER = "__*";
 	
 	public enum AccessMode{

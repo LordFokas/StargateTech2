@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.modules.core.machine;
+package lordfokas.stargatetech2.lib.tileentity;
 
 public interface IOwnedMachine {
 	public String getOwner();

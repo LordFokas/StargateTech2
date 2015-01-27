@@ -4,13 +4,14 @@ import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP;
 import lordfokas.stargatetech2.api.bus.BusProtocols;
 import lordfokas.stargatetech2.api.bus.IBusDriver;
+import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerServer;
 
 public class ShieldControllerBusDriver implements IBusDriver{
-	private TileShieldController controller;
+	private ShieldControllerServer controller;
 	private short address = 0x0000;
 	private boolean enabled = true;
 	
-	public ShieldControllerBusDriver(TileShieldController controller){
+	public ShieldControllerBusDriver(ShieldControllerServer controller){
 		this.controller = controller;
 	}
 	

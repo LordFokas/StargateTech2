@@ -1,8 +1,8 @@
-package lordfokas.stargatetech2.modules.core.machine;
+package lordfokas.stargatetech2.modules.core.machine__TRASH;
 
 import lordfokas.stargatetech2.reference.TextureReference;
 
-public enum FaceColor{
+public enum FaceColor__THRASH{
 	BLUE,	// In:	Main
 	PURPLE,	// In:	1st
 	GREEN,	// In:	2nd

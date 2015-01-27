@@ -4,8 +4,8 @@ import java.util.LinkedList;
 
 import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
-import lordfokas.stargatetech2.modules.core.machine.FaceColor;
-import lordfokas.stargatetech2.modules.core.machine.TileMachine;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.FaceColor__THRASH;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.util.ConfigServer;
 import lordfokas.stargatetech2.util.Vec3Int;
 import lordfokas.stargatetech2.util.api.WeakBlockRegistry;
@@ -14,14 +14,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileShieldEmitter extends TileMachine implements IShieldControllerProvider{
+public class TileShieldEmitter extends TileMachine__THRASH implements IShieldControllerProvider{
 	private Vec3Int controller;
 	
 	public void setController(Vec3Int controller){
 		this.controller = controller;
 		TileEntity te = worldObj.getTileEntity(controller.x, controller.y, controller.z);
 		if(te instanceof TileShieldController){
-			((TileShieldController)te).addEmitter(this);
+			((TileShieldController)te).getServerContext().addEmitter(this);
 		}
 	}
 	
@@ -31,7 +31,7 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 		if(controller == null) return;
 		TileEntity te = worldObj.getTileEntity(controller.x, controller.y, controller.z);
 		if(te instanceof TileShieldController){
-			((TileShieldController)te).removeEmitter(this);
+			((TileShieldController)te).getServerContext().removeEmitter(this);
 		}
 	}
 	
@@ -57,7 +57,7 @@ public class TileShieldEmitter extends TileMachine implements IShieldControllerP
 	@Override public boolean canUpdate(){ return false; }
 	
 	@Override // Never used;
-	protected FaceColor[] getPossibleFaceColors(){ return null; }
+	protected FaceColor__THRASH[] getPossibleFaceColors(){ return null; }
 
 	@Override
 	protected void readNBT(NBTTagCompound nbt){

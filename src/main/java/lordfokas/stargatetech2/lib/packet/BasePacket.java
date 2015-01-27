@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 import lordfokas.stargatetech2.modules.automation.PacketUpdateBusAddress;
 import lordfokas.stargatetech2.modules.automation.PacketUpdateBusEnabled;
-import lordfokas.stargatetech2.modules.core.packets.PacketToggleMachineFace;
-import lordfokas.stargatetech2.modules.core.packets.PacketUpdateMachineColors;
+import lordfokas.stargatetech2.modules.core.packets__THRASH.PacketToggleMachineFace__THRASH;
+import lordfokas.stargatetech2.modules.core.packets__THRASH.PacketUpdateMachineColors__THRASH;
 import lordfokas.stargatetech2.modules.enemy.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.modules.enemy.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.modules.transport.PacketActivateRings;
@@ -57,8 +57,8 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 		packetMap.add(PacketActivateRings.class);
 		packetMap.add(PacketWormhole.class);
 		packetMap.add(PacketPrintAddress.class);
-		packetMap.add(PacketUpdateMachineColors.class);
-		packetMap.add(PacketToggleMachineFace.class);
+		packetMap.add(PacketUpdateMachineColors__THRASH.class);
+		packetMap.add(PacketToggleMachineFace__THRASH.class);
 		packetMap.add(PacketUpdateBusAddress.class);
 		packetMap.add(PacketUpdateBusEnabled.class);
 	}

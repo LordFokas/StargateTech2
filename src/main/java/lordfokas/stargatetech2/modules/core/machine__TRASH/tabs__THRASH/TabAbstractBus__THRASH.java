@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.modules.core.machine.tabs__THRASH;
+package lordfokas.stargatetech2.modules.core.machine__TRASH.tabs__THRASH;
 
 import lordfokas.stargatetech2.modules.automation.AddressHelper;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
@@ -9,7 +9,7 @@ import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTab__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.util.Stacks;
 
-public class TabAbstractBus extends BaseTab__OLD_AND_FLAWED{
+public class TabAbstractBus__THRASH extends BaseTab__OLD_AND_FLAWED{
 	private static final int TOGGLE_X = 20;
 	private static final int TOGGLE_Y = 27;
 	private static final int ADDR_X = 51;
@@ -21,7 +21,7 @@ public class TabAbstractBus extends BaseTab__OLD_AND_FLAWED{
 	
 	
 	
-	public TabAbstractBus(ISyncBusDevice device) {
+	public TabAbstractBus__THRASH(ISyncBusDevice device) {
 		super("Abstract Bus", Stacks.busCable, TabColor.BLUE);
 		this.device = device;
 		update();

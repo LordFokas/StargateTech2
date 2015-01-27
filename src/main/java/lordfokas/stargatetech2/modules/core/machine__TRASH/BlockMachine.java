@@ -1,6 +1,7 @@
-package lordfokas.stargatetech2.modules.core.machine;
+package lordfokas.stargatetech2.modules.core.machine__TRASH;
 
 import lordfokas.stargatetech2.StargateTech2;
+import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseBlockContainer__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;
@@ -42,7 +43,7 @@ public abstract class BlockMachine extends BaseBlockContainer__OLD_AND_FLAWED {
 	
 	@Override
 	public int getRenderType(){
-		return RenderBlockMachine.instance().getRenderId();
+		return RenderBlockMachine__THRASH.instance().getRenderId();
 	}
 	
 	public IIcon getFaceForMeta(int meta){
@@ -102,11 +103,11 @@ public abstract class BlockMachine extends BaseBlockContainer__OLD_AND_FLAWED {
 	
 	protected void onPlacedBy(World w, int x, int y, int z, EntityPlayer player, ForgeDirection facing){}
 	
-	public final FaceColor[] getTextureMap(IBlockAccess w, int x, int y, int z){
+	public final FaceColor__THRASH[] getTextureMap(IBlockAccess w, int x, int y, int z){
 		TileEntity te = w.getTileEntity(x, y, z);
-		FaceColor[] map = new FaceColor[]{FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID};
-		if(te instanceof TileMachine){
-			TileMachine machine = (TileMachine) te;
+		FaceColor__THRASH[] map = new FaceColor__THRASH[]{FaceColor__THRASH.VOID, FaceColor__THRASH.VOID, FaceColor__THRASH.VOID, FaceColor__THRASH.VOID, FaceColor__THRASH.VOID, FaceColor__THRASH.VOID};
+		if(te instanceof TileMachine__THRASH){
+			TileMachine__THRASH machine = (TileMachine__THRASH) te;
 			for(int i = 0; i < 6; i++){
 				map[i] = machine.getColor(i);
 			}
@@ -114,5 +115,5 @@ public abstract class BlockMachine extends BaseBlockContainer__OLD_AND_FLAWED {
 		return map;
 	}
 	
-	@Override protected abstract TileMachine createTileEntity(int metadata);
+	@Override protected abstract TileMachine__THRASH createTileEntity(int metadata);
 }

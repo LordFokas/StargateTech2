@@ -75,6 +75,10 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 		}
 	}
 	
+	public final ITileContext getContext(){
+		return context;
+	}
+	
 	public final C getClientContext(){
 		if(context instanceof ITileContext.Client){
 			return (C) context;

@@ -1,11 +1,11 @@
-package lordfokas.stargatetech2.modules.core.machine.tabs__THRASH;
+package lordfokas.stargatetech2.modules.core.machine__TRASH.tabs__THRASH;
 
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.Arrow;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTab__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.util.Stacks;
 
-public class TabMachineRecipes extends BaseTab__OLD_AND_FLAWED{
+public class TabMachineRecipes__THRASH extends BaseTab__OLD_AND_FLAWED{
 	public static interface IMachineRecipe{
 		public void renderAt(int x, int y);
 	}
@@ -14,7 +14,7 @@ public class TabMachineRecipes extends BaseTab__OLD_AND_FLAWED{
 	private int page = 1;
 	private int numpages;
 	
-	public TabMachineRecipes(IMachineRecipe[] recipes) {
+	public TabMachineRecipes__THRASH(IMachineRecipe[] recipes) {
 		super("Recipes", Stacks.book, TabColor.GREEN);
 		this.recipes = recipes;
 		this.numpages = (recipes.length / 2) + (recipes.length % 2);

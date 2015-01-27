@@ -1,29 +1,29 @@
-package lordfokas.stargatetech2.modules.core.packets;
+package lordfokas.stargatetech2.modules.core.packets__THRASH;
 
 import lordfokas.stargatetech2.lib.packet.BasePacket.ServerToClient;
 import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
-import lordfokas.stargatetech2.modules.core.machine.FaceColor;
-import lordfokas.stargatetech2.modules.core.machine.TileMachine;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.FaceColor__THRASH;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.Side;
 
 @ServerToClient
-public class PacketUpdateMachineColors extends PacketCoordinates {
-	private FaceColor[] colors;
+public class PacketUpdateMachineColors__THRASH extends PacketCoordinates {
+	private FaceColor__THRASH[] colors;
 	
-	public PacketUpdateMachineColors(){
-		colors = new FaceColor[6];
+	public PacketUpdateMachineColors__THRASH(){
+		colors = new FaceColor__THRASH[6];
 	}
 	
-	public PacketUpdateMachineColors(FaceColor[] colors){
+	public PacketUpdateMachineColors__THRASH(FaceColor__THRASH[] colors){
 		this.colors = colors;
 	}
 	
 	@Override
 	protected void writeData() throws Exception{
-		for(FaceColor color : colors){
+		for(FaceColor__THRASH color : colors){
 			output.writeByte(color.ordinal());
 		}
 	}
@@ -31,11 +31,11 @@ public class PacketUpdateMachineColors extends PacketCoordinates {
 	@Override
 	protected IMessage readData(EntityPlayer player, Side side) throws Exception {
 		for(int s = 0; s < 6; s++){
-			colors[s] = FaceColor.values()[input.readByte()];
+			colors[s] = FaceColor__THRASH.values()[input.readByte()];
 		}
 		TileEntity te = player.worldObj.getTileEntity(x, y, z);
-		if(te instanceof TileMachine){
-			((TileMachine)te).updateColors(colors);
+		if(te instanceof TileMachine__THRASH){
+			((TileMachine__THRASH)te).updateColors(colors);
 		}
 		return null;
 	}
