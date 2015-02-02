@@ -15,7 +15,6 @@ import lordfokas.stargatetech2.modules.ModuleEnemy;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.modules.enemy.BlockShield;
 import lordfokas.stargatetech2.modules.enemy.IShieldControllerProvider;
-import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
 import lordfokas.stargatetech2.modules.enemy.ShieldControllerBusDriver;
 import lordfokas.stargatetech2.modules.enemy.TileShieldEmitter;
 import lordfokas.stargatetech2.util.Vec3Int;

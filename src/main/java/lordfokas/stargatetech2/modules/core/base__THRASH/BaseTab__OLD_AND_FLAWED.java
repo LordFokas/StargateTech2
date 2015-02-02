@@ -1,7 +1,6 @@
 package lordfokas.stargatetech2.modules.core.base__THRASH;
 
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.ITab;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
 import net.minecraft.item.ItemStack;
 
 public abstract class BaseTab__OLD_AND_FLAWED implements ITab{

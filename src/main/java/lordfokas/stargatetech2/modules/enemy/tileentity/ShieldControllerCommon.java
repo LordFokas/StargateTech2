@@ -1,9 +1,5 @@
 package lordfokas.stargatetech2.modules.enemy.tileentity;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.lib.tileentity.ISyncedGUI;
@@ -11,6 +7,10 @@ import lordfokas.stargatetech2.lib.tileentity.ITile;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 
 public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, ISyncBusDevice{
 	protected FluidTank tank = new FluidTank(16000);

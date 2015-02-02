@@ -1,11 +1,8 @@
 package lordfokas.stargatetech2.modules.enemy.tileentity;
 
-import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.tileentity.ITile;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext;
-import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidTank;
 
 public class ShieldControllerClient extends ShieldControllerCommon implements ITileContext.Client{

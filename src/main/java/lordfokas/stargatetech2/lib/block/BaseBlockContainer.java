@@ -1,6 +1,5 @@
 package lordfokas.stargatetech2.lib.block;
 
-import lordfokas.stargatetech2.lib.tileentity.ITileContext;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;

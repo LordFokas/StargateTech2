@@ -6,6 +6,7 @@ import cofh.api.tileentity.IReconfigurableSides;
 
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
 implements IReconfigurableSides{
+	private FaceWrapper[] faces = new FaceWrapper[6];
 	
 	public TileEntityMachine(Class<? extends C> client, Class<? extends S> server) {
 		super(client, server);
@@ -39,5 +40,9 @@ implements IReconfigurableSides{
 	public int getNumConfig(int side) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	private static class FaceWrapper{
+		
 	}
 }

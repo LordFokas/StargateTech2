@@ -2,6 +2,7 @@ package lordfokas.stargatetech2.modules.core.base__THRASH;
 
 import lordfokas.stargatetech2.lib.block.BaseBlock;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public abstract class BaseBlockContainer__OLD_AND_FLAWED extends BaseBlock implements ITileEntityProvider{
@@ -15,14 +16,14 @@ public abstract class BaseBlockContainer__OLD_AND_FLAWED extends BaseBlock imple
 	}
 	
 	@Override
-	public final BaseTileEntity__OLD_AND_FLAWED createTileEntity(World world, int metadata){
+	public final TileEntity createTileEntity(World world, int metadata){
 		return createTileEntity(metadata);
 	}
 	
 	@Override
-	public final BaseTileEntity__OLD_AND_FLAWED createNewTileEntity(World world, int metadata){
+	public final TileEntity createNewTileEntity(World world, int metadata){
 		return createTileEntity(metadata);
 	}
 	
-	protected abstract BaseTileEntity__OLD_AND_FLAWED createTileEntity(int metadata);
+	protected abstract TileEntity createTileEntity(int metadata);
 }

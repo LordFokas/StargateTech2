@@ -1,7 +1,6 @@
 package lordfokas.stargatetech2.modules;
 
 import lordfokas.stargatetech2.StargateTech2;
-import lordfokas.stargatetech2.modules.IContentModule.Module;
 import lordfokas.stargatetech2.modules.automation.BlockBusCable;
 import lordfokas.stargatetech2.util.Stacks;
 import net.minecraft.init.Blocks;

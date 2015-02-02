@@ -115,5 +115,5 @@ public abstract class BlockMachine extends BaseBlockContainer__OLD_AND_FLAWED {
 		return map;
 	}
 	
-	@Override protected abstract TileMachine__THRASH createTileEntity(int metadata);
+	@Override protected abstract TileEntity createTileEntity(int metadata);
 }
