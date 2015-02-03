@@ -1,9 +1,10 @@
-package lordfokas.stargatetech2.modules.core.machine__TRASH;
+package lordfokas.stargatetech2.lib.block;
 
 import lordfokas.stargatetech2.StargateTech2;
+import lordfokas.stargatetech2.lib.render.RenderBlockMachine;
 import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseBlockContainer__OLD_AND_FLAWED;
+import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;
 import lordfokas.stargatetech2.util.Helper;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import buildcraft.api.tools.IToolWrench;
 
-public abstract class BlockMachine extends BaseBlockContainer__OLD_AND_FLAWED {
+public abstract class BlockMachine extends BaseBlockContainer{
 	private boolean useVertical = false;
 	private Screen screen;
 	
@@ -44,7 +45,7 @@ public abstract class BlockMachine extends BaseBlockContainer__OLD_AND_FLAWED {
 	
 	@Override
 	public int getRenderType(){
-		return RenderBlockMachine__THRASH.instance().getRenderId();
+		return RenderBlockMachine.instance().getRenderId();
 	}
 	
 	public IIcon getFaceForMeta(int meta){
@@ -115,6 +116,4 @@ public abstract class BlockMachine extends BaseBlockContainer__OLD_AND_FLAWED {
 		}
 		return map;
 	}
-	
-	@Override protected abstract TileEntity createTileEntity(int metadata);
 }

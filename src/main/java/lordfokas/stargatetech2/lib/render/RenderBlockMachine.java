@@ -1,6 +1,6 @@
-package lordfokas.stargatetech2.modules.core.machine__TRASH;
+package lordfokas.stargatetech2.lib.render;
 
-import lordfokas.stargatetech2.lib.render.BaseISBRH;
+import lordfokas.stargatetech2.lib.block.BlockMachine;
 import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
@@ -9,10 +9,10 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-public class RenderBlockMachine__THRASH extends BaseISBRH {
-	private static final RenderBlockMachine__THRASH INSTANCE = new RenderBlockMachine__THRASH();
+public class RenderBlockMachine extends BaseISBRH {
+	private static final RenderBlockMachine INSTANCE = new RenderBlockMachine();
 	
-	public static RenderBlockMachine__THRASH instance(){
+	public static RenderBlockMachine instance(){
 		return INSTANCE;
 	}
 	

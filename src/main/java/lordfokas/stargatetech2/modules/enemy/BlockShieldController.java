@@ -1,9 +1,10 @@
 package lordfokas.stargatetech2.modules.enemy;
 
-import lordfokas.stargatetech2.modules.core.machine__TRASH.BlockMachine;
+import lordfokas.stargatetech2.lib.block.BlockMachine;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class BlockShieldController extends BlockMachine {
 
@@ -12,7 +13,7 @@ public class BlockShieldController extends BlockMachine {
 	}
 	
 	@Override
-	protected TileEntity createTileEntity(int metadata) {
+	public TileEntity createNewTileEntity(World world, int metadata) {
 		return new TileShieldController();
 	}
 	

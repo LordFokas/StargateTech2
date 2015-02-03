@@ -11,10 +11,11 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 
 public class BaseTileEntity<C extends Client, S extends Server> extends TileEntity implements ITile.Client, ITile.Server, ISyncedGUI.Flow{
-	private ITileContext context = null;
+	protected final ITileContext context;
 	
 	public BaseTileEntity(Class<? extends C> client, Class<? extends S> server){
 		Side side = FMLCommonHandler.instance().getEffectiveSide();
+		ITileContext context = null;
 		try{
 			if(side == Side.CLIENT && client != null){
 				context = client.newInstance();
@@ -26,6 +27,7 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 		}catch(Exception e){
 			FMLCommonHandler.instance().raiseException(e, "Invalid BaseTileEntity construction", true);
 		}
+		this.context = context;
 	}
 	
 	@Override

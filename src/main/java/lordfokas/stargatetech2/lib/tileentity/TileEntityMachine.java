@@ -10,7 +10,7 @@ import cofh.api.tileentity.IReconfigurableFacing;
 import cofh.api.tileentity.IReconfigurableSides;
 
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
-implements IReconfigurableSides, IReconfigurableFacing{
+implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider{
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
 	private Face[] faceMap = new Face[6];
 	private ForgeDirection facing;
@@ -21,6 +21,9 @@ implements IReconfigurableSides, IReconfigurableFacing{
 		remapSides(false); // don't update the clients; we may even be on the client side!
 		for(Face face : faceMap){
 			faces.put(face, new FaceWrapper(colors));
+		}
+		if(context instanceof IFacingAware){
+			((IFacingAware)context).setProvider(this);
 		}
 	}
 	
@@ -108,8 +111,14 @@ implements IReconfigurableSides, IReconfigurableFacing{
 		return faces.get(faceMap[side]);
 	}
 	
-	protected FaceColor getColorForSide(int side){
+	@Override
+	public FaceColor getColorForSide(int side){
 		return getFaceForSide(side).getColor();
+	}
+	
+	@Override
+	public FaceColor getColorForDirection(ForgeDirection dir){
+		return getColorForSide(dir.ordinal());
 	}
 	
 	// ##########################################################

@@ -3,10 +3,10 @@ package lordfokas.stargatetech2;
 import java.util.List;
 
 import lordfokas.stargatetech2.lib.render.BaseISBRH;
+import lordfokas.stargatetech2.lib.render.RenderBlockMachine;
 import lordfokas.stargatetech2.modules.IContentModule.Module;
 import lordfokas.stargatetech2.modules.automation.RenderBusCable;
 import lordfokas.stargatetech2.modules.core.RenderNaquadah;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.RenderBlockMachine__THRASH;
 import lordfokas.stargatetech2.modules.transport.RenderBeacon;
 import lordfokas.stargatetech2.modules.transport.RenderBeaconMatterGrid;
 import lordfokas.stargatetech2.modules.transport.RenderNaquadahRail;
@@ -40,7 +40,7 @@ public class ProxyClient implements ISidedProxy{
 				registerRenderer(RenderBusCable.instance());
 				break;
 			case CORE:
-				registerRenderer(RenderBlockMachine__THRASH.instance());
+				registerRenderer(RenderBlockMachine.instance());
 				registerRenderer(RenderNaquadah.instance());
 				break;
 			case ENEMY:
