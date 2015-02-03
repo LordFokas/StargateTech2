@@ -113,6 +113,7 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider{
 	
 	@Override
 	public FaceColor getColorForSide(int side){
+		if(side < 0 || side > 5) return FaceColor.VOID;
 		return getFaceForSide(side).getColor();
 	}
 	

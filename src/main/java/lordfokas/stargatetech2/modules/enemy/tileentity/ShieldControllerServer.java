@@ -9,12 +9,15 @@ import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.api.shields.ITileShieldController;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
+import lordfokas.stargatetech2.lib.tileentity.IFacingAware;
+import lordfokas.stargatetech2.lib.tileentity.IFacingProvider;
 import lordfokas.stargatetech2.lib.tileentity.ITile;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.modules.enemy.BlockShield;
 import lordfokas.stargatetech2.modules.enemy.IShieldControllerProvider;
+import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
 import lordfokas.stargatetech2.modules.enemy.ShieldControllerBusDriver;
 import lordfokas.stargatetech2.modules.enemy.TileShieldEmitter;
 import lordfokas.stargatetech2.util.Vec3Int;
@@ -29,7 +32,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
 public class ShieldControllerServer extends ShieldControllerCommon
-implements ITileContext.Server, IShieldControllerProvider, ITileShieldController, ISyncBusDevice, IFluidHandler{
+implements ITileContext.Server, IShieldControllerProvider, ITileShieldController, ISyncBusDevice, IFluidHandler, IFacingAware{
 	private static final int ION_DRAIN = 10;
 	
 	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver(this);
@@ -37,7 +40,13 @@ implements ITileContext.Server, IShieldControllerProvider, ITileShieldController
 	private IBusInterface[] interfaces = new IBusInterface[]{busInterface};
 	private ArrayList<Vec3Int> emitters = new ArrayList();
 	private LinkedList<Vec3Int> shields = new LinkedList();
+	private IFacingProvider facing;
 	private ITile.Server tile;
+	
+	@Override
+	public void setProvider(IFacingProvider provider) {
+		facing = provider;
+	}
 	
 	@Override
 	public void setTile(ITile.Server tile) {
@@ -209,11 +218,11 @@ implements ITileContext.Server, IShieldControllerProvider, ITileShieldController
 	
 	@Override
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-		//if(getColor(from).isInput() && resource.getFluid() == IonizedParticles.fluid){
+		if(facing.getColorForDirection(from).isInput() && resource.getFluid() == IonizedParticles.fluid){
 			return tank.fill(resource, doFill);
-		//}else{
-		//	return 0;
-		//}
+		}else{
+			return 0;
+		}
 	}
 
 	@Override
@@ -228,7 +237,7 @@ implements ITileContext.Server, IShieldControllerProvider, ITileShieldController
 
 	@Override
 	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return false; //getColor(from).isInput();
+		return facing.getColorForDirection(from).isInput();
 	}
 
 	@Override
@@ -238,11 +247,11 @@ implements ITileContext.Server, IShieldControllerProvider, ITileShieldController
 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		//if(getColor(from).isInput()){
+		if(facing.getColorForDirection(from).isInput()){
 			return new FluidTankInfo[]{tank.getInfo()};
-		//}else{
-		//	return new FluidTankInfo[]{};
-		//}
+		}else{
+			return new FluidTankInfo[]{};
+		}
 	}
 	
 	
