@@ -3,8 +3,8 @@ package lordfokas.stargatetech2.modules.enemy;
 import java.util.LinkedList;
 
 import lordfokas.stargatetech2.api.shields.IShieldable;
+import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.FaceColor__THRASH;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.util.ConfigServer;
 import lordfokas.stargatetech2.util.Vec3Int;
@@ -57,7 +57,7 @@ public class TileShieldEmitter extends TileMachine__THRASH implements IShieldCon
 	@Override public boolean canUpdate(){ return false; }
 	
 	@Override // Never used;
-	protected FaceColor__THRASH[] getPossibleFaceColors(){ return null; }
+	protected FaceColor[] getPossibleFaceColors(){ return null; }
 
 	@Override
 	protected void readNBT(NBTTagCompound nbt){

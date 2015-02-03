@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import lordfokas.stargatetech2.lib.gui.BaseContainer;
+import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.FaceColor__THRASH;
 import lordfokas.stargatetech2.reference.TextureReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -502,7 +502,7 @@ public abstract class BaseGUI__OLD_AND_FLAWED extends GuiContainer {
 		drawHoveringText(lines, x, y, fontRendererObj);
 	}
 	
-	public final void drawFrame(FaceColor__THRASH color, int xPos, int yPos, int xSize, int ySize){
+	public final void drawFrame(FaceColor color, int xPos, int yPos, int xSize, int ySize){
 		bindImage(TextureReference.getTexture("blocks/" + color.getTexture() + ".png"));
 		float x0 = 5F / 16F, x1 = 6F / 16F, y0 = 4F / 16F, y1 = 5F / 16F;
 		drawQuad(xPos, yPos, x0, x1, y0, y1, xSize, 1);

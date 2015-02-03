@@ -1,6 +1,7 @@
 package lordfokas.stargatetech2.modules.core.machine__TRASH;
 
 import lordfokas.stargatetech2.lib.render.BaseISBRH;
+import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.block.Block;
@@ -26,8 +27,8 @@ public class RenderBlockMachine__THRASH extends BaseISBRH {
 		IIcon mbot = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
 		IIcon mboti = IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM_I);
 		IIcon[] map = new IIcon[6];
-		FaceColor__THRASH[] colors = machine.getTextureMap(w, x, y, z);
-		colors[metadata] = FaceColor__THRASH.VOID;
+		FaceColor[] colors = machine.getTextureMap(w, x, y, z);
+		colors[metadata] = FaceColor.VOID;
 		for(int face = 0; face < 6; face++){
 			switch(face){
 				case 0:

@@ -2,9 +2,9 @@ package lordfokas.stargatetech2.modules.enemy;
 
 import java.util.LinkedList;
 
+import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 import lordfokas.stargatetech2.lib.util.Inventory;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.FaceColor__THRASH;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.util.api.ParticleIonizerRecipes;
 import lordfokas.stargatetech2.util.api.ParticleIonizerRecipes.IonizerRecipe;
@@ -178,8 +178,8 @@ public class TileParticleIonizer extends TileMachine__THRASH implements IFluidHa
 	}
 	
 	@Override
-	protected FaceColor__THRASH[] getPossibleFaceColors() {
-		return new FaceColor__THRASH[]{FaceColor__THRASH.VOID, FaceColor__THRASH.BLUE, FaceColor__THRASH.ORANGE, FaceColor__THRASH.STRIPES};
+	protected FaceColor[] getPossibleFaceColors() {
+		return new FaceColor[]{FaceColor.VOID, FaceColor.BLUE, FaceColor.ORANGE, FaceColor.STRIPES};
 	}
 	
 	// ############################################################################################
@@ -219,7 +219,7 @@ public class TileParticleIonizer extends TileMachine__THRASH implements IFluidHa
 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection side) {
-		FaceColor__THRASH color = getColor(side);
+		FaceColor color = getColor(side);
 		if(color.isInput() && color.isOutput()){
 			return new FluidTankInfo[]{fluidIonizable.getInfo(), ionizedParticles.getInfo()};
 		}else if(color.isInput()){

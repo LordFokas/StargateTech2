@@ -2,7 +2,7 @@ package lordfokas.stargatetech2.modules.core.packets__THRASH;
 
 import lordfokas.stargatetech2.lib.packet.BasePacket.ClientToServer;
 import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.Face__THRASH;
+import lordfokas.stargatetech2.lib.tileentity.Face;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -11,7 +11,7 @@ import cpw.mods.fml.relauncher.Side;
 
 @ClientToServer
 public class PacketToggleMachineFace__THRASH extends PacketCoordinates {
-	public Face__THRASH face;
+	public Face face;
 	
 	@Override
 	protected void writeData() throws Exception {
@@ -20,7 +20,7 @@ public class PacketToggleMachineFace__THRASH extends PacketCoordinates {
 
 	@Override
 	protected IMessage readData(EntityPlayer player, Side side) throws Exception {
-		face = Face__THRASH.values()[input.readInt()];
+		face = Face.values()[input.readInt()];
 		TileEntity te = player.worldObj.getTileEntity(x, y, z);
 		if(te instanceof TileMachine__THRASH){
 			((TileMachine__THRASH)te).toggleFace(face);

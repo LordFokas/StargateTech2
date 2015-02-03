@@ -9,5 +9,4 @@ public class TileShieldController extends BaseTileEntity<ShieldControllerClient,
 	public TileShieldController() {
 		super(ShieldControllerClient.class, ShieldControllerServer.class);
 	}
-	
 }

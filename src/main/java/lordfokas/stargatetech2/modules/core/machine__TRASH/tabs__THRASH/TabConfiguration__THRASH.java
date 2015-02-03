@@ -1,8 +1,8 @@
 package lordfokas.stargatetech2.modules.core.machine__TRASH.tabs__THRASH;
 
+import lordfokas.stargatetech2.lib.tileentity.FaceColor;
+import lordfokas.stargatetech2.lib.tileentity.Face;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTab__OLD_AND_FLAWED;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.FaceColor__THRASH;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.Face__THRASH;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.modules.core.packets__THRASH.PacketToggleMachineFace__THRASH;
 import lordfokas.stargatetech2.reference.TextureReference;
@@ -13,19 +13,19 @@ import net.minecraft.util.IIcon;
 
 public class TabConfiguration__THRASH extends BaseTab__OLD_AND_FLAWED{
 	private static final Side[] sides = new Side[]{
-		new Side(Face__THRASH.BOTTOM, 45, 61),
-		new Side(Face__THRASH.TOP, 45, 25),
-		new Side(Face__THRASH.LEFT, 27, 43),
-		new Side(Face__THRASH.FRONT, 45, 43),
-		new Side(Face__THRASH.RIGHT, 63, 43),
-		new Side(Face__THRASH.BACK, 63, 61)
+		new Side(Face.BOTTOM, 45, 61),
+		new Side(Face.TOP, 45, 25),
+		new Side(Face.LEFT, 27, 43),
+		new Side(Face.FRONT, 45, 43),
+		new Side(Face.RIGHT, 63, 43),
+		new Side(Face.BACK, 63, 61)
 	};
 	
 	private static class Side{
 		public final int x, y;
-		public final Face__THRASH face;
+		public final Face face;
 		
-		public Side(Face__THRASH face, int x, int y){
+		public Side(Face face, int x, int y){
 			this.face = face;
 			this.x = x;
 			this.y = y;
@@ -53,7 +53,7 @@ public class TabConfiguration__THRASH extends BaseTab__OLD_AND_FLAWED{
 		gui.drawDarkerArea(getColor(), 23, 21, 60, 60);
 		for(int i = 0; i < 6; i++){
 			Side s = sides[i];
-			FaceColor__THRASH color = machine.getColor(s.face);
+			FaceColor color = machine.getColor(s.face);
 			if(!color.isColored()){
 				gui.drawIcon(s.x, s.y, machine.getBlockType().getIcon(i, 0), TextureMap.locationBlocksTexture, 16);
 			}else{

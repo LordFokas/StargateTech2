@@ -2,7 +2,7 @@ package lordfokas.stargatetech2.modules.core.packets__THRASH;
 
 import lordfokas.stargatetech2.lib.packet.BasePacket.ServerToClient;
 import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.FaceColor__THRASH;
+import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -11,19 +11,19 @@ import cpw.mods.fml.relauncher.Side;
 
 @ServerToClient
 public class PacketUpdateMachineColors__THRASH extends PacketCoordinates {
-	private FaceColor__THRASH[] colors;
+	private FaceColor[] colors;
 	
 	public PacketUpdateMachineColors__THRASH(){
-		colors = new FaceColor__THRASH[6];
+		colors = new FaceColor[6];
 	}
 	
-	public PacketUpdateMachineColors__THRASH(FaceColor__THRASH[] colors){
+	public PacketUpdateMachineColors__THRASH(FaceColor[] colors){
 		this.colors = colors;
 	}
 	
 	@Override
 	protected void writeData() throws Exception{
-		for(FaceColor__THRASH color : colors){
+		for(FaceColor color : colors){
 			output.writeByte(color.ordinal());
 		}
 	}
@@ -31,7 +31,7 @@ public class PacketUpdateMachineColors__THRASH extends PacketCoordinates {
 	@Override
 	protected IMessage readData(EntityPlayer player, Side side) throws Exception {
 		for(int s = 0; s < 6; s++){
-			colors[s] = FaceColor__THRASH.values()[input.readByte()];
+			colors[s] = FaceColor.values()[input.readByte()];
 		}
 		TileEntity te = player.worldObj.getTileEntity(x, y, z);
 		if(te instanceof TileMachine__THRASH){
