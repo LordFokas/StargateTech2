@@ -55,7 +55,7 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
     }
 	
 	@Override
-	public final void readFromNBT(NBTTagCompound nbt){
+	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
 		if(context != null){
 			NBTTagCompound contextNBT = nbt.getCompoundTag("context");
@@ -66,7 +66,7 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 	}
 	
 	@Override
-	public final void writeToNBT(NBTTagCompound nbt){
+	public void writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
 		if(context instanceof ITileContext.Server){
 			NBTTagCompound contextNBT = new NBTTagCompound();
