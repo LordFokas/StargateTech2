@@ -50,4 +50,19 @@ public abstract class FaceColorFilter implements IFaceColorFilter{
 			return !color.isColored();
 		}
 	};
+	
+	public static class MatchColors extends FaceColorFilter{
+		private FaceColor[] colors;
+		
+		public MatchColors(FaceColor ... colors){
+			this.colors = colors;
+		}
+		
+		@Override
+		public boolean doesColorMatch(FaceColor color) {
+			for(FaceColor c : colors)
+				if(c == color) return true;
+			return false;
+		}
+	}
 }

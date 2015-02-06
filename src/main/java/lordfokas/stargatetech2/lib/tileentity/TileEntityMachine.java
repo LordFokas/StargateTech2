@@ -1,9 +1,12 @@
 package lordfokas.stargatetech2.lib.tileentity;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
+import lordfokas.stargatetech2.lib.tileentity.component.IAccessibleTileComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.ITileComponent;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
@@ -16,9 +19,13 @@ import cofh.api.tileentity.ISidedTexture;
 
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
 implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar{
+	private static final Class[] INTERFACES = new Class[]{};
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
 	private Face[] faceMap = new Face[6];
 	private ForgeDirection facing;
+	
+	private ArrayList<ITileComponent> allComponents = new ArrayList();
+	private HashMap<Class, ArrayList<IAccessibleTileComponent>> sidedComponents = new HashMap();
 	
 	public TileEntityMachine(Class<? extends C> client, Class<? extends S> server, FaceColor ... colors) {
 		super(client, server);
@@ -39,7 +46,20 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 	
 	@Override
 	public void registerComponent(ITileComponent component) {
-		// TODO: implement this :)
+		allComponents.add(component);
+		Class cls = component.getClass();
+		if(component instanceof IAccessibleTileComponent)
+		for(Class iface : INTERFACES){
+			if(iface.isAssignableFrom(cls)){
+				ArrayList<IAccessibleTileComponent> list = sidedComponents.get(iface);
+				if(list == null){
+					list = new ArrayList();
+					sidedComponents.put(iface, list);
+				}
+				list.add((IAccessibleTileComponent) component);
+				return;
+			}
+		}
 	}
 	
 	// ##########################################################
@@ -220,6 +240,11 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 			int[] c = wrapper.getIntArray("colors");
 			faces.put(face, new FaceWrapper(fc, c));
 		}
+		NBTTagCompound components = nbt.getCompoundTag("components");
+		int size = components.getInteger("size");
+		for(int i = 0; i < size; i++){
+			allComponents.get(i).readFromNBT(components.getCompoundTag("comp_" + i));
+		}
 	}
 	
 	@Override
@@ -237,5 +262,11 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 			facingNBT.setTag("fw_" + face.ordinal(), wrapper);
 		}
 		nbt.setTag("facing", facingNBT);
+		NBTTagCompound components = new NBTTagCompound();
+		for(int i = 0; i < allComponents.size(); i++){
+			components.setTag("comp_" + i, allComponents.get(i).writeToNBT(new NBTTagCompound()));
+		}
+		components.setInteger("size", allComponents.size());
+		nbt.setTag("components", components);
 	}
 }
