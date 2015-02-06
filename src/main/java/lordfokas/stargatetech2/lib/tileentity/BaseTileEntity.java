@@ -1,5 +1,6 @@
 package lordfokas.stargatetech2.lib.tileentity;
 
+import lordfokas.stargatetech2.lib.gui.BaseContainer;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,6 +11,20 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 
+/**
+ * A basic TileEntity. It splits the logic into Client / Server context, which can
+ * inherit from a common context. Refer to {@link ITileContext} for which interfaces
+ * each context should implement.
+ * 
+ * Also supplies basic automated GUI Sync if used along with a {@link BaseContainer}.
+ * Refer to {@link ISyncedGUI} for the interfaces each context should implement in
+ * order to be automatically synced.
+ *
+ * @param <C> The type {@link BaseTileEntity#getClientContext()} should return.
+ * @param <S> The type {@link BaseTileEntity#getServerContext()} should return.
+ * 
+ * @author LordFokas
+ */
 public class BaseTileEntity<C extends Client, S extends Server> extends TileEntity implements ITile.Client, ITile.Server, ISyncedGUI.Flow{
 	protected final ITileContext context;
 	

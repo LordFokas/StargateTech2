@@ -10,6 +10,9 @@ import lordfokas.stargatetech2.lib.tileentity.component.IAccessibleTileComponent
 import lordfokas.stargatetech2.lib.tileentity.component.IComponentProvider;
 import lordfokas.stargatetech2.lib.tileentity.component.IComponentRegistrar;
 import lordfokas.stargatetech2.lib.tileentity.component.ITileComponent;
+import lordfokas.stargatetech2.lib.tileentity.component.access.ICapacitorComponent;
+import lordfokas.stargatetech2.lib.tileentity.component.access.IInventoryComponent;
+import lordfokas.stargatetech2.lib.tileentity.component.access.ITankComponent;
 import lordfokas.stargatetech2.lib.tileentity.faces.Face;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingAware;
@@ -23,9 +26,30 @@ import cofh.api.tileentity.IReconfigurableFacing;
 import cofh.api.tileentity.IReconfigurableSides;
 import cofh.api.tileentity.ISidedTexture;
 
+/**
+ * An advanced TileEntity. Supplies services like automatic rotation handling,
+ * side colors, components, among others.
+ * 
+ * If a context implements {@link IFacingAware} it will be provided with access
+ * to this TileEntity's facing data.
+ * 
+ * If a Context implements {@link IComponentProvider} it will be allowed to register
+ * components to this machine. Components should implement {@link ITileComponent}.
+ * Components that implement {@link IAccessibleTileComponent} will be exposed to
+ * the outside of the TileEntity.
+ * Components that implement {@link IFacingAware} will be allowed to read this
+ * TileEntity's facing data.
+ *
+ * @param <C> The type {@link BaseTileEntity#getClientContext()} should return.
+ * @param <S> The type {@link BaseTileEntity#getServerContext()} should return.
+ * 
+ * @author LordFokas
+ */
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
 implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar{
-	private static final Class[] INTERFACES = new Class[]{};
+	private static final Class[] INTERFACES = new Class[]{
+		ICapacitorComponent.class, IInventoryComponent.class, ITankComponent.class
+	};
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
 	private Face[] faceMap = new Face[6];
 	private ForgeDirection facing;

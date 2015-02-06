@@ -5,6 +5,14 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+/**
+ * A basic Inventory implementation. It respects IInventory's
+ * general contract and supplies additional functionality.
+ * 
+ * You can simply direct your IInventory calls to it.
+ * 
+ * @author LordFokas
+ */
 public class Inventory implements IInventory{
 	private ItemStack[] inventory;
 	private InventoryMode mode;
