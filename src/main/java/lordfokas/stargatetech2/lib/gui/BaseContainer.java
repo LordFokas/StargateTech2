@@ -16,18 +16,16 @@ public class BaseContainer extends Container {
 	@Deprecated
 	public BaseContainer(){
 		this(null);
+		throw new RuntimeException("NOPE!");
 	}
 	
-	// TODO: remove null checks after finishing refactoring.
 	public BaseContainer(BaseTileEntity te){
 		this.te = te;
-		if(te != null){
-			int values = te.getValueCount();
-			if(values > 0){
-				lastValues = new int[values];
-				for(int i = 0; i < values; i++){
-					lastValues[i] = Integer.MIN_VALUE;
-				}
+		int values = te.getValueCount();
+		if(values > 0){
+			lastValues = new int[values];
+			for(int i = 0; i < values; i++){
+				lastValues[i] = Integer.MIN_VALUE;
 			}
 		}
 	}
@@ -58,7 +56,7 @@ public class BaseContainer extends Container {
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-		if(te != null && lastValues != null){
+		if(lastValues != null){
 			for(int i = 0; i < te.getValueCount(); i++){
 				int val = te.getValue(i);
 				if(val != lastValues[i]){
