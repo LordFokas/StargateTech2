@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.lib.render;
 
 import lordfokas.stargatetech2.lib.block.BlockMachine;
-import lordfokas.stargatetech2.lib.tileentity.FaceColor;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.block.Block;

@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.lib.tileentity;
+package lordfokas.stargatetech2.lib.tileentity.faces;
 
 import lordfokas.stargatetech2.reference.TextureReference;
 

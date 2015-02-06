@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import lordfokas.stargatetech2.lib.gui.BaseContainer;
-import lordfokas.stargatetech2.lib.tileentity.FaceColor;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
 import lordfokas.stargatetech2.reference.TextureReference;
 import net.minecraft.client.Minecraft;

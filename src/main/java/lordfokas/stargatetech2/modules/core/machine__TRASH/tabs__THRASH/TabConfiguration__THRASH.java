@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.modules.core.machine__TRASH.tabs__THRASH;
 
-import lordfokas.stargatetech2.lib.tileentity.FaceColor;
-import lordfokas.stargatetech2.lib.tileentity.Face;
+import lordfokas.stargatetech2.lib.tileentity.faces.Face;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTab__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.modules.core.packets__THRASH.PacketToggleMachineFace__THRASH;

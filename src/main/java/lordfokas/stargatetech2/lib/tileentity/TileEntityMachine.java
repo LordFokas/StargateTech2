@@ -7,7 +7,13 @@ import java.util.HashMap;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
 import lordfokas.stargatetech2.lib.tileentity.component.IAccessibleTileComponent;
+import lordfokas.stargatetech2.lib.tileentity.component.IComponentProvider;
+import lordfokas.stargatetech2.lib.tileentity.component.IComponentRegistrar;
 import lordfokas.stargatetech2.lib.tileentity.component.ITileComponent;
+import lordfokas.stargatetech2.lib.tileentity.faces.Face;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
+import lordfokas.stargatetech2.lib.tileentity.faces.IFacingAware;
+import lordfokas.stargatetech2.lib.tileentity.faces.IFacingProvider;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.nbt.NBTTagCompound;
@@ -47,17 +53,21 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 	@Override
 	public void registerComponent(ITileComponent component) {
 		allComponents.add(component);
-		Class cls = component.getClass();
-		if(component instanceof IAccessibleTileComponent)
-		for(Class iface : INTERFACES){
-			if(iface.isAssignableFrom(cls)){
-				ArrayList<IAccessibleTileComponent> list = sidedComponents.get(iface);
-				if(list == null){
-					list = new ArrayList();
-					sidedComponents.put(iface, list);
+		if(component instanceof IFacingAware){
+			((IFacingAware)component).setProvider(this);
+		}
+		if(component instanceof IAccessibleTileComponent){
+			Class cls = component.getClass();
+			for(Class iface : INTERFACES){
+				if(iface.isAssignableFrom(cls)){
+					ArrayList<IAccessibleTileComponent> list = sidedComponents.get(iface);
+					if(list == null){
+						list = new ArrayList();
+						sidedComponents.put(iface, list);
+					}
+					list.add((IAccessibleTileComponent) component);
+					return;
 				}
-				list.add((IAccessibleTileComponent) component);
-				return;
 			}
 		}
 	}

@@ -1,6 +1,5 @@
-package lordfokas.stargatetech2.lib.tileentity.component;
+package lordfokas.stargatetech2.lib.tileentity.faces;
 
-import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 
 public abstract class FaceColorFilter implements IFaceColorFilter{
 	public static final FaceColorFilter INPUT = new FaceColorFilter(){

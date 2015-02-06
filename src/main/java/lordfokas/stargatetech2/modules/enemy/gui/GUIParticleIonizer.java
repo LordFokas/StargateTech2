@@ -2,7 +2,7 @@ package lordfokas.stargatetech2.modules.enemy.gui;
 
 import java.util.List;
 
-import lordfokas.stargatetech2.lib.tileentity.FaceColor;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGauge__OLD_AND_FLAWED.PowerGauge;

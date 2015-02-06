@@ -3,7 +3,7 @@ package lordfokas.stargatetech2.modules.enemy;
 import java.util.LinkedList;
 
 import lordfokas.stargatetech2.api.shields.IShieldable;
-import lordfokas.stargatetech2.lib.tileentity.FaceColor;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.util.ConfigServer;

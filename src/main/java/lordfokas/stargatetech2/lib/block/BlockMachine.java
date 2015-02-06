@@ -2,9 +2,9 @@ package lordfokas.stargatetech2.lib.block;
 
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.lib.render.RenderBlockMachine;
-import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
 import lordfokas.stargatetech2.lib.tileentity.TileEntityMachine;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;

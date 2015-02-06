@@ -2,7 +2,7 @@ package lordfokas.stargatetech2.modules.core.packets__THRASH;
 
 import lordfokas.stargatetech2.lib.packet.BasePacket.ServerToClient;
 import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
-import lordfokas.stargatetech2.lib.tileentity.FaceColor;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;

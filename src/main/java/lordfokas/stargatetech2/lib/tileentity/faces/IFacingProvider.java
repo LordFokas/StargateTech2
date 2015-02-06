@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.lib.tileentity;
+package lordfokas.stargatetech2.lib.tileentity.faces;
 
 import net.minecraftforge.common.util.ForgeDirection;
 
