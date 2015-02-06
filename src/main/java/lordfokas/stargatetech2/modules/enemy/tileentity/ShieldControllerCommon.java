@@ -66,7 +66,7 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IS
 				busEnabled = (val == 1);
 				break;
 			case 4:
-				busAddress = (short) val;
+				busAddress = (short)(val & 0xFFFF);
 				break;
 		}
 	}

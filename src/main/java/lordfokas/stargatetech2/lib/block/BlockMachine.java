@@ -4,6 +4,7 @@ import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.lib.render.RenderBlockMachine;
 import lordfokas.stargatetech2.lib.tileentity.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
+import lordfokas.stargatetech2.lib.tileentity.TileEntityMachine;
 import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;
@@ -94,6 +95,7 @@ public abstract class BlockMachine extends BaseBlockContainer{
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase living, ItemStack stack){
 		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw, living.rotationPitch, useVertical);
 		w.setBlockMetadataWithNotify(x, y, z, dir.ordinal(), 2);
+		((TileEntityMachine)w.getTileEntity(x, y, z)).setFacing(dir.ordinal());
 		if(living instanceof EntityPlayer){
 			TileEntity te = w.getTileEntity(x, y, z);
 			if(te instanceof IOwnedMachine){

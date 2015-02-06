@@ -4,13 +4,17 @@ import java.util.EnumMap;
 
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
+import lordfokas.stargatetech2.reference.TextureReference;
+import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.tileentity.IReconfigurableFacing;
 import cofh.api.tileentity.IReconfigurableSides;
+import cofh.api.tileentity.ISidedTexture;
 
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
-implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider{
+implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider{
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
 	private Face[] faceMap = new Face[6];
 	private ForgeDirection facing;
@@ -18,6 +22,8 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider{
 	public TileEntityMachine(Class<? extends C> client, Class<? extends S> server, FaceColor ... colors) {
 		super(client, server);
 		facing = ForgeDirection.SOUTH;
+		setMap(ForgeDirection.UP, Face.TOP);
+		setMap(ForgeDirection.DOWN, Face.BOTTOM);
 		remapSides(false); // don't update the clients; we may even be on the client side!
 		for(Face face : faceMap){
 			faces.put(face, new FaceWrapper(colors));
@@ -67,6 +73,7 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider{
 	}
 	
 	private void setMap(ForgeDirection dir, Face face){
+		System.err.println("Setting face: " + face + " on side: " + dir);
 		faceMap[dir.ordinal()] = face;
 	}
 	
@@ -120,6 +127,11 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider{
 	@Override
 	public FaceColor getColorForDirection(ForgeDirection dir){
 		return getColorForSide(dir.ordinal());
+	}
+	
+	@Override
+	public IIcon getTexture(int side, int pass) {
+		return IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE_I);
 	}
 	
 	// ##########################################################

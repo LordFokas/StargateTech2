@@ -1,5 +1,7 @@
 package lordfokas.stargatetech2.lib.gui;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lordfokas.stargatetech2.lib.tileentity.BaseTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -8,9 +10,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 
 public class BaseContainer extends Container {
-	private final BaseTileEntity te;
+	public final BaseTileEntity te;
 	private int[] lastValues = null;
 	
+	@Deprecated
 	public BaseContainer(){
 		this(null);
 	}
@@ -64,5 +67,11 @@ public class BaseContainer extends Container {
 				}
 			}
 		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public void updateProgressBar(int key, int value){
+		te.setValue(key, value);
 	}
 }

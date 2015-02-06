@@ -4,7 +4,6 @@ import lordfokas.stargatetech2.lib.gui.BaseContainer;
 import lordfokas.stargatetech2.modules.enemy.TileParticleIonizer;
 import lordfokas.stargatetech2.modules.enemy.TileShieldController;
 import lordfokas.stargatetech2.modules.enemy.gui.ContainerParticleIonizer;
-import lordfokas.stargatetech2.modules.enemy.gui.ContainerShieldController;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -23,7 +22,7 @@ public class GUIHandler implements IGuiHandler {
 		switch(Screen.values()[ID]){
 			case SHIELD_CONTROLLER:
 				if(te instanceof TileShieldController)
-					container = new ContainerShieldController((TileShieldController)te);
+					container = new BaseContainer((TileShieldController)te);
 				break;
 			case PARTICLE_IONIZER:
 				if(te instanceof TileParticleIonizer)

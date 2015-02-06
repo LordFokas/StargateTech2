@@ -19,9 +19,11 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 		try{
 			if(side == Side.CLIENT && client != null){
 				context = client.newInstance();
+				context.setTile(this);
 				((ITileContext.Client)context).setTile(this);
 			}else if(side == Side.SERVER && server != null){
 				context = server.newInstance();
+				context.setTile(this);
 				((ITileContext.Server)context).setTile(this);
 			}
 		}catch(Exception e){
