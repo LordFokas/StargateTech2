@@ -4,6 +4,7 @@ import java.util.EnumMap;
 
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
+import lordfokas.stargatetech2.lib.tileentity.component.ITileComponent;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +15,7 @@ import cofh.api.tileentity.IReconfigurableSides;
 import cofh.api.tileentity.ISidedTexture;
 
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
-implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider{
+implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar{
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
 	private Face[] faceMap = new Face[6];
 	private ForgeDirection facing;
@@ -31,6 +32,14 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 		if(context instanceof IFacingAware){
 			((IFacingAware)context).setProvider(this);
 		}
+		if(context instanceof IComponentProvider){
+			((IComponentProvider)context).registerComponents(this);
+		}
+	}
+	
+	@Override
+	public void registerComponent(ITileComponent component) {
+		// TODO: implement this :)
 	}
 	
 	// ##########################################################
