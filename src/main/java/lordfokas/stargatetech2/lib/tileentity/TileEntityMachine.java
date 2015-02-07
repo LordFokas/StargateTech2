@@ -5,12 +5,14 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
 import lordfokas.stargatetech2.lib.tileentity.component.IAccessibleTileComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.IComponentProvider;
 import lordfokas.stargatetech2.lib.tileentity.component.IComponentRegistrar;
 import lordfokas.stargatetech2.lib.tileentity.component.ITileComponent;
+import lordfokas.stargatetech2.lib.tileentity.component.access.IBusComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.access.ICapacitorComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.access.IInventoryComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.access.ITankComponent;
@@ -18,6 +20,7 @@ import lordfokas.stargatetech2.lib.tileentity.faces.Face;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingAware;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingProvider;
+import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.nbt.NBTTagCompound;
@@ -52,9 +55,9 @@ import cofh.api.tileentity.ISidedTexture;
  */
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
 implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar,
-IFluidHandler{
+IFluidHandler, ISyncBusDevice{
 	private static final Class[] INTERFACES = new Class[]{
-		ICapacitorComponent.class, IInventoryComponent.class, ITankComponent.class
+		IBusComponent.class, ICapacitorComponent.class, IInventoryComponent.class, ITankComponent.class
 	};
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
 	private Face[] faceMap = new Face[6];
@@ -88,6 +91,9 @@ IFluidHandler{
 		allComponents.add(component);
 		if(component instanceof IFacingAware){
 			((IFacingAware)component).setProvider(this);
+		}
+		if(component instanceof IBusComponent){
+			
 		}
 		if(component instanceof IAccessibleTileComponent){
 			Class cls = component.getClass();
@@ -305,6 +311,58 @@ IFluidHandler{
 		}
 		components.setInteger("size", allComponents.size());
 		nbt.setTag("components", components);
+	}
+	
+	// ##########################################################
+	// COMPONENT: IBusComponent
+	
+	private ArrayList<IBusComponent> getInterfaces(){
+		return (ArrayList<IBusComponent>) sidedComponents.get(IBusComponent.class);
+	}
+	
+	@Override
+	public IBusInterface[] getInterfaces(int side) {
+		LinkedList<IBusInterface> interfaces = new LinkedList();
+		ForgeDirection dir = ForgeDirection.getOrientation(side);
+		for(IBusComponent component : getInterfaces()){
+			if(component.accessibleOnSide(dir)) interfaces.add(component.getInterface());
+		}
+		return interfaces.toArray(new IBusInterface[]{});
+	}
+
+	@Override
+	public int getXCoord() {
+		return xCoord;
+	}
+
+	@Override
+	public int getYCoord() {
+		return yCoord;
+	}
+
+	@Override
+	public int getZCoord() {
+		return zCoord;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		getInterfaces().get(0).setEnabled(enabled);
+	}
+
+	@Override
+	public boolean getEnabled() {
+		return getInterfaces().get(0).getEnabled();
+	}
+
+	@Override
+	public void setAddress(short addr) {
+		getInterfaces().get(0).setAddress(addr);
+	}
+
+	@Override
+	public short getAddress() {
+		return getInterfaces().get(0).getAddress();
 	}
 	
 	// ##########################################################
