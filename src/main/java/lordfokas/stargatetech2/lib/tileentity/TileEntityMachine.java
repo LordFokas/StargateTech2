@@ -3,6 +3,7 @@ package lordfokas.stargatetech2.lib.tileentity;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
@@ -22,6 +23,10 @@ import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 import cofh.api.tileentity.IReconfigurableFacing;
 import cofh.api.tileentity.IReconfigurableSides;
 import cofh.api.tileentity.ISidedTexture;
@@ -46,7 +51,8 @@ import cofh.api.tileentity.ISidedTexture;
  * @author LordFokas
  */
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
-implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar{
+implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar,
+IFluidHandler{
 	private static final Class[] INTERFACES = new Class[]{
 		ICapacitorComponent.class, IInventoryComponent.class, ITankComponent.class
 	};
@@ -55,7 +61,7 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 	private ForgeDirection facing;
 	
 	private ArrayList<ITileComponent> allComponents = new ArrayList();
-	private HashMap<Class, ArrayList<IAccessibleTileComponent>> sidedComponents = new HashMap();
+	private HashMap<Class, ArrayList<? extends IAccessibleTileComponent>> sidedComponents = new HashMap();
 	
 	public TileEntityMachine(Class<? extends C> client, Class<? extends S> server, FaceColor ... colors) {
 		super(client, server);
@@ -68,6 +74,9 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 		}
 		if(context instanceof IFacingAware){
 			((IFacingAware)context).setProvider(this);
+		}
+		for(Class iface : INTERFACES){
+			sidedComponents.put(iface, new ArrayList());
 		}
 		if(context instanceof IComponentProvider){
 			((IComponentProvider)context).registerComponents(this);
@@ -84,12 +93,7 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 			Class cls = component.getClass();
 			for(Class iface : INTERFACES){
 				if(iface.isAssignableFrom(cls)){
-					ArrayList<IAccessibleTileComponent> list = sidedComponents.get(iface);
-					if(list == null){
-						list = new ArrayList();
-						sidedComponents.put(iface, list);
-					}
-					list.add((IAccessibleTileComponent) component);
+					((ArrayList<ITileComponent>) sidedComponents.get(iface)).add(component);
 					return;
 				}
 			}
@@ -136,7 +140,6 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 	}
 	
 	private void setMap(ForgeDirection dir, Face face){
-		System.err.println("Setting face: " + face + " on side: " + dir);
 		faceMap[dir.ordinal()] = face;
 	}
 	
@@ -302,5 +305,64 @@ implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingPr
 		}
 		components.setInteger("size", allComponents.size());
 		nbt.setTag("components", components);
+	}
+	
+	// ##########################################################
+	// COMPONENT: ITankComponent
+	
+	private ArrayList<ITankComponent> getTanks(){
+		return (ArrayList<ITankComponent>) sidedComponents.get(ITankComponent.class);
+	}
+	
+	@Override
+	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+		for(ITankComponent tank : getTanks()){
+			if(tank.canInputOnSide(from) && tank.canFill(resource.getFluid())){
+				return tank.fill(resource, doFill);
+			}
+		}
+		return 0;
+	}
+
+	@Override
+	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+		return drain(from, resource.amount, doDrain);
+	}
+
+	@Override
+	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+		for(ITankComponent tank : getTanks()){
+			if(tank.canOutputOnSide(from) && tank.canDrain()){
+				return tank.drain(maxDrain, doDrain);
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean canFill(ForgeDirection from, Fluid fluid) {
+		for(ITankComponent tank : getTanks()){
+			if(tank.canInputOnSide(from)) return tank.canFill(fluid);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canDrain(ForgeDirection from, Fluid fluid) {
+		for(ITankComponent tank : getTanks()){
+			if(tank.canOutputOnSide(from)) return tank.canDrain();
+		}
+		return false;
+	}
+
+	@Override
+	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+		LinkedList<FluidTankInfo> infos = new LinkedList();
+		for(ITankComponent tank : getTanks()){
+			if(tank.canInputOnSide(from) || tank.canOutputOnSide(from)){
+				infos.add(tank.getInfo());
+			}
+		}
+		return infos.toArray(new FluidTankInfo[]{});
 	}
 }

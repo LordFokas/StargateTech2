@@ -5,6 +5,12 @@ import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.lib.tileentity.ISyncedGUI;
 import lordfokas.stargatetech2.lib.tileentity.ITile;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext;
+import lordfokas.stargatetech2.lib.tileentity.component.IComponentProvider;
+import lordfokas.stargatetech2.lib.tileentity.component.IComponentRegistrar;
+import lordfokas.stargatetech2.lib.tileentity.component.base.BasicFluidFilter;
+import lordfokas.stargatetech2.lib.tileentity.component.base.TankComponentFiltered;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
+import lordfokas.stargatetech2.lib.tileentity.faces.FaceColorFilter;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,7 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
-public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, ISyncBusDevice{
+public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IComponentProvider{
 	protected FluidTank tank = new FluidTank(16000);
 	protected ShieldPermissions permissions = ShieldPermissions.getDefault();
 	protected boolean active;
@@ -21,15 +27,19 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IS
 	protected short busAddress;
 	private ITile tile;
 	
+	@Override
+	public void registerComponents(IComponentRegistrar registrar) {
+		TankComponentFiltered component = new TankComponentFiltered(tank, false, new BasicFluidFilter(IonizedParticles.fluid));
+		registrar.registerComponent(component.setInputFilter(new FaceColorFilter.MatchColors(FaceColor.BLUE)));
+	}
+	
 	public void readNBTData(NBTTagCompound nbt) {
 		permissions = ShieldPermissions.readFromNBT(nbt.getCompoundTag("permissions"));
-		tank.readFromNBT(nbt.getCompoundTag("tank"));
 		active = nbt.getBoolean("active");
 		enabled = nbt.getBoolean("enabled");
 	}
 	
 	public void writeNBTData(NBTTagCompound nbt) {
-		nbt.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
 		nbt.setTag("permissions", permissions.writeToNBT());
 		nbt.setBoolean("active", active);
 		nbt.setBoolean("enabled", enabled);
@@ -85,23 +95,5 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IS
 	
 	public ShieldPermissions getPermissions(){
 		return permissions;
-	}
-	
-	@Override public IBusInterface[] getInterfaces(int side) { return null; }
-	@Override public World getWorld(){ return tile.getWorld(); }
-	@Override public int getXCoord(){ return tile.x(); }
-	@Override public int getYCoord(){ return tile.y(); }
-	@Override public int getZCoord(){ return tile.z(); }
-	@Override public void setEnabled(boolean enabled){}
-	@Override public void setAddress(short addr){}
-	
-	@Override
-	public boolean getEnabled() {
-		return busEnabled;
-	}
-	
-	@Override
-	public short getAddress() {
-		return busAddress;
 	}
 }

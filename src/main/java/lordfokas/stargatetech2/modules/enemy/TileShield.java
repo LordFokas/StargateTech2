@@ -52,6 +52,6 @@ public class TileShield extends BaseTileEntity__OLD_AND_FLAWED {
 	public String getOwner(){
 		TileShieldController controller = getController();
 		if(controller == null) return "";
-		else return controller.getServerContext().getOwner();
+		else return controller.getOwner();
 	}
 }

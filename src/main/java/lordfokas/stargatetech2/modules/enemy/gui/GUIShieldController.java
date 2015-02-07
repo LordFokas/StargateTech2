@@ -58,9 +58,9 @@ public class GUIShieldController extends BaseGUI {
 		if(redstone){
 			mode = "Redstone";
 			m_color = 0xD00000;
-		}else if(shieldController.getClientContext().getEnabled()){
+		/*}else if(shieldController.getClientContext().getEnabled()){
 			mode = "Abstract Bus";
-			m_color = 0x0088FF;
+			m_color = 0x0088FF;*/
 		}else{
 			mode = "None";
 			m_color = 0x505050;
@@ -114,7 +114,7 @@ public class GUIShieldController extends BaseGUI {
 		addElement(listBox);
 		
 		addTab(new TabInfo(this, INFO));
-		addTab(new TabAbstractBus(this, TabBase.RIGHT, shieldController.getClientContext()));
+		//addTab(new TabAbstractBus(this, TabBase.RIGHT, shieldController.getClientContext()));
 		addTab(new TabConfiguration(this, TabBase.RIGHT, shieldController));
 		
 		updatePermissions();

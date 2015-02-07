@@ -9,6 +9,7 @@ import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.api.shields.ITileShieldController;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
+import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
 import lordfokas.stargatetech2.lib.tileentity.ITile;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingAware;
@@ -32,21 +33,11 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
 public class ShieldControllerServer extends ShieldControllerCommon
-implements ITileContext.Server, IShieldControllerProvider, ITileShieldController, ISyncBusDevice, IFluidHandler, IFacingAware{
+implements ITileContext.Server, IShieldControllerProvider{
 	private static final int ION_DRAIN = 10;
-	
-	private ShieldControllerBusDriver driver = new ShieldControllerBusDriver(this);
-	private IBusInterface busInterface = StargateTechAPI.api().getFactory().getIBusInterface(this, driver);
-	private IBusInterface[] interfaces = new IBusInterface[]{busInterface};
 	private ArrayList<Vec3Int> emitters = new ArrayList();
 	private LinkedList<Vec3Int> shields = new LinkedList();
-	private IFacingProvider facing;
 	private ITile.Server tile;
-	
-	@Override
-	public void setProvider(IFacingProvider provider) {
-		facing = provider;
-	}
 	
 	@Override
 	public void setTile(ITile.Server tile) {
@@ -106,18 +97,6 @@ implements ITileContext.Server, IShieldControllerProvider, ITileShieldController
 	@Override
 	public boolean isShieldOn(){
 		return active;
-	}
-	
-	@Override
-	public String getOwner() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
-	@Override
-	public boolean hasAccess(String player) {
-		// TODO Auto-generated method stub
-		return true;
 	}
 	
 	@Override
@@ -194,75 +173,11 @@ implements ITileContext.Server, IShieldControllerProvider, ITileShieldController
 	
 	
 	// ***************************************************
-	// ISyncBusDevice
-	
-	@Override public IBusInterface[] getInterfaces(int side){ return interfaces; }
-	@Override public boolean getEnabled(){ return driver.isInterfaceEnabled(); }
-	@Override public short getAddress(){ return driver.getInterfaceAddress(); }
-	
-	@Override
-	public void setAddress(short addr){
-		driver.setAddress(addr);
-		super.busAddress = addr;
-	}
-	
-	@Override
-	public void setEnabled(boolean enabled){
-		driver.setEnabled(enabled);
-		super.busEnabled = enabled;
-	}
-	
-	
-	// ***************************************************
-	// IFluidHandler
-	
-	@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-		if(facing.getColorForDirection(from).isInput() && resource.getFluid() == IonizedParticles.fluid){
-			return tank.fill(resource, doFill);
-		}else{
-			return 0;
-		}
-	}
-
-	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-		return null;
-	}
-
-	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		return null;
-	}
-
-	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return facing.getColorForDirection(from).isInput();
-	}
-
-	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		return false;
-	}
-
-	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		if(facing.getColorForDirection(from).isInput()){
-			return new FluidTankInfo[]{tank.getInfo()};
-		}else{
-			return new FluidTankInfo[]{};
-		}
-	}
-	
-	
-	// ***************************************************
 	// Named Binary Tags
 	
 	@Override
 	public void readNBTData(NBTTagCompound nbt) {
 		super.readNBTData(nbt);
-		driver.setAddress(nbt.getShort("address"));
-		driver.setEnabled(nbt.getBoolean("driverEnabled"));
 		int num_emitters = nbt.getInteger("emitters");
 		emitters = new ArrayList(num_emitters);
 		for(int i = 0; i < num_emitters; i++){
@@ -286,7 +201,5 @@ implements ITileContext.Server, IShieldControllerProvider, ITileShieldController
 		for(int i = 0; i < shields.size(); i++){
 			nbt.setTag("shield_" + i, shields.get(i).toNBT());
 		}
-		nbt.setShort("address", driver.getInterfaceAddress());
-		nbt.setBoolean("driverEnabled", driver.isInterfaceEnabled());
 	}
 }
