@@ -365,7 +365,7 @@ IFluidHandler, ISyncBusDevice{
 		int component = key / 10;
 		int actualKey = key % 10;
 		if(component < syncComponents.size()){
-			return syncComponents.get(actualKey).getValue(actualKey);
+			return syncComponents.get(component).getValue(actualKey);
 		}else{
 			return super.getValue(actualKey);
 		}
@@ -376,7 +376,7 @@ IFluidHandler, ISyncBusDevice{
 		int component = key / 10;
 		int actualKey = key % 10;
 		if(component < syncComponents.size()){
-			syncComponents.get(actualKey).setValue(actualKey, val);
+			syncComponents.get(component).setValue(actualKey, val);
 		}else{
 			super.setValue(actualKey, val);
 		}
