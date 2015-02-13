@@ -22,10 +22,8 @@ public class PacketUpdateBusEnabled extends PacketCoordinates {
 	protected IMessage readData(EntityPlayer player, Side side) throws Exception {
 		enabled = input.readBoolean();
 		TileEntity te = player.worldObj.getTileEntity(x, y, z);
-		if(te instanceof BaseTileEntity){
-			ITileContext.Server context = ((BaseTileEntity)te).getServerContext();
-			if(context instanceof ISyncBusDevice)
-			((ISyncBusDevice)context).setEnabled(enabled);
+		if(te instanceof ISyncBusDevice){
+			((ISyncBusDevice)te).setEnabled(enabled);
 		}
 		return null;
 	}

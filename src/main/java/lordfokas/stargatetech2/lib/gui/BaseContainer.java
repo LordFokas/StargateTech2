@@ -23,8 +23,8 @@ public class BaseContainer extends Container {
 	public BaseContainer(BaseTileEntity te){
 		this.te = te;
 		int[] values = te.getKeyArray();
-		lastValues = new TIntIntHashMap();
 		if(values.length > 0){
+			lastValues = new TIntIntHashMap();
 			for(int i : values){
 				lastValues.put(i, Integer.MIN_VALUE);
 			}
