@@ -104,6 +104,7 @@ implements ITileContext.Server, IShieldControllerProvider{
 		return new Vec3Int(tile.x(), tile.y(), tile.z());
 	}
 	
+	@Override
 	public void setShieldStatus(boolean enabled){
 		this.enabled = enabled;
 		if(enabled && !active && hasIons()) raiseShields();

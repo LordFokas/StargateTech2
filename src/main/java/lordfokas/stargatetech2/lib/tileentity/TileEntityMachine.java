@@ -36,17 +36,19 @@ import cofh.api.tileentity.ISidedTexture;
 
 /**
  * An advanced TileEntity. Supplies services like automatic rotation handling,
- * side colors, components, among others.
- * 
- * If a context implements {@link IFacingAware} it will be provided with access
- * to this TileEntity's facing data.
- * 
+ * side colors, components, among others.<br>
+ * <br>
+ * If a Context implements {@link IFacingAware} it will be provided with access
+ * to this TileEntity's facing data.<br>
+ * <br>
  * If a Context implements {@link IComponentProvider} it will be allowed to register
- * components to this machine. Components should implement {@link ITileComponent}.
+ * components to this machine. Components should implement {@link ITileComponent}.<br>
+ * <br>
  * Components that implement {@link IAccessibleTileComponent} will be exposed to
- * the outside of the TileEntity.
+ * the outside of the TileEntity.<br>
  * Components that implement {@link IFacingAware} will be allowed to read this
- * TileEntity's facing data.
+ * TileEntity's facing data.<br>
+ * Components that implement {@link ISyncedGUI.Flow} will automatically be synced.
  *
  * @param <C> The type {@link BaseTileEntity#getClientContext()} should return.
  * @param <S> The type {@link BaseTileEntity#getServerContext()} should return.
@@ -59,11 +61,15 @@ IFluidHandler, ISyncBusDevice{
 	private static final Class[] INTERFACES = new Class[]{
 		IBusComponent.class, ICapacitorComponent.class, IInventoryComponent.class, ITankComponent.class
 	};
+	
+	private boolean isComponentRegistrationAllowed = false;
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
 	private Face[] faceMap = new Face[6];
 	private ForgeDirection facing;
 	
 	private ArrayList<ITileComponent> allComponents = new ArrayList();
+	private ArrayList<ISyncedGUI.Flow> syncComponents = new ArrayList();
+	private int[] syncKeys; // Cached value set for those ^
 	private HashMap<Class, ArrayList<? extends IAccessibleTileComponent>> sidedComponents = new HashMap();
 	
 	public TileEntityMachine(Class<? extends C> client, Class<? extends S> server, FaceColor ... colors) {
@@ -81,19 +87,27 @@ IFluidHandler, ISyncBusDevice{
 		for(Class iface : INTERFACES){
 			sidedComponents.put(iface, new ArrayList());
 		}
+		isComponentRegistrationAllowed = true;
 		if(context instanceof IComponentProvider){
 			((IComponentProvider)context).registerComponents(this);
 		}
+		isComponentRegistrationAllowed = false;
+		cacheSyncValueArray();
 	}
 	
 	@Override
 	public void registerComponent(ITileComponent component) {
+		if(!isComponentRegistrationAllowed)
+			throw new RuntimeException("ITileComponent registration CANNOT be delayed. Respect the fucking API!");
 		allComponents.add(component);
 		if(component instanceof IFacingAware){
 			((IFacingAware)component).setProvider(this);
 		}
 		if(component instanceof IBusComponent){
-			
+			((IBusComponent)component).setBusDevice(this);
+		}
+		if(component instanceof ISyncedGUI.Flow){
+			syncComponents.add((ISyncedGUI.Flow) component);
 		}
 		if(component instanceof IAccessibleTileComponent){
 			Class cls = component.getClass();
@@ -311,6 +325,61 @@ IFluidHandler, ISyncBusDevice{
 		}
 		components.setInteger("size", allComponents.size());
 		nbt.setTag("components", components);
+	}
+	
+	// ##########################################################
+	// SYNC OVERRIDE FOR COMPONENTS
+	
+	// I know, I know.
+	// This only runs ONCE per TE at construction phase.
+	private void cacheSyncValueArray(){
+		LinkedList<Integer> keys = new LinkedList();
+		int i;
+		for(i = 0; i < syncComponents.size(); i++){
+			ISyncedGUI.Flow sync = syncComponents.get(i);
+			int[] vals = sync.getKeyArray();
+			for(int val : vals){
+				keys.add((10 * i) + val);
+			}
+		}
+		if(context instanceof ISyncedGUI.Source){
+			int[] vals = ((ISyncedGUI.Source)context).getKeyArray();
+			for(int val : vals){
+				keys.add((10 * i) + val);
+			}
+		}
+		syncKeys = new int[keys.size()];
+		int pos = 0;
+		for(Integer key : keys){
+			syncKeys[pos++] = key;
+		}
+	}
+	
+	@Override
+	public int[] getKeyArray() {
+		return syncKeys;
+	}
+	
+	@Override // TODO: in the future maybe allow the context to have more than 10 keys.
+	public int getValue(int key) {
+		int component = key / 10;
+		int actualKey = key % 10;
+		if(component < syncComponents.size()){
+			return syncComponents.get(actualKey).getValue(actualKey);
+		}else{
+			return super.getValue(actualKey);
+		}
+	}
+	
+	@Override // TODO: in the future maybe allow the context to have more than 10 keys.
+	public void setValue(int key, int val) {
+		int component = key / 10;
+		int actualKey = key % 10;
+		if(component < syncComponents.size()){
+			syncComponents.get(actualKey).setValue(actualKey, val);
+		}else{
+			super.setValue(actualKey, val);
+		}
 	}
 	
 	// ##########################################################

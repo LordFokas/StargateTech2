@@ -8,19 +8,24 @@ import lordfokas.stargatetech2.lib.tileentity.ITileContext;
 import lordfokas.stargatetech2.lib.tileentity.component.IComponentProvider;
 import lordfokas.stargatetech2.lib.tileentity.component.IComponentRegistrar;
 import lordfokas.stargatetech2.lib.tileentity.component.base.BasicFluidFilter;
+import lordfokas.stargatetech2.lib.tileentity.component.base.BusComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.base.TankComponentFiltered;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColorFilter;
+import lordfokas.stargatetech2.lib.tileentity.faces.IFaceColorFilter;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
+import lordfokas.stargatetech2.modules.enemy.ShieldControllerBusDriver;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IComponentProvider{
+	private static final int[] VALUES = new int[]{0, 1, 2, 3, 4};
 	protected FluidTank tank = new FluidTank(16000);
 	protected ShieldPermissions permissions = ShieldPermissions.getDefault();
+	protected ShieldControllerBusDriver driver = new ShieldControllerBusDriver(this);
 	protected boolean active;
 	protected boolean enabled;
 	protected boolean busEnabled;
@@ -29,8 +34,11 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	
 	@Override
 	public void registerComponents(IComponentRegistrar registrar) {
-		TankComponentFiltered component = new TankComponentFiltered(tank, false, new BasicFluidFilter(IonizedParticles.fluid));
-		registrar.registerComponent(component.setInputFilter(new FaceColorFilter.MatchColors(FaceColor.BLUE)));
+		TankComponentFiltered tankComponent = new TankComponentFiltered(tank, false, new BasicFluidFilter(IonizedParticles.fluid));
+		BusComponent busComponent = new BusComponent(driver);
+		
+		registrar.registerComponent(tankComponent.setInputFilter(new FaceColorFilter.MatchColors(FaceColor.BLUE)));
+		registrar.registerComponent(busComponent.setGenericAccessFilter(new FaceColorFilter.MatchColors(FaceColor.BLUE)));
 	}
 	
 	public void readNBTData(NBTTagCompound nbt) {
@@ -46,8 +54,8 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	}
 	
 	@Override
-	public int getValueCount() {
-		return 5;
+	public int[] getKeyArray() {
+		return VALUES;
 	}
 	@Override
 	public int getValue(int key) {
@@ -96,4 +104,7 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	public ShieldPermissions getPermissions(){
 		return permissions;
 	}
+	
+	// is just a stub for the server.
+	public void setShieldStatus(boolean enabled){}
 }

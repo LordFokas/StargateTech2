@@ -4,14 +4,16 @@ import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP;
 import lordfokas.stargatetech2.api.bus.BusProtocols;
 import lordfokas.stargatetech2.api.bus.IBusDriver;
+import lordfokas.stargatetech2.modules.automation.ISyncBusDriver;
+import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerCommon;
 import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerServer;
 
-public class ShieldControllerBusDriver implements IBusDriver{
-	private ShieldControllerServer controller;
+public class ShieldControllerBusDriver implements ISyncBusDriver{
+	private ShieldControllerCommon controller;
 	private short address = 0x0000;
 	private boolean enabled = true;
 	
-	public ShieldControllerBusDriver(ShieldControllerServer controller){
+	public ShieldControllerBusDriver(ShieldControllerCommon controller){
 		this.controller = controller;
 	}
 	
@@ -48,14 +50,6 @@ public class ShieldControllerBusDriver implements IBusDriver{
 	public short getInterfaceAddress() {
 		return address;
 	}
-	
-	public void setEnabled(boolean enabled){
-		this.enabled = enabled;
-	}
-	
-	public void setAddress(short address){
-		this.address = address;
-	}
 
 	@Override
 	public String getShortName() {
@@ -65,5 +59,15 @@ public class ShieldControllerBusDriver implements IBusDriver{
 	@Override
 	public String getDescription() {
 		return "The Shield Controller is used to control attached Shield Emitters.";
+	}
+
+	@Override
+	public void setInterfaceAddress(short address) {
+		this.address = address;
+	}
+
+	@Override
+	public void setInterfaceEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

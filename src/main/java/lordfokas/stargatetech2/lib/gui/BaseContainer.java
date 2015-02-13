@@ -1,5 +1,6 @@
 package lordfokas.stargatetech2.lib.gui;
 
+import gnu.trove.map.hash.TIntIntHashMap;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lordfokas.stargatetech2.lib.tileentity.BaseTileEntity;
@@ -11,7 +12,7 @@ import net.minecraft.inventory.Slot;
 
 public class BaseContainer extends Container {
 	public final BaseTileEntity te;
-	private int[] lastValues = null;
+	private TIntIntHashMap lastValues;
 	
 	@Deprecated
 	public BaseContainer(){
@@ -21,11 +22,11 @@ public class BaseContainer extends Container {
 	
 	public BaseContainer(BaseTileEntity te){
 		this.te = te;
-		int values = te.getValueCount();
-		if(values > 0){
-			lastValues = new int[values];
-			for(int i = 0; i < values; i++){
-				lastValues[i] = Integer.MIN_VALUE;
+		int[] values = te.getKeyArray();
+		lastValues = new TIntIntHashMap();
+		if(values.length > 0){
+			for(int i : values){
+				lastValues.put(i, Integer.MIN_VALUE);
 			}
 		}
 	}
@@ -57,11 +58,11 @@ public class BaseContainer extends Container {
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
 		if(lastValues != null){
-			for(int i = 0; i < te.getValueCount(); i++){
+			for(int i : te.getKeyArray()){
 				int val = te.getValue(i);
-				if(val != lastValues[i]){
+				if(val != lastValues.get(i)){
 					sendUpdate(i, val);
-					lastValues[i] = val;
+					lastValues.put(i, val);
 				}
 			}
 		}

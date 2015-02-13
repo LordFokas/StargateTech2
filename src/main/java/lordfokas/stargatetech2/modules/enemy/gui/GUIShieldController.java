@@ -14,7 +14,6 @@ import lordfokas.stargatetech2.modules.enemy.TileShieldController;
 import lordfokas.stargatetech2.reference.TextureReference;
 import cofh.core.gui.element.TabConfiguration;
 import cofh.core.gui.element.TabInfo;
-import cofh.core.gui.element.TabRedstone;
 import cofh.lib.gui.element.ElementButton;
 import cofh.lib.gui.element.ElementFluidTank;
 import cofh.lib.gui.element.TabBase;

@@ -24,12 +24,14 @@ public class BusComponent extends SidedComponent implements IBusComponent{
 	public void readFromNBT(NBTTagCompound nbt) {
 		driver.setInterfaceAddress(nbt.getShort("address"));
 		driver.setInterfaceEnabled(nbt.getBoolean("enabled"));
+		iface.readFromNBT(nbt, "interface");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		nbt.setShort("address", driver.getInterfaceAddress());
 		nbt.setBoolean("enabled", driver.isInterfaceEnabled());
+		iface.writeToNBT(nbt, "interface");
 		return nbt;
 	}
 

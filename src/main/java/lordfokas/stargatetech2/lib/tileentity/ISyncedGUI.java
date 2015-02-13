@@ -14,7 +14,7 @@ public interface ISyncedGUI {
 	 * @author LordFokas
 	 */
 	public static interface Source extends ISyncedGUI{
-		public int getValueCount();
+		public int[] getKeyArray();
 		public int getValue(int key);
 	}
 	

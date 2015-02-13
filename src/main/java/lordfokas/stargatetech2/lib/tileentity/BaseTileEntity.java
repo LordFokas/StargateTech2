@@ -147,10 +147,10 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 	// ISyncedGUI
 	
 	@Override
-	public int getValueCount(){
+	public int[] getKeyArray(){
 		if(context instanceof ISyncedGUI.Source){
-			return ((ISyncedGUI.Source)context).getValueCount();
-		} else return 0;
+			return ((ISyncedGUI.Source)context).getKeyArray();
+		} else return new int[]{};
 	}
 
 	@Override
