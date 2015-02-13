@@ -22,14 +22,12 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IComponentProvider{
-	private static final int[] VALUES = new int[]{0, 1, 2, 3, 4};
+	private static final int[] KEYS = new int[]{0, 1, 2};
 	protected FluidTank tank = new FluidTank(16000);
 	protected ShieldPermissions permissions = ShieldPermissions.getDefault();
 	protected ShieldControllerBusDriver driver = new ShieldControllerBusDriver(this);
 	protected boolean active;
 	protected boolean enabled;
-	protected boolean busEnabled;
-	protected short busAddress;
 	private ITile tile;
 	
 	@Override
@@ -55,7 +53,7 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	
 	@Override
 	public int[] getKeyArray() {
-		return VALUES;
+		return KEYS;
 	}
 	@Override
 	public int getValue(int key) {
@@ -63,8 +61,6 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 			case 0: return tank.getFluidAmount();
 			case 1: return active ? 1 : 0;
 			case 2: return enabled ? 1 : 0;
-			case 3: return busEnabled ? 1: 0;
-			case 4: return busAddress;
 		}
 		return -1;
 	}
@@ -79,12 +75,6 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 				break;
 			case 2:
 				enabled = (val == 1);
-				break;
-			case 3:
-				busEnabled = (val == 1);
-				break;
-			case 4:
-				busAddress = (short)(val & 0xFFFF);
 				break;
 		}
 	}

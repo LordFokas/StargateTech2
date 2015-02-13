@@ -55,10 +55,8 @@ implements ITileContext.Server, IShieldControllerProvider{
 		if(active && !enabled) lowerShields();
 		if(enabled && hasIons()){
 			tank.drain(ION_DRAIN, true);
-			if(!active && enabled) raiseShields();
-		}else{
-			if( active && enabled) lowerShields();
-		}
+			if(!active) raiseShields(); // removed check for enabled here
+		}else if(active) lowerShields(); // and here. Shouldn't break shit.
 	}
 	
 	private boolean hasIons(){

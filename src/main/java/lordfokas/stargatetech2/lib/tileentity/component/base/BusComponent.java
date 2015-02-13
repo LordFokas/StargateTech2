@@ -3,12 +3,14 @@ package lordfokas.stargatetech2.lib.tileentity.component.base;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
+import lordfokas.stargatetech2.lib.tileentity.ISyncedGUI;
 import lordfokas.stargatetech2.lib.tileentity.component.SidedComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.access.IBusComponent;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDriver;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class BusComponent extends SidedComponent implements IBusComponent{
+public class BusComponent extends SidedComponent implements IBusComponent, ISyncedGUI.Flow{
+	private static final int[] KEYS = new int[]{0, 1};
 	private IBusInterface iface;
 	private ISyncBusDriver driver;
 	
@@ -58,5 +60,21 @@ public class BusComponent extends SidedComponent implements IBusComponent{
 	@Override
 	public void setEnabled(boolean enabled) {
 		driver.setInterfaceEnabled(enabled);
+	}
+
+	@Override
+	public int[] getKeyArray() {
+		return KEYS;
+	}
+
+	@Override
+	public int getValue(int key) {
+		return key == 0 ? driver.getInterfaceAddress() : driver.isInterfaceEnabled() ? 1 : 0;
+	}
+
+	@Override
+	public void setValue(int key, int val) {
+		if(key == 0) driver.setInterfaceAddress((short)val);
+		else driver.setInterfaceEnabled(val != 0);
 	}
 }
