@@ -26,7 +26,8 @@ public class TabAbstractBus extends TabBase{
 		this.device = device;
 		this.backgroundColor = 0xFF0088FF;
 		this.name = "Abstract Bus";
-		this.maxHeight = 90;
+		this.maxHeight = 100;
+		this.maxWidth = 110;
 	}
 	
 	@Override
@@ -54,6 +55,11 @@ public class TabAbstractBus extends TabBase{
 		handlers.add(new BitClickHandler(selx + 37, sely + 00, +1));
 		handlers.add(new BitClickHandler(selx + 37, sely + 21, -1));
 		
+		handlers.add(new ClickHandler(posXOffset() + 13, posY + 25, 75, 60) {
+			@Override
+			public void run(){}
+		});
+		
 		return this;
 	}
 	
@@ -78,6 +84,7 @@ public class TabAbstractBus extends TabBase{
 		super.drawBackground();
 		drawTabIcon("");
 		if(!isFullyOpened()) return;
+		gui.drawSizedModalRect(posXOffset() + 13, posY + 25, posXOffset() + 88, posY + 85, 0xFF0055CC);
 		GL11.glColor4f(1, 1, 1, 1);
 		RenderHelper.bindTexture(TextureReference.GUI_ELEM_ABUS_ADDR);
 		gui.drawSizedTexturedModalRect(selx, sely, 0, 0, 48, 28, 48, 28);
