@@ -1,6 +1,5 @@
 package lordfokas.stargatetech2.modules.enemy.tileentity;
 
-import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.lib.tileentity.ISyncedGUI;
 import lordfokas.stargatetech2.lib.tileentity.ITile;
@@ -12,12 +11,9 @@ import lordfokas.stargatetech2.lib.tileentity.component.base.BusComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.base.TankComponentFiltered;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColorFilter;
-import lordfokas.stargatetech2.lib.tileentity.faces.IFaceColorFilter;
-import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
 import lordfokas.stargatetech2.modules.enemy.ShieldControllerBusDriver;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 

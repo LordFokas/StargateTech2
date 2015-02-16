@@ -4,22 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import lordfokas.stargatetech2.api.StargateTechAPI;
-import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.api.shields.IShieldable;
-import lordfokas.stargatetech2.api.shields.ITileShieldController;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
-import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
 import lordfokas.stargatetech2.lib.tileentity.ITile;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext;
-import lordfokas.stargatetech2.lib.tileentity.faces.IFacingAware;
-import lordfokas.stargatetech2.lib.tileentity.faces.IFacingProvider;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
-import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.modules.enemy.BlockShield;
 import lordfokas.stargatetech2.modules.enemy.IShieldControllerProvider;
-import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
-import lordfokas.stargatetech2.modules.enemy.ShieldControllerBusDriver;
 import lordfokas.stargatetech2.modules.enemy.TileShieldEmitter;
 import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.block.Block;
@@ -27,10 +18,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
 
 public class ShieldControllerServer extends ShieldControllerCommon
 implements ITileContext.Server, IShieldControllerProvider{

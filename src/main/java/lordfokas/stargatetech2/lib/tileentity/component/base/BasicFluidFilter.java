@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.lib.tileentity.component.base;
 
-import net.minecraftforge.fluids.Fluid;
 import lordfokas.stargatetech2.lib.tileentity.component.base.TankComponentFiltered.IFluidFilter;
+import net.minecraftforge.fluids.Fluid;
 
 public class BasicFluidFilter implements IFluidFilter{
 	public Fluid[] fluids;

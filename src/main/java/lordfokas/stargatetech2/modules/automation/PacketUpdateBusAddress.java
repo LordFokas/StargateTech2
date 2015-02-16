@@ -2,8 +2,6 @@ package lordfokas.stargatetech2.modules.automation;
 
 import lordfokas.stargatetech2.lib.packet.BasePacket.ClientToServer;
 import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
-import lordfokas.stargatetech2.lib.tileentity.BaseTileEntity;
-import lordfokas.stargatetech2.lib.tileentity.ITileContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

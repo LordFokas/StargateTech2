@@ -1,14 +1,14 @@
 package lordfokas.stargatetech2.lib.gui;
 
 import gnu.trove.map.hash.TIntIntHashMap;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import lordfokas.stargatetech2.lib.tileentity.BaseTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BaseContainer extends Container {
 	public final BaseTileEntity te;

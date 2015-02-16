@@ -3,15 +3,9 @@ package lordfokas.stargatetech2.api.shields;
 import java.util.LinkedList;
 import java.util.List;
 
-import lordfokas.stargatetech2.modules.integration.te4.CoFHFriendHelper;
+import lordfokas.stargatetech2.api.StargateTechAPI;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-
 
 public class ShieldPermissions {
 	// Permission Flags
@@ -84,44 +78,7 @@ public class ShieldPermissions {
 	 * @return Whether this entity can go through or not.
 	 */
 	public boolean isEntityAllowed(Entity entity, boolean doDismount, String owner){
-		boolean allow = false;
-		if(entity instanceof EntityPlayer){
-			EntityPlayer player = (EntityPlayer) entity;
-			if(CoFHFriendHelper.isSystemEnabled()){
-				if(CoFHFriendHelper.isFriend(player.getDisplayName(), owner)){
-					allow = hasBit(PERM_FRIEND);
-				}else{
-					allow = hasBit(PERM_PLAYER);
-				}
-			}else{
-				allow = hasBit(PERM_PLAYER);
-			}
-			if(playerExceptions.contains(player.getDisplayName())){
-				allow = !allow;
-			}
-		}else if(entity instanceof EntityVillager){
-			allow = hasBit(PERM_VILLAGER);
-		}else if(entity instanceof EntityAnimal){
-			allow = hasBit(PERM_ANIMAL);
-		}else if(entity instanceof EntityMob){
-			allow = hasBit(PERM_MONSTER);
-		}else if(entity instanceof EntityMinecart){
-			allow = hasBit(PERM_VESSEL);
-		}
-		if(allow && entity.riddenByEntity != null && doDismount && entity.worldObj.isRemote == false){
-			if(!isEntityAllowed(entity.riddenByEntity, true, owner)){
-				Entity rider = entity.riddenByEntity;
-				if(rider instanceof EntityPlayer){
-					rider.mountEntity(null);
-				}else{
-					rider.ridingEntity = null;
-					rider.prevPosY += 1;
-					rider.posY += 1;
-					entity.riddenByEntity = null;
-				}
-			}
-		}
-		return allow;
+		return StargateTechAPI.api().isEntityAllowed(this, entity, doDismount, owner);
 	}
 	
 	/**

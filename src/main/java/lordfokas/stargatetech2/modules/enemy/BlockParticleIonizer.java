@@ -1,11 +1,10 @@
 package lordfokas.stargatetech2.modules.enemy;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import lordfokas.stargatetech2.lib.block.BlockMachine;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class BlockParticleIonizer extends BlockMachine{
 	public BlockParticleIonizer() {

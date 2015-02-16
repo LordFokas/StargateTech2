@@ -1,9 +1,9 @@
 package lordfokas.stargatetech2.lib.tileentity;
 
-import net.minecraft.nbt.NBTTagCompound;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityOwnedMachine<C extends Client, S extends Server> extends TileEntityMachine<C, S> implements IOwnedMachine{
 	private String owner = "::";

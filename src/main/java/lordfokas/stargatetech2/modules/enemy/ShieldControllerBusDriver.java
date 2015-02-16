@@ -3,10 +3,8 @@ package lordfokas.stargatetech2.modules.enemy;
 import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP;
 import lordfokas.stargatetech2.api.bus.BusProtocols;
-import lordfokas.stargatetech2.api.bus.IBusDriver;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDriver;
 import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerCommon;
-import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerServer;
 
 public class ShieldControllerBusDriver implements ISyncBusDriver{
 	private ShieldControllerCommon controller;

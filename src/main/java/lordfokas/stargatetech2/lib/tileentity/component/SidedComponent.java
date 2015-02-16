@@ -1,6 +1,5 @@
 package lordfokas.stargatetech2.lib.tileentity.component;
 
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFaceColorFilter;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingAware;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingProvider;

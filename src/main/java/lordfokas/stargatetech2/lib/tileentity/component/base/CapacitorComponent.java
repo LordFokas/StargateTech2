@@ -1,9 +1,9 @@
 package lordfokas.stargatetech2.lib.tileentity.component.base;
 
-import cofh.api.energy.EnergyStorage;
 import lordfokas.stargatetech2.lib.tileentity.component.SidedComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.access.ICapacitorComponent;
 import net.minecraft.nbt.NBTTagCompound;
+import cofh.api.energy.EnergyStorage;
 
 public class CapacitorComponent extends SidedComponent implements ICapacitorComponent{
 	protected EnergyStorage storage;

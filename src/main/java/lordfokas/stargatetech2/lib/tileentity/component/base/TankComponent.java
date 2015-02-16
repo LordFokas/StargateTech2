@@ -3,7 +3,6 @@ package lordfokas.stargatetech2.lib.tileentity.component.base;
 import lordfokas.stargatetech2.lib.tileentity.ISyncedGUI;
 import lordfokas.stargatetech2.lib.tileentity.component.SidedComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.access.ITankComponent;
-import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;

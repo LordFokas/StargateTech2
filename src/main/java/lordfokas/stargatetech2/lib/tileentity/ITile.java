@@ -3,6 +3,7 @@ package lordfokas.stargatetech2.lib.tileentity;
 import net.minecraft.block.Block;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 /**
  * Represents a generic TileEntity.
