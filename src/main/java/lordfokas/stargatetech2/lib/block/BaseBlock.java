@@ -1,6 +1,7 @@
 package lordfokas.stargatetech2.lib.block;
 
 import lordfokas.stargatetech2.api.bus.BusEvent;
+import lordfokas.stargatetech2.lib.util.NoDefaultTexture;
 import lordfokas.stargatetech2.reference.ModReference;
 import lordfokas.stargatetech2.util.MaterialNaquadah;
 import lordfokas.stargatetech2.util.StargateTab;
@@ -31,12 +32,12 @@ public class BaseBlock extends Block{
 	public BaseBlock(String uName, boolean breakable, Material material){
 		super(material);
 		unlocalized = uName;
-		this.setBlockTextureName(ModReference.MOD_ID + ":" + uName);
+		setBlockTextureName(ModReference.MOD_ID + ":" + (getClass().getAnnotation(NoDefaultTexture.class) == null ? uName : "dummy"));
 		if(!breakable){
-			this.setBlockUnbreakable();
-			this.setResistance(20000000F);
+			setBlockUnbreakable();
+			setResistance(20000000F);
 		}
-		this.setCreativeTab(StargateTab.instance);
+		setCreativeTab(StargateTab.instance);
 		registerBlock();
 	}
 	

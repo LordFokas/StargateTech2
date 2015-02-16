@@ -2,6 +2,7 @@ package lordfokas.stargatetech2.modules.transport;
 
 import java.util.List;
 
+import lordfokas.stargatetech2.lib.util.NoDefaultTexture;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseBlockContainer__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.reference.BlockReference;
@@ -15,6 +16,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
 
+@NoDefaultTexture
 public class BlockBeacon extends BaseBlockContainer__OLD_AND_FLAWED{
 	public static final int META_TRANSCEIVER = 0;
 	public static final int META_ANTENNA = 1;

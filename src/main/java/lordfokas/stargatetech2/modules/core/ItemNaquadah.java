@@ -3,6 +3,7 @@ package lordfokas.stargatetech2.modules.core;
 import java.util.List;
 
 import lordfokas.stargatetech2.lib.item.BaseItem;
+import lordfokas.stargatetech2.lib.util.NoDefaultTexture;
 import lordfokas.stargatetech2.reference.ItemReference;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
+@NoDefaultTexture
 public class ItemNaquadah extends BaseItem{
 	public static final Metadata DATA[] = new Metadata[6];
 	public static final Metadata INGOT =	new Metadata(0, "naquadahIngot",	"Naquadah Ingot");
