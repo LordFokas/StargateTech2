@@ -3,6 +3,7 @@ package lordfokas.stargatetech2.lib.tileentity.component.base;
 import lordfokas.stargatetech2.lib.tileentity.ISyncedGUI;
 import lordfokas.stargatetech2.lib.tileentity.component.SidedComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.access.ITankComponent;
+import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -68,7 +69,7 @@ public class TankComponent extends SidedComponent implements ITankComponent, ISy
 
 	@Override
 	public int getValue(int key) {
-		return key == 0 ? tank.getFluidAmount() : tank.getFluid().getFluid().getID();
+		return key == 0 ? tank.getFluidAmount() : (tank.getFluid() == null ? IonizedParticles.fluid : tank.getFluid().getFluid()).getID();
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public class TankComponent extends SidedComponent implements ITankComponent, ISy
 	}
 	
 	private void set(int f, int a){
-		Fluid fluid = f == -1 ? tank.getFluid().getFluid() : FluidRegistry.getFluid(f);
+		Fluid fluid = f == -1 ? (tank.getFluid() == null ? IonizedParticles.fluid : tank.getFluid().getFluid()) : FluidRegistry.getFluid(f);
 		int amount = a == -1 ? tank.getFluidAmount() : a;
 		tank.setFluid(new FluidStack(fluid, amount));
 	}
