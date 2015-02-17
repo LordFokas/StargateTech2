@@ -207,9 +207,9 @@ public class StargateNetwork implements IStargateNetwork{
 		int dim = w.provider.dimensionId;
 		for(AddressMapping map : addresses.values()){
 			if(map.getDimension() == dim){
-				int dx = x - map.getXCoord();
-				int dy = y - map.getYCoord();
-				int dz = z - map.getZCoord();
+				double dx = x - map.getXCoord();
+				double dy = y - map.getYCoord();
+				double dz = z - map.getZCoord();
 				if(dx*dx + dy*dy + dz*dz < ConfigServer.stargateMinDistance){
 					return false;
 				}
