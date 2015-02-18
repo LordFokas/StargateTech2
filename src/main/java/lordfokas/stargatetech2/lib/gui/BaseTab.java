@@ -12,8 +12,10 @@ import cofh.lib.gui.element.ElementBase;
 import cofh.lib.gui.element.TabBase;
 
 public abstract class BaseTab extends TabBase{
+	protected static final int LMB = 0, RMB = 1, MMB = 2;
 	private static final int SHADOW = 0x30 << 24;
 	private ArrayList<ClickHandler> handlers;
+	protected int baseX, baseY;
 	private ItemStack icon;
 	
 	public BaseTab(BaseGUI gui, String name, ItemStack icon, int color) {
@@ -21,6 +23,10 @@ public abstract class BaseTab extends TabBase{
 		this.name = name;
 		this.icon = icon;
 		this.backgroundColor = color;
+	}
+	
+	protected BaseGUI gui(){
+		return (BaseGUI) gui;
 	}
 	
 	@Override
@@ -50,7 +56,7 @@ public abstract class BaseTab extends TabBase{
 		super.drawBackground();
 		drawTabIcon("");
 		if(!isFullyOpened()) return;
-		gui.drawSizedModalRect(posXOffset() + 5, posY + 24, posXOffset() + maxWidth - 10, posY + maxHeight - 10, SHADOW);
+		gui.drawSizedModalRect(baseX, baseY, posXOffset() + maxWidth - 10, posY + maxHeight - 10, SHADOW);
 		getFontRenderer().drawStringWithShadow(this.name, posXOffset() + 18, this.posY + 6, this.headerColor);
 		GL11.glColor4f(1, 1, 1, 1);
 		drawTab();
@@ -63,7 +69,7 @@ public abstract class BaseTab extends TabBase{
 		if(isFullyOpened()){
 			for(ClickHandler handler : handlers){
 				if(handler.hits(mx, my)){
-					handler.run();
+					handler.run(mouse);
 					return true;
 				}
 			}
@@ -92,16 +98,18 @@ public abstract class BaseTab extends TabBase{
 			return mx >= px && mx < fx && my >= py && my < fy;
 		}
 		
-		public abstract void run();
+		public abstract void run(int mb);
 	}
 	
 	@Override
-	public ElementBase setPosition(int arg0, int arg1) {
-		super.setPosition(arg0, arg1);		
+	public ElementBase setPosition(int x, int y) {
+		super.setPosition(x, y);
+		baseX = posXOffset() + 5;
+		baseY = posY + 24;
 		handlers = new ArrayList();
 		addHandlers();
-		handlers.add(new ClickHandler(posXOffset() + 5, posY + 24, maxWidth - 15, maxHeight - 34) {
-			@Override public void run(){}
+		handlers.add(new ClickHandler(baseX, baseY, maxWidth - 15, maxHeight - 34) {
+			@Override public void run(int mb){}
 		});
 		return this;
 	}

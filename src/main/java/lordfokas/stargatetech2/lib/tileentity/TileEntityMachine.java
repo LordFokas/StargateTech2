@@ -173,7 +173,7 @@ IFluidHandler, ISyncBusDevice{
 		face.decrease();
 		return true;
 	}
-
+	
 	@Override
 	public boolean incrSide(int side) {
 		FaceWrapper face = getFaceForSide(side);
@@ -217,7 +217,17 @@ IFluidHandler, ISyncBusDevice{
 	
 	@Override
 	public IIcon getTexture(int side, int pass) {
-		return IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE_I);
+		FaceColor color = getFaceForSide(side).getColor();
+		if(pass == 0){
+			String texture = null;
+			if(side == 0) texture = TextureReference.MACHINE_BOTTOM;
+			else if(side == 1) texture = TextureReference.MACHINE_TOP;
+			else texture = TextureReference.MACHINE_SIDE;
+			if(color.isColored()) texture += "I";
+			return IconRegistry.blockIcons.get(texture);
+		}else{
+			return IconRegistry.blockIcons.get(color.getTexture());
+		}
 	}
 	
 	// ##########################################################
@@ -232,7 +242,7 @@ IFluidHandler, ISyncBusDevice{
 			this.faces = new FaceColor[faces.length];
 			this.face = face;
 			for(int i = 0; i < faces.length; i++){
-				this.faces[i] = FaceColor.values()[i];
+				this.faces[i] = FaceColor.values()[faces[i]];
 			}
 		}
 		
@@ -286,13 +296,13 @@ IFluidHandler, ISyncBusDevice{
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		NBTTagCompound facingNBT = nbt.getCompoundTag("facing");
-		facing = ForgeDirection.getOrientation(nbt.getInteger("facing"));
+		facing = ForgeDirection.getOrientation(facingNBT.getInteger("facing"));
 		faces = new EnumMap(Face.class);
 		for(int i = 0; i < faceMap.length; i++){
-			int f = nbt.getInteger("face_" + i);
+			int f = facingNBT.getInteger("face_" + i);
 			Face face = Face.values()[i];
 			faceMap[i] = face;
-			NBTTagCompound wrapper = nbt.getCompoundTag("fw_" + f);
+			NBTTagCompound wrapper = facingNBT.getCompoundTag("fw_" + f);
 			int fc = wrapper.getInteger("face");
 			int[] c = wrapper.getIntArray("colors");
 			faces.put(face, new FaceWrapper(fc, c));

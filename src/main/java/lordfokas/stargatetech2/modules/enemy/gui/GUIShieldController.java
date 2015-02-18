@@ -8,11 +8,11 @@ import lordfokas.stargatetech2.lib.gui.ElementListBox;
 import lordfokas.stargatetech2.lib.gui.ElementTextBox;
 import lordfokas.stargatetech2.lib.gui.ListBoxText;
 import lordfokas.stargatetech2.lib.gui.TabAbstractBus;
-import lordfokas.stargatetech2.lib.gui.TabConfiguration;
 import lordfokas.stargatetech2.modules.enemy.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.modules.enemy.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.modules.enemy.TileShieldController;
 import lordfokas.stargatetech2.reference.TextureReference;
+import cofh.core.gui.element.TabConfiguration;
 import cofh.core.gui.element.TabInfo;
 import cofh.lib.gui.element.ElementButton;
 import cofh.lib.gui.element.ElementFluidTank;
@@ -114,7 +114,7 @@ public class GUIShieldController extends BaseGUI {
 		
 		addTab(new TabInfo(this, INFO));
 		addTab(new TabAbstractBus(this, TabBase.RIGHT, shieldController));
-		addTab(new TabConfiguration(this, shieldController));
+		addTab(new TabConfiguration(this, TabBase.RIGHT, shieldController));
 		
 		updatePermissions();
 	}
