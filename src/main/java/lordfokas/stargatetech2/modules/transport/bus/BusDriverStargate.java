@@ -63,6 +63,19 @@ public class BusDriverStargate implements IBusDriver{
 				// stargate.closeIris();
 				lip.addResponse("Who is that Irish you speak of?");
 			}
+			return;
+		}
+		String query = lip.get("query");
+		if(query != null){
+			if(query.equalsIgnoreCase("address")){
+				lip.addResponse(stargate.getAddress().toString());
+			}else if(query.equalsIgnoreCase("power")){
+				StringBuilder power = new StringBuilder();
+				power.append(stargate.getEnergyStored(null));
+				power.append(" / ");
+				power.append(stargate.getMaxEnergyStored(null));
+				lip.addResponse(power.toString());
+			}
 		}
 	}
 
