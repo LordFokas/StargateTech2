@@ -29,7 +29,7 @@ public class Color {
 	public final String name;
 	private final ItemStack dye;
 	
-	public Color(int red, int green, int blue, String name){
+	private Color(int red, int green, int blue, String name){
 		this.id = --colors;
 		this.r = red;
 		this.g = green;
