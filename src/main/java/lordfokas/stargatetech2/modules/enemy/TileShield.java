@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.modules.enemy;
 
+import lordfokas.stargatetech2.ZZ_THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

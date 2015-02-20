@@ -1,5 +1,6 @@
 package lordfokas.stargatetech2.modules.transport;
 
+import lordfokas.stargatetech2.ZZ_THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP.LIPMetadata;
@@ -11,7 +12,6 @@ import lordfokas.stargatetech2.api.stargate.ITileStargateBase;
 import lordfokas.stargatetech2.api.stargate.StargateEvent;
 import lordfokas.stargatetech2.api.stargate.Symbol;
 import lordfokas.stargatetech2.modules.ModuleTransport;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.modules.transport.bus.BusDriverStargate;
 import lordfokas.stargatetech2.modules.transport.stargates.StargateNetwork;
 import lordfokas.stargatetech2.modules.transport.stargates.Wormhole;

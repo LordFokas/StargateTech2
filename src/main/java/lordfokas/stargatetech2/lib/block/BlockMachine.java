@@ -1,121 +1,37 @@
 package lordfokas.stargatetech2.lib.block;
 
-import lordfokas.stargatetech2.StargateTech2;
-import lordfokas.stargatetech2.lib.render.RenderBlockMachine;
-import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
 import lordfokas.stargatetech2.lib.tileentity.TileEntityMachine;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
-import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.GUIHandler.Screen;
+import lordfokas.stargatetech2.lib.util.TileEntityHelper;
 import lordfokas.stargatetech2.util.Helper;
-import lordfokas.stargatetech2.util.IconRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import buildcraft.api.tools.IToolWrench;
 
-public abstract class BlockMachine extends BaseBlockContainer{
-	private boolean useVertical = false;
-	private Screen screen;
+public class BlockMachine extends BaseBlockContainer {
+	private Class<? extends TileEntityMachine> tile;
 	
-	public BlockMachine(String uName, boolean owned){
-		this(uName, owned, null);
-	}
-	
-	public BlockMachine(String uName, boolean owned, Screen screen) {
-		super(uName, !owned, true);
-		this.screen = screen;
-		if(!owned){
-			this.setResistance(80000F);
-			this.setHardness(4.0F);
-			setHarvestLevel("pickaxe", 0);
-		}
-	}
-	
-	protected void setUseVertical(){
-		useVertical = true;
+	public BlockMachine(String uName, Class<? extends TileEntityMachine> tile) {
+		super(uName, true, true);
+		this.tile = tile;
 	}
 	
 	@Override
-	public int getRenderType(){
-		return RenderBlockMachine.instance().getRenderId();
-	}
-	
-	public IIcon getFaceForMeta(int meta){
-		return getBaseIcon(3, 0);
-	}
-	
-	@Override
-	public IIcon getBaseIcon(int side, int meta){
-		switch(side){
-			case 0: return IconRegistry.blockIcons.get(TextureReference.MACHINE_BOTTOM);
-			case 1: return IconRegistry.blockIcons.get(TextureReference.MACHINE_TOP);
-			case 3: return blockIcon;
-			default: return IconRegistry.blockIcons.get(TextureReference.MACHINE_SIDE);
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+		super.onBlockPlacedBy(world, x, y, z, entity, stack);
+		if(entity instanceof EntityPlayerMP){
+			TileEntityMachine machine = TileEntityHelper.getTileEntityAs(world, x, y, z, TileEntityMachine.class);
+			// TODO: redirect the direction decision to the machine TE, it can then call the helper if it needs.
+			machine.setFacing(Helper.yaw2dir(entity.rotationYaw, 0, false)); // only the yaw really matters here
 		}
 	}
 	
 	@Override
-	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int s, float hx, float hy, float hz){
-		ItemStack stack = p.inventory.getCurrentItem();
-		Item item = stack != null ? stack.getItem() : null;
-		if(item instanceof IToolWrench && canPlayerAccess(p, w, x, y, z) && p.isSneaking()){
-			IToolWrench wrench = (IToolWrench) item;
-			if(wrench.canWrench(p, x, y, z)){
-				dropBlockAsItem(w, x, y, z, 0, 0);
-				w.setBlock(x, y, z, (Block) Block.blockRegistry.getObjectById(0), 0, 3);
-				wrench.wrenchUsed(p, x, y, z);
-				return true;
-			}
-		}else if(!p.isSneaking() && screen != null && canPlayerAccess(p, w, x, y, z)){
-			p.openGui(StargateTech2.instance, screen.ordinal(), w, x, y, z);
-			return true;
+	public TileEntityMachine createNewTileEntity(World world, int metadata) {
+		try {
+			return tile.newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException("Error creating instance of Machine TileEntity", e);
 		}
-		return false;
-	}
-	
-	protected final boolean canPlayerAccess(EntityPlayer player, World world, int x, int y, int z){
-		TileEntity te = world.getTileEntity(x, y, z);
-		if(te instanceof IOwnedMachine){
-			return ((IOwnedMachine)te).hasAccess(player.getDisplayName());
-		}else{
-			return true;
-		}
-	}
-	
-	@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase living, ItemStack stack){
-		ForgeDirection dir = Helper.yaw2dir(living.rotationYaw, living.rotationPitch, useVertical);
-		w.setBlockMetadataWithNotify(x, y, z, dir.ordinal(), 2);
-		((TileEntityMachine)w.getTileEntity(x, y, z)).setFacing(dir.ordinal());
-		if(living instanceof EntityPlayer){
-			TileEntity te = w.getTileEntity(x, y, z);
-			if(te instanceof IOwnedMachine){
-				((IOwnedMachine)te).setOwner(((EntityPlayer)living).getDisplayName());
-			}
-			onPlacedBy(w, x, y, z, (EntityPlayer)living, dir);
-		}
-	}
-	
-	protected void onPlacedBy(World w, int x, int y, int z, EntityPlayer player, ForgeDirection facing){}
-	
-	public final FaceColor[] getTextureMap(IBlockAccess w, int x, int y, int z){
-		TileEntity te = w.getTileEntity(x, y, z);
-		FaceColor[] map = new FaceColor[]{FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID, FaceColor.VOID};
-		if(te instanceof TileMachine__THRASH){
-			TileMachine__THRASH machine = (TileMachine__THRASH) te;
-			for(int i = 0; i < 6; i++){
-				map[i] = machine.getColor(i);
-			}
-		}
-		return map;
 	}
 }

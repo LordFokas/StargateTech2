@@ -5,11 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import lordfokas.stargatetech2.StargateTech2;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.modules.ModuleTransport;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.modules.transport.bus.BusDriverTransportRing;
 import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.entity.Entity;

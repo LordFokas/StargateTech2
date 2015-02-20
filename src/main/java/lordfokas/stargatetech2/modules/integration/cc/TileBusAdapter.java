@@ -2,6 +2,7 @@ package lordfokas.stargatetech2.modules.integration.cc;
 
 import java.util.LinkedList;
 
+import lordfokas.stargatetech2.ZZ_THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.BusPacketLIP;
@@ -11,7 +12,6 @@ import lordfokas.stargatetech2.api.bus.BusPacketNetScan.Device;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.modules.automation.AddressHelper;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.reference.ModReference;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;

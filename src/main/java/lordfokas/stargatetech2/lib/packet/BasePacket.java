@@ -8,10 +8,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 
+import lordfokas.stargatetech2.ZZ_THRASH.PacketToggleMachineFace__THRASH;
+import lordfokas.stargatetech2.ZZ_THRASH.PacketUpdateMachineColors__THRASH;
 import lordfokas.stargatetech2.modules.automation.PacketUpdateBusAddress;
 import lordfokas.stargatetech2.modules.automation.PacketUpdateBusEnabled;
-import lordfokas.stargatetech2.modules.core.packets__THRASH.PacketToggleMachineFace__THRASH;
-import lordfokas.stargatetech2.modules.core.packets__THRASH.PacketUpdateMachineColors__THRASH;
 import lordfokas.stargatetech2.modules.enemy.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.modules.enemy.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.modules.transport.PacketActivateRings;

@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.modules.integration.cc;
 
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseBlockContainer__OLD_AND_FLAWED;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTileEntity__OLD_AND_FLAWED;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseBlockContainer__OLD_AND_FLAWED;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseTileEntity__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.reference.BlockReference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

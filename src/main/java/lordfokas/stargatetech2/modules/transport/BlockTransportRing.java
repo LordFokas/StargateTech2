@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.transport;
 
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseBlockContainer__OLD_AND_FLAWED;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseBlockContainer__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;

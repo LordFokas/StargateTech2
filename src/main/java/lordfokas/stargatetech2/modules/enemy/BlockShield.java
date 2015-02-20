@@ -2,9 +2,9 @@ package lordfokas.stargatetech2.modules.enemy;
 
 import java.util.List;
 
+import lordfokas.stargatetech2.ZZ_THRASH.BaseBlockContainer__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.api.ITabletAccess;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseBlockContainer__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.reference.BlockReference;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
