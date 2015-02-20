@@ -1,9 +1,8 @@
-package lordfokas.stargatetech2.modules.core.packets__THRASH;
+package lordfokas.stargatetech2.ZZ_THRASH;
 
 import lordfokas.stargatetech2.lib.packet.BasePacket.ClientToServer;
 import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
 import lordfokas.stargatetech2.lib.tileentity.faces.Face;
-import lordfokas.stargatetech2.modules.core.machine__TRASH.TileMachine__THRASH;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

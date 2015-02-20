@@ -1,7 +1,6 @@
-package lordfokas.stargatetech2.modules.core.machine__TRASH.tabs__THRASH;
+package lordfokas.stargatetech2.ZZ_THRASH;
 
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.Arrow;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTab__OLD_AND_FLAWED;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.Arrow;
 import lordfokas.stargatetech2.util.Stacks;
 
 public class TabMachineRecipes__THRASH extends BaseTab__OLD_AND_FLAWED{

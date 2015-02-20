@@ -1,7 +1,7 @@
-package lordfokas.stargatetech2.modules.core.base__THRASH;
+package lordfokas.stargatetech2.ZZ_THRASH;
 
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.IGauge;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseGUI__OLD_AND_FLAWED.IHoverHandler;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.IGauge;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.IHoverHandler;
 import lordfokas.stargatetech2.util.Helper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;

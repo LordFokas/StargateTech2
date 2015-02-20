@@ -1,9 +1,7 @@
-package lordfokas.stargatetech2.modules.core.machine__TRASH;
+package lordfokas.stargatetech2.ZZ_THRASH;
 
 import lordfokas.stargatetech2.lib.tileentity.faces.Face;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import lordfokas.stargatetech2.modules.core.base__THRASH.BaseTileEntity__OLD_AND_FLAWED;
-import lordfokas.stargatetech2.modules.core.packets__THRASH.PacketUpdateMachineColors__THRASH;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 

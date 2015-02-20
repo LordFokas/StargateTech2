@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.modules.core.base__THRASH;
+package lordfokas.stargatetech2.ZZ_THRASH;
 
 import lordfokas.stargatetech2.lib.block.BaseBlock;
 import net.minecraft.block.ITileEntityProvider;

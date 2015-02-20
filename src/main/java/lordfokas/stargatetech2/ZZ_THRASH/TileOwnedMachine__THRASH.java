@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.modules.core.machine__TRASH;
+package lordfokas.stargatetech2.ZZ_THRASH;
 
 import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
 import lordfokas.stargatetech2.modules.integration.te4.CoFHFriendHelper;
