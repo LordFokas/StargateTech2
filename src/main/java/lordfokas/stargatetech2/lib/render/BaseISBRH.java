@@ -28,7 +28,7 @@ public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 	protected static final float F14 = F01 * 14F;
 	protected static final float F15 = F01 * 15F;
 	
-	public final int renderID;
+	private final int renderID;
 	
 	protected BaseISBRH(){
 		renderID = RenderingRegistry.getNextAvailableRenderId();

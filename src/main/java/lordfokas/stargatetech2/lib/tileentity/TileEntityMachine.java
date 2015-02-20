@@ -140,12 +140,16 @@ IFluidHandler, ISyncBusDevice{
 		setFacing(side);
 		return true;
 	}
-
-	@Override
-	public boolean setFacing(int side) {
-		facing = ForgeDirection.getOrientation(side);
+	
+	public boolean setFacing(ForgeDirection facing){
+		this.facing = facing;
 		remapSides(true);
 		return true;
+	}
+	
+	@Override
+	public boolean setFacing(int side) {
+		return setFacing(ForgeDirection.getOrientation(side));
 	}
 	
 	private void remapSides(boolean update){
@@ -217,17 +221,22 @@ IFluidHandler, ISyncBusDevice{
 	
 	@Override
 	public IIcon getTexture(int side, int pass) {
+		return getTexture(side, pass, side == facing.ordinal() && !getFaceForSide(side).getColor().isColored());
+	}
+	
+	public IIcon getTexture(int side, int pass, boolean useFace) {
 		FaceColor color = getFaceForSide(side).getColor();
 		if(pass == 0){
+			if(useFace) return getBlockType().getIcon(3, 0);
 			String texture = null;
 			if(side == 0) texture = TextureReference.MACHINE_BOTTOM;
 			else if(side == 1) texture = TextureReference.MACHINE_TOP;
 			else texture = TextureReference.MACHINE_SIDE;
 			if(color.isColored()) texture += "I";
 			return IconRegistry.blockIcons.get(texture);
-		}else{
+		}else if(pass == 1 && !useFace){
 			return IconRegistry.blockIcons.get(color.getTexture());
-		}
+		}else return IconRegistry.blockIcons.get(TextureReference.TEXTURE_INVISIBLE);
 	}
 	
 	// ##########################################################

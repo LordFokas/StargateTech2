@@ -112,6 +112,7 @@ public class StargateTech2 {
 			}
 		}
 		StargateLogger.info("All Modules Post-Initalized.");
+		proxy.registerRenderers(null);
 		proxy.registerHandlers();
 		config.save();
 	}

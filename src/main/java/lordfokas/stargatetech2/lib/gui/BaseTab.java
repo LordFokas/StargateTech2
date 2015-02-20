@@ -1,7 +1,6 @@
 package lordfokas.stargatetech2.lib.gui;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;

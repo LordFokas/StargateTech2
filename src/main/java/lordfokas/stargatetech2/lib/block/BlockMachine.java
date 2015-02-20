@@ -1,11 +1,15 @@
 package lordfokas.stargatetech2.lib.block;
 
+import lordfokas.stargatetech2.lib.render.RenderMachine;
 import lordfokas.stargatetech2.lib.tileentity.TileEntityMachine;
 import lordfokas.stargatetech2.lib.util.TileEntityHelper;
+import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.Helper;
+import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class BlockMachine extends BaseBlockContainer {
@@ -14,6 +18,11 @@ public class BlockMachine extends BaseBlockContainer {
 	public BlockMachine(String uName, Class<? extends TileEntityMachine> tile) {
 		super(uName, true, true);
 		this.tile = tile;
+	}
+	
+	@Override
+	public int getRenderType() {
+		return RenderMachine.instance().getRenderId();
 	}
 	
 	@Override
@@ -33,5 +42,17 @@ public class BlockMachine extends BaseBlockContainer {
 		} catch (Exception e) {
 			throw new RuntimeException("Error creating instance of Machine TileEntity", e);
 		}
+	}
+	
+	@Override
+	public IIcon getBaseIcon(int side, int meta) {
+		String texture = null;
+		switch(side){
+			case 0: texture = TextureReference.MACHINE_BOTTOM; break;
+			case 1: texture = TextureReference.MACHINE_TOP; break;
+			case 3: return blockIcon;
+			default: texture = TextureReference.MACHINE_SIDE;
+		}
+		return IconRegistry.blockIcons.get(texture);
 	}
 }
