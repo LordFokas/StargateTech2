@@ -1,16 +1,21 @@
 package lordfokas.stargatetech2.lib.block;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.lib.render.RenderMachine;
 import lordfokas.stargatetech2.lib.tileentity.TileEntityMachine;
 import lordfokas.stargatetech2.lib.util.TileEntityHelper;
 import lordfokas.stargatetech2.reference.TextureReference;
+import lordfokas.stargatetech2.util.GUIHandler.Screen;
 import lordfokas.stargatetech2.util.Helper;
 import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import buildcraft.api.tools.IToolWrench;
 
 public class BlockMachine extends BaseBlockContainer {
 	private Class<? extends TileEntityMachine> tile;
@@ -30,9 +35,25 @@ public class BlockMachine extends BaseBlockContainer {
 		super.onBlockPlacedBy(world, x, y, z, entity, stack);
 		if(entity instanceof EntityPlayerMP){
 			TileEntityMachine machine = TileEntityHelper.getTileEntityAs(world, x, y, z, TileEntityMachine.class);
-			// TODO: redirect the direction decision to the machine TE, it can then call the helper if it needs.
-			machine.setFacing(Helper.yaw2dir(entity.rotationYaw, 0, false)); // only the yaw really matters here
+			machine.setFacingFrom(entity);
+			System.err.println("PLACING!");
 		}
+	}
+	
+	@Override
+	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int s, float hx, float hy, float hz) {
+		ItemStack hand = p.getCurrentEquippedItem();
+		TileEntityMachine machine = TileEntityHelper.getTileEntityAs(w, x, y, z, TileEntityMachine.class);
+		if(hand != null && hand.getItem() instanceof IToolWrench){
+			if(p.isSneaking()){
+				super.dropSelf(w, x, y, z);
+			}else{
+				machine.rotateBlock();
+			}
+		}else if(!p.isSneaking()){
+			p.openGui(StargateTech2.instance, Screen.SHIELD_CONTROLLER.ordinal(), w, x, y, z);
+		}
+		return super.onBlockActivated(w, x, y, z, p, s, hx, hy, hz);
 	}
 	
 	@Override

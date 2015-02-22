@@ -22,7 +22,9 @@ import lordfokas.stargatetech2.lib.tileentity.faces.IFacingAware;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingProvider;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.reference.TextureReference;
+import lordfokas.stargatetech2.util.Helper;
 import lordfokas.stargatetech2.util.IconRegistry;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -98,7 +100,7 @@ IFluidHandler, ISyncBusDevice{
 	@Override
 	public void registerComponent(ITileComponent component) {
 		if(!isComponentRegistrationAllowed)
-			throw new RuntimeException("ITileComponent registration CANNOT be delayed. Respect the fucking API!");
+			throw new RuntimeException("ITileComponent registration CANNOT be delayed. Respect the f**king API!");
 		allComponents.add(component);
 		if(component instanceof IFacingAware){
 			((IFacingAware)component).setProvider(this);
@@ -147,6 +149,10 @@ IFluidHandler, ISyncBusDevice{
 		return true;
 	}
 	
+	public void setFacingFrom(Entity entity){
+		setFacing(Helper.yaw2dir(entity.rotationYaw, 0, allowYAxisFacing()));
+	}
+	
 	@Override
 	public boolean setFacing(int side) {
 		return setFacing(ForgeDirection.getOrientation(side));
@@ -175,6 +181,7 @@ IFluidHandler, ISyncBusDevice{
 		FaceWrapper face = getFaceForSide(side);
 		if(face.count() < 2) return false;
 		face.decrease();
+		super.updateClients();
 		return true;
 	}
 	
@@ -183,6 +190,7 @@ IFluidHandler, ISyncBusDevice{
 		FaceWrapper face = getFaceForSide(side);
 		if(face.count() < 2) return false;
 		face.increase();
+		super.updateClients();
 		return true;
 	}
 
@@ -196,6 +204,7 @@ IFluidHandler, ISyncBusDevice{
 		for(FaceWrapper fw : faces.values()){
 			fw.reset();
 		}
+		super.updateClients();
 		return true;
 	}
 
