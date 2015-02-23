@@ -43,7 +43,7 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface ClientToServer{}
 	
-	/** Marks the sides that receive this packet. Mandatory annotarion. */
+	/** Marks the sides that receive this packet. Mandatory annotation. */
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface SidesReceivedOn{
