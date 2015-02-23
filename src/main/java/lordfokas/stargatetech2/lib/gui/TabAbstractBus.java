@@ -138,7 +138,7 @@ public class TabAbstractBus extends TabBase{
 		puba.x = device.getXCoord();
 		puba.y = device.getYCoord();
 		puba.z = device.getZCoord();
-		puba.address = (short) address;
+		puba.address = address;
 		puba.sendToServer();
 		
 		((BaseGUI)gui).playTonedClick(value > 0);

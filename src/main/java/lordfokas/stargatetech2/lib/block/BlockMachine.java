@@ -1,13 +1,11 @@
 package lordfokas.stargatetech2.lib.block;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.lib.render.RenderMachine;
 import lordfokas.stargatetech2.lib.tileentity.TileEntityMachine;
 import lordfokas.stargatetech2.lib.util.TileEntityHelper;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;
-import lordfokas.stargatetech2.util.Helper;
 import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

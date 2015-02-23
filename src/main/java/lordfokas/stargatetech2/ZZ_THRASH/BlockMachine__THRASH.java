@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import buildcraft.api.tools.IToolWrench;
 
+@Deprecated
 public abstract class BlockMachine__THRASH extends BaseBlockContainer{
 	private boolean useVertical = false;
 	private Screen screen;

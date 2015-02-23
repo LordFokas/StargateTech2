@@ -9,8 +9,6 @@ import net.minecraftforge.common.config.Configuration;
 public class Config {
 	public Configuration cfg;
 	private HashMap<String, PluginConfig> plugins = new HashMap<String, PluginConfig>();
-	private int blockIDs = 1000;
-	private int itemIDs  = 5000;
 	
 	public static class PluginConfig{
 		private ConfigCategory category;
@@ -50,7 +48,7 @@ public class Config {
 	public ConfigCategory getPluginConfig(String key){
 		PluginConfig pc = plugins.get(key);
 		if(pc == null) return null;
-		else return pc.getConfig();
+		return pc.getConfig();
 	}
 	
 	public void setServerConfigs(){

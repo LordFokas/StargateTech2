@@ -7,7 +7,6 @@ import net.minecraftforge.fluids.IFluidTank;
 
 public class ShieldControllerClient extends ShieldControllerCommon implements ITileContext.Client{
 	public boolean hasUpdated;
-	private ITile.Client tile;
 	
 	@Override
 	public void readNBTData(NBTTagCompound nbt) {
@@ -19,9 +18,7 @@ public class ShieldControllerClient extends ShieldControllerCommon implements IT
 	@Override public boolean canTick(){ return false; }
 	
 	@Override
-	public void setTile(ITile.Client tile){
-		this.tile = tile;
-	}
+	public void setTile(ITile.Client tile){}
 	
 	public IFluidTank getTank(){
 		return tank;

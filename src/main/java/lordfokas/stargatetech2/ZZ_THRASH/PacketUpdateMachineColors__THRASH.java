@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.Side;
 
+@Deprecated
 @ServerToClient
 public class PacketUpdateMachineColors__THRASH extends PacketCoordinates {
 	private FaceColor[] colors;

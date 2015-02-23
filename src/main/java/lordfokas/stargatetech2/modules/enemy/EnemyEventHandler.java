@@ -16,7 +16,6 @@ public class EnemyEventHandler {
 			if(living instanceof EntityPlayer && shield.blocksDamage(evt.source)){
 				EntityPlayer player = (EntityPlayer) living;
 				if(player.inventory.hasItem(shield)){
-					ItemStack shieldStack = null;
 					for(int slot = 0; slot < player.inventory.getSizeInventory(); slot++){
 						ItemStack stack = player.inventory.getStackInSlot(slot);
 						if(stack != null && stack.getItem() == shield){

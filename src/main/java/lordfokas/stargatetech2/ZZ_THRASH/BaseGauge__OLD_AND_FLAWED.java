@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL11;
 
 import cofh.api.energy.EnergyStorage;
 
+@Deprecated
 public abstract class BaseGauge__OLD_AND_FLAWED implements IGauge{
 	protected BaseGUI__OLD_AND_FLAWED master;
 	protected GaugeHoverHandler hoverHandler;

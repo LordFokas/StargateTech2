@@ -8,6 +8,7 @@ import lordfokas.stargatetech2.util.Stacks;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 
+@Deprecated
 public class TabConfiguration__THRASH extends BaseTab__OLD_AND_FLAWED{
 	private static final Side[] sides = new Side[]{
 		new Side(Face.BOTTOM, 45, 61),

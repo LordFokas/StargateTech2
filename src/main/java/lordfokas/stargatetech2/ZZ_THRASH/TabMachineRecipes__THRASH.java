@@ -3,6 +3,7 @@ package lordfokas.stargatetech2.ZZ_THRASH;
 import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.Arrow;
 import lordfokas.stargatetech2.util.Stacks;
 
+@Deprecated
 public class TabMachineRecipes__THRASH extends BaseTab__OLD_AND_FLAWED{
 	public static interface IMachineRecipe{
 		public void renderAt(int x, int y);

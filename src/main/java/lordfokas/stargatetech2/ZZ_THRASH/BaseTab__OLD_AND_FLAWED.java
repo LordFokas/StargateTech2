@@ -3,6 +3,7 @@ package lordfokas.stargatetech2.ZZ_THRASH;
 import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.ITab;
 import net.minecraft.item.ItemStack;
 
+@Deprecated
 public abstract class BaseTab__OLD_AND_FLAWED implements ITab{
 	private final TabColor color;
 	private final ItemStack icon;

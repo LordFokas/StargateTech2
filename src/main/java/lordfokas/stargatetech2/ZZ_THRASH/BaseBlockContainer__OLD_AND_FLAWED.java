@@ -5,6 +5,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+@Deprecated
 public abstract class BaseBlockContainer__OLD_AND_FLAWED extends BaseBlock implements ITileEntityProvider{
 	
 	public BaseBlockContainer__OLD_AND_FLAWED(String name){

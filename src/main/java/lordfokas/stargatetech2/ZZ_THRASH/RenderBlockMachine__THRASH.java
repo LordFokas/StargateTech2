@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
+@Deprecated
 public class RenderBlockMachine__THRASH extends BaseISBRH {
 	private static final RenderBlockMachine__THRASH INSTANCE = new RenderBlockMachine__THRASH();
 	

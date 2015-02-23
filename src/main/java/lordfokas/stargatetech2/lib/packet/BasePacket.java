@@ -32,15 +32,24 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessage> implements IMessage,IMessageHandler<T, RES>{
 	/** Marks packets the server sends to the clients. */
+	@Deprecated
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface ServerToClient{}
 	
 	/** Marks packets the client sends to the server. */
+	@Deprecated
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface ClientToServer{}
-	//Class<T extends BasePacket<T,IMessage>>
+	
+	/** Marks the sides that receive this packet. Mandatory annotarion. */
+	@Target(ElementType.TYPE)
+	@Retention(RetentionPolicy.RUNTIME)
+	public @interface SidesReceivedOn{
+		Side[] value() default {};
+	}
+	
 	private static ArrayList<Class<? extends BasePacket<?,? extends IMessage>>> packetMap = new ArrayList<Class<? extends BasePacket<?,? extends IMessage>>>();
 	private static SimpleNetworkWrapper network;
 	protected ByteBuf output;
@@ -53,14 +62,14 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 	static{
 		packetMap.add(PacketPermissionsUpdate.class);
 		packetMap.add(PacketExceptionsUpdate.class);
-		packetMap.add(PacketOpenGUI.class);
 		packetMap.add(PacketActivateRings.class);
 		packetMap.add(PacketWormhole.class);
 		packetMap.add(PacketPrintAddress.class);
-		packetMap.add(PacketUpdateMachineColors__THRASH.class);
-		packetMap.add(PacketToggleMachineFace__THRASH.class);
 		packetMap.add(PacketUpdateBusAddress.class);
 		packetMap.add(PacketUpdateBusEnabled.class);
+		
+		packetMap.add(PacketUpdateMachineColors__THRASH.class);
+		packetMap.add(PacketToggleMachineFace__THRASH.class);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -68,16 +77,36 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(ModReference.MOD_ID);
 		
 		for( Class clazz: packetMap ){
-			if(clazz.isAnnotationPresent(ServerToClient.class)){
-				registerPacket(clazz, Side.CLIENT);
+			boolean isAnnotated = false;
+			boolean registeredSide = false;
+			Side[] sides = new Side[]{};
+			if(clazz.isAnnotationPresent(SidesReceivedOn.class)){
+				isAnnotated = true;
+				sides = ((SidesReceivedOn) clazz.getAnnotation(SidesReceivedOn.class)).value();
+			}else{
+				sides = new Side[2];
+				if(clazz.isAnnotationPresent(ServerToClient.class)){
+					isAnnotated = true;
+					sides[0] = Side.CLIENT;
+				}
+				if(clazz.isAnnotationPresent(ClientToServer.class)){
+					isAnnotated = true;
+					sides[1] = Side.SERVER;
+				}
 			}
 			
-			if(clazz.isAnnotationPresent(ClientToServer.class)){
-				registerPacket(clazz, Side.SERVER);
+			if(sides != null && sides.length > 0){
+				for(Side side : sides){
+					if(side != null){
+						registeredSide = true;
+						registerPacket(clazz, side);
+					}
+				}
 			}
+			if(!isAnnotated) throw new RuntimeException("Attempted to register a packet class that isn't annotated! (" + clazz.getName() + ")");
+			if(!registeredSide) throw new RuntimeException("A Packet MUST have at least 1 receiving side! (" + clazz.getName() + ")");
 		}
 	}
-	
 	
 	@Override 
 	public RES onMessage(T message, MessageContext ctx) {

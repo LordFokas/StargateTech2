@@ -24,7 +24,6 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	protected ShieldControllerBusDriver driver = new ShieldControllerBusDriver(this);
 	protected boolean active;
 	protected boolean enabled;
-	private ITile tile;
 	
 	@Override
 	public void registerComponents(IComponentRegistrar registrar) {
@@ -79,9 +78,7 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	@Override public boolean canTick() { return false; }
 	
 	@Override
-	public void setTile(ITile tile){
-		this.tile = tile;
-	}
+	public void setTile(ITile tile){}
 	
 	public boolean isShieldOn(){
 		return active;

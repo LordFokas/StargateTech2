@@ -18,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+@Deprecated
 public abstract class BaseGUI__OLD_AND_FLAWED extends GuiContainer {
 	private int _xoff = 0, _yoff = 0;
 	private boolean onBackground;
@@ -74,7 +75,6 @@ public abstract class BaseGUI__OLD_AND_FLAWED extends GuiContainer {
 	private static class TabWrapper{
 		public int _hx, _hy;
 		public final ITab tab;
-		private BaseGUI__OLD_AND_FLAWED gui;
 		private int size;
 		private long lastUpdate = 0;
 		private int grow;
@@ -83,7 +83,6 @@ public abstract class BaseGUI__OLD_AND_FLAWED extends GuiContainer {
 		
 		public TabWrapper(ITab tab, BaseGUI__OLD_AND_FLAWED gui){
 			this.tab = tab;
-			this.gui = gui;
 		}
 		
 		public void expand(){
@@ -122,17 +121,15 @@ public abstract class BaseGUI__OLD_AND_FLAWED extends GuiContainer {
 		public int getX(int off){
 			if(size == 0){
 				return 0;
-			}else{
-				return (tab.getSizeX() + off) * size / 100;
 			}
+			return (tab.getSizeX() + off) * size / 100;
 		}
 		
 		public int getY(int off){
 			if(size == 0){
 				return 0;
-			}else{
-				return (tab.getSizeY() + off) * size / 100;
 			}
+			return (tab.getSizeY() + off) * size / 100;
 		}
 		
 		public void setHover(boolean hover){

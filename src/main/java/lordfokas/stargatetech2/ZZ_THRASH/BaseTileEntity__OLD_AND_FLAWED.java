@@ -10,6 +10,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
+@Deprecated
 public abstract class BaseTileEntity__OLD_AND_FLAWED extends TileEntity {
 	
 	/**

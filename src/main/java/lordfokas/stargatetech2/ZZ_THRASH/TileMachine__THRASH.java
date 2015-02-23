@@ -5,6 +5,7 @@ import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
+@Deprecated
 public abstract class TileMachine__THRASH extends BaseTileEntity__OLD_AND_FLAWED {
 	private FaceColor[] colors = new FaceColor[]{
 			FaceColor.VOID, FaceColor.VOID,
