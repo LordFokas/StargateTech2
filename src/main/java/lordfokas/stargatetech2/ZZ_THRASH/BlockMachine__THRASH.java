@@ -32,6 +32,7 @@ public abstract class BlockMachine__THRASH extends BaseBlockContainer{
 	
 	public BlockMachine__THRASH(String uName, boolean owned, Screen screen) {
 		super(uName, !owned, true);
+		super.setRenderer(RenderBlockMachine__THRASH.instance());
 		this.screen = screen;
 		if(!owned){
 			this.setResistance(80000F);
@@ -42,11 +43,6 @@ public abstract class BlockMachine__THRASH extends BaseBlockContainer{
 	
 	protected void setUseVertical(){
 		useVertical = true;
-	}
-	
-	@Override
-	public int getRenderType(){
-		return RenderBlockMachine__THRASH.instance().getRenderId();
 	}
 	
 	public IIcon getFaceForMeta(int meta){

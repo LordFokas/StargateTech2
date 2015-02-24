@@ -222,10 +222,19 @@ IFluidHandler, ISyncBusDevice{
 
 	@Override
 	public boolean resetSides() {
-		for(FaceWrapper fw : faces.values()){
-			fw.reset();
+		if(this.side.isClient()){
+			PacketMachineConfiguration pmc = new PacketMachineConfiguration();
+			pmc.x = xCoord;
+			pmc.y = yCoord;
+			pmc.z = zCoord;
+			pmc.reset = true;
+			pmc.sendToServer();
+		}else{
+			for(FaceWrapper fw : faces.values()){
+				fw.reset();
+			}
+			super.updateClients();
 		}
-		super.updateClients();
 		return true;
 	}
 

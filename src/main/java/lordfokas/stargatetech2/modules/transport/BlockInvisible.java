@@ -8,17 +8,13 @@ public class BlockInvisible extends BaseBlock {
 
 	public BlockInvisible() {
 		super(BlockReference.INVISIBLE);
-		this.setCreativeTab(null);
+		setRenderer(null);
+		setCreativeTab(null);
 	}
 	
 	@Override
 	public boolean isOpaqueCube(){
 		return false;
-	}
-	
-	@Override
-	public int getRenderType(){
-		return -1;
 	}
 	
 	@Override

@@ -24,11 +24,7 @@ public class BlockNaquadah extends BaseBlock {
 		this.setHardness(3.0F);
 		this.setResistance(5.0F);
 		setHarvestLevel("pickaxe", 2);
-	}
-	
-	@Override
-	public int getRenderType(){
-		return RenderNaquadah.instance().getRenderId();
+		
 	}
 	
 	@Override

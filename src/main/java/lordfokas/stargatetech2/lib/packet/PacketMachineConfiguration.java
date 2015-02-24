@@ -10,20 +10,25 @@ import cpw.mods.fml.relauncher.Side;
 @SidesReceivedOn(Side.SERVER)
 public class PacketMachineConfiguration extends PacketCoordinates{
 	public boolean increase;
+	public boolean reset;
 	public int side;
 	
 	@Override
 	protected void writeData() throws Exception {
 		output.writeBoolean(increase);
+		output.writeBoolean(reset);
 		output.writeInt(side);
 	}
 
 	@Override
 	protected IMessage readData(EntityPlayer player, Side s) throws Exception {
 		increase = input.readBoolean();
+		reset = input.readBoolean();
 		side = input.readInt();
 		TileEntityMachine machine = TileEntityHelper.getTileEntityAs(player.worldObj, x, y, z, TileEntityMachine.class);
-		if(increase){
+		if(reset){
+			machine.resetSides();
+		}else if(increase){
 			machine.incrSide(side);
 		}else{
 			machine.decrSide(side);

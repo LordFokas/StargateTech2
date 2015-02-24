@@ -25,6 +25,7 @@ public class BlockBeacon extends BaseBlockContainer__OLD_AND_FLAWED{
 	
 	public BlockBeacon() {
 		super(BlockReference.BEACON);
+		setRenderer(RenderBeacon.instance());
 		setIsAbstractBusBlock();
 	}
 	
@@ -54,11 +55,6 @@ public class BlockBeacon extends BaseBlockContainer__OLD_AND_FLAWED{
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z){
 		return new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
-	}
-	
-	@Override
-	public int getRenderType(){
-		return RenderBeacon.instance().getRenderId();
 	}
 	
 	@Override

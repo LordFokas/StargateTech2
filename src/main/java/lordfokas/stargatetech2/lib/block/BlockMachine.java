@@ -17,15 +17,13 @@ import buildcraft.api.tools.IToolWrench;
 
 public class BlockMachine extends BaseBlockContainer {
 	private Class<? extends TileEntityMachine> tile;
+	private Screen screen;
 	
-	public BlockMachine(String uName, Class<? extends TileEntityMachine> tile) {
+	public BlockMachine(String uName, Class<? extends TileEntityMachine> tile, Screen screen) {
 		super(uName, true, true);
+		super.setRenderer(RenderMachine.instance());
+		this.screen = screen;
 		this.tile = tile;
-	}
-	
-	@Override
-	public int getRenderType() {
-		return RenderMachine.instance().getRenderId();
 	}
 	
 	@Override
@@ -34,7 +32,6 @@ public class BlockMachine extends BaseBlockContainer {
 		if(entity instanceof EntityPlayerMP){
 			TileEntityMachine machine = TileEntityHelper.getTileEntityAs(world, x, y, z, TileEntityMachine.class);
 			machine.setFacingFrom(entity);
-			System.err.println("PLACING!");
 		}
 	}
 	
@@ -48,8 +45,8 @@ public class BlockMachine extends BaseBlockContainer {
 			}else{
 				machine.rotateBlock();
 			}
-		}else if(!p.isSneaking()){
-			p.openGui(StargateTech2.instance, Screen.SHIELD_CONTROLLER.ordinal(), w, x, y, z);
+		}else if(!p.isSneaking() && screen != null){
+			p.openGui(StargateTech2.instance, screen.ordinal(), w, x, y, z);
 		}
 		return super.onBlockActivated(w, x, y, z, p, s, hx, hy, hz);
 	}

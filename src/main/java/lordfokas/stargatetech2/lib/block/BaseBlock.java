@@ -13,9 +13,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BaseBlock extends Block{
+	private ISimpleBlockRenderingHandler renderer;
+	private boolean noRender = false;
 	protected IIcon[] iconOverride;
 	protected boolean isOverride = false;
 	private boolean isAbstractBus = false;
@@ -39,6 +42,22 @@ public class BaseBlock extends Block{
 		}
 		setCreativeTab(StargateTab.instance);
 		registerBlock();
+	}
+	
+	public final void setRenderer(ISimpleBlockRenderingHandler renderer){
+		if(renderer != null) this.renderer = renderer;
+		else noRender = true;
+	}
+	
+	@Override
+	public final int getRenderType() {
+		if(noRender){
+			return -1;
+		}else if(renderer != null){
+			return renderer.getRenderId();
+		}else{
+			return super.getRenderType();
+		}
 	}
 	
 	// MEH

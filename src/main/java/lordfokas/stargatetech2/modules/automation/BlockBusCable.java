@@ -22,13 +22,9 @@ public class BlockBusCable extends BaseBlock {
 	
 	public BlockBusCable() {
 		super(BlockReference.BUS_CABLE, true, false);
+		setRenderer(RenderBusCable.instance());
 		setIsAbstractBusBlock();
 		setLightOpacity(0);
-	}
-	
-	@Override
-	public int getRenderType(){
-		return RenderBusCable.instance().getRenderId();
 	}
 	
 	@Override

@@ -20,14 +20,10 @@ public class BlockLanteanWall extends BaseBlock {
 	
 	public BlockLanteanWall() {
 		super(BlockReference.LANTEAN_WALL, true, true);
+		setRenderer(RenderLanteanWall.instance());
 		setHarvestLevel("pickaxe", 2);
 		setHardness(1.5F);
 		setResistance(15F);
-	}
-	
-	@Override
-	public int getRenderType(){
-		return RenderLanteanWall.instance().getRenderId();
 	}
 	
 	@Override
