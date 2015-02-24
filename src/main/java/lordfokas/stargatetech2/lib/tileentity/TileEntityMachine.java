@@ -35,6 +35,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import cofh.api.tileentity.IReconfigurableFacing;
 import cofh.api.tileentity.IReconfigurableSides;
+import cofh.api.tileentity.IRedstoneControl;
 import cofh.api.tileentity.ISidedTexture;
 
 /**
@@ -46,6 +47,9 @@ import cofh.api.tileentity.ISidedTexture;
  * <br>
  * If a Context implements {@link IComponentProvider} it will be allowed to register
  * components to this machine. Components should implement {@link ITileComponent}.<br>
+ * <br>
+ * If a Context implements {@link IRedstoneAware} it will be notified of whether or
+ * not it should run based on the TE's redstone control mode.<br>
  * <br>
  * Components that implement {@link IAccessibleTileComponent} will be exposed to
  * the outside of the TileEntity.<br>
@@ -60,7 +64,7 @@ import cofh.api.tileentity.ISidedTexture;
  */
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
 implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar,
-IFluidHandler, ISyncBusDevice{
+IFluidHandler, ISyncBusDevice, IRedstoneControl{
 	private static final Class[] INTERFACES = new Class[]{
 		IBusComponent.class, ICapacitorComponent.class, IInventoryComponent.class, ITankComponent.class
 	};
@@ -69,6 +73,9 @@ IFluidHandler, ISyncBusDevice{
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
 	private Face[] faceMap = new Face[6];
 	private ForgeDirection facing;
+	private ControlMode redstoneControl = ControlMode.DISABLED;
+	private boolean redstonePower = false;
+	private IRedstoneAware rsContext;
 	
 	private ArrayList<ITileComponent> allComponents = new ArrayList();
 	private ArrayList<ISyncedGUI.Flow> syncComponents = new ArrayList();
@@ -86,6 +93,9 @@ IFluidHandler, ISyncBusDevice{
 		}
 		if(context instanceof IFacingAware){
 			((IFacingAware)context).setProvider(this);
+		}
+		if(context instanceof IRedstoneAware){
+			rsContext = (IRedstoneAware) context;
 		}
 		for(Class iface : INTERFACES){
 			sidedComponents.put(iface, new ArrayList());
@@ -336,13 +346,53 @@ IFluidHandler, ISyncBusDevice{
 			face = 0;
 		}
 	}
+	
+	// ##########################################################
+	// Redstone Control
+	
+	@Override // TODO: send data to server
+	public void setPowered(boolean isPowered) {
+		redstonePower = isPowered;
+		updateRS();
+	}
 
+	@Override
+	public boolean isPowered() {
+		return redstonePower;
+	}
+
+	@Override // TODO: send data to server
+	public void setControl(ControlMode control) {
+		redstoneControl = control;
+		updateRS();
+	}
+
+	@Override
+	public ControlMode getControl() {
+		return redstoneControl;
+	}
+	
+	private void updateRS(){
+		rsContext.onRedstoneState(shouldRun());
+	}
+	
+	private boolean shouldRun(){
+		switch(redstoneControl){
+			case DISABLED: return true;
+			case LOW: return !redstonePower;
+			case HIGH: return redstonePower;
+			default: throw new RuntimeException("Is RedstoneControl null?");
+		}
+	}
+	
 	// ##########################################################
 	// Nice little NBT handling
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
+		redstoneControl = ControlMode.values()[nbt.getInteger("rsControl")];
+		redstonePower = nbt.getBoolean("rsPower");
 		NBTTagCompound facingNBT = nbt.getCompoundTag("facing");
 		facing = ForgeDirection.getOrientation(facingNBT.getInteger("facing"));
 		faces = new EnumMap(Face.class);
@@ -368,6 +418,8 @@ IFluidHandler, ISyncBusDevice{
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
+		nbt.setInteger("rsControl", redstoneControl.ordinal());
+		nbt.setBoolean("rsPower", redstonePower);
 		NBTTagCompound facingNBT = new NBTTagCompound();
 		facingNBT.setInteger("facing", facing.ordinal());
 		for(int i = 0; i < faceMap.length; i++){

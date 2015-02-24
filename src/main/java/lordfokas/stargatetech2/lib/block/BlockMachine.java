@@ -7,6 +7,7 @@ import lordfokas.stargatetech2.lib.util.TileEntityHelper;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;
 import lordfokas.stargatetech2.util.IconRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -17,6 +18,7 @@ import buildcraft.api.tools.IToolWrench;
 
 public class BlockMachine extends BaseBlockContainer {
 	private Class<? extends TileEntityMachine> tile;
+	private boolean useRedstoneSignal = false;
 	private Screen screen;
 	
 	public BlockMachine(String uName, Class<? extends TileEntityMachine> tile, Screen screen) {
@@ -26,6 +28,10 @@ public class BlockMachine extends BaseBlockContainer {
 		this.tile = tile;
 	}
 	
+	public void useRedstoneSignal(){
+		useRedstoneSignal = true;
+	}
+	
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		super.onBlockPlacedBy(world, x, y, z, entity, stack);
@@ -33,6 +39,21 @@ public class BlockMachine extends BaseBlockContainer {
 			TileEntityMachine machine = TileEntityHelper.getTileEntityAs(world, x, y, z, TileEntityMachine.class);
 			machine.setFacingFrom(entity);
 		}
+		if(useRedstoneSignal){
+			checkRS(world, x, y, z);
+		}
+	}
+	
+	@Override
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block b) {
+		if(useRedstoneSignal){
+			checkRS(world, x, y, z);
+		}
+	}
+	
+	private void checkRS(World world, int x, int y, int z) {
+		TileEntityMachine machine = TileEntityHelper.getTileEntityAs(world, x, y, z, TileEntityMachine.class);
+		machine.setPowered(world.isBlockIndirectlyGettingPowered(x, y, z));
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ import lordfokas.stargatetech2.modules.enemy.TileShieldController;
 import lordfokas.stargatetech2.reference.TextureReference;
 import cofh.core.gui.element.TabConfiguration;
 import cofh.core.gui.element.TabInfo;
+import cofh.core.gui.element.TabRedstone;
 import cofh.lib.gui.element.ElementButton;
 import cofh.lib.gui.element.ElementFluidTank;
 import cofh.lib.gui.element.TabBase;
@@ -53,8 +54,7 @@ public class GUIShieldController extends BaseGUI {
 		
 		String mode;
 		int m_color;
-		boolean redstone = false;
-		if(redstone){
+		if(!shieldController.getControl().isDisabled()){
 			mode = "Redstone";
 			m_color = 0xD00000;
 		}else if(shieldController.getEnabled()){
@@ -114,6 +114,7 @@ public class GUIShieldController extends BaseGUI {
 		
 		addTab(new TabInfo(this, INFO));
 		addTab(new TabAbstractBus(this, TabBase.RIGHT, shieldController));
+		addTab(new TabRedstone(this, TabBase.RIGHT, shieldController));
 		addTab(new TabConfiguration(this, TabBase.RIGHT, shieldController));
 		
 		updatePermissions();

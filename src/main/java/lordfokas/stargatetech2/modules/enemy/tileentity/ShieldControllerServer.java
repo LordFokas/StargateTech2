@@ -6,6 +6,7 @@ import java.util.List;
 
 import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
+import lordfokas.stargatetech2.lib.tileentity.IRedstoneAware;
 import lordfokas.stargatetech2.lib.tileentity.ITile;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class ShieldControllerServer extends ShieldControllerCommon
-implements ITileContext.Server, IShieldControllerProvider{
+implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	private static final int ION_DRAIN = 10;
 	private ArrayList<Vec3Int> emitters = new ArrayList();
 	private LinkedList<Vec3Int> shields = new LinkedList();
@@ -187,5 +188,10 @@ implements ITileContext.Server, IShieldControllerProvider{
 		for(int i = 0; i < shields.size(); i++){
 			nbt.setTag("shield_" + i, shields.get(i).toNBT());
 		}
+	}
+
+	@Override
+	public void onRedstoneState(boolean powered) {
+		this.enabled = powered;
 	}
 }
