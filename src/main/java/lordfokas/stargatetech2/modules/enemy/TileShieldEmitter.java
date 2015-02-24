@@ -20,7 +20,7 @@ public class TileShieldEmitter extends TileMachine__THRASH implements IShieldCon
 	public void setController(Vec3Int controller){
 		this.controller = controller;
 		TileEntity te = worldObj.getTileEntity(controller.x, controller.y, controller.z);
-		if(te instanceof TileShieldController){
+		if(!worldObj.isRemote){
 			((TileShieldController)te).getServerContext().addEmitter(this);
 		}
 	}
@@ -30,7 +30,7 @@ public class TileShieldEmitter extends TileMachine__THRASH implements IShieldCon
 		super.invalidate();
 		if(controller == null) return;
 		TileEntity te = worldObj.getTileEntity(controller.x, controller.y, controller.z);
-		if(te instanceof TileShieldController){
+		if(te instanceof TileShieldController && !worldObj.isRemote){
 			((TileShieldController)te).getServerContext().removeEmitter(this);
 		}
 	}

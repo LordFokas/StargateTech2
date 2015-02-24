@@ -18,6 +18,7 @@ public class BlockShieldEmitter extends BlockMachine__THRASH{
 		super.setUseVertical();
 	}
 	
+	@Override // TODO: SO MUCH SHIT TO CLEAN DUDE!
 	public boolean canPlaceBlockAt(World w, int x, int y, int z){
 		if(!super.canPlaceBlockAt(w, x, y, z)) return false;
 		Vec3Int controller = null;
@@ -27,11 +28,22 @@ public class BlockShieldEmitter extends BlockMachine__THRASH{
 			int sz = z + fd.offsetZ;
 			if(sy >= 0 && sy < w.getActualHeight()){ // make sure we're within vertical world bounds;
 				TileEntity te = w.getTileEntity(sx, sy, sz);
+				Vec3Int c = null;
+				boolean wasNull = false;
 				if(te instanceof IShieldControllerProvider){
-					Vec3Int c = ((IShieldControllerProvider)te).getShieldControllerCoords();
-					if(controller == null) controller = c; // make sure we always have a controller;
-					else if(!controller.equals(c)) return false; // make sure there's no 2 different controllers;
+					c = ((IShieldControllerProvider)te).getShieldControllerCoords();
+					if(controller == null){
+						controller = c; // make sure we always have a controller;
+						wasNull = true;
+					}
+				}else if(te instanceof TileShieldController){
+					c = new Vec3Int(sx, sy, sz);
+					if(controller == null){
+						controller = c; // make sure we always have a controller;
+						wasNull = true;
+					}
 				}
+				if(c != null && !wasNull && !controller.equals(c)) return false; // make sure there's no 2 different controllers;
 			}
 		}
 		return controller != null; // a single controller was found;
@@ -53,6 +65,9 @@ public class BlockShieldEmitter extends BlockMachine__THRASH{
 							((TileShieldEmitter)te).setController(controller);
 							return;
 						}
+					}else if(prvdr instanceof TileShieldController){
+						((TileShieldEmitter)te).setController(new Vec3Int(prvdr.xCoord, prvdr.yCoord, prvdr.zCoord));
+						return;
 					}
 				}
 			}
