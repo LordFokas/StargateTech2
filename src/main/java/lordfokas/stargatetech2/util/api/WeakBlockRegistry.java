@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class WeakBlockRegistry{
-	// TODO: allow API access to add weak blocks;
+	// TODO: allow API access to add weak blocks; Consider using IMC.
 	private static final class RemovableWeakBlock{
 		private Block block;
 		private int meta;

@@ -135,7 +135,7 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 			TileShieldController controller = ((TileShield)te).getController();
 			if(controller == null || !((ShieldControllerCommon)controller.getContext()).isShieldOn()) return;
 			ShieldPermissions permissions = ((ShieldControllerCommon)controller.getContext()).getPermissions();
-			if(!permissions.isEntityAllowed(e, true, /*controller.getOwner()*/ "")){ // TODO: fix this shit
+			if(!permissions.isEntityAllowed(e, true, controller.getOwner())){
 				this.setBlockBounds(0, 0, 0, 1, 1, 1);
 				super.addCollisionBoxesToList(w, x, y, z, aabb, l, e);
 				this.setBlockBoundsBasedOnState(w, x, y, z);

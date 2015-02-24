@@ -11,11 +11,9 @@ import lordfokas.stargatetech2.lib.tileentity.component.base.BusComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.base.TankComponentFiltered;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColorFilter;
-import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
 import lordfokas.stargatetech2.modules.enemy.ShieldControllerBusDriver;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IComponentProvider{
@@ -28,7 +26,7 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	
 	@Override
 	public void registerComponents(IComponentRegistrar registrar) {
-		TankComponentFiltered tankComponent = new TankComponentFiltered(tank, false, new BasicFluidFilter(FluidRegistry.LAVA));
+		TankComponentFiltered tankComponent = new TankComponentFiltered(tank, false, new BasicFluidFilter(FluidRegistry.WATER));
 		BusComponent busComponent = new BusComponent(driver);
 		
 		registrar.registerComponent(tankComponent.setInputFilter(new FaceColorFilter.MatchColors(FaceColor.BLUE)));
