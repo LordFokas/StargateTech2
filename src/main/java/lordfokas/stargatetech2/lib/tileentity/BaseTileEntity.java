@@ -27,16 +27,17 @@ import cpw.mods.fml.relauncher.Side;
  */
 public class BaseTileEntity<C extends Client, S extends Server> extends TileEntity implements ITile.Client, ITile.Server, ISyncedGUI.Flow{
 	protected final ITileContext context;
+	protected Side side;
 	
 	public BaseTileEntity(Class<? extends C> client, Class<? extends S> server){
-		Side side = FMLCommonHandler.instance().getEffectiveSide();
+		side = FMLCommonHandler.instance().getEffectiveSide();
 		ITileContext context = null;
 		try{
-			if(side == Side.CLIENT && client != null){
+			if(side.isClient() && client != null){
 				context = client.newInstance();
 				context.setTile(this);
 				((ITileContext.Client)context).setTile(this);
-			}else if(side == Side.SERVER && server != null){
+			}else if(side.isServer() && server != null){
 				context = server.newInstance();
 				context.setTile(this);
 				((ITileContext.Server)context).setTile(this);
@@ -118,7 +119,7 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 	
 	@Override
 	public final void updateClients(){
-		if(worldObj.isRemote) return;
+		if(side.isClient()) return;
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 	

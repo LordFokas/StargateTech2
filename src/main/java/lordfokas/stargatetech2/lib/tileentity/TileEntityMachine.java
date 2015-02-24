@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import lordfokas.stargatetech2.api.bus.IBusInterface;
+import lordfokas.stargatetech2.lib.packet.PacketMachineConfiguration;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
 import lordfokas.stargatetech2.lib.tileentity.component.IAccessibleTileComponent;
@@ -180,8 +181,18 @@ IFluidHandler, ISyncBusDevice{
 	public boolean decrSide(int side) {
 		FaceWrapper face = getFaceForSide(side);
 		if(face.count() < 2) return false;
-		face.decrease();
-		super.updateClients();
+		if(this.side.isClient()){
+			PacketMachineConfiguration pmc = new PacketMachineConfiguration();
+			pmc.x = xCoord;
+			pmc.y = yCoord;
+			pmc.z = zCoord;
+			pmc.increase = false;
+			pmc.side = side;
+			pmc.sendToServer();
+		}else{
+			face.decrease();
+			super.updateClients();
+		}
 		return true;
 	}
 	
@@ -189,8 +200,18 @@ IFluidHandler, ISyncBusDevice{
 	public boolean incrSide(int side) {
 		FaceWrapper face = getFaceForSide(side);
 		if(face.count() < 2) return false;
-		face.increase();
-		super.updateClients();
+		if(this.side.isClient()){
+			PacketMachineConfiguration pmc = new PacketMachineConfiguration();
+			pmc.x = xCoord;
+			pmc.y = yCoord;
+			pmc.z = zCoord;
+			pmc.increase = false;
+			pmc.side = side;
+			pmc.sendToServer();
+		}else{
+			face.increase();
+			super.updateClients();
+		}
 		return true;
 	}
 
@@ -329,6 +350,9 @@ IFluidHandler, ISyncBusDevice{
 		int size = components.getInteger("size");
 		for(int i = 0; i < size; i++){
 			allComponents.get(i).readFromNBT(components.getCompoundTag("comp_" + i));
+		}
+		if(side.isClient() && worldObj != null){
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 	}
 	

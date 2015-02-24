@@ -50,7 +50,7 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 		Side[] value() default {};
 	}
 	
-	private static ArrayList<Class<? extends BasePacket<?,? extends IMessage>>> packetMap = new ArrayList<Class<? extends BasePacket<?,? extends IMessage>>>();
+	private static ArrayList<Class<? extends BasePacket<?,? extends IMessage>>> packetMap = new ArrayList();
 	private static SimpleNetworkWrapper network;
 	protected ByteBuf output;
 	protected ByteBuf input;
@@ -59,7 +59,14 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 		return packetMap.indexOf(this.getClass());
 	}
 	
+	public BasePacket(){
+		if(getPacketID() == -1){
+			throw new RuntimeException("Packet isn't registered! (" + getClass().getName() + ")");
+		}
+	}
+	
 	static{
+		// pre v0.8 packets
 		packetMap.add(PacketPermissionsUpdate.class);
 		packetMap.add(PacketExceptionsUpdate.class);
 		packetMap.add(PacketActivateRings.class);
@@ -68,6 +75,10 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 		packetMap.add(PacketUpdateBusAddress.class);
 		packetMap.add(PacketUpdateBusEnabled.class);
 		
+		// v0.8+ packets
+		packetMap.add(PacketMachineConfiguration.class);
+		
+		// old shit that needs to be deleted.
 		packetMap.add(PacketUpdateMachineColors__THRASH.class);
 		packetMap.add(PacketToggleMachineFace__THRASH.class);
 	}
