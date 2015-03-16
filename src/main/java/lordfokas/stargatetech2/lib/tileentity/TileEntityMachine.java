@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.packet.PacketMachineConfiguration;
+import lordfokas.stargatetech2.lib.packet.PacketMachineRedstone;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
 import lordfokas.stargatetech2.lib.tileentity.component.IAccessibleTileComponent;
@@ -350,10 +351,12 @@ IFluidHandler, ISyncBusDevice, IRedstoneControl{
 	// ##########################################################
 	// Redstone Control
 	
-	@Override // TODO: send data to server
+	@Override
 	public void setPowered(boolean isPowered) {
-		redstonePower = isPowered;
-		updateRS();
+		if(side.isServer()){
+			redstonePower = isPowered;
+			updateRS();
+		}
 	}
 
 	@Override
@@ -361,10 +364,20 @@ IFluidHandler, ISyncBusDevice, IRedstoneControl{
 		return redstonePower;
 	}
 
-	@Override // TODO: send data to server
+	@Override
 	public void setControl(ControlMode control) {
-		redstoneControl = control;
-		updateRS();
+		if(side.isClient()){
+			PacketMachineRedstone pmr = new PacketMachineRedstone();
+			pmr.x = xCoord;
+			pmr.y = yCoord;
+			pmr.z = zCoord;
+			pmr.mode = control;
+			pmr.sendToServer();
+		}else{
+			redstoneControl = control;
+			updateRS();
+			updateClients();
+		}
 	}
 
 	@Override

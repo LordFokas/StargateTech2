@@ -77,6 +77,7 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 		
 		// v0.8+ packets
 		packetMap.add(PacketMachineConfiguration.class);
+		packetMap.add(PacketMachineRedstone.class);
 		
 		// old shit that needs to be deleted.
 		packetMap.add(PacketUpdateMachineColors__THRASH.class);

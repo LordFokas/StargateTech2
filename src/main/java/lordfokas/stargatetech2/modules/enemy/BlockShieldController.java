@@ -7,5 +7,6 @@ import lordfokas.stargatetech2.util.GUIHandler.Screen;
 public class BlockShieldController extends BlockMachine{
 	public BlockShieldController() {
 		super(BlockReference.SHIELD_CONTROLLER, TileShieldController.class, Screen.SHIELD_CONTROLLER);
+		super.useRedstoneSignal();
 	}
 }

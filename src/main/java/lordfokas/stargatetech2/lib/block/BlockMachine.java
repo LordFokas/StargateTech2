@@ -53,7 +53,9 @@ public class BlockMachine extends BaseBlockContainer {
 	
 	private void checkRS(World world, int x, int y, int z) {
 		TileEntityMachine machine = TileEntityHelper.getTileEntityAs(world, x, y, z, TileEntityMachine.class);
-		machine.setPowered(world.isBlockIndirectlyGettingPowered(x, y, z));
+		int level = world.getBlockPowerInput(x, y, z);
+		System.err.println("RS-Level: " + level);
+		machine.setPowered(level > 0);
 	}
 	
 	@Override

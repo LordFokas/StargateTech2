@@ -192,6 +192,12 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 
 	@Override
 	public void onRedstoneState(boolean powered) {
+		System.err.println("Enabled: " + powered);
 		this.enabled = powered;
+		if(enabled){
+			raiseShields();
+		}else{
+			lowerShields();
+		}
 	}
 }
