@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.packet.PacketMachineConfiguration;
 import lordfokas.stargatetech2.lib.packet.PacketMachineRedstone;
+import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeFluidHandler;
+import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeSyncBusDevice;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
 import lordfokas.stargatetech2.lib.tileentity.component.IAccessibleTileComponent;
@@ -33,7 +35,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
 import cofh.api.tileentity.IReconfigurableFacing;
 import cofh.api.tileentity.IReconfigurableSides;
 import cofh.api.tileentity.IRedstoneControl;
@@ -65,7 +66,11 @@ import cofh.api.tileentity.ISidedTexture;
  */
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
 implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar,
-IFluidHandler, ISyncBusDevice, IRedstoneControl{
+IRedstoneControl,
+
+// fake interfaces so that the compiler helps us.
+IFakeFluidHandler, IFakeSyncBusDevice{
+	
 	private static final Class[] INTERFACES = new Class[]{
 		IBusComponent.class, ICapacitorComponent.class, IInventoryComponent.class, ITankComponent.class
 	};
@@ -117,8 +122,8 @@ IFluidHandler, ISyncBusDevice, IRedstoneControl{
 		if(component instanceof IFacingAware){
 			((IFacingAware)component).setProvider(this);
 		}
-		if(component instanceof IBusComponent){
-			((IBusComponent)component).setBusDevice(this);
+		if(component instanceof IBusComponent){ // TODO: find a better way to work around this
+			((IBusComponent)component).setBusDevice((ISyncBusDevice)this);
 		}
 		if(component instanceof ISyncedGUI.Flow){
 			syncComponents.add((ISyncedGUI.Flow) component);
