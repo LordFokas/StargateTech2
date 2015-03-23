@@ -391,6 +391,7 @@ IFakeFluidHandler, IFakeSyncBusDevice{
 	}
 	
 	private void updateRS(){
+		rsContext.setUsesRedstone(!redstoneControl.isDisabled());
 		rsContext.onRedstoneState(shouldRun());
 	}
 	

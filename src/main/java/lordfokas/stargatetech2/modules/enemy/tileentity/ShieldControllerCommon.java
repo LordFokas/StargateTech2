@@ -84,5 +84,5 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	}
 	
 	// is just a stub for the server.
-	public void setShieldStatus(boolean enabled){}
+	public boolean setShieldStatus(boolean enabled){ return false; }
 }

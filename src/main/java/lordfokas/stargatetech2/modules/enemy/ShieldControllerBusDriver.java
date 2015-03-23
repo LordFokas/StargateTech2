@@ -24,13 +24,20 @@ public class ShieldControllerBusDriver implements ISyncBusDriver{
 	public void handlePacket(BusPacket packet){
 		BusPacketLIP lip = packet.getPlainText();
 		String action = lip.get("action");
-		if(action == null) return;
+		if(action == null){
+			lip.addResponse("Shield Controller: Invalid Command!");
+			return;
+		}
+		boolean enable = false;
 		if(action.equalsIgnoreCase("enable")){
-			controller.setShieldStatus(true);
-			lip.addResponse("Shield Status: Enabled");
+			enable = true;
 		}else if(action.equalsIgnoreCase("disable")){
-			controller.setShieldStatus(false);
-			lip.addResponse("Shield Status: Disabled");
+			enable = false;
+		}
+		if(controller.setShieldStatus(enable)){
+			lip.addResponse("Shield Status: " + (controller.isShieldOn() ? "Enabled" : "Disabled"));
+		}else{
+			lip.addResponse("Denied: Shield Controller is not on Abstract Bus control mode.");
 		}
 	}
 

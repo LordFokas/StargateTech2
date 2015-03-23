@@ -26,6 +26,7 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	private ArrayList<Vec3Int> emitters = new ArrayList();
 	private LinkedList<Vec3Int> shields = new LinkedList();
 	private ITile.Server tile;
+	private boolean redstone = false;
 	
 	@Override
 	public void setTile(ITile.Server tile) {
@@ -42,7 +43,6 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 		boolean shouldActivate = false; // TODO: this prevents the shield from activating on non-check ticks.
 		boolean shouldDeactivate = false;
 		
-		// Decide if the shield is to run or not
 		if((tile.getWorld().getTotalWorldTime() % 100) == 0){
 			if(enabled && hasIons()){
 				tank.drain(ION_DRAIN, true);
@@ -52,13 +52,14 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 			}
 		}
 		
-		// Lower or Raise shields based on state.
+		updateShields(shouldActivate, shouldDeactivate);
+	}
+	
+	private void updateShields(boolean shouldActivate, boolean shouldDeactivate){
 		if(active && (!enabled || shouldDeactivate)){
-			System.out.println("Lowering Shields");
 			lowerShields();
 		}
 		if(enabled && !active && shouldActivate){
-			System.out.println("Raising Shields");
 			raiseShields();
 		}
 	}
@@ -107,10 +108,12 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	}
 	
 	@Override
-	public void setShieldStatus(boolean enabled){
-		this.enabled = enabled;
-		if(enabled && !active && hasIons()) raiseShields();
-		if(!enabled && active) lowerShields();
+	public boolean setShieldStatus(boolean enabled){
+		if(!redstone){
+			this.enabled = enabled;
+			updateShields(hasIons(), true);
+		}
+		return !redstone;
 	}
 	
 	public void addEmitter(TileShieldEmitter emitter){
@@ -191,6 +194,7 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 		for(int i = 0; i < num_shields; i++){
 			shields.add(Vec3Int.fromNBT(nbt.getCompoundTag("shield_" + i)));
 		}
+		redstone = nbt.getBoolean("redstone");
 	}
 	
 	@Override
@@ -204,12 +208,23 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 		for(int i = 0; i < shields.size(); i++){
 			nbt.setTag("shield_" + i, shields.get(i).toNBT());
 		}
+		nbt.setBoolean("redstone", redstone);
 	}
-
+	
+	@Override
+	public void setUsesRedstone(boolean redstone){
+		if(!redstone){
+			onRedstoneState(false);
+		}
+		this.redstone = redstone;
+	}
+	
 	@Override
 	public void onRedstoneState(boolean powered) {
-		System.err.println("Enabled: " + powered);
-		this.enabled = powered;
-		
+		if(redstone){
+			System.err.println("Enabled: " + powered);
+			this.enabled = powered;
+			updateShields(hasIons(), true);
+		}
 	}
 }
