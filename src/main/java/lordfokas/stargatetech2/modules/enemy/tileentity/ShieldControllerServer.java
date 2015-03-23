@@ -39,12 +39,28 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	
 	@Override
 	public void tick() {
-		if((tile.getWorld().getTotalWorldTime() % 100) != 0) return;
-		if(active && !enabled) lowerShields();
-		if(enabled && hasIons()){
-			tank.drain(ION_DRAIN, true);
-			if(!active) raiseShields(); // removed check for enabled here
-		}else if(active) lowerShields(); // and here. Shouldn't break shit.
+		boolean shouldActivate = false; // TODO: this prevents the shield from activating on non-check ticks.
+		boolean shouldDeactivate = false;
+		
+		// Decide if the shield is to run or not
+		if((tile.getWorld().getTotalWorldTime() % 100) == 0){
+			if(enabled && hasIons()){
+				tank.drain(ION_DRAIN, true);
+				shouldActivate = true;
+			}else{
+				shouldDeactivate = true;
+			}
+		}
+		
+		// Lower or Raise shields based on state.
+		if(active && (!enabled || shouldDeactivate)){
+			System.out.println("Lowering Shields");
+			lowerShields();
+		}
+		if(enabled && !active && shouldActivate){
+			System.out.println("Raising Shields");
+			raiseShields();
+		}
 	}
 	
 	private boolean hasIons(){
@@ -194,10 +210,6 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	public void onRedstoneState(boolean powered) {
 		System.err.println("Enabled: " + powered);
 		this.enabled = powered;
-		if(enabled){
-			raiseShields();
-		}else{
-			lowerShields();
-		}
+		
 	}
 }
