@@ -40,11 +40,11 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	
 	@Override
 	public void tick() {
-		boolean shouldActivate = false; // TODO: this prevents the shield from activating on non-check ticks.
+		boolean shouldActivate = false;
 		boolean shouldDeactivate = false;
 		
-		if((tile.getWorld().getTotalWorldTime() % 100) == 0){
-			if(enabled && hasIons()){
+		if(enabled && (tile.getWorld().getTotalWorldTime() % 100) == 0){
+			if(hasIons()){
 				tank.drain(ION_DRAIN, true);
 				shouldActivate = true;
 			}else{
