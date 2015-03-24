@@ -40,19 +40,14 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	
 	@Override
 	public void tick() {
-		boolean shouldActivate = false;
-		boolean shouldDeactivate = false;
-		
 		if(enabled && (tile.getWorld().getTotalWorldTime() % 100) == 0){
 			if(hasIons()){
 				tank.drain(ION_DRAIN, true);
-				shouldActivate = true;
+				updateShields(true, false);
 			}else{
-				shouldDeactivate = true;
+				updateShields(false, true);
 			}
 		}
-		
-		updateShields(shouldActivate, shouldDeactivate);
 	}
 	
 	private void updateShields(boolean shouldActivate, boolean shouldDeactivate){
@@ -222,7 +217,6 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	@Override
 	public void onRedstoneState(boolean powered) {
 		if(redstone){
-			System.err.println("Enabled: " + powered);
 			this.enabled = powered;
 			updateShields(hasIons(), true);
 		}
