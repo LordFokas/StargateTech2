@@ -74,7 +74,7 @@ public final class Wormhole {
 			aabb = AxisAlignedBB.getBoundingBox(source.xCoord+0.375, source.yCoord+1, source.zCoord-1, source.xCoord+0.625, source.yCoord+4, source.zCoord+2);
 		}
 		Vec3Int position = new Vec3Int(destination.xCoord, destination.yCoord+1, destination.zCoord);
-		float yaw = (90 * destination.getBlockMetadata());
+		float yaw = (-90 * (destination.getBlockMetadata()-2));
 		List<Entity> entities = source.getWorldObj().getEntitiesWithinAABB(Entity.class, aabb);
 		for(Entity entity : entities){
 			if(entity.riddenByEntity == null){
