@@ -31,6 +31,22 @@ public class Teleporter{
 		teleport(worldTo, entity, position, yaw);
 	}
 	
+	private static void setEntityVelocity(Entity entity, float yaw){
+		int direction = (int) (-yaw/90f);
+		double force = Math.max(Math.abs(entity.motionX),Math.abs(entity.motionZ));
+		double mZ = 0;
+		double mX = 0;
+		
+		switch(direction){
+			case 0: mZ = force; break;
+			case 1: mX = force; break;
+			case 2: mZ = -force; break;
+			case 3: mX = -force; break;
+		}
+		
+		entity.setVelocity(mX, entity.motionY, mZ);
+	}
+	
 	private static Entity teleport(World world, Entity entity, double[] position, float yaw){
 		// If there is a mount, unmount, tp, and save for later.
 		Entity mount = entity.ridingEntity;
@@ -40,7 +56,7 @@ public class Teleporter{
 		}
 		// check if we're moving to a different world.
 		boolean differentWorld = entity.worldObj != world;
-		
+		setEntityVelocity(entity,yaw);
 		
 		//##################################################################################
 		entity.worldObj.updateEntityWithOptionalForce(entity, false);
