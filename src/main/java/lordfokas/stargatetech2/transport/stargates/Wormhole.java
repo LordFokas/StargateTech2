@@ -2,6 +2,7 @@ package lordfokas.stargatetech2.transport.stargates;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.LinkedList;
 import java.util.List;
 
 import lordfokas.stargatetech2.api.stargate.Address;
@@ -76,10 +77,14 @@ public final class Wormhole {
 		Vec3Int position = new Vec3Int(destination.xCoord, destination.yCoord+1, destination.zCoord);
 		float yaw = (-90 * (destination.getBlockMetadata()-2));
 		List<Entity> entities = source.getWorldObj().getEntitiesWithinAABB(Entity.class, aabb);
+		List<Entity> entitiesToTeleport = new LinkedList<Entity>();
 		for(Entity entity : entities){
 			if(entity.riddenByEntity == null){
-				Teleporter.teleport(source.getWorldObj(), entity, destination.getWorldObj(), position, yaw);
+				entitiesToTeleport.add(entity);
 			}
+		}
+		for(Entity entity : entitiesToTeleport){
+				Teleporter.teleport(source.getWorldObj(), entity, destination.getWorldObj(), position, yaw);
 		}
 	}
 	
