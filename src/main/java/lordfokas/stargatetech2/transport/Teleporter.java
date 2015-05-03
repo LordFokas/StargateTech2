@@ -43,8 +43,8 @@ public class Teleporter{
 			case 2: mZ = -force; break;
 			case 3: mX = -force; break;
 		}
-		
-		entity.setVelocity(mX, entity.motionY, mZ);
+		entity.motionX = mX;
+		entity.motionZ = mZ;
 	}
 	
 	private static Entity teleport(World world, Entity entity, double[] position, float yaw){
