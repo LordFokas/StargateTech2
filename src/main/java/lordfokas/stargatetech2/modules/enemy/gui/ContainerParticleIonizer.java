@@ -21,6 +21,7 @@ public class ContainerParticleIonizer extends BaseContainer {
 	private int lTicks = 0;
 	
 	public ContainerParticleIonizer(TileParticleIonizer ionizer, EntityPlayer player){
+		super();
 		this.ionizer = ionizer;
 		this.player = player;
 		for(int i = 0; i < 3; i++){

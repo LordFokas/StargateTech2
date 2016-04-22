@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 
 public class FakeInterfaces {
-	public static interface IFakeSyncBusDevice{
+	public interface IFakeSyncBusDevice{
 		public IBusInterface[] getInterfaces(int side);
 		public World getWorld();
 		public int getXCoord();
@@ -22,7 +22,7 @@ public class FakeInterfaces {
 		public short getAddress();
 	}
 	
-	public static interface IFakeFluidHandler{
+	public interface IFakeFluidHandler{
 		public int fill(ForgeDirection from, FluidStack resource, boolean doFill);
 		public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain);
 		public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain);
@@ -31,7 +31,7 @@ public class FakeInterfaces {
 		public FluidTankInfo[] getTankInfo(ForgeDirection from);
 	}
 	
-	public static interface IFakeSidedInventory{
+	public interface IFakeSidedInventory{
 		public int getSizeInventory();
 		public ItemStack getStackInSlot(int slot);
 		public ItemStack decrStackSize(int slot, int amount);
@@ -50,7 +50,7 @@ public class FakeInterfaces {
 		public boolean canExtractItem(int p_102008_1_, ItemStack stack, int p_102008_3_);
 	}
 	
-	public static interface IFakeEnergyHandler{
+	public interface IFakeEnergyHandler{
 		public boolean canConnectEnergy(ForgeDirection from);
 		public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate);
 		public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate);

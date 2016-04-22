@@ -5,10 +5,16 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import cofh.api.tileentity.IReconfigurableFacing;
+import cofh.api.tileentity.IReconfigurableSides;
+import cofh.api.tileentity.IRedstoneControl;
+import cofh.api.tileentity.ISidedTexture;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.packet.PacketMachineConfiguration;
 import lordfokas.stargatetech2.lib.packet.PacketMachineRedstone;
+import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeEnergyHandler;
 import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeFluidHandler;
+import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeSidedInventory;
 import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeSyncBusDevice;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
@@ -29,16 +35,14 @@ import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.Helper;
 import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
-import cofh.api.tileentity.IReconfigurableFacing;
-import cofh.api.tileentity.IReconfigurableSides;
-import cofh.api.tileentity.IRedstoneControl;
-import cofh.api.tileentity.ISidedTexture;
 
 /**
  * An advanced TileEntity. Supplies services like automatic rotation handling,
@@ -68,9 +72,11 @@ public class TileEntityMachine<C extends Client, S extends Server> extends BaseT
 implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar,
 IRedstoneControl,
 
-// fake interfaces so that the compiler helps us.
-IFakeFluidHandler, IFakeSyncBusDevice{
+// fake interfaces so that the compiler helps us. *************************************
+IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{    //**
+// ************************************************************************************	
 	
+	private static final int COMPONENT_KEYS = 100;
 	private static final Class[] INTERFACES = new Class[]{
 		IBusComponent.class, ICapacitorComponent.class, IInventoryComponent.class, ITankComponent.class
 	};
@@ -471,13 +477,13 @@ IFakeFluidHandler, IFakeSyncBusDevice{
 			ISyncedGUI.Flow sync = syncComponents.get(i);
 			int[] vals = sync.getKeyArray();
 			for(int val : vals){
-				keys.add((10 * i) + val);
+				keys.add((COMPONENT_KEYS * i) + val);
 			}
 		}
 		if(context instanceof ISyncedGUI.Source){
 			int[] vals = ((ISyncedGUI.Source)context).getKeyArray();
 			for(int val : vals){
-				keys.add((10 * i) + val);
+				keys.add((COMPONENT_KEYS * i) + val);
 			}
 		}
 		syncKeys = new int[keys.size()];
@@ -492,10 +498,10 @@ IFakeFluidHandler, IFakeSyncBusDevice{
 		return syncKeys;
 	}
 	
-	@Override // TODO: in the future maybe allow the context to have more than 10 keys.
+	@Override
 	public int getValue(int key) {
-		int component = key / 10;
-		int actualKey = key % 10;
+		int component = key / COMPONENT_KEYS;
+		int actualKey = key % COMPONENT_KEYS;
 		if(component < syncComponents.size()){
 			return syncComponents.get(component).getValue(actualKey);
 		}else{
@@ -503,10 +509,10 @@ IFakeFluidHandler, IFakeSyncBusDevice{
 		}
 	}
 	
-	@Override // TODO: in the future maybe allow the context to have more than 10 keys.
+	@Override
 	public void setValue(int key, int val) {
-		int component = key / 10;
-		int actualKey = key % 10;
+		int component = key / COMPONENT_KEYS;
+		int actualKey = key % COMPONENT_KEYS;
 		if(component < syncComponents.size()){
 			syncComponents.get(component).setValue(actualKey, val);
 		}else{
@@ -623,5 +629,133 @@ IFakeFluidHandler, IFakeSyncBusDevice{
 			}
 		}
 		return infos.toArray(new FluidTankInfo[]{});
+	}
+
+	// ##########################################################
+	// COMPONENT: ICapacitorComponent
+	// TODO: add access to components
+	
+	@Override
+	public boolean canConnectEnergy(ForgeDirection from) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getEnergyStored(ForgeDirection from) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getMaxEnergyStored(ForgeDirection from) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	// ##########################################################
+	// COMPONENT: IInventoryComponent
+	// TODO: Add access to inventories
+	
+	@Override
+	public int getSizeInventory() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ItemStack getStackInSlot(int slot) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ItemStack decrStackSize(int slot, int amount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ItemStack getStackInSlotOnClosing(int slot) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setInventorySlotContents(int slot, ItemStack stack) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getInventoryName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getInventoryStackLimit() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isUseableByPlayer(EntityPlayer player) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void openInventory() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeInventory() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isItemValidForSlot(int slot, ItemStack stack) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int[] getAccessibleSlotsFromSide(int side) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean canInsertItem(int p_102007_1_, ItemStack stack, int p_102007_3_) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canExtractItem(int p_102008_1_, ItemStack stack, int p_102008_3_) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
