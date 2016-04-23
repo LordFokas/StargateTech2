@@ -9,6 +9,7 @@ import cofh.api.tileentity.IReconfigurableFacing;
 import cofh.api.tileentity.IReconfigurableSides;
 import cofh.api.tileentity.IRedstoneControl;
 import cofh.api.tileentity.ISidedTexture;
+import gnu.trove.list.array.TIntArrayList;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.packet.PacketMachineConfiguration;
 import lordfokas.stargatetech2.lib.packet.PacketMachineRedstone;
@@ -633,7 +634,10 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 
 	// ##########################################################
 	// COMPONENT: ICapacitorComponent
-	// TODO: add access to components
+	
+	private ArrayList<ICapacitorComponent> getCapacitors(){
+		return (ArrayList<ICapacitorComponent>) sidedComponents.get(ICapacitorComponent.class);
+	}
 	
 	@Override
 	public boolean canConnectEnergy(ForgeDirection from) {
@@ -667,95 +671,124 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 
 	// ##########################################################
 	// COMPONENT: IInventoryComponent
-	// TODO: Add access to inventories
+	
+	private ArrayList<IInventoryComponent> getInventories(){
+		return (ArrayList<IInventoryComponent>) sidedComponents.get(IInventoryComponent.class);
+	}
+	
+	/** This is just a wrapper class to return 2 values
+	 *  at once while keeping efficiency */
+	private static final class InventoryData{
+		IInventoryComponent inventory;
+		int offset;
+	}
+	
+	private InventoryData find(int slot){
+		int slots = 0;
+		if(slot >= 0)
+			for(IInventoryComponent component : getInventories()){
+				if(slot < slots + component.getSlotCount()){
+					InventoryData data = new InventoryData();
+					data.inventory = component;
+					data.offset = slots;
+					return data;
+				}
+				slots += component.getSlotCount();
+			}
+		return null;
+	}
+	
+	private boolean isVisible(IInventoryComponent inv, int side){
+		ForgeDirection dir = ForgeDirection.getOrientation(side);
+		return inv.accessibleOnSide(dir)
+			|| inv.canOutputOnSide(dir)
+			|| inv.canInputOnSide(dir);
+	}
 	
 	@Override
 	public int getSizeInventory() {
-		// TODO Auto-generated method stub
-		return 0;
+		int slots = 0;
+		for(IInventoryComponent component : getInventories()){
+			slots += component.getSlotCount();
+		}
+		return slots;
 	}
-
+	
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		// TODO Auto-generated method stub
+		InventoryData data = find(slot);
+		if(data != null){
+			return data.inventory.getStackInSlot(slot - data.offset);
+		}
 		return null;
 	}
-
+	
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
-		// TODO Auto-generated method stub
+		InventoryData data = find(slot);
+		if(data != null){
+			return data.inventory.decrStackSize(slot - data.offset, amount);
+		}
 		return null;
 	}
-
-	@Override
-	public ItemStack getStackInSlotOnClosing(int slot) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
-		// TODO Auto-generated method stub
-		
+		InventoryData data = find(slot);
+		if(data != null){
+			data.inventory.getStackInSlot(slot - data.offset);
+		}
 	}
-
-	@Override
-	public String getInventoryName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int getInventoryStackLimit() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void openInventory() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void closeInventory() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
+	@Override public ItemStack getStackInSlotOnClosing(int slot){ return null; }
+	@Override public String getInventoryName(){ return null; }
+	@Override public boolean hasCustomInventoryName(){ return false; }
+	@Override public int getInventoryStackLimit(){ return 64; }
+	@Override public boolean isUseableByPlayer(EntityPlayer player) { return true; }
+	@Override public void openInventory(){}
+	@Override public void closeInventory(){}
+	
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		// TODO Auto-generated method stub
+		InventoryData data = find(slot);
+		if(data != null){
+			return data.inventory.isItemValidForSlot(slot - data.offset, stack);
+		}
 		return false;
 	}
-
+	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		// TODO Auto-generated method stub
-		return null;
+		TIntArrayList slots = new TIntArrayList();
+		int current = 0;
+		for(IInventoryComponent component : getInventories()){
+			if(isVisible(component, side)){
+				for(int s = 0; s < component.getSlotCount(); s++){
+					slots.add(current);
+					current++;
+				}
+			}else{
+				current += component.getSlotCount();
+			}
+		}
+		return slots.toArray();
 	}
-
+	
 	@Override
-	public boolean canInsertItem(int p_102007_1_, ItemStack stack, int p_102007_3_) {
-		// TODO Auto-generated method stub
+	public boolean canInsertItem(int slot, ItemStack stack, int side) {
+		InventoryData data = find(slot);
+		if(data != null){
+			return data.inventory.canInsertItem(slot - data.offset, stack, side);
+		}
 		return false;
 	}
-
+	
 	@Override
-	public boolean canExtractItem(int p_102008_1_, ItemStack stack, int p_102008_3_) {
-		// TODO Auto-generated method stub
+	public boolean canExtractItem(int slot, ItemStack stack, int side) {
+		InventoryData data = find(slot);
+		if(data != null){
+			return data.inventory.canExtractItem(slot - data.offset, stack, side);
+		}
 		return false;
 	}
 }

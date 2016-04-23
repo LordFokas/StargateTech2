@@ -9,7 +9,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 
-public class FakeInterfaces {
+public class FakeInterfaces{
 	public interface IFakeSyncBusDevice{
 		public IBusInterface[] getInterfaces(int side);
 		public World getWorld();
@@ -46,8 +46,8 @@ public class FakeInterfaces {
 		public void closeInventory();
 		public boolean isItemValidForSlot(int slot, ItemStack stack);
 		public int[] getAccessibleSlotsFromSide(int side);
-		public boolean canInsertItem(int p_102007_1_, ItemStack stack, int p_102007_3_);
-		public boolean canExtractItem(int p_102008_1_, ItemStack stack, int p_102008_3_);
+		public boolean canInsertItem(int slot, ItemStack stack, int side);
+		public boolean canExtractItem(int slot, ItemStack stack, int side);
 	}
 	
 	public interface IFakeEnergyHandler{

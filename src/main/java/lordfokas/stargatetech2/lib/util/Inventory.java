@@ -37,7 +37,7 @@ public class Inventory implements IInventory{
 		inventory = new ItemStack[size];
 		this.mode = mode;
 	}
-
+	
 	public NBTTagCompound writeToNBT(NBTTagCompound inventoryNBT){
 		for(int slot = 0; slot < inventory.length; slot++){
 			if(inventory[slot] != null){
@@ -61,12 +61,12 @@ public class Inventory implements IInventory{
 	public int getSizeInventory() {
 		return inventory.length;
 	}
-
+	
 	@Override
 	public ItemStack getStackInSlot(int slot) {
 		return inventory[slot];
 	}
-
+	
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
 		if(inventory[slot] != null){
@@ -85,13 +85,13 @@ public class Inventory implements IInventory{
 			return null;
 		}
 	}
-
+	
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
 		inventory[slot] = stack;
 	}
-
-	@Override // this one is for a future upgrade :)
+	
+	@Override // TODO: this one is for a future upgrade :)
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
 		return true;
 	}
@@ -114,7 +114,7 @@ public class Inventory implements IInventory{
 	public boolean canExtract(){
 		return mode.canExtract();
 	}
-
+	
 	@Override
 	public String getInventoryName() {
 		return "sgtech2.inventory";
