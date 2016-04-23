@@ -1,22 +1,23 @@
-bin/
-build/
-eclipse/
-out/
-run/
-.gradle/
-.settings/
-
-*.class
-*.bat
-
-# Package Files #
-*.war
-*.ear
-
+# eclipse
+bin
+*.launch
+.settings
+.metadata
 .classpath
 .project
 
-# Idea Stuff #
-*.iml
+# idea
+out
 *.ipr
 *.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+lcmd.bat
