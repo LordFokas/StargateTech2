@@ -4,7 +4,6 @@ import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.reference.ConfigReference;
 import lordfokas.stargatetech2.util.StargateLogger;
 import net.minecraftforge.common.config.Configuration;
-import cpw.mods.fml.common.Loader;
 
 public final class PluginProxy<Plugin extends IPlugin>{
 	private static final String PACKAGE = PluginProxy.class.getPackage().getName() + ".";
@@ -29,7 +28,7 @@ public final class PluginProxy<Plugin extends IPlugin>{
 		this.cfgKey = cfgKey;
 		this.cfg = StargateTech2.config.cfg;
 		this.enabled = cfg.get(cfgKey, ConfigReference.PLUGIN_ENABLE, true).getBoolean(true);
-		this.modPresent = Loader.isModLoaded(modID);
+		this.modPresent = false; // Loader.isModLoaded(modID);
 		this.main = PACKAGE + main;
 		if(fallback != null){
 			this.fallback = PACKAGE + fallback;

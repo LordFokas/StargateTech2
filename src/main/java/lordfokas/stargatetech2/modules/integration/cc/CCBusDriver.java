@@ -1,10 +1,7 @@
 package lordfokas.stargatetech2.modules.integration.cc;
 
-import lordfokas.stargatetech2.api.bus.BusPacket;
-import lordfokas.stargatetech2.api.bus.IBusDriver;
-
-public class CCBusDriver implements IBusDriver {
-	private TileBusAdapter busAdapter;
+public class CCBusDriver /* implements IBusDriver */{
+	/*private TileBusAdapter busAdapter;
 	private boolean isEnabled;
 	private short address;
 	
@@ -55,5 +52,5 @@ public class CCBusDriver implements IBusDriver {
 	@Override
 	public String getDescription() {
 		return "The Abstract Bus Adapter can be used by ComputerCraft computers to interact with the Abstract Bus.";
-	}
+	}*/
 }

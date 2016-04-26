@@ -25,7 +25,7 @@ public class ModuleIntegration implements IContentModule {
 	public static PluginProxy<PluginCC> cc;
 	
 	@Override
-	public void preInit(){
+	public void preInit(){ /*
 		waila	= new PluginProxy("Waila", ConfigReference.KEY_PLUGINS_WAILA, "waila.PluginWaila");
 		tico	= new PluginProxy("TConstruct", ConfigReference.KEY_PLUGINS_TICO, "tico.PluginTiCo");
 		te4		= new PluginProxy("ThermalExpansion", ConfigReference.KEY_PLUGINS_TE4, "te4.PluginTE4");
@@ -37,7 +37,7 @@ public class ModuleIntegration implements IContentModule {
 		proxies.add(tico);
 		proxies.add(te4);
 		proxies.add(ic2);
-		proxies.add(cc);
+		proxies.add(cc); */
 	}
 
 	@Override

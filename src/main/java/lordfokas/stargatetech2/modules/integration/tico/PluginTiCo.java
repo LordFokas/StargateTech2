@@ -1,20 +1,7 @@
 package lordfokas.stargatetech2.modules.integration.tico;
 
-import lordfokas.stargatetech2.modules.ModuleCore;
-import lordfokas.stargatetech2.modules.core.BlockNaquadah;
-import lordfokas.stargatetech2.modules.core.ItemNaquadah;
-import lordfokas.stargatetech2.modules.integration.IPlugin;
-import lordfokas.stargatetech2.util.Stacks;
-import lordfokas.stargatetech2.util.StargateLogger;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import tconstruct.library.TConstructRegistry;
-import tconstruct.library.crafting.LiquidCasting;
-import tconstruct.library.crafting.Smeltery;
-
-public class PluginTiCo implements IPlugin{
-	private static final int NUGGET = 16; // mB
+public class PluginTiCo /* implements IPlugin */{
+	/*private static final int NUGGET = 16; // mB
 	private static final int INGOT = NUGGET * 9; // 144 mB
 	private static final int BLOCK = INGOT * 9; // 1296 mB
 	
@@ -43,5 +30,5 @@ public class PluginTiCo implements IPlugin{
 		
 		LiquidCasting basinCasting = TConstructRegistry.getBasinCasting();
 		basinCasting.addCastingRecipe(Stacks.naqBlock, new FluidStack(MoltenNaquadah.instance, BLOCK), 50);
-	}
+	}*/
 }

@@ -1,14 +1,7 @@
 package lordfokas.stargatetech2.modules.integration.cc;
 
-import lordfokas.stargatetech2.modules.integration.IPlugin;
-import lordfokas.stargatetech2.reference.TileEntityReference;
-import lordfokas.stargatetech2.util.Stacks;
-import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.registry.GameRegistry;
-import dan200.computercraft.api.ComputerCraftAPI;
-
-public class PluginCC implements IPlugin{
-	public static BlockBusAdapter busAdapter;
+public class PluginCC /* implements IPlugin */{
+	/*public static BlockBusAdapter busAdapter;
 	
 	@Override
 	public void load() {
@@ -18,5 +11,5 @@ public class PluginCC implements IPlugin{
 		ComputerCraftAPI.registerPeripheralProvider(new CCPeripheralProvider());
 	}
 	
-	@Override public void postload(){}
+	@Override public void postload(){}*/
 }

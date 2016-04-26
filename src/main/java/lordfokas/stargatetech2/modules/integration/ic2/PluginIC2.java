@@ -1,16 +1,7 @@
 package lordfokas.stargatetech2.modules.integration.ic2;
 
-import ic2.api.item.IC2Items;
-import lordfokas.stargatetech2.modules.integration.IPlugin;
-import lordfokas.stargatetech2.util.api.ParticleIonizerRecipes;
-import lordfokas.stargatetech2.util.api.ParticleIonizerRecipes.IonizerRecipe;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-
-public class PluginIC2 implements IPlugin{
-	public static ItemStack scrap;
+public class PluginIC2 /* implements IPlugin*/ {
+	/*public static ItemStack scrap;
 	public static Fluid uuMatter;
 	
 	@Override public void load(){}
@@ -25,5 +16,5 @@ public class PluginIC2 implements IPlugin{
 		
 		ParticleIonizerRecipes.recipes().addRecipe(scrapRecipe);
 		ParticleIonizerRecipes.recipes().addRecipe(uuRecipe);
-	}
+	}*/
 }

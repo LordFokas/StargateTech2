@@ -1,16 +1,7 @@
 package lordfokas.stargatetech2.modules.integration.te4;
 
-import lordfokas.stargatetech2.modules.ModuleCore;
-import lordfokas.stargatetech2.modules.core.ItemNaquadah;
-import lordfokas.stargatetech2.modules.integration.IPlugin;
-import lordfokas.stargatetech2.util.Stacks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import cpw.mods.fml.common.event.FMLInterModComms;
-
-public class PluginTE4 implements IPlugin{
-	@Override
+public class PluginTE4 /* implements IPlugin */{
+	/*@Override
 	public void load() {
 		addPulverizerRecipe(4000, new ItemStack(ModuleCore.naquadahBlock), new ItemStack(ModuleCore.naquadahItem, 2, ItemNaquadah.DUST.ID));
 		addPulverizerRecipe(2400, new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.INGOT.ID), new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.DUST.ID));
@@ -72,5 +63,5 @@ public class PluginTE4 implements IPlugin{
 		}
 
 		FMLInterModComms.sendMessage("ThermalExpansion", "SmelterRecipe", toSend);
-	}
+	}*/
 }

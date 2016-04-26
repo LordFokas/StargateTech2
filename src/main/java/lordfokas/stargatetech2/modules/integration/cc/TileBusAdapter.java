@@ -1,27 +1,10 @@
 package lordfokas.stargatetech2.modules.integration.cc;
 
-import java.util.LinkedList;
-
 import lordfokas.stargatetech2.ZZ_THRASH.BaseTileEntity__OLD_AND_FLAWED;
-import lordfokas.stargatetech2.api.StargateTechAPI;
-import lordfokas.stargatetech2.api.bus.BusPacket;
-import lordfokas.stargatetech2.api.bus.BusPacketLIP;
-import lordfokas.stargatetech2.api.bus.BusPacketLIP.LIPMetadata;
-import lordfokas.stargatetech2.api.bus.BusPacketNetScan;
-import lordfokas.stargatetech2.api.bus.BusPacketNetScan.Device;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
-import lordfokas.stargatetech2.api.bus.IBusInterface;
-import lordfokas.stargatetech2.modules.automation.AddressHelper;
-import lordfokas.stargatetech2.reference.ModReference;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.lua.LuaException;
-import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IPeripheral;
 
-public class TileBusAdapter extends BaseTileEntity__OLD_AND_FLAWED implements IBusDevice, IPeripheral{
-	private LinkedList<BusPacket> outputQueue = new LinkedList();
+public class TileBusAdapter /* extends BaseTileEntity__OLD_AND_FLAWED implements IBusDevice, IPeripheral */{
+	/*private LinkedList<BusPacket> outputQueue = new LinkedList();
 	private LinkedList<BusPacketLIP> received = new LinkedList();
 	private CCBusDriver networkDriver = new CCBusDriver(this);
 	private IBusInterface[] interfaces = new IBusInterface[]{
@@ -238,5 +221,5 @@ public class TileBusAdapter extends BaseTileEntity__OLD_AND_FLAWED implements IB
 	public boolean equals(IPeripheral other) {
 		
 		return other==this;
-	}
+	}*/
 }

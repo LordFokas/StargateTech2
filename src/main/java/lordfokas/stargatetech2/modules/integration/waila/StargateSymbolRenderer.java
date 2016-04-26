@@ -1,22 +1,8 @@
 package lordfokas.stargatetech2.modules.integration.waila;
 
-import java.awt.Dimension;
-
-import lordfokas.stargatetech2.api.stargate.Address;
-import lordfokas.stargatetech2.api.stargate.ITileStargate;
-import lordfokas.stargatetech2.lib.render.Color;
-import lordfokas.stargatetech2.modules.transport.stargates.SymbolCoordinates;
-import lordfokas.stargatetech2.reference.TextureReference;
-import mcp.mobius.waila.api.IWailaCommonAccessor;
-import mcp.mobius.waila.api.IWailaTooltipRenderer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.tileentity.TileEntity;
-
-import org.lwjgl.opengl.GL11;
-
-public class StargateSymbolRenderer implements IWailaTooltipRenderer{
+public class StargateSymbolRenderer /* implements IWailaTooltipRenderer */{
 	
-	@Override
+	/*@Override
 	public Dimension getSize(String[] params, IWailaCommonAccessor accessor) {
 		return new Dimension(144, 18);
 	}
@@ -48,5 +34,5 @@ public class StargateSymbolRenderer implements IWailaTooltipRenderer{
 			GL11.glEnd();
 		}
 		GL11.glPopMatrix();
-	}
+	}*/
 }

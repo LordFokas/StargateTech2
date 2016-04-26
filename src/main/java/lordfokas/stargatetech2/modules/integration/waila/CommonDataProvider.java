@@ -1,20 +1,7 @@
 package lordfokas.stargatetech2.modules.integration.waila;
 
-import java.util.List;
-
-import lordfokas.stargatetech2.api.bus.IBusDevice;
-import lordfokas.stargatetech2.api.bus.IBusInterface;
-import lordfokas.stargatetech2.modules.automation.AddressHelper;
-import lordfokas.stargatetech2.modules.automation.BusInterface;
-import lordfokas.stargatetech2.util.Helper;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import cofh.api.energy.IEnergyHandler;
-
-public class CommonDataProvider extends Provider.Body{
-	@Override
+public class CommonDataProvider /* extends Provider.Body */{
+	/*@Override
 	public void addToBody(ItemStack stack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler configHandler){
 		TileEntity te = accessor.getTileEntity();
 		
@@ -40,5 +27,5 @@ public class CommonDataProvider extends Provider.Body{
 			int max = energyHandler.getMaxEnergyStored(null);
 			list.add(Helper.prettyNumber(curr) + " / " + Helper.prettyNumber(max) + " RF");
 		}
-	}
+	}*/
 }

@@ -1,18 +1,8 @@
 package lordfokas.stargatetech2.modules.integration.cc;
 
-import lordfokas.stargatetech2.ZZ_THRASH.BaseBlockContainer__OLD_AND_FLAWED;
-import lordfokas.stargatetech2.ZZ_THRASH.BaseTileEntity__OLD_AND_FLAWED;
-import lordfokas.stargatetech2.reference.BlockReference;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import buildcraft.api.tools.IToolWrench;
-
-public class BlockBusAdapter extends BaseBlockContainer__OLD_AND_FLAWED {
+public class BlockBusAdapter /*extends BaseBlockContainer__OLD_AND_FLAWED*/ {
 	
-	public BlockBusAdapter() {
+	/*public BlockBusAdapter() {
 		super(BlockReference.BUS_ADAPTER);
 		setIsAbstractBusBlock();
 	}
@@ -36,5 +26,5 @@ public class BlockBusAdapter extends BaseBlockContainer__OLD_AND_FLAWED {
 			}
 		}
 		return false;
-	}
+	}*/
 }
