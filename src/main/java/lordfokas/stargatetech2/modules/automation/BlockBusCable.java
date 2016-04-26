@@ -1,28 +1,19 @@
 package lordfokas.stargatetech2.modules.automation;
 
-import java.util.List;
-
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.block.BaseBlock;
 import lordfokas.stargatetech2.reference.BlockReference;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import buildcraft.api.tools.IToolWrench;
 
 public class BlockBusCable extends BaseBlock {
 	
 	public BlockBusCable() {
 		super(BlockReference.BUS_CABLE, true, false);
-		setRenderer(RenderBusCable.instance());
+		// setRenderer(RenderBusCable.instance());
 		setIsAbstractBusBlock();
 		setLightOpacity(0);
 	}
@@ -32,14 +23,16 @@ public class BlockBusCable extends BaseBlock {
 		return false;
 	}
 	
-	@Override
+	/*@Override
 	public boolean renderAsNormalBlock(){
 		return false;
-	}
+	}*/
 	
-	public Connection getBusConnection(IBlockAccess world, int x, int y, int z, ForgeDirection d){
-		if(world.getBlock(x + d.offsetX, y + d.offsetY, z + d.offsetZ) == this) return Connection.CABLE;
-		TileEntity te = world.getTileEntity(x + d.offsetX, y + d.offsetY, z + d.offsetZ);
+	// FIXME maybe switch position to BlockPos ?
+	public Connection getBusConnection(World world, int x, int y, int z, EnumFacing d){
+		BlockPos pos = new BlockPos(x + d.getFrontOffsetX(), y + d.getFrontOffsetY(), z + d.getFrontOffsetZ());
+		if(world.getBlockState(pos).getBlock() == this) return Connection.CABLE;
+		TileEntity te = world.getTileEntity(pos);
 		if(te instanceof IBusDevice){
 			IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(d.getOpposite().ordinal());
 			if(interfaces == null || interfaces.length == 0) return Connection.DISCONNECTED;
@@ -52,7 +45,7 @@ public class BlockBusCable extends BaseBlock {
 		return Connection.DISCONNECTED;
 	}
 	
-	@Override
+	/*@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int s, float hx, float hy, float hz){
 		ItemStack stack = p.inventory.getCurrentItem();
 		Item item = stack != null ? stack.getItem() : null;
@@ -66,14 +59,14 @@ public class BlockBusCable extends BaseBlock {
 			}
 		}
 		return false;
-	}
+	}*/
 	
-	@Override
+	@Override // FIXME why is this still a thing?
 	public void setBlockBoundsForItemRender(){
 		this.setBlockBounds(0.3125F, 0F, 0.3125F, 0.6875F, 1F, 0.6875F);
 	}
 	
-	@Override
+	/*@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){
 		float x0 = getBusConnection(world, x, y, z, ForgeDirection.WEST ).isConnected() ? 0 : 0.3125F;
 		float x1 = getBusConnection(world, x, y, z, ForgeDirection.EAST ).isConnected() ? 1 : 0.6875F;
@@ -82,11 +75,11 @@ public class BlockBusCable extends BaseBlock {
 		float z0 = getBusConnection(world, x, y, z, ForgeDirection.NORTH).isConnected() ? 0 : 0.3125F;
 		float z1 = getBusConnection(world, x, y, z, ForgeDirection.SOUTH).isConnected() ? 1 : 0.6875F;
 		setBlockBounds(x0, y0, z0, x1, y1, z1);
-	}
+	}*/
 	
-	@Override
+	/*@Override
 	public void addCollisionBoxesToList(World w, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity){
 		this.setBlockBoundsBasedOnState(w, x, y, z);
 		super.addCollisionBoxesToList(w, x, y, z, aabb, list, entity);
-	}
+	}*/
 }

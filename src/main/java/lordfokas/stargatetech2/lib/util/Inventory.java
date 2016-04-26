@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IChatComponent;
 
 /**
  * A basic Inventory implementation. It respects IInventory's
@@ -68,6 +69,14 @@ public class Inventory implements IInventory{
 	}
 	
 	@Override
+	public ItemStack removeStackFromSlot(int index){
+		if(!canExtract()) return null;
+		ItemStack stack = inventory[index];
+		inventory[index] = null;
+		return stack;
+	}
+	
+	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
 		if(inventory[slot] != null){
 			ItemStack stack;
@@ -96,17 +105,6 @@ public class Inventory implements IInventory{
 		return true;
 	}
 	
-	// #######################################################################################
-	// These don't really matter...
-	@Override public boolean isUseableByPlayer(EntityPlayer entityplayer) { return false; }
-	@Override public ItemStack getStackInSlotOnClosing(int slot){ return null; }
-	@Override public int getInventoryStackLimit(){ return 64; }
-	@Override public boolean hasCustomInventoryName(){ return false; }
-	@Override public void markDirty(){}
-	@Override public void openInventory(){}
-	@Override public void closeInventory(){}
-	// #######################################################################################
-	
 	public boolean canInsert(){
 		return mode.canReceive();
 	}
@@ -115,8 +113,21 @@ public class Inventory implements IInventory{
 		return mode.canExtract();
 	}
 	
-	@Override
-	public String getInventoryName() {
-		return "sgtech2.inventory";
-	}
+	// #######################################################################################
+	// These don't really matter...
+	
+	@Override public boolean isUseableByPlayer(EntityPlayer entityplayer) { return false; }
+	@Override public int getInventoryStackLimit(){ return 64; }
+	@Override public void markDirty(){}
+	@Override public String getName() { return "sgtech2.inventory"; }
+	@Override public boolean hasCustomName(){ return false; }
+	@Override public IChatComponent getDisplayName(){ return null; }
+	@Override public void openInventory(EntityPlayer player){}
+	@Override public void closeInventory(EntityPlayer player){}
+
+	// XXX: WTF are these, even?
+	@Override public int getField(int id){ return 0; }
+	@Override public void setField(int id, int value){}
+	@Override public int getFieldCount(){ return 0; }
+	@Override public void clear(){}
 }

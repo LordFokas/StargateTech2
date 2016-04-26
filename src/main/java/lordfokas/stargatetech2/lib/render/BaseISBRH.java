@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
+@Deprecated
 public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 	protected static final float F01 = 0.0625F;
 	protected static final float F02 = F01 *  2F;

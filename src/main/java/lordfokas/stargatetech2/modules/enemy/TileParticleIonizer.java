@@ -1,28 +1,7 @@
 package lordfokas.stargatetech2.modules.enemy;
 
-import java.util.LinkedList;
-
-import lordfokas.stargatetech2.ZZ_THRASH.TileMachine__THRASH;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import lordfokas.stargatetech2.lib.util.Inventory;
-import lordfokas.stargatetech2.modules.ModuleEnemy;
-import lordfokas.stargatetech2.util.api.ParticleIonizerRecipes;
-import lordfokas.stargatetech2.util.api.ParticleIonizerRecipes.IonizerRecipe;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyHandler;
-
-public class TileParticleIonizer extends TileMachine__THRASH implements IFluidHandler, IEnergyHandler, ISidedInventory{
-	public final FluidTank ionizedParticles = new FluidTank(8000);		// orange
+public class TileParticleIonizer /*extends TileMachine__THRASH implements IFluidHandler, IEnergyHandler, ISidedInventory*/{
+	/*public final FluidTank ionizedParticles = new FluidTank(8000);		// orange
 	public final FluidTank fluidIonizable = new FluidTank(8000);		// blue
 	public final Inventory solidIonizable = new Inventory(9);			// blue
 	public final EnergyStorage energy = new EnergyStorage(32000, 400);
@@ -308,5 +287,5 @@ public class TileParticleIonizer extends TileMachine__THRASH implements IFluidHa
 	@Override public String getInventoryName(){ return "Particle Ionizer"; }
 	@Override public boolean hasCustomInventoryName(){ return false; }
 	@Override public void openInventory(){}
-	@Override public void closeInventory(){}
+	@Override public void closeInventory(){}*/
 }

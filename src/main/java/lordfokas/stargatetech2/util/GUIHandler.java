@@ -26,8 +26,8 @@ public class GUIHandler implements IGuiHandler {
 					container = new BaseContainer((TileShieldController)te);
 				break;
 			case PARTICLE_IONIZER:
-				if(te instanceof TileParticleIonizer)
-					container = new ContainerParticleIonizer((TileParticleIonizer)te, player);
+				/*if(te instanceof TileParticleIonizer) // FIXME: re-enable later
+					container = new ContainerParticleIonizer((TileParticleIonizer)te, player);*/
 				break;
 			default: break;
 		}

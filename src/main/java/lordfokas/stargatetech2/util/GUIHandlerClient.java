@@ -23,8 +23,8 @@ public class GUIHandlerClient extends GUIHandler {
 					gui = new GUIShieldController(new BaseContainer((TileShieldController)te));
 				break;
 			case PARTICLE_IONIZER:
-				if(te instanceof TileParticleIonizer)
-					gui = new GUIParticleIonizer(new ContainerParticleIonizer((TileParticleIonizer)te, player));
+				/*if(te instanceof TileParticleIonizer) // FIXME re-enable when fixed
+					gui = new GUIParticleIonizer(new ContainerParticleIonizer((TileParticleIonizer)te, player));*/
 				break;
 			default: break;
 		}
