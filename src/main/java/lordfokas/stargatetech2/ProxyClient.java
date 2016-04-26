@@ -36,10 +36,10 @@ public class ProxyClient implements ISidedProxy{
 				break;
 			case INTEGRATION:
 				break;
-			case TRANSPORT:
-				ClientRegistry.bindTileEntitySpecialRenderer(TileBeaconMatterGrid.class, new RenderBeaconMatterGrid());
-				ClientRegistry.bindTileEntitySpecialRenderer(TileTransportRing.class, new RenderTransportRing());
-				ClientRegistry.bindTileEntitySpecialRenderer(TileStargate.class, new RenderStargateTile());
+			case TRANSPORT: // FIXME whatever is wrong with these generics
+				//ClientRegistry.bindTileEntitySpecialRenderer(TileBeaconMatterGrid.class, new RenderBeaconMatterGrid());
+				//ClientRegistry.bindTileEntitySpecialRenderer(TileTransportRing.class, new RenderTransportRing());
+				//ClientRegistry.bindTileEntitySpecialRenderer(TileStargate.class, new RenderStargateTile());
 				break;
 			case WORLD:
 				break;

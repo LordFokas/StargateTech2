@@ -1,11 +1,8 @@
 package lordfokas.stargatetech2.lib.gui;
 
-import cofh.lib.gui.element.ElementListBox;
-import cofh.lib.gui.element.listbox.ListBoxElementText;
+public class ListBoxText /*extends ListBoxElementText*/{
 
-public class ListBoxText extends ListBoxElementText{
-
-	public ListBoxText(String value) {
+	/*public ListBoxText(String value) {
 		super(value);
 	}
 	
@@ -15,5 +12,5 @@ public class ListBoxText extends ListBoxElementText{
 		int py = y - 1;
 		parent.drawModalRect(px, py, px + parent.getContentWidth() + 2, py + this.getHeight(), line);
 		super.draw(parent, x, y, line, color);
-	}
+	}*/
 }

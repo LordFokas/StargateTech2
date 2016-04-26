@@ -1,17 +1,16 @@
 package lordfokas.stargatetech2.api.bus;
 
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class BusEvent extends Event{
 	public final World world;
-	public final int x, y, z;
+	public final BlockPos pos;
 	
-	protected BusEvent(World world, int x, int y, int z){
+	protected BusEvent(World world, BlockPos pos){
 		this.world = world;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.pos = pos;
 	}
 	
 	/**
@@ -21,8 +20,8 @@ public class BusEvent extends Event{
 	 * @author LordFokas
 	 */
 	public static final class AddToNetwork extends BusEvent{
-		public AddToNetwork(World world, int x, int y, int z) {
-			super(world, x, y, z);
+		public AddToNetwork(World world, BlockPos pos) {
+			super(world, pos);
 		}
 	}
 	
@@ -33,8 +32,8 @@ public class BusEvent extends Event{
 	 * @author LordFokas
 	 */
 	public static final class RemoveFromNetwork extends BusEvent{
-		public RemoveFromNetwork(World world, int x, int y, int z) {
-			super(world, x, y, z);
+		public RemoveFromNetwork(World world, BlockPos pos) {
+			super(world, pos);
 		}
 	}
 }

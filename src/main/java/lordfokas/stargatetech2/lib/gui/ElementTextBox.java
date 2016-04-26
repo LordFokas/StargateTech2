@@ -1,10 +1,7 @@
 package lordfokas.stargatetech2.lib.gui;
 
-import net.minecraft.client.gui.FontRenderer;
-import cofh.lib.gui.element.ElementBase;
-
-public class ElementTextBox extends ElementBase{
-	public int backgroundColor = 0xFF000000;
+public class ElementTextBox /*extends ElementBase*/{
+	/*public int backgroundColor = 0xFF000000;
 	public int borderColor = 0xFF808080;
 	public int textColor = 0xFFFFFF;
 	
@@ -90,5 +87,5 @@ public class ElementTextBox extends ElementBase{
 			return true;
 		}
 		return false;
-	}
+	}*/
 }

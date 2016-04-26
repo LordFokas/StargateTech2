@@ -1,10 +1,7 @@
 package lordfokas.stargatetech2.lib.gui;
 
-import cofh.lib.gui.GuiBase;
-import cofh.lib.gui.element.listbox.IListBoxElement;
-
-public class ElementListBox extends cofh.lib.gui.element.ElementListBox{
-	public ElementListBox(GuiBase arg0, int arg1, int arg2, int arg3, int arg4) {
+public class ElementListBox /*extends cofh.lib.gui.element.ElementListBox*/{
+	/*public ElementListBox(GuiBase arg0, int arg1, int arg2, int arg3, int arg4) {
 		super(arg0, arg1, arg2, arg3, arg4);
 	}
 	
@@ -14,5 +11,5 @@ public class ElementListBox extends cofh.lib.gui.element.ElementListBox{
 		}
 	}
 
-	@Override protected void onSelectionChanged(int arg0, IListBoxElement arg1){}
+	@Override protected void onSelectionChanged(int arg0, IListBoxElement arg1){}*/
 }

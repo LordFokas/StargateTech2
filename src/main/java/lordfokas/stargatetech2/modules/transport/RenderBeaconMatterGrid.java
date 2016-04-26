@@ -3,6 +3,8 @@ package lordfokas.stargatetech2.modules.transport;
 import java.nio.FloatBuffer;
 import java.util.Random;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GLAllocation;
@@ -11,8 +13,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.opengl.GL11;
-
 public class RenderBeaconMatterGrid extends TileEntitySpecialRenderer{
 	private static final ResourceLocation ender_sky = new ResourceLocation("textures/environment/end_sky.png");
     private static final ResourceLocation end_portal = new ResourceLocation("textures/entity/end_portal.png");
@@ -20,7 +20,7 @@ public class RenderBeaconMatterGrid extends TileEntitySpecialRenderer{
     private FloatBuffer buffer = GLAllocation.createDirectFloatBuffer(16);
 	
 	@Override
-	public final void renderTileEntityAt(TileEntity te, double x, double y, double z, float f){
+	public final void renderTileEntityAt(TileEntity te, double x, double y, double z, float f, int s){
 		float tl_x = (float)this.field_147501_a.field_147560_j;
         float tl_y = (float)this.field_147501_a.field_147561_k;
         float tl_z = (float)this.field_147501_a.field_147558_l;

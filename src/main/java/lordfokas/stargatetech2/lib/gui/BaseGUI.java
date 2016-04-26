@@ -1,16 +1,9 @@
 package lordfokas.stargatetech2.lib.gui;
 
-import lordfokas.stargatetech2.reference.TextureReference;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.opengl.GL11;
-
-import cofh.core.gui.GuiBaseAdv;
-import cofh.lib.gui.element.ElementBase;
-import cofh.lib.gui.element.ElementButton;
-
-public class BaseGUI extends GuiBaseAdv{
+public class BaseGUI /*extends GuiBaseAdv*/{
 	private static final int BORDER_THICK = 9;
 	private static final int BORDER_WIDE = 25;
 	private static final int BORDER_RES = 4;
@@ -19,14 +12,14 @@ public class BaseGUI extends GuiBaseAdv{
 	protected String title;
 	
 	public BaseGUI(Container container, int x, int y, ResourceLocation background) {
-		super(container, background);
+		/*super(container, background);
 		drawInventory = false;
 		drawTitle = false;
 		xSize = x + 8;
-		ySize = y + 8;
+		ySize = y + 8;*/
 	}
 	
-	@Override
+	/*@Override
 	protected void drawGuiContainerBackgroundLayer(float arg0, int arg1, int arg2) {
 		super.drawGuiContainerBackgroundLayer(arg0, arg1, arg2);
 		GL11.glColor3f(1, 1, 1);
@@ -54,10 +47,10 @@ public class BaseGUI extends GuiBaseAdv{
 	protected void drawGuiContainerForegroundLayer(int arg0, int arg1) {
 		super.drawGuiContainerForegroundLayer(arg0, arg1);
 		this.drawString(fontRendererObj, title, 8, 8, 0xFFFFFF);
-	}
+	}*/
 	
 	public void triggerElementButtonClick(String button, int mouse) {
-		for(ElementBase element : elements){
+		/*for(ElementBase element : elements){
 			if(element instanceof ElementButton){
 				String action = ((ElementButton)element).getName();
 				if(button.equals(action)){
@@ -65,10 +58,10 @@ public class BaseGUI extends GuiBaseAdv{
 					return;
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void playTonedClick(boolean positive){
-		playSound("random.click", 1F, positive ? 0.8F : 0.6F);
+		//playSound("random.click", 1F, positive ? 0.8F : 0.6F);
 	}
 }

@@ -1,23 +1,7 @@
 package lordfokas.stargatetech2.lib.gui;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import lordfokas.stargatetech2.modules.automation.AddressHelper;
-import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
-import lordfokas.stargatetech2.modules.automation.PacketUpdateBusAddress;
-import lordfokas.stargatetech2.modules.automation.PacketUpdateBusEnabled;
-import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.Stacks;
-
-import org.lwjgl.opengl.GL11;
-
-import cofh.lib.gui.element.ElementBase;
-import cofh.lib.gui.element.TabBase;
-import cofh.lib.render.RenderHelper;
-
-public class TabAbstractBus extends TabBase{
-	private ISyncBusDevice device;
+public class TabAbstractBus /*extends TabBase*/{
+	/*private ISyncBusDevice device;
 	private LinkedList<ClickHandler> handlers;
 	private int selx, sely, togx, togy;
 	
@@ -178,5 +162,5 @@ public class TabAbstractBus extends TabBase{
 		public void run() {
 			handleBit(bit);
 		}
-	}
+	}*/
 }

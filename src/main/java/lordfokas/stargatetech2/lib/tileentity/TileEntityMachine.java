@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import cofh.api.tileentity.IReconfigurableFacing;
 import cofh.api.tileentity.IReconfigurableSides;
 import cofh.api.tileentity.IRedstoneControl;
-import cofh.api.tileentity.ISidedTexture;
 import gnu.trove.list.array.TIntArrayList;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.packet.PacketMachineConfiguration;
@@ -39,8 +38,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.Axis;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -70,7 +69,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
  * @author LordFokas
  */
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
-implements IReconfigurableSides, IReconfigurableFacing, ISidedTexture, IFacingProvider, IComponentRegistrar,
+implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, IComponentRegistrar,
 IRedstoneControl,
 
 // fake interfaces so that the compiler helps us. *************************************
@@ -85,7 +84,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	private boolean isComponentRegistrationAllowed = false;
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
 	private Face[] faceMap = new Face[6];
-	private ForgeDirection facing;
+	private EnumFacing facing;
 	private ControlMode redstoneControl = ControlMode.DISABLED;
 	private boolean redstonePower = false;
 	private IRedstoneAware rsContext;
@@ -97,9 +96,9 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	
 	public TileEntityMachine(Class<? extends C> client, Class<? extends S> server, FaceColor ... colors) {
 		super(client, server);
-		facing = ForgeDirection.SOUTH;
-		setMap(ForgeDirection.UP, Face.TOP);
-		setMap(ForgeDirection.DOWN, Face.BOTTOM);
+		facing = EnumFacing.SOUTH;
+		setMap(EnumFacing.UP, Face.TOP);
+		setMap(EnumFacing.DOWN, Face.BOTTOM);
 		remapSides(false); // don't update the clients; we may even be on the client side!
 		for(Face face : faceMap){
 			faces.put(face, new FaceWrapper(colors));
@@ -186,14 +185,14 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 		setMap(facing, Face.FRONT);
 		setMap(facing.getOpposite(), Face.BACK);
 		
-		ForgeDirection left = facing.getRotation(ForgeDirection.UP); // rotate on Y axis
+		EnumFacing left = facing.rotateAround(Axis.Y); // rotate on Y axis
 		setMap(left, Face.LEFT);
 		setMap(left.getOpposite(), Face.RIGHT);
 		
 		if(update) super.updateClients();
 	}
 	
-	private void setMap(ForgeDirection dir, Face face){
+	private void setMap(EnumFacing dir, Face face){
 		faceMap[dir.ordinal()] = face;
 	}
 	
@@ -528,7 +527,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 		return (ArrayList<IBusComponent>) sidedComponents.get(IBusComponent.class);
 	}
 	
-	@Override
+	/*@Override
 	public IBusInterface[] getInterfaces(int side) {
 		LinkedList<IBusInterface> interfaces = new LinkedList();
 		ForgeDirection dir = ForgeDirection.getOrientation(side);
@@ -571,7 +570,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	@Override
 	public short getAddress() {
 		return getInterfaces().get(0).getAddress();
-	}
+	}*/
 	
 	// ##########################################################
 	// COMPONENT: ITankComponent
@@ -580,7 +579,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 		return (ArrayList<ITankComponent>) sidedComponents.get(ITankComponent.class);
 	}
 	
-	@Override
+	/*@Override
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 		for(ITankComponent tank : getTanks()){
 			if(tank.canInputOnSide(from) && tank.canFill(resource.getFluid())){
@@ -630,7 +629,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 			}
 		}
 		return infos.toArray(new FluidTankInfo[]{});
-	}
+	}*/
 
 	// ##########################################################
 	// COMPONENT: ICapacitorComponent
@@ -639,7 +638,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 		return (ArrayList<ICapacitorComponent>) sidedComponents.get(ICapacitorComponent.class);
 	}
 	
-	@Override
+	/*@Override
 	public boolean canConnectEnergy(ForgeDirection from) {
 		// TODO Auto-generated method stub
 		return false;
@@ -667,7 +666,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	public int getMaxEnergyStored(ForgeDirection from) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}*/
 
 	// ##########################################################
 	// COMPONENT: IInventoryComponent
@@ -678,7 +677,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	
 	/** This is just a wrapper class to return 2 values
 	 *  at once while keeping efficiency */
-	private static final class InventoryData{
+	/*private static final class InventoryData{
 		IInventoryComponent inventory;
 		int offset;
 	}
@@ -790,5 +789,5 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 			return data.inventory.canExtractItem(slot - data.offset, stack, side);
 		}
 		return false;
-	}
+	}*/
 }

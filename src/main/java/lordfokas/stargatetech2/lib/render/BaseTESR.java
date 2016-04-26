@@ -31,7 +31,7 @@ public abstract class BaseTESR extends TileEntitySpecialRenderer {
 			// rendering starts before the world fully loads.
 			block = ModuleCore.naquadahBlock;
 		}
-		tessellator = Tessellator.instance;
+		tessellator = Tessellator.getInstance();
 		GL11.glPushMatrix();
 		GL11.glTranslated(x+0.5D, y, z+0.5D);
 		GL11.glColor3f(1, 1, 1);

@@ -1,17 +1,7 @@
 package lordfokas.stargatetech2.lib.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.item.ItemStack;
-
-import org.lwjgl.opengl.GL11;
-
-import cofh.lib.gui.element.ElementBase;
-import cofh.lib.gui.element.TabBase;
-
-public abstract class BaseTab extends TabBase{
-	protected static final int LMB = 0, RMB = 1, MMB = 2;
+public abstract class BaseTab /*extends TabBase*/{
+	/*protected static final int LMB = 0, RMB = 1, MMB = 2;
 	private static final int SHADOW = 0x30 << 24;
 	private ArrayList<ClickHandler> handlers;
 	protected int baseX, baseY;
@@ -117,5 +107,5 @@ public abstract class BaseTab extends TabBase{
 	
 	public final void addHandler(ClickHandler handler){
 		handlers.add(handler);
-	}
+	}*/
 }

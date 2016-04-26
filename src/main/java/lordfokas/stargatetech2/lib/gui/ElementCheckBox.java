@@ -1,13 +1,7 @@
 package lordfokas.stargatetech2.lib.gui;
 
-import org.lwjgl.opengl.GL11;
-
-import cofh.lib.gui.GuiBase;
-import cofh.lib.gui.element.ElementButton;
-import cofh.lib.render.RenderHelper;
-
-public class ElementCheckBox extends ElementButton{
-	private boolean isChecked = false;
+public class ElementCheckBox /*extends ElementButton*/{
+	/*private boolean isChecked = false;
 	private boolean autoCheck = false;
 	private int stringWidth = 0;
 	private String label = "";
@@ -71,5 +65,5 @@ public class ElementCheckBox extends ElementButton{
 	
 	public boolean isChecked(){
 		return this.isChecked;
-	}
+	}*/
 }

@@ -1,26 +1,21 @@
 package lordfokas.stargatetech2.lib.block;
 
 import lordfokas.stargatetech2.api.bus.BusEvent;
-import lordfokas.stargatetech2.lib.util.NoDefaultTexture;
-import lordfokas.stargatetech2.reference.ModReference;
 import lordfokas.stargatetech2.util.MaterialNaquadah;
 import lordfokas.stargatetech2.util.StargateTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BaseBlock extends Block{
-	private ISimpleBlockRenderingHandler renderer;
-	private boolean noRender = false;
-	protected IIcon[] iconOverride;
-	protected boolean isOverride = false;
+	private BlockRenderType renderType = BlockRenderType.STANDARD;
 	private boolean isAbstractBus = false;
 	private String unlocalized;
 	
@@ -35,7 +30,6 @@ public class BaseBlock extends Block{
 	public BaseBlock(String uName, boolean breakable, Material material){
 		super(material);
 		unlocalized = uName;
-		setBlockTextureName(ModReference.MOD_ID + ":" + (getClass().getAnnotation(NoDefaultTexture.class) == null ? uName : "dummy"));
 		if(!breakable){
 			setBlockUnbreakable();
 			setResistance(20000000F);
@@ -44,20 +38,13 @@ public class BaseBlock extends Block{
 		registerBlock();
 	}
 	
-	public final void setRenderer(ISimpleBlockRenderingHandler renderer){
-		if(renderer != null) this.renderer = renderer;
-		else noRender = true;
+	public final void setRenderType(BlockRenderType renderType){
+		this.renderType = renderType;
 	}
 	
 	@Override
 	public final int getRenderType() {
-		if(noRender){
-			return -1;
-		}else if(renderer != null){
-			return renderer.getRenderId();
-		}else{
-			return super.getRenderType();
-		}
+		return renderType.value;
 	}
 	
 	// MEH
@@ -79,47 +66,25 @@ public class BaseBlock extends Block{
 		GameRegistry.registerBlock(this, getUnlocalizedName());
 	}
 	
-	public void setOverride(IIcon[] icons){
-		iconOverride = icons;
-		isOverride = true;
-	}
-	
-	public void restoreTextures(){
-		isOverride = false;
+	@Override
+	public void onBlockAdded(World w, BlockPos pos, IBlockState state) {
+		super.onBlockAdded(w, pos, state);
+		if(isAbstractBus) MinecraftForge.EVENT_BUS.post(new BusEvent.AddToNetwork(w, pos));
 	}
 	
 	@Override
-	public void onBlockAdded(World w, int x, int y, int z){
-		super.onBlockAdded(w, x, y, z);
-		if(isAbstractBus) MinecraftForge.EVENT_BUS.post(new BusEvent.AddToNetwork(w, x, y, z));
+	public void breakBlock(World w, BlockPos pos, IBlockState state) {
+		super.breakBlock(w, pos, state);
+		if(isAbstractBus) MinecraftForge.EVENT_BUS.post(new BusEvent.RemoveFromNetwork(w, pos));
 	}
 	
-	@Override
-	public void breakBlock(World w, int x, int y, int z, Block b, int m){
-		super.breakBlock(w, x, y, z, b, m);
-		if(isAbstractBus) MinecraftForge.EVENT_BUS.post(new BusEvent.RemoveFromNetwork(w, x, y, z));
+	public void dropSelf(World w, BlockPos pos){
+		w.setBlockToAir(pos);
+		dropItemStack(w, pos, new ItemStack(this));
 	}
 	
-	@Override
-	public final IIcon getIcon(int side, int meta){
-		if(isOverride){
-			return iconOverride[side];
-		}else{
-			return getBaseIcon(side, meta);
-		}
-	}
-	
-	public IIcon getBaseIcon(int side, int meta){
-		return blockIcon;
-	}
-	
-	public void dropSelf(World w, int x, int y, int z){
-		w.setBlockToAir(x, y, z);
-		dropItemStack(w, x, y, z, new ItemStack(this));
-	}
-	
-	public void dropItemStack(World w, int x, int y, int z, ItemStack stack){
-		dropStackAt(w, ((double)x)+0.5D, ((double)y)+0.5D, ((double)z)+0.5D, stack);
+	public void dropItemStack(World w, BlockPos pos, ItemStack stack){
+		dropStackAt(w, ((double)pos.getX())+0.5D, ((double)pos.getY())+0.5D, ((double)pos.getZ())+0.5D, stack);
 	}
 	
 	public void dropItemStack(World w, EntityPlayer p, ItemStack stack){
