@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.api.stargate;
 
-import cpw.mods.fml.common.eventhandler.Cancelable;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 public abstract class DialEvent extends StargateEvent {
 	public final Address sourceAddress;
