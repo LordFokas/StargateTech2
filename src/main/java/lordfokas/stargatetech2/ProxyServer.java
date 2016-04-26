@@ -4,7 +4,7 @@ import lordfokas.stargatetech2.modules.IContentModule.Module;
 import lordfokas.stargatetech2.util.GUIHandler;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class ProxyServer implements ISidedProxy{
 	

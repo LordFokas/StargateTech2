@@ -20,7 +20,7 @@ import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public final class ChunkLoader implements LoadingCallback{
 	public static final ChunkLoader instance = new ChunkLoader();
@@ -57,7 +57,7 @@ public final class ChunkLoader implements LoadingCallback{
 	public static void unload(){
 		ArrayList<Integer> dims = new ArrayList();
 		for(Ticket ticket : instance.tickets){
-			Integer dim = ticket.world.provider.dimensionId;
+			Integer dim = ticket.world.provider.getDimensionId();
 			if(!dims.contains(dim)){
 				dims.add(dim);
 			}
@@ -82,7 +82,7 @@ public final class ChunkLoader implements LoadingCallback{
 	
 	@SubscribeEvent
 	public void forceReloadChunks(WorldEvent.Load evt){
-		if(evt.world.provider.dimensionId == 0){
+		if(evt.world.provider.getDimensionId() == 0){
 			MinecraftServer server = MinecraftServer.getServer();
 			for(Integer dim : instance.dims){
 				server.worldServerForDimension(dim.intValue());

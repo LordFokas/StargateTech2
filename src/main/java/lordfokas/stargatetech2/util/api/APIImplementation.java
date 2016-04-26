@@ -58,7 +58,7 @@ public final class APIImplementation extends StargateTechAPI {
 		if(entity instanceof EntityPlayer){
 			EntityPlayer player = (EntityPlayer) entity;
 			if(CoFHFriendHelper.isSystemEnabled()){
-				if(CoFHFriendHelper.isFriend(player.getDisplayName(), owner)){
+				if(CoFHFriendHelper.isFriend(player.getName(), owner)){ // XXX getName() might not be suitable
 					allow = perms.hasBit(ShieldPermissions.PERM_FRIEND);
 				}else{
 					allow = perms.hasBit(ShieldPermissions.PERM_PLAYER);

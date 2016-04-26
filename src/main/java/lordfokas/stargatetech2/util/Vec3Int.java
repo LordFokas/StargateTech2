@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.util;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 public class Vec3Int {
 	public final int x, y, z;
@@ -31,8 +31,8 @@ public class Vec3Int {
 		return nbt;
 	}
 	
-	public Vec3Int offset(ForgeDirection fd){
-		return new Vec3Int(x + fd.offsetX, y + fd.offsetY, z + fd.offsetZ);
+	public Vec3Int offset(EnumFacing fd){
+		return new Vec3Int(x + fd.getFrontOffsetX(), y + fd.getFrontOffsetY(), z + fd.getFrontOffsetZ());
 	}
 	
 	@Override

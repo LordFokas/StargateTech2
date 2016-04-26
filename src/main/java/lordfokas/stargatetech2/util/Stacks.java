@@ -7,7 +7,7 @@ import lordfokas.stargatetech2.modules.core.ItemNaquadah;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Stacks {
 	// Vanilla Stacks
@@ -40,7 +40,7 @@ public class Stacks {
 		machine_0 =	fromTE4("frameMachineBasic");
 		machine_1 =	fromTE4("frameMachineHardened");
 		machine_2 =	fromTE4("frameMachineReinforced");
-		signalum = GameRegistry.findItemStack("ThermalFoundation", "ingotSignalum", 1);
+		signalum = new ItemStack(GameRegistry.findItem("ThermalFoundation", "ingotSignalum"), 1);
 		coilGold =	fromTE4("powerCoilGold");
 		
 		//##########################################################################################
@@ -57,6 +57,6 @@ public class Stacks {
 	}
 	
 	private static ItemStack fromTE4(String name){
-		return GameRegistry.findItemStack("ThermalExpansion", name, 1);
+		return new ItemStack(GameRegistry.findItem("ThermalExpansion", name), 1);
 	}
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import net.minecraft.util.ResourceLocation;
 
+// XXX: probably useless now.
 public class TextureReference {
 	public static final ArrayList<String> TERRAIN_TEXTURES = new ArrayList<String>();
 	public static final ArrayList<String> ITEM_TEXTURES = new ArrayList<String>();
