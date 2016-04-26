@@ -1,17 +1,11 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
 import lordfokas.stargatetech2.lib.packet.BasePacket.ClientToServer;
-import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
-import lordfokas.stargatetech2.lib.tileentity.faces.Face;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.relauncher.Side;
 
 @Deprecated
 @ClientToServer
-public class PacketToggleMachineFace__THRASH extends PacketCoordinates {
-	public Face face;
+public class PacketToggleMachineFace__THRASH /* extends PacketCoordinates */{
+	/*public Face face;
 	
 	@Override
 	protected void writeData() throws Exception {
@@ -26,5 +20,5 @@ public class PacketToggleMachineFace__THRASH extends PacketCoordinates {
 			((TileMachine__THRASH)te).toggleFace(face);
 		}
 		return null;
-	}
+	}*/
 }

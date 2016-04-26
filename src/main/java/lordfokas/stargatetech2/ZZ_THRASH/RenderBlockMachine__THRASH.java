@@ -1,17 +1,8 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
-import lordfokas.stargatetech2.lib.render.BaseISBRH;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.IconRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-
 @Deprecated
-public class RenderBlockMachine__THRASH extends BaseISBRH {
-	private static final RenderBlockMachine__THRASH INSTANCE = new RenderBlockMachine__THRASH();
+public class RenderBlockMachine__THRASH /* extends BaseISBRH */{
+	/*private static final RenderBlockMachine__THRASH INSTANCE = new RenderBlockMachine__THRASH();
 	
 	public static RenderBlockMachine__THRASH instance(){
 		return INSTANCE;
@@ -52,5 +43,5 @@ public class RenderBlockMachine__THRASH extends BaseISBRH {
 		renderer.renderStandardBlock(machine, x, y, z);
 		machine.restoreTextures();
 		return true;
-	}
+	}*/
 }

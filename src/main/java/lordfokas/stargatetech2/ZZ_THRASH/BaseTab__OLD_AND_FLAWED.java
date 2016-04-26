@@ -1,11 +1,8 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
-import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.ITab;
-import net.minecraft.item.ItemStack;
-
 @Deprecated
-public abstract class BaseTab__OLD_AND_FLAWED implements ITab{
-	private final TabColor color;
+public abstract class BaseTab__OLD_AND_FLAWED /*implements ITab*/{
+	/*private final TabColor color;
 	private final ItemStack icon;
 	private final String name;
 	protected BaseGUI__OLD_AND_FLAWED gui;
@@ -48,5 +45,5 @@ public abstract class BaseTab__OLD_AND_FLAWED implements ITab{
 	
 	protected boolean elementHit(int ex, int ey, int cx, int cy, int sx, int sy){
 		return cx >= ex && cx < ex + sx && cy >= ey && cy < ey + sy;
-	}
+	}*/
 }

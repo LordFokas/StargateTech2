@@ -1,16 +1,8 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
-import lordfokas.stargatetech2.lib.tileentity.faces.Face;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.IconRegistry;
-import lordfokas.stargatetech2.util.Stacks;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.IIcon;
-
 @Deprecated
-public class TabConfiguration__THRASH extends BaseTab__OLD_AND_FLAWED{
-	private static final Side[] sides = new Side[]{
+public class TabConfiguration__THRASH /* extends BaseTab__OLD_AND_FLAWED */{
+	/*private static final Side[] sides = new Side[]{
 		new Side(Face.BOTTOM, 45, 61),
 		new Side(Face.TOP, 45, 25),
 		new Side(Face.LEFT, 27, 43),
@@ -87,5 +79,5 @@ public class TabConfiguration__THRASH extends BaseTab__OLD_AND_FLAWED{
 			}
 		}
 		return !elementHit(23, 21, x, y, 60, 60);
-	}
+	}*/
 }

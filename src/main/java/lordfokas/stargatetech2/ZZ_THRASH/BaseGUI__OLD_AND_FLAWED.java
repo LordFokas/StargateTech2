@@ -1,26 +1,8 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
-import lordfokas.stargatetech2.lib.gui.BaseContainer;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import lordfokas.stargatetech2.reference.TextureReference;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 @Deprecated
-public abstract class BaseGUI__OLD_AND_FLAWED extends GuiContainer {
-	private int _xoff = 0, _yoff = 0;
+public abstract class BaseGUI__OLD_AND_FLAWED /* extends GuiContainer */{
+	/*private int _xoff = 0, _yoff = 0;
 	private boolean onBackground;
 	private boolean isNativeRender;
 	private boolean usesTextHandler = false;
@@ -549,5 +531,5 @@ public abstract class BaseGUI__OLD_AND_FLAWED extends GuiContainer {
 	
 	public final void playClick(float pitch){
 		mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-	}
+	}*/
 }

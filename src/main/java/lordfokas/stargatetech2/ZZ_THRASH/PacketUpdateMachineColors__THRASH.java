@@ -1,17 +1,11 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
 import lordfokas.stargatetech2.lib.packet.BasePacket.ServerToClient;
-import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.relauncher.Side;
 
 @Deprecated
 @ServerToClient
-public class PacketUpdateMachineColors__THRASH extends PacketCoordinates {
-	private FaceColor[] colors;
+public class PacketUpdateMachineColors__THRASH /* extends PacketCoordinates */{
+	/*private FaceColor[] colors;
 	
 	public PacketUpdateMachineColors__THRASH(){
 		colors = new FaceColor[6];
@@ -38,5 +32,5 @@ public class PacketUpdateMachineColors__THRASH extends PacketCoordinates {
 			((TileMachine__THRASH)te).updateColors(colors);
 		}
 		return null;
-	}
+	}*/
 }

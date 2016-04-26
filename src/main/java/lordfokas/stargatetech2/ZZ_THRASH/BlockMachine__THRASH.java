@@ -1,28 +1,8 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
-import lordfokas.stargatetech2.StargateTech2;
-import lordfokas.stargatetech2.lib.block.BaseBlockContainer;
-import lordfokas.stargatetech2.lib.tileentity.IOwnedMachine;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.GUIHandler.Screen;
-import lordfokas.stargatetech2.util.Helper;
-import lordfokas.stargatetech2.util.IconRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import buildcraft.api.tools.IToolWrench;
-
 @Deprecated
-public abstract class BlockMachine__THRASH extends BaseBlockContainer{
-	private boolean useVertical = false;
+public abstract class BlockMachine__THRASH /* extends BaseBlockContainer */{
+	/*private boolean useVertical = false;
 	private Screen screen;
 	
 	public BlockMachine__THRASH(String uName, boolean owned){
@@ -111,5 +91,5 @@ public abstract class BlockMachine__THRASH extends BaseBlockContainer{
 			}
 		}
 		return map;
-	}
+	}*/
 }

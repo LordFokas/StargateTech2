@@ -1,13 +1,8 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
-import lordfokas.stargatetech2.lib.tileentity.faces.Face;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
-
 @Deprecated
-public abstract class TileMachine__THRASH extends BaseTileEntity__OLD_AND_FLAWED {
-	private FaceColor[] colors = new FaceColor[]{
+public abstract class TileMachine__THRASH /* extends BaseTileEntity__OLD_AND_FLAWED */{
+	/*private FaceColor[] colors = new FaceColor[]{
 			FaceColor.VOID, FaceColor.VOID,
 			FaceColor.VOID, FaceColor.VOID,
 			FaceColor.VOID, FaceColor.VOID,
@@ -116,5 +111,5 @@ public abstract class TileMachine__THRASH extends BaseTileEntity__OLD_AND_FLAWED
 		for(int i = 0; i < colors.length; i++){
 			colors[i] = FaceColor.values()[nbt.getByte("color" + i)];
 		}
-	}
+	}*/
 }

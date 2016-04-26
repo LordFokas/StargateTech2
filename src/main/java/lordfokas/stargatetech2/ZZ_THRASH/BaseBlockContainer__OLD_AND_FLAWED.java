@@ -16,10 +16,10 @@ public abstract class BaseBlockContainer__OLD_AND_FLAWED extends BaseBlock imple
 		super(name, breakable, requiresTool);
 	}
 	
-	@Override
+	/*@Override
 	public final TileEntity createTileEntity(World world, int metadata){
 		return createTileEntity(metadata);
-	}
+	}*/
 	
 	@Override
 	public final TileEntity createNewTileEntity(World world, int metadata){

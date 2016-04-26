@@ -5,13 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-
 @Deprecated
-public abstract class BaseTileEntity__OLD_AND_FLAWED extends TileEntity {
+public abstract class BaseTileEntity__OLD_AND_FLAWED /* extends TileEntity */{
 	
 	/**
 	 * Marks things that belong to the server logic
@@ -33,7 +28,7 @@ public abstract class BaseTileEntity__OLD_AND_FLAWED extends TileEntity {
 	@Retention(RetentionPolicy.SOURCE)
 	public @interface ClientLogic{}
 	
-	@Override
+	/*@Override
 	public final S35PacketUpdateTileEntity getDescriptionPacket(){
         NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
@@ -66,5 +61,5 @@ public abstract class BaseTileEntity__OLD_AND_FLAWED extends TileEntity {
 	}
 	
 	protected abstract void readNBT(NBTTagCompound nbt);
-	protected abstract void writeNBT(NBTTagCompound nbt);
+	protected abstract void writeNBT(NBTTagCompound nbt);*/
 }

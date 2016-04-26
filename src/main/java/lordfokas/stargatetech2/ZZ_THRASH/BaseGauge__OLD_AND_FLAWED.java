@@ -1,23 +1,8 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
-import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.IGauge;
-import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.IHoverHandler;
-import lordfokas.stargatetech2.util.Helper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
-
-import org.lwjgl.opengl.GL11;
-
-import cofh.api.energy.EnergyStorage;
-
 @Deprecated
-public abstract class BaseGauge__OLD_AND_FLAWED implements IGauge{
-	protected BaseGUI__OLD_AND_FLAWED master;
+public abstract class BaseGauge__OLD_AND_FLAWED /*implements IGauge*/{
+	/*protected BaseGUI__OLD_AND_FLAWED master;
 	protected GaugeHoverHandler hoverHandler;
 	protected int cVal, mVal;
 	protected int xPos, yPos;
@@ -137,5 +122,5 @@ public abstract class BaseGauge__OLD_AND_FLAWED implements IGauge{
 		public void update() {
 			cVal = capacitor.getEnergyStored();
 		}
-	}
+	}*/
 }
