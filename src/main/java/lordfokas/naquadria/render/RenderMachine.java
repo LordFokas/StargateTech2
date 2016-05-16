@@ -1,14 +1,8 @@
 package lordfokas.naquadria.render;
 
-import lordfokas.naquadria.block.BlockMachine;
-import lordfokas.naquadria.tileentity.TileEntityMachine;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-
+@Deprecated
 public class RenderMachine extends BaseISBRH{
-	private static final RenderMachine INSTANCE = new RenderMachine();
+	/*private static final RenderMachine INSTANCE = new RenderMachine();
 	private static final int[] PASSES = new int[]{0, 1};
 	
 	public static RenderMachine instance(){
@@ -33,5 +27,5 @@ public class RenderMachine extends BaseISBRH{
 			map[side] = machine.getTexture(side, pass, side == machine.getFacing());
 		}
 		return map;
-	}
+	}*/
 }

@@ -3,7 +3,7 @@ package lordfokas.naquadria.render;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class Color {
+public class Color{
 	private static int colors = 16;
 	public static final Color[] COLORS = new Color[colors];
 	

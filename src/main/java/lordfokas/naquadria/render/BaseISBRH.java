@@ -1,19 +1,8 @@
 package lordfokas.naquadria.render;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-
 @Deprecated
-public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
-	protected static final float F01 = 0.0625F;
+public abstract class BaseISBRH /*implements ISimpleBlockRenderingHandler*/ {
+	/*protected static final float F01 = 0.0625F;
 	protected static final float F02 = F01 *  2F;
 	protected static final float F03 = F01 *  3F;
 	protected static final float F04 = F01 *  4F;
@@ -104,5 +93,5 @@ public abstract class BaseISBRH implements ISimpleBlockRenderingHandler {
 	protected final void renderWorldCuboidWithBounds(Block block, RenderBlocks renderer, int x, int y, int z, double minX, double minY, double minZ, double maxX, double maxY, double maxZ){
 		renderer.setRenderBounds(minX, minY, minZ, maxX, maxY, maxZ);
 		renderWorldCuboid(x, y, z, block, renderer);
-	}
+	}*/
 }

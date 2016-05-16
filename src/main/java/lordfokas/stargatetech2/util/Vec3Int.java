@@ -3,6 +3,7 @@ package lordfokas.stargatetech2.util;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
+@Deprecated
 public class Vec3Int {
 	public final int x, y, z;
 	
