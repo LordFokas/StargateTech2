@@ -27,11 +27,11 @@ public abstract class BaseTESR extends TileEntitySpecialRenderer {
 		if(state == null) return;
 		Block block = state.getBlock();
 		if(block == null) return;
-		tessellator = Tessellator.getInstance();
 		GL11.glPushMatrix();
 		GL11.glTranslated(x+0.5D, y, z+0.5D);
 		GL11.glColor3f(1, 1, 1);
 		if(useLocalizedLighting()){
+			tessellator = Tessellator.getInstance();
 			BlockPos light = new BlockPos(x, y, z);
 			light = getLightCoordinates(te, light);
 			float b = block.getMixedBrightnessForBlock(w, light);

@@ -52,8 +52,7 @@ import net.minecraftforge.common.capabilities.Capability;
  * @author LordFokas
  */
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
-implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, IComponentRegistrar,
-IRedstoneControl{
+implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, IComponentRegistrar, IRedstoneControl{
 	
 	private static final int COMPONENT_KEYS = 100;
 	

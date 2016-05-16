@@ -10,10 +10,14 @@ import net.minecraftforge.items.IItemHandler;
 public class InventoryComponent extends CapabilityComponent<IItemHandler>{
 	@CapabilityInject(IItemHandler.class)
 	private static Capability itemHandlerCapability = null;
-	protected Inventory inventory;
+	private Inventory inventory;
 	
-	public InventoryComponent(Inventory inventory){
-		this.inventory = inventory;
+	public InventoryComponent(int size){
+		this.inventory = new Inventory(size);
+	}
+	
+	public Inventory getInventory(){
+		return inventory;
 	}
 	
 	@Override

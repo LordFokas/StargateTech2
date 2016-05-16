@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class TileEntityOwnedMachine<C extends Client, S extends Server> extends TileEntityMachine<C, S> implements IOwnedMachine{
 	private String owner = "::";
 	
-	public TileEntityOwnedMachine(Class client, Class server, FaceColor... colors) {
+	public TileEntityOwnedMachine(Class<? extends C> client, Class<? extends S> server, FaceColor... colors) {
 		super(client, server, colors);
 	}
 
