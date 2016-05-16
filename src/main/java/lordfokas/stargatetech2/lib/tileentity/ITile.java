@@ -2,6 +2,7 @@ package lordfokas.stargatetech2.lib.tileentity;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
@@ -15,9 +16,7 @@ public interface ITile{
 	public Block getBlockType();
 	public int getBlockMetadata();
 	public World getWorld();
-	public int x();
-	public int y();
-	public int z();
+	public BlockPos pos();
 	
 	/**
 	 * An {@link ITile} on a {@link WorldClient}

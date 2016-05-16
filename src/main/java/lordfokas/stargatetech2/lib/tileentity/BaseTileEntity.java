@@ -7,6 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,11 +27,12 @@ import net.minecraftforge.fml.relauncher.Side;
  * 
  * @author LordFokas
  */
-public class BaseTileEntity<C extends Client, S extends Server> extends TileEntity implements ITile.Client, ITile.Server, ISyncedGUI.Flow{
+public class BaseTileEntity<C extends Client, S extends Server> extends TileEntity
+implements ITickable, ITile.Client, ITile.Server, ISyncedGUI.Flow{
 	protected final ITileContext context;
 	protected Side side;
 	
-	public BaseTileEntity(Class<? extends C> client, Class<? extends S> server){
+	protected BaseTileEntity(Class<? extends C> client, Class<? extends S> server){
 		side = FMLCommonHandler.instance().getEffectiveSide();
 		ITileContext context = null;
 		try{
@@ -49,26 +52,26 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 	}
 	
 	@Override
-	public final void updateEntity(){
+	public final void update(){
 		context.tick();
 	}
 	
-	@Override
+	/*@Override // TODO Optimize this
 	public final boolean canUpdate(){
 		if(context == null) return false;
 		return context.canTick();
-	}
+	}*/
 	
 	@Override
 	public final S35PacketUpdateTileEntity getDescriptionPacket(){
         NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
+        return new S35PacketUpdateTileEntity(pos, 1, nbt);
     }
 	
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
-		NBTTagCompound nbt = pkt.func_148857_g();
+		NBTTagCompound nbt = pkt.getNbtCompound();
 		if(nbt != null){
 			this.readFromNBT(nbt);
 		}
@@ -120,7 +123,7 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 	@Override
 	public final void updateClients(){
 		if(side.isClient()) return;
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		worldObj.markBlockForUpdate(pos);
 	}
 	
 	@Override
@@ -129,18 +132,8 @@ public class BaseTileEntity<C extends Client, S extends Server> extends TileEnti
 	}
 
 	@Override
-	public int x() {
-		return xCoord;
-	}
-
-	@Override
-	public int y() {
-		return yCoord;
-	}
-
-	@Override
-	public int z() {
-		return zCoord;
+	public BlockPos pos() {
+		return pos;
 	}
 	
 	
