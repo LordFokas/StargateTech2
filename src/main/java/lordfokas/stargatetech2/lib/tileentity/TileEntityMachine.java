@@ -12,24 +12,20 @@ import lordfokas.stargatetech2.lib.packet.PacketMachineConfiguration;
 import lordfokas.stargatetech2.lib.packet.PacketMachineRedstone;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
-import lordfokas.stargatetech2.lib.tileentity.component.IAccessibleTileComponent;
+import lordfokas.stargatetech2.lib.tileentity.component.ICapabilityTileComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.IComponentProvider;
 import lordfokas.stargatetech2.lib.tileentity.component.IComponentRegistrar;
 import lordfokas.stargatetech2.lib.tileentity.component.ITileComponent;
-import lordfokas.stargatetech2.lib.tileentity.component.access.IBusComponent;
-import lordfokas.stargatetech2.lib.tileentity.component.access.ICapacitorComponent;
-import lordfokas.stargatetech2.lib.tileentity.component.access.IInventoryComponent;
-import lordfokas.stargatetech2.lib.tileentity.component.access.ITankComponent;
 import lordfokas.stargatetech2.lib.tileentity.faces.Face;
 import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingAware;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingProvider;
-import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.util.Helper;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
+import net.minecraftforge.common.capabilities.Capability;
 
 /**
  * An advanced TileEntity. Supplies services like automatic rotation handling,
@@ -44,7 +40,7 @@ import net.minecraft.util.EnumFacing.Axis;
  * If a Context implements {@link IRedstoneAware} it will be notified of whether or
  * not it should run based on the TE's redstone control mode.<br>
  * <br>
- * Components that implement {@link IAccessibleTileComponent} will be exposed to
+ * Components that implement {@link ICapabilityTileComponent} will be exposed to
  * the outside of the TileEntity.<br>
  * Components that implement {@link IFacingAware} will be allowed to read this
  * TileEntity's facing data.<br>
@@ -60,9 +56,6 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, ICompon
 IRedstoneControl{
 	
 	private static final int COMPONENT_KEYS = 100;
-	private static final Class[] INTERFACES = new Class[]{
-		IBusComponent.class, ICapacitorComponent.class, IInventoryComponent.class, ITankComponent.class
-	};
 	
 	private boolean isComponentRegistrationAllowed = false;
 	private EnumMap<Face, FaceWrapper> faces = new EnumMap(Face.class);
@@ -73,9 +66,34 @@ IRedstoneControl{
 	private IRedstoneAware rsContext;
 	
 	private ArrayList<ITileComponent> allComponents = new ArrayList();
+	private ArrayList<ICapabilityTileComponent> capableComponents = new ArrayList();
+	// TODO: split this into 2 lists:
 	private ArrayList<ISyncedGUI.Flow> syncComponents = new ArrayList();
 	private int[] syncKeys; // Cached value set for those ^
-	private HashMap<Class, ArrayList<? extends IAccessibleTileComponent>> sidedComponents = new HashMap();
+	private HashMap<CapabilityOnSide, Object> capabilities = new HashMap();
+	
+	/** Wrapper class to represent a given Capability on a given EnumFacing inside an HashMap */
+	private static class CapabilityOnSide{
+		private final Capability capability;
+		private final EnumFacing side;
+		
+		public CapabilityOnSide(Capability capability, EnumFacing side){
+			this.capability = capability;
+			this.side = side;
+		}
+		
+		@Override
+		public int hashCode() {
+			return capability.hashCode() ^ side.hashCode();
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if(!(obj instanceof CapabilityOnSide)) return false;
+			CapabilityOnSide other = (CapabilityOnSide) obj;
+			return other.capability.equals(capability) && other.side == side;
+		}
+	}
 	
 	public TileEntityMachine(Class<? extends C> client, Class<? extends S> server, FaceColor ... colors) {
 		super(client, server);
@@ -92,9 +110,6 @@ IRedstoneControl{
 		if(context instanceof IRedstoneAware){
 			rsContext = (IRedstoneAware) context;
 		}
-		for(Class iface : INTERFACES){
-			sidedComponents.put(iface, new ArrayList());
-		}
 		isComponentRegistrationAllowed = true;
 		if(context instanceof IComponentProvider){
 			((IComponentProvider)context).registerComponents(this);
@@ -107,25 +122,38 @@ IRedstoneControl{
 	public void registerComponent(ITileComponent component) {
 		if(!isComponentRegistrationAllowed)
 			throw new RuntimeException("ITileComponent registration CANNOT be delayed. Respect the f**king API!");
+		
+		// this must be first because the component may be discarded!
+		if(component instanceof ICapabilityTileComponent){
+			ICapabilityTileComponent capable = (ICapabilityTileComponent) component;
+			Capability capability = capable.getCapability();
+			if(capability != null)
+				capableComponents.add(capable);
+			else if(capable.discardIfNull())
+				return;
+		}// end "must be first"
+		
 		allComponents.add(component);
 		if(component instanceof IFacingAware){
 			((IFacingAware)component).setProvider(this);
 		}
-		if(component instanceof IBusComponent){ // TODO: find a better way to work around this
-			((IBusComponent)component).setBusDevice((ISyncBusDevice)this);
-		}
 		if(component instanceof ISyncedGUI.Flow){
 			syncComponents.add((ISyncedGUI.Flow) component);
 		}
-		if(component instanceof IAccessibleTileComponent){
-			Class cls = component.getClass();
-			for(Class iface : INTERFACES){
-				if(iface.isAssignableFrom(cls)){
-					((ArrayList<ITileComponent>) sidedComponents.get(iface)).add(component);
-					return;
-				}
-			}
-		}
+		
+		/*if(component instanceof IBusComponent){ // FIXME: find a better way to work around this
+			((IBusComponent)component).setBusDevice((ISyncBusDevice)this);
+		}*/
+	}
+	
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing){
+		return capabilities.containsKey(new CapabilityOnSide(capability, facing));
+	}
+	
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+		return (T) capabilities.get(new CapabilityOnSide(capability, facing));
 	}
 	
 	// ##########################################################
@@ -135,12 +163,12 @@ IRedstoneControl{
 	public int getFacing() {
 		return facing.ordinal();
 	}
-
+	
 	@Override
 	public boolean allowYAxisFacing() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean rotateBlock() {
 		int side = facing.ordinal() + 1;
@@ -172,6 +200,16 @@ IRedstoneControl{
 		setMap(left.getOpposite(), Face.RIGHT);
 		
 		if(update) super.updateClients();
+		
+		capabilities.clear();
+		for(ICapabilityTileComponent c : capableComponents){
+			Capability capability = c.getCapability();
+			for(EnumFacing side : EnumFacing.values()){
+				Object impl = c.getCapability(side);
+				if(c != null)
+					capabilities.put(new CapabilityOnSide(capability, side), impl);
+			}
+		}
 	}
 	
 	private void setMap(EnumFacing dir, Face face){
@@ -489,275 +527,4 @@ IRedstoneControl{
 			super.setValue(actualKey, val);
 		}
 	}
-	
-	// ##########################################################
-	// COMPONENT: IBusComponent
-	
-	private ArrayList<IBusComponent> getInterfaces(){
-		return (ArrayList<IBusComponent>) sidedComponents.get(IBusComponent.class);
-	}
-	
-	/*@Override
-	public IBusInterface[] getInterfaces(int side) {
-		LinkedList<IBusInterface> interfaces = new LinkedList();
-		ForgeDirection dir = ForgeDirection.getOrientation(side);
-		for(IBusComponent component : getInterfaces()){
-			if(component.accessibleOnSide(dir)) interfaces.add(component.getInterface());
-		}
-		return interfaces.toArray(new IBusInterface[]{});
-	}
-
-	@Override
-	public int getXCoord() {
-		return xCoord;
-	}
-
-	@Override
-	public int getYCoord() {
-		return yCoord;
-	}
-
-	@Override
-	public int getZCoord() {
-		return zCoord;
-	}
-
-	@Override
-	public void setEnabled(boolean enabled) {
-		getInterfaces().get(0).setEnabled(enabled);
-	}
-
-	@Override
-	public boolean getEnabled() {
-		return getInterfaces().get(0).getEnabled();
-	}
-
-	@Override
-	public void setAddress(short addr) {
-		getInterfaces().get(0).setAddress(addr);
-	}
-
-	@Override
-	public short getAddress() {
-		return getInterfaces().get(0).getAddress();
-	}*/
-	
-	// ##########################################################
-	// COMPONENT: ITankComponent
-	
-	private ArrayList<ITankComponent> getTanks(){
-		return (ArrayList<ITankComponent>) sidedComponents.get(ITankComponent.class);
-	}
-	
-	/*@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-		for(ITankComponent tank : getTanks()){
-			if(tank.canInputOnSide(from) && tank.canFill(resource.getFluid())){
-				return tank.fill(resource, doFill);
-			}
-		}
-		return 0;
-	}
-
-	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-		return drain(from, resource.amount, doDrain);
-	}
-
-	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		for(ITankComponent tank : getTanks()){
-			if(tank.canOutputOnSide(from) && tank.canDrain()){
-				return tank.drain(maxDrain, doDrain);
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		for(ITankComponent tank : getTanks()){
-			if(tank.canInputOnSide(from)) return tank.canFill(fluid);
-		}
-		return false;
-	}
-
-	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		for(ITankComponent tank : getTanks()){
-			if(tank.canOutputOnSide(from)) return tank.canDrain();
-		}
-		return false;
-	}
-
-	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		LinkedList<FluidTankInfo> infos = new LinkedList();
-		for(ITankComponent tank : getTanks()){
-			if(tank.canInputOnSide(from) || tank.canOutputOnSide(from)){
-				infos.add(tank.getInfo());
-			}
-		}
-		return infos.toArray(new FluidTankInfo[]{});
-	}*/
-
-	// ##########################################################
-	// COMPONENT: ICapacitorComponent
-	
-	private ArrayList<ICapacitorComponent> getCapacitors(){
-		return (ArrayList<ICapacitorComponent>) sidedComponents.get(ICapacitorComponent.class);
-	}
-	
-	/*@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getEnergyStored(ForgeDirection from) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getMaxEnergyStored(ForgeDirection from) {
-		// TODO Auto-generated method stub
-		return 0;
-	}*/
-
-	// ##########################################################
-	// COMPONENT: IInventoryComponent
-	
-	private ArrayList<IInventoryComponent> getInventories(){
-		return (ArrayList<IInventoryComponent>) sidedComponents.get(IInventoryComponent.class);
-	}
-	
-	/** This is just a wrapper class to return 2 values
-	 *  at once while keeping efficiency */
-	/*private static final class InventoryData{
-		IInventoryComponent inventory;
-		int offset;
-	}
-	
-	private InventoryData find(int slot){
-		int slots = 0;
-		if(slot >= 0)
-			for(IInventoryComponent component : getInventories()){
-				if(slot < slots + component.getSlotCount()){
-					InventoryData data = new InventoryData();
-					data.inventory = component;
-					data.offset = slots;
-					return data;
-				}
-				slots += component.getSlotCount();
-			}
-		return null;
-	}
-	
-	private boolean isVisible(IInventoryComponent inv, int side){
-		ForgeDirection dir = ForgeDirection.getOrientation(side);
-		return inv.accessibleOnSide(dir)
-			|| inv.canOutputOnSide(dir)
-			|| inv.canInputOnSide(dir);
-	}
-	
-	@Override
-	public int getSizeInventory() {
-		int slots = 0;
-		for(IInventoryComponent component : getInventories()){
-			slots += component.getSlotCount();
-		}
-		return slots;
-	}
-	
-	@Override
-	public ItemStack getStackInSlot(int slot) {
-		InventoryData data = find(slot);
-		if(data != null){
-			return data.inventory.getStackInSlot(slot - data.offset);
-		}
-		return null;
-	}
-	
-	@Override
-	public ItemStack decrStackSize(int slot, int amount) {
-		InventoryData data = find(slot);
-		if(data != null){
-			return data.inventory.decrStackSize(slot - data.offset, amount);
-		}
-		return null;
-	}
-	
-	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
-		InventoryData data = find(slot);
-		if(data != null){
-			data.inventory.getStackInSlot(slot - data.offset);
-		}
-	}
-	
-	@Override public ItemStack getStackInSlotOnClosing(int slot){ return null; }
-	@Override public String getInventoryName(){ return null; }
-	@Override public boolean hasCustomInventoryName(){ return false; }
-	@Override public int getInventoryStackLimit(){ return 64; }
-	@Override public boolean isUseableByPlayer(EntityPlayer player) { return true; }
-	@Override public void openInventory(){}
-	@Override public void closeInventory(){}
-	
-	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		InventoryData data = find(slot);
-		if(data != null){
-			return data.inventory.isItemValidForSlot(slot - data.offset, stack);
-		}
-		return false;
-	}
-	
-	@Override
-	public int[] getAccessibleSlotsFromSide(int side) {
-		TIntArrayList slots = new TIntArrayList();
-		int current = 0;
-		for(IInventoryComponent component : getInventories()){
-			if(isVisible(component, side)){
-				for(int s = 0; s < component.getSlotCount(); s++){
-					slots.add(current);
-					current++;
-				}
-			}else{
-				current += component.getSlotCount();
-			}
-		}
-		return slots.toArray();
-	}
-	
-	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, int side) {
-		InventoryData data = find(slot);
-		if(data != null){
-			return data.inventory.canInsertItem(slot - data.offset, stack, side);
-		}
-		return false;
-	}
-	
-	@Override
-	public boolean canExtractItem(int slot, ItemStack stack, int side) {
-		InventoryData data = find(slot);
-		if(data != null){
-			return data.inventory.canExtractItem(slot - data.offset, stack, side);
-		}
-		return false;
-	}*/
 }

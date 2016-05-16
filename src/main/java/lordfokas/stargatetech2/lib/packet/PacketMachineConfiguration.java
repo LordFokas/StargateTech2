@@ -1,8 +1,8 @@
 package lordfokas.stargatetech2.lib.packet;
 
 import lordfokas.stargatetech2.lib.packet.BasePacket.SidesReceivedOn;
+import lordfokas.stargatetech2.lib.tileentity.TileEntityHelper;
 import lordfokas.stargatetech2.lib.tileentity.TileEntityMachine;
-import lordfokas.stargatetech2.lib.util.TileEntityHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

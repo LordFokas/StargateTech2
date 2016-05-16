@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.lib.util;
+package lordfokas.stargatetech2.lib.tileentity;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -7,14 +7,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 
 public class TileEntityHelper{
-	@Deprecated
-	public static <TYPE> TYPE getTileEntityAs(World w, int x, int y, int z, Class<TYPE> type){
-		TileEntity te = w.getTileEntity(new BlockPos(x, y, z));
-		if(te != null && type.isAssignableFrom(te.getClass())){
-			return (TYPE) te;
-		}else return null;
-	}
-	
 	public static <TYPE> TYPE getTileEntityAs(World w, BlockPos pos, Class<TYPE> type){
 		TileEntity te = w.getTileEntity(pos);
 		if(te != null && type.isAssignableFrom(te.getClass())){

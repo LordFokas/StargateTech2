@@ -4,12 +4,12 @@ import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.tileentity.ISyncedGUI;
-import lordfokas.stargatetech2.lib.tileentity.component.SidedComponent;
+import lordfokas.stargatetech2.lib.tileentity.component.CapabilityComponent;
 import lordfokas.stargatetech2.lib.tileentity.component.access.IBusComponent;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDriver;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class BusComponent extends SidedComponent implements IBusComponent, ISyncedGUI.Flow{
+public class BusComponent extends CapabilityComponent implements IBusComponent, ISyncedGUI.Flow{
 	private static final int[] KEYS = new int[]{0, 1};
 	private IBusInterface iface;
 	private ISyncBusDriver driver;

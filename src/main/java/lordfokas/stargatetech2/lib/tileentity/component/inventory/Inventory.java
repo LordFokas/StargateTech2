@@ -1,4 +1,4 @@
-package lordfokas.stargatetech2.lib.util;
+package lordfokas.stargatetech2.lib.tileentity.component.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -6,15 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IChatComponent;
 
-/**
- * A basic Inventory implementation. It respects IInventory's
- * general contract and supplies additional functionality.
- * 
- * You can simply direct your IInventory calls to it.
- * 
- * @author LordFokas
- */
-public class Inventory implements IInventory{
+// TODO: overhaul this?
+public class Inventory{
 	private ItemStack[] inventory;
 	private InventoryMode mode;
 	
@@ -58,26 +51,22 @@ public class Inventory implements IInventory{
 		}
 	}
 	
-	@Override
-	public int getSizeInventory() {
+	public int getSlotCount() {
 		return inventory.length;
 	}
 	
-	@Override
-	public ItemStack getStackInSlot(int slot) {
+	public ItemStack getStack(int slot) {
 		return inventory[slot];
 	}
 	
-	@Override
-	public ItemStack removeStackFromSlot(int index){
+	public ItemStack removeStack(int index){
 		if(!canExtract()) return null;
 		ItemStack stack = inventory[index];
 		inventory[index] = null;
 		return stack;
 	}
 	
-	@Override
-	public ItemStack decrStackSize(int slot, int amount) {
+	public ItemStack decreaseStack(int slot, int amount) {
 		if(inventory[slot] != null){
 			ItemStack stack;
 			if(inventory[slot].stackSize <= amount){
@@ -95,14 +84,8 @@ public class Inventory implements IInventory{
 		}
 	}
 	
-	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
+	public void setStack(int slot, ItemStack stack) {
 		inventory[slot] = stack;
-	}
-	
-	@Override // TODO: this one is for a future upgrade :)
-	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		return true;
 	}
 	
 	public boolean canInsert(){
@@ -112,22 +95,4 @@ public class Inventory implements IInventory{
 	public boolean canExtract(){
 		return mode.canExtract();
 	}
-	
-	// #######################################################################################
-	// These don't really matter...
-	
-	@Override public boolean isUseableByPlayer(EntityPlayer entityplayer) { return false; }
-	@Override public int getInventoryStackLimit(){ return 64; }
-	@Override public void markDirty(){}
-	@Override public String getName() { return "sgtech2.inventory"; }
-	@Override public boolean hasCustomName(){ return false; }
-	@Override public IChatComponent getDisplayName(){ return null; }
-	@Override public void openInventory(EntityPlayer player){}
-	@Override public void closeInventory(EntityPlayer player){}
-
-	// XXX: WTF are these, even?
-	@Override public int getField(int id){ return 0; }
-	@Override public void setField(int id, int value){}
-	@Override public int getFieldCount(){ return 0; }
-	@Override public void clear(){}
 }

@@ -2,8 +2,8 @@ package lordfokas.stargatetech2.lib.block;
 
 import cofh.api.item.IToolHammer;
 import lordfokas.stargatetech2.StargateTech2;
+import lordfokas.stargatetech2.lib.tileentity.TileEntityHelper;
 import lordfokas.stargatetech2.lib.tileentity.TileEntityMachine;
-import lordfokas.stargatetech2.lib.util.TileEntityHelper;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;

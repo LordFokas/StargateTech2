@@ -13,9 +13,8 @@ public class BasicFluidFilter implements IFluidFilter{
 	@Override
 	public boolean matches(Fluid fluid) {
 		for(Fluid filter : fluids){
-			if(filter.getID() == fluid.getID()) return true;
+			if(filter.getName().equals(fluid.getName())) return true;
 		}
 		return false;
 	}
-	
 }
