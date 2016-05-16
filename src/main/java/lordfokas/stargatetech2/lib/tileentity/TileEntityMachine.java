@@ -8,14 +8,8 @@ import java.util.LinkedList;
 import cofh.api.tileentity.IReconfigurableFacing;
 import cofh.api.tileentity.IReconfigurableSides;
 import cofh.api.tileentity.IRedstoneControl;
-import gnu.trove.list.array.TIntArrayList;
-import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.lib.packet.PacketMachineConfiguration;
 import lordfokas.stargatetech2.lib.packet.PacketMachineRedstone;
-import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeEnergyHandler;
-import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeFluidHandler;
-import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeSidedInventory;
-import lordfokas.stargatetech2.lib.tileentity.FakeInterfaces.IFakeSyncBusDevice;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Client;
 import lordfokas.stargatetech2.lib.tileentity.ITileContext.Server;
 import lordfokas.stargatetech2.lib.tileentity.component.IAccessibleTileComponent;
@@ -31,18 +25,11 @@ import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingAware;
 import lordfokas.stargatetech2.lib.tileentity.faces.IFacingProvider;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
-import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.Helper;
-import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
 
 /**
  * An advanced TileEntity. Supplies services like automatic rotation handling,
@@ -70,11 +57,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
  */
 public class TileEntityMachine<C extends Client, S extends Server> extends BaseTileEntity<C, S>
 implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, IComponentRegistrar,
-IRedstoneControl,
-
-// fake interfaces so that the compiler helps us. *************************************
-IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{    //**
-// ************************************************************************************	
+IRedstoneControl{
 	
 	private static final int COMPONENT_KEYS = 100;
 	private static final Class[] INTERFACES = new Class[]{
@@ -166,7 +149,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 		return true;
 	}
 	
-	public boolean setFacing(ForgeDirection facing){
+	public boolean setFacing(EnumFacing facing){
 		this.facing = facing;
 		remapSides(true);
 		return true;
@@ -176,9 +159,8 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 		setFacing(Helper.yaw2dir(entity.rotationYaw, 0, allowYAxisFacing()));
 	}
 	
-	@Override
 	public boolean setFacing(int side) {
-		return setFacing(ForgeDirection.getOrientation(side));
+		return setFacing(EnumFacing.getFront(side));
 	}
 	
 	private void remapSides(boolean update){
@@ -200,14 +182,12 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	// Reconfigurable Sides
 	
 	@Override
-	public boolean decrSide(int side) {
+	public boolean decrSide(EnumFacing side) {
 		FaceWrapper face = getFaceForSide(side);
 		if(face.count() < 2) return false;
 		if(this.side.isClient()){
 			PacketMachineConfiguration pmc = new PacketMachineConfiguration();
-			pmc.x = xCoord;
-			pmc.y = yCoord;
-			pmc.z = zCoord;
+			pmc.coordinates = pos;
 			pmc.increase = false;
 			pmc.side = side;
 			pmc.sendToServer();
@@ -219,15 +199,13 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	}
 	
 	@Override
-	public boolean incrSide(int side) {
+	public boolean incrSide(EnumFacing side) {
 		FaceWrapper face = getFaceForSide(side);
 		if(face.count() < 2) return false;
 		if(this.side.isClient()){
 			PacketMachineConfiguration pmc = new PacketMachineConfiguration();
-			pmc.x = xCoord;
-			pmc.y = yCoord;
-			pmc.z = zCoord;
-			pmc.increase = false;
+			pmc.coordinates = pos;
+			pmc.increase = false; // TODO check weird logic, possible copy-paste bug.
 			pmc.side = side;
 			pmc.sendToServer();
 		}else{
@@ -237,8 +215,8 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 		return true;
 	}
 
-	@Override
-	public boolean setSide(int side, int config) {
+	@Override // TODO why is this unused?
+	public boolean setSide(EnumFacing side, int config) {
 		return false;
 	}
 
@@ -246,9 +224,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	public boolean resetSides() {
 		if(this.side.isClient()){
 			PacketMachineConfiguration pmc = new PacketMachineConfiguration();
-			pmc.x = xCoord;
-			pmc.y = yCoord;
-			pmc.z = zCoord;
+			pmc.coordinates = pos;
 			pmc.reset = true;
 			pmc.sendToServer();
 		}else{
@@ -261,31 +237,27 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	}
 
 	@Override
-	public int getNumConfig(int side) {
+	public int getNumConfig(EnumFacing side) {
 		return getFaceForSide(side).count();
 	}
 	
-	private FaceWrapper getFaceForSide(int side){
-		return faces.get(faceMap[side]);
+	private FaceWrapper getFaceForSide(EnumFacing side){
+		return faces.get(faceMap[side.ordinal()]);
 	}
 	
 	@Override
-	public FaceColor getColorForSide(int side){
-		if(side < 0 || side > 5) return FaceColor.VOID;
+	public FaceColor getColorForSide(EnumFacing side){
+		if(side.ordinal() > 5) return FaceColor.VOID;
 		return getFaceForSide(side).getColor();
 	}
 	
-	@Override
-	public FaceColor getColorForDirection(ForgeDirection dir){
-		return getColorForSide(dir.ordinal());
-	}
-	
-	@Override
+	/*@Override TODO: no longer used, find alternative and remove.
 	public IIcon getTexture(int side, int pass) {
 		return getTexture(side, pass, side == facing.ordinal() && !getFaceForSide(side).getColor().isColored());
-	}
+	}*/
 	
-	public IIcon getTexture(int side, int pass, boolean useFace) {
+	// TODO: see above. This remains to avoid logic loss.
+	/*public IIcon getTexture(int side, int pass, boolean useFace) {
 		FaceColor color = getFaceForSide(side).getColor();
 		if(pass == 0){
 			if(useFace) return getBlockType().getIcon(3, 0);
@@ -298,7 +270,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 		}else if(pass == 1 && !useFace){
 			return IconRegistry.blockIcons.get(color.getTexture());
 		}else return IconRegistry.blockIcons.get(TextureReference.TEXTURE_INVISIBLE);
-	}
+	}*/
 	
 	// ##########################################################
 	// Face Wrapper
@@ -379,9 +351,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 	public void setControl(ControlMode control) {
 		if(side.isClient()){
 			PacketMachineRedstone pmr = new PacketMachineRedstone();
-			pmr.x = xCoord;
-			pmr.y = yCoord;
-			pmr.z = zCoord;
+			pmr.coordinates = pos;
 			pmr.mode = control;
 			pmr.sendToServer();
 		}else{
@@ -419,7 +389,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 		redstoneControl = ControlMode.values()[nbt.getInteger("rsControl")];
 		redstonePower = nbt.getBoolean("rsPower");
 		NBTTagCompound facingNBT = nbt.getCompoundTag("facing");
-		facing = ForgeDirection.getOrientation(facingNBT.getInteger("facing"));
+		facing = EnumFacing.values()[facingNBT.getInteger("facing")];
 		faces = new EnumMap(Face.class);
 		for(int i = 0; i < faceMap.length; i++){
 			int f = facingNBT.getInteger("face_" + i);
@@ -436,7 +406,7 @@ IFakeFluidHandler, IFakeSidedInventory, IFakeEnergyHandler, IFakeSyncBusDevice{ 
 			allComponents.get(i).readFromNBT(components.getCompoundTag("comp_" + i));
 		}
 		if(side.isClient() && worldObj != null){
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			worldObj.markBlockForUpdate(pos);
 		}
 	}
 	

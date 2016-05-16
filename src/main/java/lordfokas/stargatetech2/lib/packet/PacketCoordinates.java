@@ -1,25 +1,27 @@
 package lordfokas.stargatetech2.lib.packet;
 
 import net.minecraft.entity.player.EntityPlayer;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.relauncher.Side;
+import net.minecraft.util.BlockPos;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.relauncher.Side;
 
 public abstract class PacketCoordinates extends BasePacket<PacketCoordinates, IMessage> {
-	public int x, y, z;
+	public BlockPos coordinates;
 	
 	@Override
 	protected final void serialize() throws Exception {
-		output.writeInt(x);
-		output.writeInt(y);
-		output.writeInt(z);
+		output.writeInt(coordinates.getX());
+		output.writeInt(coordinates.getY());
+		output.writeInt(coordinates.getZ());
 		writeData();
 	}
 	
 	@Override
 	public final IMessage unserialize(EntityPlayer player, Side side) throws Exception {
-		x = input.readInt();
-		y = input.readInt();
-		z = input.readInt();
+		int x = input.readInt();
+		int y = input.readInt();
+		int z = input.readInt();
+		coordinates = new BlockPos(x, y, z);
 		return readData(player, side);
 	}
 	

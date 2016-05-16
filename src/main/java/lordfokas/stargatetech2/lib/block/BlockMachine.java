@@ -1,5 +1,6 @@
 package lordfokas.stargatetech2.lib.block;
 
+import cofh.api.item.IToolHammer;
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.lib.tileentity.TileEntityMachine;
 import lordfokas.stargatetech2.lib.util.TileEntityHelper;
@@ -59,13 +60,13 @@ public class BlockMachine extends BaseBlock implements ITileEntityProvider{
 	public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer p, EnumFacing f, float hx, float hy, float hz) {
 		ItemStack hand = p.getCurrentEquippedItem();
 		TileEntityMachine machine = TileEntityHelper.getTileEntityAs(w, pos, TileEntityMachine.class);
-		/*if(hand != null && hand.getItem() instanceof IToolWrench){ // FIXME re-enable when wrench interface is available
+		if(hand != null && hand.getItem() instanceof IToolHammer){ // TODO: check if this is the correct interface
 			if(p.isSneaking()){
 				super.dropSelf(w, pos);
 			}else{
 				machine.rotateBlock();
 			}
-		}else*/ if(!p.isSneaking() && screen != null){
+		}else if(!p.isSneaking() && screen != null){
 			p.openGui(StargateTech2.instance, screen.ordinal(), w, pos.getX(), pos.getY(), pos.getZ());
 		}
 		return super.onBlockActivated(w, pos, state, p, f, hx, hy, hz);

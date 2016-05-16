@@ -1,8 +1,7 @@
 package lordfokas.stargatetech2.lib.tileentity.faces;
 
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 public interface IFacingProvider {
-	public FaceColor getColorForSide(int side);
-	public FaceColor getColorForDirection(ForgeDirection dir);
+	public FaceColor getColorForSide(EnumFacing side);
 }

@@ -1,15 +1,12 @@
 package lordfokas.stargatetech2.lib.packet;
 
-import io.netty.buffer.ByteBuf;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 
-import lordfokas.stargatetech2.ZZ_THRASH.PacketToggleMachineFace__THRASH;
-import lordfokas.stargatetech2.ZZ_THRASH.PacketUpdateMachineColors__THRASH;
+import io.netty.buffer.ByteBuf;
 import lordfokas.stargatetech2.modules.automation.PacketUpdateBusAddress;
 import lordfokas.stargatetech2.modules.automation.PacketUpdateBusEnabled;
 import lordfokas.stargatetech2.modules.enemy.PacketExceptionsUpdate;
@@ -21,14 +18,14 @@ import lordfokas.stargatetech2.reference.ModReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessage> implements IMessage,IMessageHandler<T, RES>{
 	/** Marks packets the server sends to the clients. */
@@ -78,10 +75,6 @@ public abstract class BasePacket<T extends BasePacket<T,RES>,RES extends IMessag
 		// v0.8+ packets
 		packetMap.add(PacketMachineConfiguration.class);
 		packetMap.add(PacketMachineRedstone.class);
-		
-		// old shit that needs to be deleted.
-		packetMap.add(PacketUpdateMachineColors__THRASH.class);
-		packetMap.add(PacketToggleMachineFace__THRASH.class);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
