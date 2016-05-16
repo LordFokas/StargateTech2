@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.world;
 
-import lordfokas.stargatetech2.lib.render.Color;
+import lordfokas.naquadria.render.Color;
 import lordfokas.stargatetech2.modules.ModuleWorld;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;

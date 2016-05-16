@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.core;
 
-import lordfokas.stargatetech2.lib.render.BaseISBRH;
+import lordfokas.naquadria.render.BaseISBRH;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.block.Block;

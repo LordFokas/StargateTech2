@@ -1,0 +1,20 @@
+package lordfokas.naquadria.tileentity.component.base;
+
+import lordfokas.naquadria.tileentity.component.base.TankComponentFiltered.IFluidFilter;
+import net.minecraftforge.fluids.Fluid;
+
+public class BasicFluidFilter implements IFluidFilter{
+	public Fluid[] fluids;
+	
+	public BasicFluidFilter(Fluid ... fluids){
+		this.fluids = fluids;
+	}
+	
+	@Override
+	public boolean matches(Fluid fluid) {
+		for(Fluid filter : fluids){
+			if(filter.getName().equals(fluid.getName())) return true;
+		}
+		return false;
+	}
+}

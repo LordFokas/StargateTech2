@@ -1,10 +1,10 @@
 package lordfokas.stargatetech2.modules.enemy;
 
-import lordfokas.stargatetech2.lib.packet.BasePacket.ClientToServer;
-import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
 import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.Side;
+import lordfokas.naquadria.network.PacketCoordinates;
+import lordfokas.naquadria.network.BasePacket.ClientToServer;
 
 @ClientToServer
 public class PacketExceptionsUpdate extends PacketCoordinates {

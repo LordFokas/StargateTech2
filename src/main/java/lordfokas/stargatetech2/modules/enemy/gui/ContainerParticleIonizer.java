@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.enemy.gui;
 
-import lordfokas.stargatetech2.lib.gui.BaseContainer;
+import lordfokas.naquadria.gui.BaseContainer;
 import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
 import lordfokas.stargatetech2.modules.enemy.TileParticleIonizer;
 import net.minecraft.entity.player.EntityPlayer;

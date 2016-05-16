@@ -2,7 +2,7 @@ package lordfokas.stargatetech2;
 
 import java.util.ArrayList;
 
-import lordfokas.stargatetech2.lib.packet.BasePacket;
+import lordfokas.naquadria.network.BasePacket;
 import lordfokas.stargatetech2.modules.IContentModule;
 import lordfokas.stargatetech2.modules.ModuleAutomation;
 import lordfokas.stargatetech2.modules.ModuleCore;

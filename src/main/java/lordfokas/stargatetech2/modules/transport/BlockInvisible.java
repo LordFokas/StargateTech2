@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.transport;
 
-import lordfokas.stargatetech2.lib.block.BaseBlock;
+import lordfokas.naquadria.block.BaseBlock;
 import lordfokas.stargatetech2.reference.BlockReference;
 import net.minecraft.world.IBlockAccess;
 

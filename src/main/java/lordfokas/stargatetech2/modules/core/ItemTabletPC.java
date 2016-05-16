@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.modules.core;
 
+import lordfokas.naquadria.item.BaseItem;
 import lordfokas.stargatetech2.api.ITabletAccess;
-import lordfokas.stargatetech2.lib.item.BaseItem;
 import lordfokas.stargatetech2.reference.ItemReference;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

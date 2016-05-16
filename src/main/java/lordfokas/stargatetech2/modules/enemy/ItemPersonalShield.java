@@ -3,7 +3,7 @@ package lordfokas.stargatetech2.modules.enemy;
 import java.util.ArrayList;
 import java.util.List;
 
-import lordfokas.stargatetech2.lib.item.BaseItem;
+import lordfokas.naquadria.item.BaseItem;
 import lordfokas.stargatetech2.reference.ItemReference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;

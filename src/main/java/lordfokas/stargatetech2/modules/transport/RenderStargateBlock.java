@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.transport;
 
-import lordfokas.stargatetech2.lib.render.BaseISBRH;
+import lordfokas.naquadria.render.BaseISBRH;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;

@@ -2,7 +2,7 @@ package lordfokas.stargatetech2.modules.core;
 
 import java.util.List;
 
-import lordfokas.stargatetech2.lib.item.BaseItem;
+import lordfokas.naquadria.item.BaseItem;
 import lordfokas.stargatetech2.lib.util.NoDefaultTexture;
 import lordfokas.stargatetech2.reference.ItemReference;
 import lordfokas.stargatetech2.reference.TextureReference;

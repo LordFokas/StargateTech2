@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import lordfokas.naquadria.tileentity.IRedstoneAware;
+import lordfokas.naquadria.tileentity.ITile;
+import lordfokas.naquadria.tileentity.ITileContext;
 import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
-import lordfokas.stargatetech2.lib.tileentity.IRedstoneAware;
-import lordfokas.stargatetech2.lib.tileentity.ITile;
-import lordfokas.stargatetech2.lib.tileentity.ITileContext;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
 import lordfokas.stargatetech2.modules.enemy.BlockShield;
 import lordfokas.stargatetech2.modules.enemy.IShieldControllerProvider;

@@ -1,9 +1,9 @@
 package lordfokas.stargatetech2.modules.transport;
 
+import lordfokas.naquadria.network.PacketCoordinates;
+import lordfokas.naquadria.network.BasePacket.ClientToServer;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.api.stargate.ITileStargate;
-import lordfokas.stargatetech2.lib.packet.BasePacket.ClientToServer;
-import lordfokas.stargatetech2.lib.packet.PacketCoordinates;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;

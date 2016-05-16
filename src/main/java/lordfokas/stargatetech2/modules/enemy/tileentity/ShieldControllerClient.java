@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.modules.enemy.tileentity;
 
-import lordfokas.stargatetech2.lib.tileentity.ITile;
-import lordfokas.stargatetech2.lib.tileentity.ITileContext;
+import lordfokas.naquadria.tileentity.ITile;
+import lordfokas.naquadria.tileentity.ITileContext;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.IFluidTank;
 

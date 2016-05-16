@@ -1,8 +1,8 @@
 package lordfokas.stargatetech2.modules.automation;
 
+import lordfokas.naquadria.block.BaseBlock;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
-import lordfokas.stargatetech2.lib.block.BaseBlock;
 import lordfokas.stargatetech2.reference.BlockReference;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;

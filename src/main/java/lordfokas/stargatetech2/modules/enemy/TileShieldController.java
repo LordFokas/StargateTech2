@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.modules.enemy;
 
-import lordfokas.stargatetech2.lib.tileentity.TileEntityOwnedMachine;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
+import lordfokas.naquadria.tileentity.TileEntityOwnedMachine;
+import lordfokas.naquadria.tileentity.facing.FaceColor;
 import lordfokas.stargatetech2.modules.automation.ISyncBusDevice;
 import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerClient;
 import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerServer;

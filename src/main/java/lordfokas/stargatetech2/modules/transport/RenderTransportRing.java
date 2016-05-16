@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.transport;
 
-import lordfokas.stargatetech2.lib.render.BaseTESR;
+import lordfokas.naquadria.render.BaseTESR;
 import lordfokas.stargatetech2.modules.transport.TileTransportRing.RingRenderData;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.Vec3Int;

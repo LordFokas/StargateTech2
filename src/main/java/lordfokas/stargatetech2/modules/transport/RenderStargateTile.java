@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.transport;
 
-import lordfokas.stargatetech2.lib.render.BaseTESR;
+import lordfokas.naquadria.render.BaseTESR;
 import lordfokas.stargatetech2.modules.transport.TileStargate.RenderData;
 import lordfokas.stargatetech2.modules.transport.TileStargate.RenderData.ChevronData;
 import lordfokas.stargatetech2.modules.transport.stargates.SymbolCoordinates;

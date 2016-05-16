@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.util;
 
-import lordfokas.stargatetech2.lib.gui.BaseContainer;
+import lordfokas.naquadria.gui.BaseContainer;
 import lordfokas.stargatetech2.modules.enemy.TileParticleIonizer;
 import lordfokas.stargatetech2.modules.enemy.TileShieldController;
 import lordfokas.stargatetech2.modules.enemy.gui.ContainerParticleIonizer;

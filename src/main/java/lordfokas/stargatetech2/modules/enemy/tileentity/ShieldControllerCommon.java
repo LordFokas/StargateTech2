@@ -1,16 +1,16 @@
 package lordfokas.stargatetech2.modules.enemy.tileentity;
 
+import lordfokas.naquadria.tileentity.ISyncedGUI;
+import lordfokas.naquadria.tileentity.ITile;
+import lordfokas.naquadria.tileentity.ITileContext;
+import lordfokas.naquadria.tileentity.component.IComponentProvider;
+import lordfokas.naquadria.tileentity.component.IComponentRegistrar;
+import lordfokas.naquadria.tileentity.component.base.BasicFluidFilter;
+import lordfokas.naquadria.tileentity.component.base.BusComponent;
+import lordfokas.naquadria.tileentity.component.base.TankComponentFiltered;
+import lordfokas.naquadria.tileentity.facing.FaceColor;
+import lordfokas.naquadria.tileentity.facing.FaceColorFilter;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
-import lordfokas.stargatetech2.lib.tileentity.ISyncedGUI;
-import lordfokas.stargatetech2.lib.tileentity.ITile;
-import lordfokas.stargatetech2.lib.tileentity.ITileContext;
-import lordfokas.stargatetech2.lib.tileentity.component.IComponentProvider;
-import lordfokas.stargatetech2.lib.tileentity.component.IComponentRegistrar;
-import lordfokas.stargatetech2.lib.tileentity.component.base.BasicFluidFilter;
-import lordfokas.stargatetech2.lib.tileentity.component.base.BusComponent;
-import lordfokas.stargatetech2.lib.tileentity.component.base.TankComponentFiltered;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColorFilter;
 import lordfokas.stargatetech2.modules.enemy.ShieldControllerBusDriver;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;

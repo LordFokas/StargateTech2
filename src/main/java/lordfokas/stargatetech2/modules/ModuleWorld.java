@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.modules;
 
+import lordfokas.naquadria.render.Color;
 import lordfokas.stargatetech2.StargateTech2;
-import lordfokas.stargatetech2.lib.render.Color;
 import lordfokas.stargatetech2.modules.world.AncientWorldGenerator;
 import lordfokas.stargatetech2.modules.world.BlockLanteanWall;
 import lordfokas.stargatetech2.util.Stacks;

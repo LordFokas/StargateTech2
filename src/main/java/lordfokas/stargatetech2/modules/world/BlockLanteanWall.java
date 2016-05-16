@@ -2,8 +2,8 @@ package lordfokas.stargatetech2.modules.world;
 
 import java.util.List;
 
-import lordfokas.stargatetech2.lib.block.BaseBlock;
-import lordfokas.stargatetech2.lib.render.Color;
+import lordfokas.naquadria.block.BaseBlock;
+import lordfokas.naquadria.render.Color;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;

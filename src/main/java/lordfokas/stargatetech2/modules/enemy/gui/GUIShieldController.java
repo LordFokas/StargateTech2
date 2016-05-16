@@ -1,13 +1,13 @@
 package lordfokas.stargatetech2.modules.enemy.gui;
 
+import lordfokas.naquadria.gui.BaseContainer;
+import lordfokas.naquadria.gui.BaseGUI;
+import lordfokas.naquadria.gui.ElementCheckBox;
+import lordfokas.naquadria.gui.ElementListBox;
+import lordfokas.naquadria.gui.ElementTextBox;
+import lordfokas.naquadria.gui.ListBoxText;
+import lordfokas.naquadria.gui.TabAbstractBus;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
-import lordfokas.stargatetech2.lib.gui.BaseContainer;
-import lordfokas.stargatetech2.lib.gui.BaseGUI;
-import lordfokas.stargatetech2.lib.gui.ElementCheckBox;
-import lordfokas.stargatetech2.lib.gui.ElementListBox;
-import lordfokas.stargatetech2.lib.gui.ElementTextBox;
-import lordfokas.stargatetech2.lib.gui.ListBoxText;
-import lordfokas.stargatetech2.lib.gui.TabAbstractBus;
 import lordfokas.stargatetech2.modules.enemy.PacketExceptionsUpdate;
 import lordfokas.stargatetech2.modules.enemy.PacketPermissionsUpdate;
 import lordfokas.stargatetech2.modules.enemy.TileShieldController;

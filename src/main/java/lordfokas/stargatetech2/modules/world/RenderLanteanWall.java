@@ -1,7 +1,7 @@
 package lordfokas.stargatetech2.modules.world;
 
-import lordfokas.stargatetech2.lib.render.BaseISBRH;
-import lordfokas.stargatetech2.lib.render.Color;
+import lordfokas.naquadria.render.BaseISBRH;
+import lordfokas.naquadria.render.Color;
 import lordfokas.stargatetech2.modules.ModuleWorld;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;

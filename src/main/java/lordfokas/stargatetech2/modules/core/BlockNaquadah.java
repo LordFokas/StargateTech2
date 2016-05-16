@@ -2,7 +2,7 @@ package lordfokas.stargatetech2.modules.core;
 
 import java.util.List;
 
-import lordfokas.stargatetech2.lib.block.BaseBlock;
+import lordfokas.naquadria.block.BaseBlock;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;

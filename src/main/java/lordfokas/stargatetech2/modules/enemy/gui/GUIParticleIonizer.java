@@ -2,6 +2,7 @@ package lordfokas.stargatetech2.modules.enemy.gui;
 
 import java.util.List;
 
+import lordfokas.naquadria.tileentity.facing.FaceColor;
 import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED;
 import lordfokas.stargatetech2.ZZ_THRASH.BaseGUI__OLD_AND_FLAWED.ITab.TabColor;
 import lordfokas.stargatetech2.ZZ_THRASH.BaseGauge__OLD_AND_FLAWED.PowerGauge;
@@ -9,7 +10,6 @@ import lordfokas.stargatetech2.ZZ_THRASH.BaseGauge__OLD_AND_FLAWED.TankGauge;
 import lordfokas.stargatetech2.ZZ_THRASH.TabConfiguration__THRASH;
 import lordfokas.stargatetech2.ZZ_THRASH.TabMachineRecipes__THRASH;
 import lordfokas.stargatetech2.ZZ_THRASH.TabMachineRecipes__THRASH.IMachineRecipe;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.modules.enemy.TileParticleIonizer;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.reference.TextureReference;

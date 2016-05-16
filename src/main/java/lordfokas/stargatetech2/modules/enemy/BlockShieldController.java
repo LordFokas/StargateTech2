@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.enemy;
 
-import lordfokas.stargatetech2.lib.block.BlockMachine;
+import lordfokas.naquadria.block.BlockMachine;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.util.GUIHandler.Screen;
 

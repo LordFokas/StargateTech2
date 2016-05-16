@@ -2,9 +2,9 @@ package lordfokas.stargatetech2.modules.enemy;
 
 import java.util.LinkedList;
 
+import lordfokas.naquadria.tileentity.facing.FaceColor;
 import lordfokas.stargatetech2.ZZ_THRASH.TileMachine__THRASH;
 import lordfokas.stargatetech2.api.shields.IShieldable;
-import lordfokas.stargatetech2.lib.tileentity.faces.FaceColor;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
 import lordfokas.stargatetech2.util.ConfigServer;
 import lordfokas.stargatetech2.util.Vec3Int;

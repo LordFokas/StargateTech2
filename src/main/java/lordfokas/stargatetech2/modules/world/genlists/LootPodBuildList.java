@@ -2,7 +2,7 @@ package lordfokas.stargatetech2.modules.world.genlists;
 
 import java.util.Random;
 
-import lordfokas.stargatetech2.lib.render.Color;
+import lordfokas.naquadria.render.Color;
 import lordfokas.stargatetech2.modules.ModuleWorld;
 import lordfokas.stargatetech2.modules.world.LootGenerator;
 import lordfokas.stargatetech2.modules.world.LootGenerator.LootLevel;

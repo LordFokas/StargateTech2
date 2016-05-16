@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.ZZ_THRASH;
 
-import lordfokas.stargatetech2.lib.block.BaseBlock;
+import lordfokas.naquadria.block.BaseBlock;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
