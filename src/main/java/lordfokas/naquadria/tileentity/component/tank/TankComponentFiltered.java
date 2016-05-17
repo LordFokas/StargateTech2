@@ -1,13 +1,9 @@
-package lordfokas.naquadria.tileentity.component.base;
+package lordfokas.naquadria.tileentity.component.tank;
 
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidTank;
 
 public class TankComponentFiltered extends TankComponent{
-	public static interface IFluidFilter{
-		public boolean matches(Fluid fluid);
-	}
-	
 	public final IFluidFilter filter;
 	
 	public TankComponentFiltered(FluidTank tank, IFluidFilter filter) {

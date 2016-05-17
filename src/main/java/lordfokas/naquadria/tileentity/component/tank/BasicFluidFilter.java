@@ -1,6 +1,5 @@
-package lordfokas.naquadria.tileentity.component.base;
+package lordfokas.naquadria.tileentity.component.tank;
 
-import lordfokas.naquadria.tileentity.component.base.TankComponentFiltered.IFluidFilter;
 import net.minecraftforge.fluids.Fluid;
 
 public class BasicFluidFilter implements IFluidFilter{
