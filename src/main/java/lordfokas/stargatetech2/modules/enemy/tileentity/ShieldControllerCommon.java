@@ -5,7 +5,7 @@ import lordfokas.naquadria.tileentity.ITile;
 import lordfokas.naquadria.tileentity.ITileContext;
 import lordfokas.naquadria.tileentity.component.IComponentProvider;
 import lordfokas.naquadria.tileentity.component.IComponentRegistrar;
-import lordfokas.naquadria.tileentity.component.tank.BasicFluidFilter;
+import lordfokas.naquadria.tileentity.component.tank.FluidFilter;
 import lordfokas.naquadria.tileentity.component.tank.BusComponent;
 import lordfokas.naquadria.tileentity.component.tank.TankComponentFiltered;
 import lordfokas.naquadria.tileentity.facing.FaceColor;
@@ -26,7 +26,7 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	
 	@Override
 	public void registerComponents(IComponentRegistrar registrar) {
-		TankComponentFiltered tankComponent = new TankComponentFiltered(tank, false, new BasicFluidFilter(FluidRegistry.WATER));
+		TankComponentFiltered tankComponent = new TankComponentFiltered(tank, false, new FluidFilter(FluidRegistry.WATER));
 		BusComponent busComponent = new BusComponent(driver);
 		
 		registrar.registerComponent(tankComponent.setInputFilter(new FaceColorFilter.MatchColors(FaceColor.BLUE)));
