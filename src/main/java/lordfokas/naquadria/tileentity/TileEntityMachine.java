@@ -440,11 +440,12 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, ICompon
 		NBTTagCompound components = nbt.getCompoundTag("components");
 		int size = components.getInteger("size");
 		for(int i = 0; i < size; i++){
-			allComponents.get(i).readFromNBT(components.getCompoundTag("comp_" + i));
+			allComponents.get(i).deserializeNBT(components.getCompoundTag("comp_" + i));
 		}
 		if(side.isClient() && worldObj != null){
 			worldObj.markBlockForUpdate(pos);
 		}
+		cacheCapabilities();
 	}
 	
 	@Override
@@ -466,7 +467,7 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, ICompon
 		nbt.setTag("facing", facingNBT);
 		NBTTagCompound components = new NBTTagCompound();
 		for(int i = 0; i < allComponents.size(); i++){
-			components.setTag("comp_" + i, allComponents.get(i).writeToNBT(new NBTTagCompound()));
+			components.setTag("comp_" + i, allComponents.get(i).serializeNBT());
 		}
 		components.setInteger("size", allComponents.size());
 		nbt.setTag("components", components);

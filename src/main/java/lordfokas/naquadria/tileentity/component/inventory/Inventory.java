@@ -2,9 +2,10 @@ package lordfokas.naquadria.tileentity.component.inventory;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.IItemHandler;
 
-public class Inventory implements IItemHandler{
+public class Inventory implements IItemHandler, INBTSerializable<NBTTagCompound>{
 	private ItemStack[] inventory;
 	
 	public Inventory(int size){
@@ -53,24 +54,27 @@ public class Inventory implements IItemHandler{
 		if(!simulate) inventory[slot] = (stack.stackSize < 1) ? null : stack;
 		return extracted;
 	}
-	
-	public NBTTagCompound writeToNBT(NBTTagCompound inventoryNBT){
-		inventoryNBT.setInteger("size", inventory.length);
+
+	@Override
+	public NBTTagCompound serializeNBT(){
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setInteger("size", inventory.length);
 		for(int slot = 0; slot < inventory.length; slot++){
 			if(inventory[slot] != null){
 				NBTTagCompound stack = new NBTTagCompound();
 				inventory[slot].writeToNBT(stack);
-				inventoryNBT.setTag("slot_" + slot, stack);
+				nbt.setTag("slot_" + slot, stack);
 			}
 		}
-		return inventoryNBT;
+		return nbt;
 	}
-	
-	public void readFromNBT(NBTTagCompound inventoryNBT){
-		inventory = new ItemStack[inventoryNBT.getInteger("size")];
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt) {
+		inventory = new ItemStack[nbt.getInteger("size")];
 		for(int slot = 0; slot < inventory.length; slot++){
-			if(inventoryNBT.hasKey("slot_" + slot)){
-				inventory[slot] = ItemStack.loadItemStackFromNBT(inventoryNBT.getCompoundTag("slot_" + slot));
+			if(nbt.hasKey("slot_" + slot)){
+				inventory[slot] = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("slot_" + slot));
 			}
 		}
 	}

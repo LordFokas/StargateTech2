@@ -1,9 +1,9 @@
 package lordfokas.naquadria.tileentity.component.inventory;
 
 import lordfokas.naquadria.tileentity.component.CapabilityComponent;
+import lordfokas.naquadria.tileentity.component.IFilter;
 import lordfokas.naquadria.tileentity.facing.FaceColor;
 import lordfokas.naquadria.tileentity.facing.FaceColorFilter;
-import lordfokas.naquadria.tileentity.facing.IFaceColorFilter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -14,14 +14,14 @@ import net.minecraftforge.items.IItemHandler;
 public class InventoryComponent extends CapabilityComponent<IItemHandler>{
 	@CapabilityInject(IItemHandler.class)
 	private static Capability<IItemHandler> itemHandlerCapability = null;
-	protected final IFaceColorFilter filter;
+	protected final IFilter<FaceColor> filter;
 	protected final Inventory inventory;
 	
 	public InventoryComponent(int size){
 		this(size, FaceColorFilter.ANY);
 	}
 	
-	public InventoryComponent(int size, IFaceColorFilter filter){
+	public InventoryComponent(int size, IFilter<FaceColor> filter){
 		this.inventory = new Inventory(size);
 		this.filter = filter;
 	}
@@ -31,30 +31,30 @@ public class InventoryComponent extends CapabilityComponent<IItemHandler>{
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound nbt){
-		inventory.readFromNBT(nbt);
-	}
-	
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
-		return inventory.writeToNBT(nbt);
-	}
-	
-	@Override
 	public Capability<IItemHandler> getCapability(){
 		return itemHandlerCapability;
 	}
 	
 	@Override
 	public IItemHandler getCapability(EnumFacing side) {
-		return filter.doesColorMatch(getColor(side)) ? inventory : null;
+		return filter.matches(getColor(side)) ? inventory : null;
+	}
+	
+	@Override
+	public NBTTagCompound serializeNBT(){
+		return inventory.serializeNBT();
+	}
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt){
+		inventory.deserializeNBT(nbt);
 	}
 	
 	public static class Advanced extends InventoryComponent{
 		private final IItemHandler input, output;
-		private final IFaceColorFilter outFilter;
+		private final IFilter<FaceColor> outFilter;
 		
-		public Advanced(int size, IFaceColorFilter input, IFaceColorFilter output){
+		public Advanced(int size, IFilter<FaceColor> input, IFilter<FaceColor> output){
 			super(size, input);
 			this.outFilter = output;
 			this.input = new Handler(inventory, true);
@@ -64,8 +64,8 @@ public class InventoryComponent extends CapabilityComponent<IItemHandler>{
 		@Override
 		public IItemHandler getCapability(EnumFacing side){
 			FaceColor color = getColor(side);
-			if(filter.doesColorMatch(color)) return input;
-			if(outFilter.doesColorMatch(color)) return output;
+			if(filter.matches(color)) return input;
+			if(outFilter.matches(color)) return output;
 			return null;
 		}
 	}

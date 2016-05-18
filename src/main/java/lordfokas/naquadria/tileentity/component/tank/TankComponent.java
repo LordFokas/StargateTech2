@@ -1,32 +1,30 @@
 package lordfokas.naquadria.tileentity.component.tank;
 
-import lordfokas.naquadria.tileentity.ISyncedGUI;
 import lordfokas.naquadria.tileentity.component.CapabilityComponent;
+import lordfokas.naquadria.tileentity.component.IFilter;
 import lordfokas.naquadria.tileentity.facing.FaceColor;
 import lordfokas.naquadria.tileentity.facing.FaceColorFilter;
-import lordfokas.naquadria.tileentity.facing.IFaceColorFilter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class TankComponent extends CapabilityComponent<IFluidHandler> implements ISyncedGUI.Flow{
+public class TankComponent extends CapabilityComponent<IFluidHandler> /*implements ISyncedGUI.Flow*/{
 	private static final int[] KEYS = new int[]{0, 1};
 	@CapabilityInject(IFluidHandler.class)
 	private static Capability<IFluidHandler> fluidHandlerCapability;
-	protected final IFaceColorFilter filter;
+	protected final IFilter<FaceColor> filter;
 	protected Tank tank;
 	
 	public TankComponent(int size){
 		this(size, FaceColorFilter.ANY);
 	}
 	
-	public TankComponent(int size, IFaceColorFilter filter){
+	public TankComponent(int size, IFilter<FaceColor> filter){
 		this.tank = new Tank(size);
 		this.filter = filter;
 	}
@@ -37,7 +35,7 @@ public class TankComponent extends CapabilityComponent<IFluidHandler> implements
 	
 	@Override
 	public IFluidHandler getCapability(EnumFacing side){
-		return filter.doesColorMatch(getColor(side)) ? tank : null;
+		return filter.matches(getColor(side)) ? tank : null;
 	}
 
 	@Override
@@ -55,7 +53,7 @@ public class TankComponent extends CapabilityComponent<IFluidHandler> implements
 		tank.deserializeNBT(nbt);
 	}
 	
-	@Override
+	/*@Override // FIXME redo GUI Sync
 	public int[] getKeyArray(){
 		return KEYS;
 	}
@@ -75,13 +73,13 @@ public class TankComponent extends CapabilityComponent<IFluidHandler> implements
 		Fluid fluid = f == -1 ? (tank.getFluid() == null ? null : tank.getFluid().getFluid()) : FluidRegistry.getFluid(f);
 		int amount = a == -1 ? tank.getFluidAmount() : a;
 		tank.setFluid(fluid == null ? null : new FluidStack(fluid, amount));
-	}
+	}*/
 	
 	public static class Advanced extends TankComponent{
 		private final IFluidHandler input, output;
-		private final IFaceColorFilter outFilter;
+		private final IFilter<FaceColor> outFilter;
 		
-		public Advanced(int size, IFaceColorFilter input, IFaceColorFilter output){
+		public Advanced(int size, IFilter<FaceColor> input, IFilter<FaceColor> output){
 			super(size, input);
 			this.outFilter = output;
 			this.input = new Handler(tank, true);
@@ -91,8 +89,8 @@ public class TankComponent extends CapabilityComponent<IFluidHandler> implements
 		@Override
 		public IFluidHandler getCapability(EnumFacing side){
 			FaceColor color = getColor(side);
-			if(filter.doesColorMatch(color)) return input;
-			if(outFilter.doesColorMatch(color)) return output;
+			if(filter.matches(color)) return input;
+			if(outFilter.matches(color)) return output;
 			return null;
 		}
 	}
