@@ -4,14 +4,13 @@ import java.util.List;
 
 import lordfokas.naquadria.block.BaseBlock;
 import lordfokas.stargatetech2.reference.BlockReference;
-import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.IconRegistry;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -33,19 +32,19 @@ public class BlockNaquadah extends BaseBlock {
 		list.add(new ItemStack(this, 1, BLOCK));
 	}
 	
-	@Override
+	/*@Override
 	public IIcon getBaseIcon(int side, int meta){
 		return meta != 0 ? blockIcon : IconRegistry.blockIcons.get(TextureReference.NAQUADAH_ORE);
+	}*/
+	
+	@Override
+	public int damageDropped(IBlockState state){
+		return -0x8000; // FIXME dafuq does this do now?
 	}
 	
 	@Override
-	public int damageDropped(int meta){
-		return meta;
-	}
-	
-	@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase e, ItemStack stack){
-		w.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
+	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase e, ItemStack stack){
+		w.setBlockMetadataWithNotify(pos, stack.getItemDamage(), 2);
 	}
 	
 	@Override

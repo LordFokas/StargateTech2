@@ -1,16 +1,8 @@
 package lordfokas.stargatetech2.modules.core;
 
-import lordfokas.naquadria.render.BaseISBRH;
-import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.IconRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-
-public class RenderNaquadah extends BaseISBRH {
-	private static final RenderNaquadah INSTANCE = new RenderNaquadah();
+// TODO remove after rendering is fixed
+public class RenderNaquadah /*extends BaseISBRH*/ {
+	/*private static final RenderNaquadah INSTANCE = new RenderNaquadah();
 	
 	public static RenderNaquadah instance(){
 		return INSTANCE;
@@ -50,5 +42,5 @@ public class RenderNaquadah extends BaseISBRH {
 			renderer.renderFaceZPos(block, x, y, z, glow);
 		}
 		return true;
-	}
+	}*/
 }

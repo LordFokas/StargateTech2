@@ -6,6 +6,8 @@ import lordfokas.stargatetech2.reference.ItemReference;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class ItemTabletPC extends BaseItem {
@@ -15,10 +17,10 @@ public class ItemTabletPC extends BaseItem {
 	}
 	
 	@Override
-	public boolean onItemUseFirst(ItemStack s, EntityPlayer p, World w, int x, int y, int z, int d, float a, float b, float c){
-		Block block = w.getBlock(x, y, z);
+	public boolean onItemUseFirst(ItemStack s, EntityPlayer p, World w, BlockPos pos, EnumFacing side, float a, float b, float c){
+		Block block = w.getBlockState(pos).getBlock();
 		if(block instanceof ITabletAccess){
-			return ((ITabletAccess)block).onTabletAccess(p, w, x, y, z);
+			return ((ITabletAccess)block).onTabletAccess(p, w, pos);
 		}
 		return false;
     }

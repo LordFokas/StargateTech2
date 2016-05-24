@@ -1,6 +1,7 @@
 package lordfokas.stargatetech2.api;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 /**
@@ -18,10 +19,8 @@ public interface ITabletAccess {
 	 * 
 	 * @param player The player activating the block.
 	 * @param world The world the block is in.
-	 * @param x The block's X coordinate.
-	 * @param y The block's Y coordinate.
-	 * @param z The block's Z coordinate.
+	 * @param pos the block's position.
 	 * @return True if a special action was executed, false otherwise.
 	 */
-	public boolean onTabletAccess(EntityPlayer player, World world, int x, int y, int z);
+	public boolean onTabletAccess(EntityPlayer player, World world, BlockPos pos);
 }

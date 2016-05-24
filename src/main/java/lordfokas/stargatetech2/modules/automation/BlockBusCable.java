@@ -28,9 +28,8 @@ public class BlockBusCable extends BaseBlock {
 		return false;
 	}*/
 	
-	// FIXME maybe switch position to BlockPos ?
-	public Connection getBusConnection(World world, int x, int y, int z, EnumFacing d){
-		BlockPos pos = new BlockPos(x + d.getFrontOffsetX(), y + d.getFrontOffsetY(), z + d.getFrontOffsetZ());
+	public Connection getBusConnection(World world, BlockPos pos, EnumFacing d){
+		pos = pos.offset(d);
 		if(world.getBlockState(pos).getBlock() == this) return Connection.CABLE;
 		TileEntity te = world.getTileEntity(pos);
 		if(te instanceof IBusDevice){

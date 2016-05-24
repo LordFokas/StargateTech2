@@ -6,30 +6,30 @@ import java.util.List;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.modules.ModuleAutomation;
-import lordfokas.stargatetech2.util.Vec3Int;
 import lordfokas.stargatetech2.util.Vec4Int;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class RecursiveBusRemapper {
-	public static void scan(World w, Vec3Int start){
+	public static void scan(World w, BlockPos start){
 		if(w.isRemote) return;
 		scan(w, start, true);
 	}
 	
-	private static void scan(World w, Vec3Int start, boolean allowMachine){
-		if(w.getBlock(start.x, start.y, start.z) instanceof BlockBusCable){
+	private static void scan(World w, BlockPos start, boolean allowMachine){
+		if(w.getBlockState(start).getBlock() instanceof BlockBusCable){
 			scanCable(w, start);
-		}else if(w.getTileEntity(start.x, start.y, start.z) instanceof IBusDevice && allowMachine){
-			for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS){
+		}else if(w.getTileEntity(start) instanceof IBusDevice && allowMachine){
+			for(EnumFacing direction : EnumFacing.values()){
 				scan(w, start.offset(direction), false);
 			}
 		}
 	}
 	
-	private static void scanCable(World w, Vec3Int start){
-		ArrayList<Vec3Int> memory = new ArrayList();
+	private static void scanCable(World w, BlockPos start){
+		ArrayList<BlockPos> memory = new ArrayList();
 		ArrayList<Vec4Int> interfaces = new ArrayList();
 		propagateScan(w, start, memory, interfaces);
 		ArrayList ifmemory = new ArrayList();
@@ -56,13 +56,13 @@ public class RecursiveBusRemapper {
 		}
 	}
 	
-	private static void propagateScan(World w, Vec3Int location, List<Vec3Int> memory, List<Vec4Int> interfaces){
+	private static void propagateScan(World w, BlockPos location, List<BlockPos> memory, List<Vec4Int> interfaces){
 		if(!memory.contains(location)){
 			memory.add(location);
-			for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS){
-				Connection connection = ModuleAutomation.busCable.getBusConnection(w, location.x, location.y, location.z, dir);
+			for(EnumFacing dir : EnumFacing.values()){
+				Connection connection = ModuleAutomation.busCable.getBusConnection(w, location, dir);
 				if(connection.isConnected()){
-					Vec3Int next = location.offset(dir);
+					BlockPos next = location.offset(dir);
 					if(connection.hasPlug()){
 						interfaces.add(new Vec4Int(dir.getOpposite().ordinal(), next.x, next.y, next.z));
 					}else{
