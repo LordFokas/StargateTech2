@@ -14,6 +14,7 @@ public class BaseContainer extends Container {
 	public final BaseTileEntity te;
 	private TIntIntHashMap lastValues;
 	
+	//TODO remove this
 	/** @deprecated THIS WILL CRASH!! */
 	public BaseContainer(){
 		throw new RuntimeException("UPDATE 'YER MACHINES BIATCH!!");
