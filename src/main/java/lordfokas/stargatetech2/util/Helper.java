@@ -3,7 +3,7 @@ package lordfokas.stargatetech2.util;
 import java.io.File;
 
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.DimensionManager;
 
 public class Helper {

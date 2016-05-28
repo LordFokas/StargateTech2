@@ -9,7 +9,7 @@ public class MaterialNaquadah extends Material {
 	public static final MaterialNaquadah breakable = new MaterialNaquadah(false);
 	
 	protected MaterialNaquadah(boolean requiresTool){
-		super(MapColor.ironColor);
+		super(MapColor.IRON);
 		this.setImmovableMobility();
 		if(requiresTool){
 			this.setRequiresTool();

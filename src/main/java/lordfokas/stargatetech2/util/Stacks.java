@@ -22,18 +22,18 @@ public class Stacks {
 	public static void init(){
 		//##########################################################################################
 		// VANILLA
-		book = new ItemStack(Items.book);
-		bucket = new ItemStack(Items.bucket);
-		chest = new ItemStack(Blocks.chest);
-		glass = new ItemStack(Blocks.glass_pane);
-		glowBlock = new ItemStack(Blocks.glowstone);
-		glowDust = new ItemStack(Items.glowstone_dust);
-		pearl = new ItemStack(Items.ender_pearl);
-		redBlock = new ItemStack(Blocks.redstone_block);
-		redDust = new ItemStack(Items.redstone);
-		slab = new ItemStack(Blocks.stone_slab);
-		stick = new ItemStack(Items.stick);
-		stone = new ItemStack(Blocks.stone);
+		book = new ItemStack(Items.BOOK);
+		bucket = new ItemStack(Items.BUCKET);
+		chest = new ItemStack(Blocks.CHEST);
+		glass = new ItemStack(Blocks.GLASS_PANE);
+		glowBlock = new ItemStack(Blocks.GLOWSTONE);
+		glowDust = new ItemStack(Items.GLOWSTONE_DUST);
+		pearl = new ItemStack(Items.ENDER_PEARL);
+		redBlock = new ItemStack(Blocks.REDSTONE_BLOCK);
+		redDust = new ItemStack(Items.REDSTONE);
+		slab = new ItemStack(Blocks.STONE_SLAB);
+		stick = new ItemStack(Items.STICK);
+		stone = new ItemStack(Blocks.STONE);
 		
 		//##########################################################################################
 		// THERMAl EXPANSION 4

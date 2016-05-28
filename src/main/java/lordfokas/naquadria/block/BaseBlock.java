@@ -4,19 +4,21 @@ import lordfokas.stargatetech2.api.bus.BusEvent;
 import lordfokas.stargatetech2.util.MaterialNaquadah;
 import lordfokas.stargatetech2.util.StargateTab;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BaseBlock extends Block{
-	private BlockRenderType renderType = BlockRenderType.STANDARD;
-	private boolean isAbstractBus = false;
+	private EnumBlockRenderType renderType = EnumBlockRenderType.MODEL;
+	private boolean isAbstractBus = false; // FIXME lib code should not refer to mod code.
 	private String unlocalized;
 	
 	public BaseBlock(String uName){
@@ -38,13 +40,13 @@ public class BaseBlock extends Block{
 		registerBlock();
 	}
 	
-	public final void setRenderType(BlockRenderType renderType){
+	public final void setRenderType(EnumBlockRenderType renderType){
 		this.renderType = renderType;
 	}
 	
 	@Override
-	public final int getRenderType() {
-		return renderType.value;
+	public final EnumBlockRenderType getRenderType(IBlockState state) {
+		return renderType;
 	}
 	
 	// MEH
@@ -54,8 +56,8 @@ public class BaseBlock extends Block{
 	}
 	
 	@Override
-	public int getMobilityFlag(){
-		return 2;
+	public EnumPushReaction getMobilityFlag(IBlockState state){
+		return EnumPushReaction.NORMAL;
 	}
 	
 	protected void setIsAbstractBusBlock(){

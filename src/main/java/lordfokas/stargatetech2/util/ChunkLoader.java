@@ -12,7 +12,7 @@ import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.modules.transport.stargates.StargateNetwork;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.LoadingCallback;
@@ -21,6 +21,7 @@ import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.server.FMLServerHandler;
 
 public final class ChunkLoader implements LoadingCallback{
 	public static final ChunkLoader instance = new ChunkLoader();
@@ -57,7 +58,7 @@ public final class ChunkLoader implements LoadingCallback{
 	public static void unload(){
 		ArrayList<Integer> dims = new ArrayList();
 		for(Ticket ticket : instance.tickets){
-			Integer dim = ticket.world.provider.getDimensionId();
+			Integer dim = ticket.world.provider.getDimension();
 			if(!dims.contains(dim)){
 				dims.add(dim);
 			}
@@ -82,8 +83,8 @@ public final class ChunkLoader implements LoadingCallback{
 	
 	@SubscribeEvent
 	public void forceReloadChunks(WorldEvent.Load evt){
-		if(evt.world.provider.getDimensionId() == 0){
-			MinecraftServer server = MinecraftServer.getServer();
+		if(evt.getWorld().provider.getDimension() == 0){
+			MinecraftServer server = FMLServerHandler.instance().getServer();
 			for(Integer dim : instance.dims){
 				server.worldServerForDimension(dim.intValue());
 			}
@@ -101,28 +102,28 @@ public final class ChunkLoader implements LoadingCallback{
 			for(int c = 0; c < chunks; c++){
 				int x = data.getInteger("cX_" + c);
 				int z = data.getInteger("cZ_" + c);
-				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(x, z));
+				ForgeChunkManager.forceChunk(ticket, new ChunkPos(x, z));
 			}
 		}
 	}
 	
 	public static long load9Chunks(World world, int x, int z){
-		ArrayList<ChunkCoordIntPair> chunks = new ArrayList();
+		ArrayList<ChunkPos> chunks = new ArrayList();
 		for(int i = -1; i < 2; i++){
 			for(int j = -1; j < 2; j++){
-				chunks.add(new ChunkCoordIntPair(x + i, z + j));
+				chunks.add(new ChunkPos(x + i, z + j));
 			}
 		}
 		return loadChunks(world, chunks);
 	}
 	
-	public synchronized static long loadChunks(World world, List<ChunkCoordIntPair> chunks){
+	public synchronized static long loadChunks(World world, List<ChunkPos> chunks){
 		Ticket ticket = ForgeChunkManager.requestTicket(StargateTech2.instance, world, Type.NORMAL);
 		if(ticket != null){
 			NBTTagCompound data = ticket.getModData();
 			int chunkID = 0;
 			data.setInteger("chunks", chunks.size());
-			for(ChunkCoordIntPair chunk : chunks){
+			for(ChunkPos chunk : chunks){
 				ForgeChunkManager.forceChunk(ticket, chunk);
 				data.setInteger("cX_" + chunkID, chunk.chunkXPos);
 				data.setInteger("cZ_" + chunkID, chunk.chunkZPos);

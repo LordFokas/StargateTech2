@@ -1,14 +1,11 @@
 package lordfokas.stargatetech2.util;
 
 import lordfokas.naquadria.gui.BaseContainer;
-import lordfokas.stargatetech2.modules.enemy.TileParticleIonizer;
 import lordfokas.stargatetech2.modules.enemy.TileShieldController;
-import lordfokas.stargatetech2.modules.enemy.gui.ContainerParticleIonizer;
-import lordfokas.stargatetech2.modules.enemy.gui.GUIParticleIonizer;
 import lordfokas.stargatetech2.modules.enemy.gui.GUIShieldController;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class GUIHandlerClient extends GUIHandler {

@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.api.bus;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Event;
 

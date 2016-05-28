@@ -37,7 +37,8 @@ public class WeakBlockRegistry{
 	public static final ArrayList<RemovableWeakBlock> removables = new ArrayList<RemovableWeakBlock>(10);
 	
 	static{
-		setWeakBlock(Blocks.deadbush);
+		// TODO: completely redo this
+		/*setWeakBlock(Blocks.deadbush);
 		setWeakBlock(Blocks.fire);
 		setWeakBlock(Blocks.leaves);
 		setWeakBlock(Blocks.red_flower);
@@ -51,7 +52,7 @@ public class WeakBlockRegistry{
 		setWeakBlock(Blocks.water);
 		setWeakBlock(Blocks.flowing_water);
 		setWeakBlock(Blocks.lava);
-		setWeakBlock(Blocks.flowing_lava);
+		setWeakBlock(Blocks.flowing_lava);*/
 	}
 	
 	public static final void setWeakBlock(Block b){

@@ -2,7 +2,7 @@ package lordfokas.stargatetech2;
 
 import lordfokas.stargatetech2.modules.IContentModule.Module;
 import lordfokas.stargatetech2.util.GUIHandler;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
