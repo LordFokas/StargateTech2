@@ -1,13 +1,11 @@
 package cofh.api.block;
 
-import cofh.api.tileentity.ITileInfo;
-
 import java.util.List;
 
+import cofh.api.tileentity.ITileInfo;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 /**
@@ -22,6 +20,8 @@ public interface IBlockInfo {
 	/**
 	 * This function appends information to a list provided to it.
 	 *
+	 * @param info
+	 *            The list that the information should be appended to.
 	 * @param world
 	 *            Reference to the world.
 	 * @param pos
@@ -30,11 +30,9 @@ public interface IBlockInfo {
 	 *            The side of the block that is being queried.
 	 * @param player
 	 *            Player doing the querying - this can be NULL.
-	 * @param info
-	 *            The list that the information should be appended to.
 	 * @param debug
 	 *            If true, the block should return "debug" information.
 	 */
-	void getBlockInfo(IBlockAccess world, BlockPos pos, EnumFacing side, EntityPlayer player, List<IChatComponent> info, boolean debug);
+	void getBlockInfo(List<IChatComponent> info, IBlockAccess world, BlockPos pos, EnumFacing side, EntityPlayer player, boolean debug);
 
 }

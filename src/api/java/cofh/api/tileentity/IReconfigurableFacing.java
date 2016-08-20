@@ -27,7 +27,7 @@ public interface IReconfigurableFacing {
 	 *
 	 * @return True if rotation was successful, false otherwise.
 	 */
-	boolean rotateBlock();
+	boolean rotateBlock(EnumFacing side);
 
 	/**
 	 * Set the facing of the block.
