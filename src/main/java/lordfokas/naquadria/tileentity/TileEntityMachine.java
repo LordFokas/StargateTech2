@@ -170,7 +170,7 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, ICompon
 	}
 	
 	@Override
-	public boolean rotateBlock() {
+	public boolean rotateBlock(EnumFacing from) {
 		int side = facing.ordinal() + 1;
 		if(side == 6) side = 2;
 		setFacing(EnumFacing.getFront(side));
@@ -449,7 +449,7 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, ICompon
 	}
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("rsControl", redstoneControl.ordinal());
 		nbt.setBoolean("rsPower", redstonePower);
@@ -471,6 +471,7 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, ICompon
 		}
 		components.setInteger("size", allComponents.size());
 		nbt.setTag("components", components);
+		return nbt;
 	}
 	
 	// ##########################################################

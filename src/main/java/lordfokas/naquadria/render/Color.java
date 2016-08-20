@@ -35,7 +35,7 @@ public class Color{
 		this.g = green;
 		this.b = blue;
 		this.name = name;
-		this.dye = new ItemStack(Items.dye, 1, 15 - id);
+		this.dye = new ItemStack(Items.DYE, 1, 15 - id);
 		COLORS[id] = this;
 	}
 	

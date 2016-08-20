@@ -34,8 +34,9 @@ public class TileEntityOwnedMachine<C extends Client, S extends Server> extends 
 	}
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setString("owner", owner);
+		return nbt;
 	}
 }

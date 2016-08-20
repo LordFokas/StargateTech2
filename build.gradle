@@ -27,12 +27,12 @@ else
     ext.buildNumber = 0
 //build numbers in the file names for jenkins stuff, else it's 0
 
-version = "Alpha-0.7.9-MC1710-Forge1614"
+version = "Alpha-0.7.9-MC1710-Forge2051"
 group= "lordfokas.stargatetech2" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "stargatetech2"
 
 minecraft {
-    version = "1.9.4-12.17.0.1922-1.9.4"
+    version = "1.9.4-12.17.0.2051"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.

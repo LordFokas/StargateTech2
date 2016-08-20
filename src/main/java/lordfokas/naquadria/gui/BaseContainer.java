@@ -4,7 +4,7 @@ import gnu.trove.map.hash.TIntIntHashMap;
 import lordfokas.naquadria.tileentity.BaseTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraftforge.fml.relauncher.Side;
@@ -49,8 +49,8 @@ public class BaseContainer extends Container {
 	}
 	
 	protected void sendUpdate(int key, int value){
-		for(int i = 0; i < crafters.size(); i++){
-			((ICrafting)crafters.get(i)).sendProgressBarUpdate(this, key, value);
+		for(IContainerListener listener : listeners){
+			listener.sendProgressBarUpdate(this, key, value);
 		}
 	}
 	

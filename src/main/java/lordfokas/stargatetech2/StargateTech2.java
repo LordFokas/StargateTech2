@@ -14,11 +14,9 @@ import lordfokas.stargatetech2.modules.ModuleWorld;
 import lordfokas.stargatetech2.reference.ModReference;
 import lordfokas.stargatetech2.util.ChunkLoader;
 import lordfokas.stargatetech2.util.Config;
-import lordfokas.stargatetech2.util.IconRegistry;
 import lordfokas.stargatetech2.util.Stacks;
 import lordfokas.stargatetech2.util.StargateLogger;
 import lordfokas.stargatetech2.util.api.APIImplementation;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -30,9 +28,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 @Mod(modid=ModReference.MOD_ID, name=ModReference.MOD_NAME, version=ModReference.MOD_VERSION, dependencies=ModReference.DEPENDENCIES)

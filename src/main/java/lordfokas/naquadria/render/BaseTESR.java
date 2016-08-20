@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,7 +34,9 @@ public abstract class BaseTESR extends TileEntitySpecialRenderer {
 			tessellator = Tessellator.getInstance();
 			BlockPos light = new BlockPos(x, y, z);
 			light = getLightCoordinates(te, light);
-			float b = block.getMixedBrightnessForBlock(w, light);
+			// TODO: check consistency and cleanup
+			// float b = block.getMixedBrightnessForBlock(w, light);
+			float b = w.getLightBrightness(light);
 			int sky = w.getCombinedLight(light, 0);
 			int sky0 = sky % SKY_LIGHT_CONST;
 			int sky1 = sky / SKY_LIGHT_CONST;

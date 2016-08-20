@@ -5,10 +5,10 @@ import lordfokas.naquadria.tileentity.ITileContext.Client;
 import lordfokas.naquadria.tileentity.ITileContext.Server;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -63,14 +63,14 @@ implements ITickable, ITile.Client, ITile.Server, ISyncedGUI.Flow{
 	}*/
 	
 	@Override
-	public final S35PacketUpdateTileEntity getDescriptionPacket(){
+	public final SPacketUpdateTileEntity getUpdatePacket(){
         NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
-        return new S35PacketUpdateTileEntity(pos, 1, nbt);
+        return new SPacketUpdateTileEntity(pos, 1, nbt);
     }
 	
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
 		NBTTagCompound nbt = pkt.getNbtCompound();
 		if(nbt != null){
 			this.readFromNBT(nbt);
@@ -89,13 +89,14 @@ implements ITickable, ITile.Client, ITile.Server, ISyncedGUI.Flow{
 	}
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt){
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
 		if(context instanceof ITileContext.Server){
 			NBTTagCompound contextNBT = new NBTTagCompound();
 			((ITileContext.Server)context).writeNBTData(contextNBT);
 			nbt.setTag("context", contextNBT);
 		}
+		return nbt;
 	}
 	
 	public final ITileContext getContext(){
@@ -123,7 +124,9 @@ implements ITickable, ITile.Client, ITile.Server, ISyncedGUI.Flow{
 	@Override
 	public final void updateClients(){
 		if(side.isClient()) return;
-		worldObj.markBlockForUpdate(pos);
+		// TODO: check for consistency and clean up
+		// worldObj.markBlockForUpdate(pos);
+		worldObj.notifyBlockOfStateChange(pos, blockType);
 	}
 	
 	@Override
