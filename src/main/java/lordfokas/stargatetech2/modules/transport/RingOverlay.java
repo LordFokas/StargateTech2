@@ -1,5 +1,7 @@
 package lordfokas.stargatetech2.modules.transport;
 
+import org.lwjgl.opengl.GL11;
+
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.ConfigClient;
 import net.minecraft.client.Minecraft;
@@ -7,13 +9,10 @@ import net.minecraft.client.gui.Gui;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.common.MinecraftForge;
-
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class RingOverlay extends Gui{
 	private static final RingOverlay INSTANCE = new RingOverlay();
@@ -27,13 +26,13 @@ public class RingOverlay extends Gui{
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void drawOverlay(RenderGameOverlayEvent.Post evt){
-		if(!ConfigClient.enableRingGUIOverlay || evt.type != ElementType.ALL) return;
+		if(!ConfigClient.enableRingGUIOverlay || evt.getType() != ElementType.ALL) return;
 		Minecraft mc = FMLClientHandler.instance().getClient();
 		TileTransportRing rings = TileTransportRing.getRingsInRange(mc.theWorld);
 		if(rings == null) return;
 		
 		mc.renderEngine.bindTexture(TextureReference.GUI_RING_OVERLAY);
-		int f = evt.resolution.getScaleFactor();
+		int f = evt.getResolution().getScaleFactor();
 		int w = 16*f, h = 24*f;
 		int px = 2*f, py = ((mc.displayHeight / f) - h) / 2;
 		
@@ -87,6 +86,6 @@ public class RingOverlay extends Gui{
 		}
 		
 		// Hacks and shit. This clears the texture I bound.
-		this.drawString(mc.fontRenderer, "", 0, 0, 0xffffff);
+		this.drawString(mc.fontRendererObj, "", 0, 0, 0xffffff);
 	}
 }

@@ -2,15 +2,8 @@ package lordfokas.stargatetech2;
 
 import java.util.ArrayList;
 
-import lordfokas.naquadria.network.BasePacket;
 import lordfokas.stargatetech2.modules.IContentModule;
-import lordfokas.stargatetech2.modules.ModuleAutomation;
 import lordfokas.stargatetech2.modules.ModuleCore;
-import lordfokas.stargatetech2.modules.ModuleEnemy;
-import lordfokas.stargatetech2.modules.ModuleEnergy;
-import lordfokas.stargatetech2.modules.ModuleIntegration;
-import lordfokas.stargatetech2.modules.ModuleTransport;
-import lordfokas.stargatetech2.modules.ModuleWorld;
 import lordfokas.stargatetech2.reference.ModReference;
 import lordfokas.stargatetech2.util.ChunkLoader;
 import lordfokas.stargatetech2.util.Config;
@@ -26,7 +19,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 
 
@@ -43,26 +36,26 @@ public class StargateTech2 {
 	public static APIImplementation apiImplementation;
 	
 	public static ModuleCore core = new ModuleCore();
-	public static ModuleAutomation automation = new ModuleAutomation();
+	/*public static ModuleAutomation automation = new ModuleAutomation();
 	public static ModuleEnergy energy = new ModuleEnergy();
 	public static ModuleEnemy enemy = new ModuleEnemy();
 	public static ModuleTransport transport = new ModuleTransport();
 	public static ModuleWorld world = new ModuleWorld();
-	public static ModuleIntegration integration = new ModuleIntegration();
+	public static ModuleIntegration integration = new ModuleIntegration();*/
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
 		config = new Config(new Configuration(event.getSuggestedConfigurationFile()));
 		modules.add(core);
-		modules.add(automation);
+		/*modules.add(automation);
 		modules.add(enemy);
 		modules.add(energy);
 		modules.add(transport);
 		modules.add(world);
-		modules.add(integration);
+		modules.add(integration);*/
 		apiImplementation = new APIImplementation();
 		MinecraftForge.EVENT_BUS.register(this);
-		BasePacket.registerAll();
+		//BasePacket.registerAll();
 		
 		StargateLogger.info("Pre-Initializing Modules");
 		for(IContentModule module : modules){
@@ -113,7 +106,7 @@ public class StargateTech2 {
 	}
 	
 	@EventHandler
-	public void onServerStart(FMLServerAboutToStartEvent event){
+	public void onServerStart(FMLServerStartedEvent event){
 		for(IContentModule module : modules){
 			module.onServerStart();
 		}

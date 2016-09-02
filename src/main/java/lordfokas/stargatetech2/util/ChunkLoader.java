@@ -40,7 +40,7 @@ public final class ChunkLoader implements LoadingCallback{
 		instance.tickets = new ArrayList();
 		instance.dims = new ArrayList();
 		MinecraftForge.EVENT_BUS.register(instance);
-		File file = Helper.getFile("chunks.dat");
+		File file = Helper.getSaveFile("chunks.dat");
 		if(file.exists())
 			try{
 				FileInputStream fis = new FileInputStream(file);
@@ -64,7 +64,7 @@ public final class ChunkLoader implements LoadingCallback{
 			}
 		}
 		try{
-			File file = Helper.getFile("chunks.dat");
+			File file = Helper.getSaveFile("chunks.dat");
 			if(!file.exists()){
 				file.createNewFile();
 			}
@@ -88,7 +88,7 @@ public final class ChunkLoader implements LoadingCallback{
 			for(Integer dim : instance.dims){
 				server.worldServerForDimension(dim.intValue());
 			}
-			StargateNetwork.instance().initializeWormholes();
+			//StargateNetwork.instance().initializeWormholes();
 			MinecraftForge.EVENT_BUS.unregister(this);
 		}
 	}

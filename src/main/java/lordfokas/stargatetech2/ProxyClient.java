@@ -40,10 +40,10 @@ public class ProxyClient implements ISidedProxy{
 	}
 	
 	@Override
-	public void registerHandlers() {
+	public void registerHandlers() { // FIXME re-enable when Transport is back.
 		NetworkRegistry.INSTANCE.registerGuiHandler(StargateTech2.instance, new GUIHandlerClient());
-		RingKeyHandler.register();
-		RingOverlay.register();
+		//RingKeyHandler.register();
+		//RingOverlay.register();
 	}
 
 	@Override

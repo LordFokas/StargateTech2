@@ -3,11 +3,12 @@ package lordfokas.stargatetech2.modules.transport;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.KeyBinding;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class RingKeyHandler{
 	private static final RingKeyHandler INSTANCE = new RingKeyHandler();
@@ -45,9 +46,7 @@ public class RingKeyHandler{
 		TileTransportRing rings = TileTransportRing.getRingsInRange(FMLClientHandler.instance().getClient().theWorld);
 		if(rings != null && Minecraft.getMinecraft().currentScreen == null){
 			PacketActivateRings packet = new PacketActivateRings();
-			packet.x = rings.xCoord;
-			packet.y = rings.yCoord;
-			packet.z = rings.zCoord;
+			packet.coordinates = new BlockPos(rings.getXCoord(), rings.getYCoord(), rings.getZCoord());
 			packet.up = up;
 			packet.sendToServer();
 		}

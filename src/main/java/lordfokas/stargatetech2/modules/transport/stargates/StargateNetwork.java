@@ -31,8 +31,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class StargateNetwork implements IStargateNetwork{
 	private static final StargateNetwork INSTANCE = new StargateNetwork();
@@ -382,9 +382,9 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	private void readFromFile(){
 		try{
-			File wormholeFile = Helper.getFile("wormholes.dat");
-			File addressFile = Helper.getFile("addresses.dat");
-			File prefixFile = Helper.getFile("prefixes.dat");
+			File wormholeFile = Helper.getSaveFile("wormholes.dat");
+			File addressFile = Helper.getSaveFile("addresses.dat");
+			File prefixFile = Helper.getSaveFile("prefixes.dat");
 			boolean hasWormhole = wormholeFile.exists();
 			boolean hasAddress = addressFile.exists();
 			boolean hasPrefix = prefixFile.exists();
@@ -471,9 +471,9 @@ public class StargateNetwork implements IStargateNetwork{
 	
 	private void writeToFile(){
 		try{
-			File wormholeFile = Helper.getFile("wormholes.dat");
-			File addressFile = Helper.getFile("addresses.dat");
-			File prefixFile = Helper.getFile("prefixes.dat");
+			File wormholeFile = Helper.getSaveFile("wormholes.dat");
+			File addressFile = Helper.getSaveFile("addresses.dat");
+			File prefixFile = Helper.getSaveFile("prefixes.dat");
 			if(!wormholeFile.exists()){
 				StargateLogger.warning("Stargate Network Wormhole file is missing. A new one is being created.");
 				wormholeFile.createNewFile();

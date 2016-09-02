@@ -4,9 +4,11 @@ import lordfokas.naquadria.block.BaseBlock;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.reference.BlockReference;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockBusCable extends BaseBlock {
@@ -19,14 +21,9 @@ public class BlockBusCable extends BaseBlock {
 	}
 	
 	@Override
-	public boolean isOpaqueCube(){
+	public boolean isNormalCube(IBlockState state, IBlockAccess world, net.minecraft.util.math.BlockPos pos) {
 		return false;
 	}
-	
-	/*@Override
-	public boolean renderAsNormalBlock(){
-		return false;
-	}*/
 	
 	public Connection getBusConnection(World world, BlockPos pos, EnumFacing d){
 		pos = pos.offset(d);

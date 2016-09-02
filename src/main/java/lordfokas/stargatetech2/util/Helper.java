@@ -23,8 +23,11 @@ public class Helper {
 		}
 	}
 	
-	public static File getFile(String file){
-		return new File(DimensionManager.getCurrentSaveRootDirectory().getAbsolutePath() + File.separator + "SGTech2_" + file);
+	public static File getSaveFile(String filename){
+		File path = DimensionManager.getCurrentSaveRootDirectory();
+		File file = new File(path.getAbsolutePath() + File.separator + "StargateTech2" + File.separator + filename);
+		file.getParentFile().mkdirs();
+		return file;
 	}
 	
 	public static String prettyNumber(int n){

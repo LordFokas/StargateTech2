@@ -40,13 +40,13 @@ public final class ModuleCore implements IContentModule{
 		StargateTech2.proxy.registerRenderers(Module.CORE);
 		
 		FurnaceRecipes.instance().addSmeltingRecipe(Stacks.naqOre, Stacks.naqIngot, 0);
-		FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.DUST.ID), Stacks.naqIngot, 0);
+		FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.Type.DUST.ordinal()), Stacks.naqIngot, 0);
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "CGC", "NRN", 'N', Stacks.naqPlate, 'C', Stacks.circuit, 'G', Stacks.glass, 'R', Stacks.redDust);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', Stacks.naqIngot);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.COIL_NAQ.ID), "--R", "-N-", "R--", 'R', Stacks.redDust, 'N', Stacks.naqIngot);
-		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.COIL_END.ID), "--R", "-E-", "R--", 'R', Stacks.redDust, 'E', Stacks.pearl);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 2, ItemNaquadah.Type.PLATE.ordinal()), "SS", "SS", 'S', Stacks.naqIngot);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.Type.COIL_NAQ.ordinal()), "--R", "-N-", "R--", 'R', Stacks.redDust, 'N', Stacks.naqIngot);
+		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.Type.COIL_END.ordinal()), "--R", "-E-", "R--", 'R', Stacks.redDust, 'E', Stacks.pearl);
 		GameRegistry.addShapedRecipe(Stacks.naqBlock, "NNN", "NNN", "NNN", 'N', Stacks.naqIngot);
-		GameRegistry.addShapelessRecipe(new ItemStack(naquadahItem, 9, ItemNaquadah.INGOT.ID), Stacks.naqBlock);
+		GameRegistry.addShapelessRecipe(new ItemStack(naquadahItem, 9, ItemNaquadah.Type.INGOT.ordinal()), Stacks.naqBlock);
 	}
 
 	@Override public void onServerStart(){
