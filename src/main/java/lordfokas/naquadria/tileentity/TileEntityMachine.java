@@ -21,6 +21,7 @@ import lordfokas.naquadria.tileentity.facing.FaceColor;
 import lordfokas.naquadria.tileentity.facing.IFacingAware;
 import lordfokas.naquadria.tileentity.facing.IFacingProvider;
 import lordfokas.stargatetech2.util.Helper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -443,7 +444,9 @@ implements IReconfigurableSides, IReconfigurableFacing, IFacingProvider, ICompon
 			allComponents.get(i).deserializeNBT(components.getCompoundTag("comp_" + i));
 		}
 		if(side.isClient() && worldObj != null){
-			worldObj.markBlockForUpdate(pos);
+			// TODO: check if this shit actually does what I want it to!
+			IBlockState state = worldObj.getBlockState(pos);
+			worldObj.notifyBlockUpdate(pos, state, state, 0);
 		}
 		cacheCapabilities();
 	}

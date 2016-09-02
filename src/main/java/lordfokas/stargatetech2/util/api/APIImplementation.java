@@ -78,19 +78,16 @@ public final class APIImplementation extends StargateTechAPI {
 		}else if(entity instanceof EntityMinecart){
 			allow = perms.hasBit(ShieldPermissions.PERM_VESSEL);
 		}
-		if(allow && entity.riddenByEntity != null && doDismount && entity.worldObj.isRemote == false){
-			if(!isEntityAllowed(perms, entity.riddenByEntity, true, owner)){
-				Entity rider = entity.riddenByEntity;
-				if(rider instanceof EntityPlayer){
-					rider.mountEntity(null);
-				}else{
-					rider.ridingEntity = null;
-					rider.prevPosY += 1;
-					rider.posY += 1;
-					entity.riddenByEntity = null;
+		
+		// Dismount riders that are not allowed through.
+		if(doDismount && allow && !entity.worldObj.isRemote && entity.isBeingRidden()){
+			for(Entity rider : entity.getPassengers()){
+				if(!isEntityAllowed(perms, rider, true, owner)){
+					rider.dismountRidingEntity();
 				}
 			}
 		}
+		
 		return allow;
 	}
 }
