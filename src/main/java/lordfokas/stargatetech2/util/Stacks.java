@@ -48,12 +48,12 @@ public class Stacks {
 		// STARGATETECH 2
 		naqOre		= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.Type.ORE.ordinal());
 		naqBlock	= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.Type.BLOCK.ordinal());
-		naqIngot	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.INGOT.ID);
-		naqDust		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.DUST.ID);
-		naqPlate	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.PLATE.ID);
-		circuit		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.CIRCUIT.ID);
-		coilNaq		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_NAQ.ID);
-		coilEnd		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_END.ID);
+		naqIngot	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.INGOT.ordinal());
+		naqDust		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.DUST.ordinal());
+		naqPlate	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.PLATE.ordinal());
+		circuit		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.CIRCUIT.ordinal());
+		coilNaq		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.COIL_NAQ.ordinal());
+		coilEnd		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.COIL_END.ordinal());
 		busCable	= new ItemStack(ModuleAutomation.busCable);
 	}
 	

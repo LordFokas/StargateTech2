@@ -12,7 +12,7 @@ public class ItemBlockNaquadah extends ItemBlock {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack){
-		String type = stack.getItemDamage() == BlockNaquadah.ORE ? "ore" : "block";
+		String type = stack.getItemDamage() == BlockNaquadah.Type.ORE.ordinal() ? "ore" : "block";
 		return "block.naquadah." + type;
 	}
 }

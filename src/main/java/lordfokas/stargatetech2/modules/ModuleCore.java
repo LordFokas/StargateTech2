@@ -39,7 +39,7 @@ public final class ModuleCore implements IContentModule{
 	public void postInit(){
 		StargateTech2.proxy.registerRenderers(Module.CORE);
 		
-		FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(naquadahBlock, BlockNaquadah.ORE), Stacks.naqIngot, 0);
+		FurnaceRecipes.instance().addSmeltingRecipe(Stacks.naqOre, Stacks.naqIngot, 0);
 		FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.DUST.ID), Stacks.naqIngot, 0);
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "CGC", "NRN", 'N', Stacks.naqPlate, 'C', Stacks.circuit, 'G', Stacks.glass, 'R', Stacks.redDust);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', Stacks.naqIngot);
