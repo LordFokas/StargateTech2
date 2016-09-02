@@ -6,8 +6,9 @@ import lordfokas.stargatetech2.modules.core.BlockNaquadah;
 import lordfokas.stargatetech2.modules.core.ItemNaquadah;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.util.ResourceLocation;
 
 public class Stacks {
 	// Vanilla Stacks
@@ -40,16 +41,16 @@ public class Stacks {
 		machine_0 =	fromTE4("frameMachineBasic");
 		machine_1 =	fromTE4("frameMachineHardened");
 		machine_2 =	fromTE4("frameMachineReinforced");
-		signalum = new ItemStack(GameRegistry.findItem("ThermalFoundation", "ingotSignalum"), 1);
+		signalum = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation("ThermalFoundation", "ingotSignalum")), 1);
 		coilGold =	fromTE4("powerCoilGold");
 		
 		//##########################################################################################
 		// STARGATETECH 2
+		naqOre		= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.Type.ORE.ordinal());
+		naqBlock	= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.Type.BLOCK.ordinal());
 		naqIngot	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.INGOT.ID);
 		naqDust		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.DUST.ID);
 		naqPlate	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.PLATE.ID);
-		naqOre		= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.ORE);
-		naqBlock	= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.BLOCK);
 		circuit		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.CIRCUIT.ID);
 		coilNaq		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_NAQ.ID);
 		coilEnd		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.COIL_END.ID);
@@ -57,6 +58,6 @@ public class Stacks {
 	}
 	
 	private static ItemStack fromTE4(String name){
-		return new ItemStack(GameRegistry.findItem("ThermalExpansion", name), 1);
+		return new ItemStack(Item.REGISTRY.getObject(new ResourceLocation("ThermalExpansion", name)), 1);
 	}
 }

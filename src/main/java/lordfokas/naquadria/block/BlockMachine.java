@@ -72,7 +72,7 @@ public class BlockMachine extends BaseBlock implements ITileEntityProvider{
 			if(p.isSneaking()){
 				super.dropSelf(w, pos);
 			}else{
-				machine.rotateBlock();
+				machine.rotateBlock(null); // The EnumFacing is unused internally
 			}
 		}else if(!p.isSneaking() && screen != null){
 			p.openGui(StargateTech2.instance, screen.ordinal(), w, pos.getX(), pos.getY(), pos.getZ());

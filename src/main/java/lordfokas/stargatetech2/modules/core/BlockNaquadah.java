@@ -31,8 +31,8 @@ public class BlockNaquadah extends BaseBlock {
 	
 	public BlockNaquadah(){
 		super(BlockReference.NAQUADAH, true, Material.ROCK);
-		this.setHardness(3.0F);
-		this.setResistance(5.0F);
+		setHardness(3.0F);
+		setResistance(5.0F);
 		setHarvestLevel("pickaxe", 2);
 		ore = blockState.getBaseState().withProperty(TYPE, Type.ORE);
 		block = blockState.getBaseState().withProperty(TYPE, Type.BLOCK);
@@ -46,8 +46,8 @@ public class BlockNaquadah extends BaseBlock {
 	
 	@Override
 	public void getSubBlocks(Item i, CreativeTabs tab, List list){
-		list.add(new ItemStack(this, 1, getMetaFromState(ore)));
-		list.add(new ItemStack(this, 1, getMetaFromState(block)));
+		list.add(new ItemStack(this, 1, Type.ORE.ordinal()));
+		list.add(new ItemStack(this, 1, Type.BLOCK.ordinal()));
 	}
 	
 	/*@Override // TODO: create model. Avoid logic loss.
