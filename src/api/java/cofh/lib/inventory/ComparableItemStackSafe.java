@@ -20,7 +20,8 @@ public class ComparableItemStackSafe extends ComparableItemStack {
 
 	public static boolean safeOreType(String oreName) {
 
-		return oreName.startsWith(BLOCK) || oreName.startsWith(ORE) || oreName.startsWith(DUST) || oreName.startsWith(INGOT) || oreName.startsWith(NUGGET);
+		return oreName.startsWith(BLOCK) || oreName.startsWith(ORE) || oreName.startsWith(DUST) || oreName.startsWith(INGOT) ||
+				oreName.startsWith(NUGGET);
 	}
 
 	public static int getOreID(ItemStack stack) {

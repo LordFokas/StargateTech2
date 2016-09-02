@@ -1,11 +1,11 @@
 package cofh.lib.util.helpers;
 
-import java.util.List;
-
 import cofh.api.tileentity.IRedstoneControl;
 import cofh.api.tileentity.IRedstoneControl.ControlMode;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.List;
 
 public final class RedstoneControlHelper {
 
@@ -39,14 +39,17 @@ public final class RedstoneControlHelper {
 		if (hasRSControl(stack)) {
 			switch (stack.getTagCompound().getByte("RSControl")) {
 			case 0:
-				list.add(StringHelper.localize("info.cofh.signal") + ": " + StringHelper.RED + StringHelper.localize("info.cofh.disabled") + StringHelper.END);
+				list.add(StringHelper.localize("info.cofh.signal") + ": " + StringHelper.RED +
+						StringHelper.localize("info.cofh.disabled") + StringHelper.END);
 				return;
 			case 1:
-				list.add(StringHelper.localize("info.cofh.signal") + ": " + StringHelper.BRIGHT_GREEN + StringHelper.localize("info.cofh.enabled")
+				list.add(StringHelper.localize("info.cofh.signal") + ": " + StringHelper.BRIGHT_GREEN +
+						StringHelper.localize("info.cofh.enabled")
 						+ StringHelper.LIGHT_GRAY + ", " + StringHelper.localize("info.cofh.low") + StringHelper.END);
 				return;
 			case 2:
-				list.add(StringHelper.localize("info.cofh.signal") + ": " + StringHelper.BRIGHT_GREEN + StringHelper.localize("info.cofh.enabled")
+				list.add(StringHelper.localize("info.cofh.signal") + ": " + StringHelper.BRIGHT_GREEN +
+						StringHelper.localize("info.cofh.enabled")
 						+ StringHelper.LIGHT_GRAY + ", " + StringHelper.localize("info.cofh.high") + StringHelper.END);
 				return;
 			}

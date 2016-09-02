@@ -1,9 +1,9 @@
 package cofh.lib.gui.element;
 
-import java.util.List;
-
 import cofh.lib.gui.GuiBase;
 import cofh.lib.util.helpers.StringHelper;
+
+import java.util.List;
 
 /**
  * Basic element which can render an arbitrary texture and may have a tooltip.

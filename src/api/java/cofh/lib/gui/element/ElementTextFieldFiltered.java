@@ -1,10 +1,10 @@
 package cofh.lib.gui.element;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import cofh.lib.gui.GuiBase;
 import cofh.lib.util.CharacterSingleton;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ElementTextFieldFiltered extends ElementTextField {
 

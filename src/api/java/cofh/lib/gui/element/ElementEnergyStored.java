@@ -1,12 +1,12 @@
 package cofh.lib.gui.element;
 
-import java.util.List;
-
 import cofh.api.energy.IEnergyStorage;
 import cofh.lib.gui.GuiBase;
 import cofh.lib.gui.GuiProps;
 import cofh.lib.util.helpers.MathHelper;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.List;
 
 public class ElementEnergyStored extends ElementBase {
 
@@ -70,7 +70,9 @@ public class ElementEnergyStored extends ElementBase {
 		}
 		long fraction = (long) storage.getEnergyStored() * sizeY / storage.getMaxEnergyStored();
 
-		return alwaysShowMinimum && storage.getEnergyStored() > 0 ? Math.max(1, MathHelper.round(fraction)) : MathHelper.round(fraction);
+		return alwaysShowMinimum && storage.getEnergyStored() > 0 ?
+				Math.max(1, MathHelper.round(fraction)) :
+				MathHelper.round(fraction);
 	}
 
 }

@@ -1,21 +1,16 @@
 package cofh.lib.gui.element;
 
-import static org.lwjgl.opengl.GL11.GL_LIGHTING;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_TEST;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTranslated;
+import cofh.lib.gui.GuiBase;
+import cofh.lib.gui.GuiColor;
+import cofh.lib.gui.element.listbox.IListBoxElement;
+import cofh.lib.util.helpers.StringHelper;
+import net.minecraft.client.renderer.GlStateManager;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import cofh.lib.gui.GuiBase;
-import cofh.lib.gui.GuiColor;
-import cofh.lib.gui.element.listbox.IListBoxElement;
-import cofh.lib.util.helpers.StringHelper;
+import static org.lwjgl.opengl.GL11.*;
 
 public class ElementListBox extends ElementBase {
 
@@ -167,23 +162,22 @@ public class ElementListBox extends ElementBase {
 		int heightDrawn = 0;
 		int nextElement = _firstIndexDisplayed;
 
-		glPushMatrix();
-		glDisable(GL_LIGHTING);
-
+		GlStateManager.pushMatrix();
+		GlStateManager.disableLighting();
 		glEnable(GL_STENCIL_TEST);
 		drawStencil(getContentLeft(), getContentTop(), getContentRight(), getContentBottom(), 1);
 
-		glPushMatrix();
-		glTranslated(-scrollHoriz, 0, 0);
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-scrollHoriz, 0, 0);
 
 		int e = _elements.size();
 		while (nextElement < e && heightDrawn <= getContentHeight()) {
 			heightDrawn += drawElement(nextElement, getContentLeft(), getContentTop() + heightDrawn);
 			nextElement++;
 		}
-		glPopMatrix();
+		GlStateManager.popMatrix();
 		glDisable(GL_STENCIL_TEST);
-		glPopMatrix();
+		GlStateManager.popMatrix();
 	}
 
 	protected int drawElement(int elementIndex, int x, int y) {

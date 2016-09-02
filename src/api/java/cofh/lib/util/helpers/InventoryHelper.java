@@ -1,7 +1,5 @@
 package cofh.lib.util.helpers;
 
-import java.util.List;
-
 import cofh.api.tileentity.IItemDuct;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -9,6 +7,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+
+import java.util.List;
 
 /**
  * This class contains helper functions related to Inventories and Inventory manipulation.
@@ -53,7 +53,8 @@ public final class InventoryHelper {
 		}
 		int openSlot = -1;
 		for (int i = startIndex; i <= endIndex; i++) {
-			if (ItemHelper.itemsEqualForCrafting(stack, inventory[i]) && inventory[i].getMaxStackSize() > inventory[i].stackSize) {
+			if (ItemHelper.itemsEqualForCrafting(stack, inventory[i]) &&
+					inventory[i].getMaxStackSize() > inventory[i].stackSize) {
 				int hold = inventory[i].getMaxStackSize() - inventory[i].stackSize;
 				if (hold >= stack.stackSize) {
 					inventory[i].stackSize += stack.stackSize;
@@ -279,7 +280,8 @@ public final class InventoryHelper {
 		return stackLimit >= stack.stackSize ? null : stack.splitStack(stack.stackSize - stackLimit);
 	}
 
-	public static ItemStack simulateAddToOccupiedInventorySlot(IInventory inventory, int slot, ItemStack stack, ItemStack existingStack) {
+	public static ItemStack simulateAddToOccupiedInventorySlot(IInventory inventory, int slot, ItemStack stack,
+			ItemStack existingStack) {
 
 		int stackLimit = Math.min(inventory.getInventoryStackLimit(), stack.getMaxStackSize());
 

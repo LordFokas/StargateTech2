@@ -14,9 +14,9 @@ public final class WrenchHelper {
 
 	public static boolean isHoldingUsableWrench(EntityPlayer player, BlockPos pos) {
 
-		Item equipped = player.getCurrentEquippedItem() != null ? player.getCurrentEquippedItem().getItem() : null;
+		Item equipped = player.getHeldItemMainhand() != null ? player.getHeldItemMainhand().getItem() : null;
 		if (equipped instanceof IToolHammer) {
-			return ((IToolHammer) equipped).isUsable(player.getCurrentEquippedItem(), player, pos);
+			return ((IToolHammer) equipped).isUsable(player.getHeldItemMainhand(), player, pos);
 		} else if (bcWrenchExists) {
 			// return canHandleBCWrench(equipped, player, pos);
 		}
@@ -25,9 +25,9 @@ public final class WrenchHelper {
 
 	public static void usedWrench(EntityPlayer player, BlockPos pos) {
 
-		Item equipped = player.getCurrentEquippedItem() != null ? player.getCurrentEquippedItem().getItem() : null;
+		Item equipped = player.getHeldItemMainhand() != null ? player.getHeldItemMainhand().getItem() : null;
 		if (equipped instanceof IToolHammer) {
-			((IToolHammer) equipped).toolUsed(player.getCurrentEquippedItem(), player, pos);
+			((IToolHammer) equipped).toolUsed(player.getHeldItemMainhand(), player, pos);
 		} else if (bcWrenchExists) {
 			// bcWrenchUsed(equipped, player, pos);
 		}

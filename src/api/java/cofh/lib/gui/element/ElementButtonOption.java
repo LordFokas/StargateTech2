@@ -1,9 +1,9 @@
 package cofh.lib.gui.element;
 
+import cofh.lib.gui.GuiBase;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import cofh.lib.gui.GuiBase;
 
 public abstract class ElementButtonOption extends ElementButtonManaged {
 
