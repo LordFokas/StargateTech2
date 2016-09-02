@@ -5,46 +5,75 @@ import java.util.List;
 import lordfokas.naquadria.block.BaseBlock;
 import lordfokas.stargatetech2.reference.BlockReference;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockNaquadah extends BaseBlock {
-	public static final int ORE = 0;
-	public static final int BLOCK = 8;
+	public static final IProperty<Type> TYPE = PropertyEnum.create("blockType", Type.class);
+	
+	public static enum Type implements IStringSerializable{
+		ORE, BLOCK;
+		
+		@Override public String getName(){ return toString(); }
+	}
+	
+	public final IBlockState ore, block;
 	
 	public BlockNaquadah(){
-		super(BlockReference.NAQUADAH, true, Material.rock);
+		super(BlockReference.NAQUADAH, true, Material.ROCK);
 		this.setHardness(3.0F);
 		this.setResistance(5.0F);
 		setHarvestLevel("pickaxe", 2);
-		
+		ore = blockState.getBaseState().withProperty(TYPE, Type.ORE);
+		block = blockState.getBaseState().withProperty(TYPE, Type.BLOCK);
+		setDefaultState(block);
+	}
+	
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, TYPE);
 	}
 	
 	@Override
 	public void getSubBlocks(Item i, CreativeTabs tab, List list){
-		list.add(new ItemStack(this, 1, ORE));
-		list.add(new ItemStack(this, 1, BLOCK));
+		list.add(new ItemStack(this, 1, getMetaFromState(ore)));
+		list.add(new ItemStack(this, 1, getMetaFromState(block)));
 	}
 	
-	/*@Override
+	/*@Override // TODO: create model. Avoid logic loss.
 	public IIcon getBaseIcon(int side, int meta){
 		return meta != 0 ? blockIcon : IconRegistry.blockIcons.get(TextureReference.NAQUADAH_ORE);
 	}*/
 	
 	@Override
 	public int damageDropped(IBlockState state){
-		return -0x8000; // FIXME dafuq does this do now?
+		return getMetaFromState(state);
 	}
 	
 	@Override
 	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase e, ItemStack stack){
-		w.setBlockMetadataWithNotify(pos, stack.getItemDamage(), 2);
+		w.setBlockState(pos, getStateFromMeta(stack.getMetadata()));
+	}
+	
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(TYPE).ordinal();
+	}
+	
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		IBlockState state = blockState.getBaseState();
+		return state.withProperty(TYPE, Type.values()[meta]);
 	}
 	
 	@Override

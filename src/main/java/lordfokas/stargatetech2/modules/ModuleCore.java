@@ -12,7 +12,7 @@ import lordfokas.stargatetech2.util.Stacks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public final class ModuleCore implements IContentModule{
 	public static BlockNaquadah naquadahBlock;
@@ -39,8 +39,8 @@ public final class ModuleCore implements IContentModule{
 	public void postInit(){
 		StargateTech2.proxy.registerRenderers(Module.CORE);
 		
-		FurnaceRecipes.smelting().func_151394_a(new ItemStack(naquadahBlock, BlockNaquadah.ORE), Stacks.naqIngot, 0);
-		FurnaceRecipes.smelting().func_151394_a(new ItemStack(naquadahItem, 1, ItemNaquadah.DUST.ID), Stacks.naqIngot, 0);
+		FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(naquadahBlock, BlockNaquadah.ORE), Stacks.naqIngot, 0);
+		FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.DUST.ID), Stacks.naqIngot, 0);
 		GameRegistry.addShapedRecipe(new ItemStack(tabletPC), "NNN", "CGC", "NRN", 'N', Stacks.naqPlate, 'C', Stacks.circuit, 'G', Stacks.glass, 'R', Stacks.redDust);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 2, ItemNaquadah.PLATE.ID), "SS", "SS", 'S', Stacks.naqIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(naquadahItem, 1, ItemNaquadah.COIL_NAQ.ID), "--R", "-N-", "R--", 'R', Stacks.redDust, 'N', Stacks.naqIngot);

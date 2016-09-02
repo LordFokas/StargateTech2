@@ -8,8 +8,8 @@ import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.modules.ModuleAutomation;
 import lordfokas.stargatetech2.util.Vec4Int;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class RecursiveBusRemapper {
