@@ -10,6 +10,7 @@ import lordfokas.stargatetech2.util.ChunkLoader;
 import lordfokas.stargatetech2.util.Config;
 import lordfokas.stargatetech2.util.Stacks;
 import lordfokas.stargatetech2.util.StargateLogger;
+import lordfokas.stargatetech2.util.StargateTab;
 import lordfokas.stargatetech2.util.api.APIImplementation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -75,6 +76,7 @@ public class StargateTech2 {
 	public void init(FMLInitializationEvent event){
 		Stacks.init();
 		ChunkLoader.register();
+		StargateTab.instance(); // calls the instance to make sure it was loaded.
 		StargateLogger.info("Initializing Modules");
 		for(IContentModule module : modules){
 			try{

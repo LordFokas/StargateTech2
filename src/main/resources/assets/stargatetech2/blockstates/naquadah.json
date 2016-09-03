@@ -1,0 +1,6 @@
+{
+	variants: {
+		"subtype=ore": { "model": "StargateTech2:naquadah_ore" },
+		"subtype=block": { "model": "StargateTech2:naquadah_block" }
+	}
+}

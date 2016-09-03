@@ -4,12 +4,11 @@ import java.util.List;
 
 import lordfokas.naquadria.item.BaseItem;
 import lordfokas.stargatetech2.reference.ItemReference;
-import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.IconRegistry;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.model.ModelLoader;
 
 public class ItemNaquadah extends BaseItem{
 	public static enum Type{
@@ -32,6 +31,12 @@ public class ItemNaquadah extends BaseItem{
 	public ItemNaquadah() {
 		super(ItemReference.NAQUADAH);
 		setHasSubtypes(true);
+		ModelLoader.setCustomModelResourceLocation(this, Type.INGOT.ordinal(), new ModelResourceLocation("naquadah_ingot"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.DUST.ordinal(), new ModelResourceLocation("naquadah_dust"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.PLATE.ordinal(), new ModelResourceLocation("naquadah_plate"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.CIRCUIT.ordinal(), new ModelResourceLocation("naquadah_circuit"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.COIL_NAQ.ordinal(), new ModelResourceLocation("naquadah_coil"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.COIL_END.ordinal(), new ModelResourceLocation("naquadah_coil_end"));
 	}
 	
 	@Override

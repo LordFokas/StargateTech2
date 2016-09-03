@@ -19,12 +19,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockNaquadah extends BaseBlock {
-	public static final IProperty<Type> TYPE = PropertyEnum.create("subType", Type.class);
+	public static final IProperty<Type> TYPE = PropertyEnum.create("subtype", Type.class);
 	
 	public static enum Type implements IStringSerializable{
 		ORE, BLOCK;
 		
-		@Override public String getName(){ return toString(); }
+		@Override public String getName(){ return toString().toLowerCase(); }
 	}
 	
 	public final IBlockState ore, block;

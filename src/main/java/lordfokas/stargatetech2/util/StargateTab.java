@@ -6,7 +6,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class StargateTab extends CreativeTabs {
-	public static final StargateTab INSTANCE = new StargateTab();
+	private static final StargateTab INSTANCE = new StargateTab();
+	public static StargateTab instance(){ return INSTANCE; }
 	
 	public StargateTab(){
 		super("StargateTech 2");
