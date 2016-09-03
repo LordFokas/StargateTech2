@@ -4,6 +4,7 @@ import lordfokas.naquadria.block.BaseBlock;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.reference.BlockReference;
+import lordfokas.stargatetech2.util.StargateTab;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -15,7 +16,6 @@ public class BlockBusCable extends BaseBlock {
 	
 	public BlockBusCable() {
 		super(BlockReference.BUS_CABLE, true, false);
-		// setRenderer(RenderBusCable.instance());
 		setIsAbstractBusBlock();
 		setLightOpacity(0);
 	}
@@ -25,20 +25,21 @@ public class BlockBusCable extends BaseBlock {
 		return false;
 	}
 	
-	public Connection getBusConnection(World world, BlockPos pos, EnumFacing d){
+	// FIXME: make IBusDevice a Capability.
+	public ConnectionType getBusConnection(World world, BlockPos pos, EnumFacing d){
 		pos = pos.offset(d);
-		if(world.getBlockState(pos).getBlock() == this) return Connection.CABLE;
+		if(world.getBlockState(pos).getBlock() == this) return ConnectionType.CABLE;
 		TileEntity te = world.getTileEntity(pos);
 		if(te instanceof IBusDevice){
-			IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(d.getOpposite().ordinal());
-			if(interfaces == null || interfaces.length == 0) return Connection.DISCONNECTED;
+			IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(d.getOpposite());
+			if(interfaces == null || interfaces.length == 0) return ConnectionType.DISCONNECTED;
 			for(IBusInterface networkCard : interfaces){
 				if(networkCard instanceof BusInterface){
-					return Connection.DEVICE;
+					return ConnectionType.DEVICE;
 				}
 			}
 		}
-		return Connection.DISCONNECTED;
+		return ConnectionType.DISCONNECTED;
 	}
 	
 	/*@Override
@@ -57,10 +58,11 @@ public class BlockBusCable extends BaseBlock {
 		return false;
 	}*/
 	
-	@Override // FIXME why is this still a thing?
+	// FIXME why is this still a thing?
+	/*@Override 
 	public void setBlockBoundsForItemRender(){
 		this.setBlockBounds(0.3125F, 0F, 0.3125F, 0.6875F, 1F, 0.6875F);
-	}
+	}*/
 	
 	/*@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z){

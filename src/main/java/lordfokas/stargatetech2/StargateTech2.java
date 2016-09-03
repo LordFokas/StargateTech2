@@ -3,6 +3,7 @@ package lordfokas.stargatetech2;
 import java.util.ArrayList;
 
 import lordfokas.stargatetech2.modules.IContentModule;
+import lordfokas.stargatetech2.modules.ModuleAutomation;
 import lordfokas.stargatetech2.modules.ModuleCore;
 import lordfokas.stargatetech2.reference.ModReference;
 import lordfokas.stargatetech2.util.ChunkLoader;
@@ -36,8 +37,8 @@ public class StargateTech2 {
 	public static APIImplementation apiImplementation;
 	
 	public static ModuleCore core = new ModuleCore();
-	/*public static ModuleAutomation automation = new ModuleAutomation();
-	public static ModuleEnergy energy = new ModuleEnergy();
+	public static ModuleAutomation automation = new ModuleAutomation();
+	/*public static ModuleEnergy energy = new ModuleEnergy();
 	public static ModuleEnemy enemy = new ModuleEnemy();
 	public static ModuleTransport transport = new ModuleTransport();
 	public static ModuleWorld world = new ModuleWorld();
@@ -47,8 +48,8 @@ public class StargateTech2 {
 	public void preInit(FMLPreInitializationEvent event){
 		config = new Config(new Configuration(event.getSuggestedConfigurationFile()));
 		modules.add(core);
-		/*modules.add(automation);
-		modules.add(enemy);
+		modules.add(automation);
+		/*modules.add(enemy);
 		modules.add(energy);
 		modules.add(transport);
 		modules.add(world);

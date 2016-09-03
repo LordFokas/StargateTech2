@@ -1,6 +1,8 @@
 package lordfokas.stargatetech2.modules.automation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import lordfokas.stargatetech2.api.bus.BusPacket;
 import lordfokas.stargatetech2.api.bus.BusPacketNetScan;
@@ -9,44 +11,36 @@ import lordfokas.stargatetech2.api.bus.BusProtocols;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusDriver;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
-import lordfokas.stargatetech2.util.Vec4Int;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public final class BusInterface implements IBusInterface{
 	private static final byte BROADCAST		= (byte) 0xFF;
 	private static final byte PROMISCUOUS	= (byte) 0x00;
 	
-	private final ArrayList<Vec4Int>[] addressingTable;
-	private ArrayList<Vec4Int> addressCache;
+	private final Set<RemoteDevice>[] addressingTable;
+	private Set<RemoteDevice> addressCache;
 	private final IBusDevice device;
 	private final IBusDriver driver;
 	
 	public BusInterface(IBusDevice device, IBusDriver driver){
 		this.device = device;
 		this.driver = driver;
-		addressingTable = new ArrayList[6];
-		addressCache = new ArrayList();
+		addressingTable = new Set[6];
+		addressCache = new HashSet();
 	}
 	
-	public void setAddressingTable(int side, ArrayList<Vec4Int> table){
-		addressingTable[side] = table;
+	public void setAddressingTable(EnumFacing side, Set<RemoteDevice> table){
+		addressingTable[side.ordinal()] = table;
 		rebuildAddressCache();
 	}
 	
 	private void rebuildAddressCache(){
-		addressCache = new ArrayList();
-		for(int i = 0; i < addressingTable.length; i++){
-			ArrayList<Vec4Int> table = addressingTable[i];
-			if(table != null){
-				for(Vec4Int address : table){
-					if(!addressCache.contains(address)){
-						addressCache.add(address);
-					}
-				}
-			}
-		}
+		addressCache = new HashSet();
+		for(Set<RemoteDevice> table : addressingTable)
+			if(table != null) addressCache.addAll(table);
 	}
 
 	@Override
@@ -62,10 +56,10 @@ public final class BusInterface implements IBusInterface{
 	private void sendPacket(BusPacket packet){
 		ArrayList memory = new ArrayList();
 		World w = device.getWorld();
-		for(Vec4Int addr : addressCache){
-			TileEntity te = w.getTileEntity(addr.x, addr.y, addr.z);
+		for(RemoteDevice device : addressCache){
+			TileEntity te = w.getTileEntity(device.pos);
 			if(te instanceof IBusDevice){
-				IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(addr.w);
+				IBusInterface[] interfaces = ((IBusDevice)te).getInterfaces(device.side);
 				if(interfaces == null){
 					continue;
 				}
@@ -111,13 +105,14 @@ public final class BusInterface implements IBusInterface{
 		NBTTagCompound data = new NBTTagCompound();
 		for(int i = 0; i < addressingTable.length; i++){
 			NBTTagCompound table = new NBTTagCompound();
-			ArrayList<Vec4Int> tbl = addressingTable[i];
+			Set<RemoteDevice> tbl = addressingTable[i];
 			if(tbl == null){
 				table.setInteger("size", 0);
 			}else{
 				table.setInteger("size", tbl.size());
-				for(int j = 0; j < tbl.size(); j++){
-					table.setTag("addr"+j, tbl.get(j).toNBT());
+				int j = 0;
+				for(RemoteDevice rdev : tbl){
+					table.setTag("addr"+j, rdev.serializeNBT());
 				}
 			}
 			data.setTag("table"+i, table);
@@ -130,12 +125,14 @@ public final class BusInterface implements IBusInterface{
 		NBTTagCompound data = nbt.getCompoundTag(tag);
 		for(int i = 0; i < addressingTable.length; i++){
 			NBTTagCompound table = data.getCompoundTag("table"+i);
-			ArrayList<Vec4Int> tbl = null;
+			Set<RemoteDevice> tbl = null;
 			int sz = table.getInteger("size");
 			if(sz != 0){
-				tbl = new ArrayList(sz);
+				tbl = new HashSet();
 				for(int j = 0; j < sz; j++){
-					tbl.add(Vec4Int.fromNBT(table.getCompoundTag("addr"+j)));
+					RemoteDevice device = new RemoteDevice(null, null);
+					device.deserializeNBT(table.getCompoundTag("addr"+j));
+					tbl.add(device);
 				}
 			}
 			addressingTable[i] = tbl;

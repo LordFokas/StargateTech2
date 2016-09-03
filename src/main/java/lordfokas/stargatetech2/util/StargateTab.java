@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class StargateTab extends CreativeTabs {
-	public static final StargateTab instance = new StargateTab();
+	public static final StargateTab INSTANCE = new StargateTab();
 	
 	public StargateTab(){
 		super("StargateTech 2");
@@ -19,7 +19,8 @@ public class StargateTab extends CreativeTabs {
 	
 	@Override
 	public ItemStack getIconItemStack(){
-		return new ItemStack(ModuleTransport.stargate, 1);
+		return Stacks.coilNaq;
+		/*return new ItemStack(ModuleTransport.stargate, 1);*/
 	}
 
 	@Override

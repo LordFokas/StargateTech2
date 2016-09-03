@@ -33,7 +33,7 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	public BlockNaquadahRail() {
 		super(false);
 		this.setBlockTextureName(ModReference.MOD_ID + ":" + BlockReference.NAQUADAH_RAIL);
-		this.setCreativeTab(StargateTab.instance);
+		this.setCreativeTab(StargateTab.INSTANCE);
 		this.setBlockUnbreakable();
 		this.setResistance(20000000F);
 	}

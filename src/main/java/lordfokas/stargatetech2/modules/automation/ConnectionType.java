@@ -1,6 +1,6 @@
 package lordfokas.stargatetech2.modules.automation;
 
-public enum Connection {
+public enum ConnectionType {
 	DISCONNECTED, DEVICE, CABLE;
 	
 	public boolean isConnected(){

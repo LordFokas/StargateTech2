@@ -1,5 +1,6 @@
 package lordfokas.stargatetech2.api.bus;
 
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 /**
@@ -17,7 +18,7 @@ public interface IBusDevice {
 	 * @param side The side of the block that is being queried.
 	 * @return This side's IBusInterface, if any.
 	 */
-	public IBusInterface[] getInterfaces(int side);
+	public IBusInterface[] getInterfaces(EnumFacing side);
 	
 	/**
 	 * @return This device's worldObj.

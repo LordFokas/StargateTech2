@@ -36,7 +36,7 @@ public class BaseBlock extends Block{
 			setBlockUnbreakable();
 			setResistance(20000000F);
 		}
-		setCreativeTab(StargateTab.instance);
+		setCreativeTab(StargateTab.INSTANCE);
 		registerBlock();
 	}
 	

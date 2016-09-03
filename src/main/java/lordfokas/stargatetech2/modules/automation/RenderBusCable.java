@@ -1,13 +1,6 @@
 package lordfokas.stargatetech2.modules.automation;
 
 import lordfokas.naquadria.render.BaseISBRH;
-import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.IconRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class RenderBusCable extends BaseISBRH {
 	private static final RenderBusCable INSTANCE = new RenderBusCable();
@@ -16,14 +9,14 @@ public class RenderBusCable extends BaseISBRH {
 		return INSTANCE;
 	}
 	
-	@Override
+	/*@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		BlockBusCable cable = (BlockBusCable) block;
 		boolean allFaces = renderer.renderAllFaces;
 		renderer.renderAllFaces = true;
 		renderer.setRenderBounds(F05, F05, F05, F11, F11, F11);
 		renderer.renderStandardBlock(cable, x, y, z);
-		Connection x0, x1, y0, y1, z0, z1;
+		ConnectionType x0, x1, y0, y1, z0, z1;
 		IIcon plug = IconRegistry.blockIcons.get(TextureReference.BUS_CABLE_PLUG);
 		y0 = cable.getBusConnection(world, x, y, z, ForgeDirection.DOWN);
 		if(y0.isConnected()){
@@ -83,5 +76,5 @@ public class RenderBusCable extends BaseISBRH {
 		renderer.setOverrideBlockTexture(null);
 		renderer.renderAllFaces = allFaces;
 		return true;
-	}
+	}*/
 }

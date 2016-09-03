@@ -1,11 +1,11 @@
 package lordfokas.stargatetech2.modules.automation;
 
+import lordfokas.naquadria.network.BasePacket.ClientToServer;
+import lordfokas.naquadria.network.PacketCoordinates;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.relauncher.Side;
-import lordfokas.naquadria.network.PacketCoordinates;
-import lordfokas.naquadria.network.BasePacket.ClientToServer;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.relauncher.Side;
 
 @ClientToServer
 public class PacketUpdateBusAddress extends PacketCoordinates {
@@ -19,7 +19,7 @@ public class PacketUpdateBusAddress extends PacketCoordinates {
 	@Override
 	protected IMessage readData(EntityPlayer player, Side side) throws Exception {
 		address = input.readShort();
-		TileEntity te = player.worldObj.getTileEntity(x, y, z);
+		TileEntity te = player.worldObj.getTileEntity(coordinates);
 		if(te instanceof ISyncBusDevice){
 			((ISyncBusDevice)te).setAddress(address);
 		}
