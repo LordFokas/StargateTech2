@@ -35,14 +35,14 @@ block.transportRing.name=Anneaux de transport
 ###################################################################################################
 # ITEMS
 
-item.tabletPC.name=Tablette PC
-item.naquadahIngot.name=Lingot Naquadah
-item.naquadahDust.name=Poussière de Naquadah
-item.naquadahPlate.name=Plaque de Naquadah
-item.circuitCrystal.name=Circuit de cristal
-item.coilNaquadah.name=Bobine d'induction magnétique
-item.coilEnder.name=Bobine conductrice de matière
-item.personalShield.name=Bouclier personnel
+item.stargatetech2.tablet_pc.name=Tablette PC
+item.stargatetech2.naquadah_ingot.name=Lingot Naquadah
+item.stargatetech2.naquadah_dust.name=Poussière de Naquadah
+item.stargatetech2.naquadah_plate.name=Plaque de Naquadah
+item.stargatetech2.circuit_crystal.name=Circuit de cristal
+item.stargatetech2.coil_naquadah.name=Bobine d'induction magnétique
+item.stargatetech2.coil_ender.name=Bobine conductrice de matière
+item.stargatetech2.personal_shield.name=Bouclier personnel
 
 
 

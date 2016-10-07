@@ -46,7 +46,7 @@ minecraft {
 
 dependencies {
 	// compile files("TConstruct-1.7.10-1.7.1c-API.jar")
-	compiole files("CoFHLib-UNOFFICIAL-1.9.4.jar")
+	compile files("CoFHLib-UNOFFICIAL-1.9.4.jar")
 	
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..

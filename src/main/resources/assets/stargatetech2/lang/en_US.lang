@@ -42,14 +42,14 @@ block.lanteanWall_black.name=Black Lantean Wall
 ###################################################################################################
 # ITEMS
 
-item.tablet_pc.name=Tablet PC
-item.naquadahIngot.name=Naquadah Ingot
-item.naquadahDust.name=Pulverized Naquadah
-item.naquadahPlate.name=Naquadah Plate
-item.circuitCrystal.name=Circuit Crystal
-item.coilNaquadah.name=Magnetic Induction Coil
-item.coilEnder.name=Matter Conductance Coil
-item.personalShield.name=Personal Shield
+item.stargatetech2.tablet_pc.name=Tablet PC
+item.stargatetech2.naquadah_ingot.name=Naquadah Ingot
+item.stargatetech2.naquadah_dust.name=Pulverized Naquadah
+item.stargatetech2.naquadah_plate.name=Naquadah Plate
+item.stargatetech2.circuit_crystal.name=Circuit Crystal
+item.stargatetech2.coil_naquadah.name=Magnetic Induction Coil
+item.stargatetech2.coil_ender.name=Matter Conductance Coil
+item.stargatetech2.personal_shield.name=Personal Shield
 
 
 

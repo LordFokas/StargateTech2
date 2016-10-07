@@ -42,14 +42,14 @@ block.lanteanWall_black.name=黑色兰特墙
 ###################################################################################################
 # ITEMS
 
-item.tabletPC.name=平板电脑
-item.naquadahIngot.name=硅岩金锭
-item.naquadahDust.name=硅岩金粉末
-item.naquadahPlate.name=硅岩金板
-item.circuitCrystal.name=电路晶体
-item.coilNaquadah.name=磁感应线圈
-item.coilEnder.name=超导线圈
-item.personalShield.name=私人护盾
+item.stargatetech2.tablet_pc.name=平板电脑
+item.stargatetech2.naquadah_ingot.name=硅岩金锭
+item.stargatetech2.naquadah_dust.name=硅岩金粉末
+item.stargatetech2.naquadah_plate.name=硅岩金板
+item.stargatetech2.circuit_crystal.name=电路晶体
+item.stargatetech2.coil_naquadah.name=磁感应线圈
+item.stargatetech2.coil_ender.name=超导线圈
+item.stargatetech2.personal_shield.name=私人护盾
 
 
 

@@ -44,14 +44,14 @@ block.transportRing.name=Ringtransporter
 ###################################################################################################
 # ITEMS
 
-item.tabletPC.name=Tablet
-item.naquadahIngot.name=Naquadah Barren
-item.naquadahDust.name=Naquadah Staub
-item.naquadahPlate.name=Naquadah Platte
-item.circuitCrystal.name=Kristall Schlateinheit
-item.coilNaquadah.name=Magnetische Inductionsspule
-item.coilEnder.name=Matterie Leiterspule
-item.personalShield.name=Personen Schild
+item.stargatetech2.tabletPC.name=Tablet
+item.stargatetech2.naquadah_ingot.name=Naquadah Barren
+item.stargatetech2.naquadah_dust.name=Naquadah Staub
+item.stargatetech2.naquadah_plate.name=Naquadah Platte
+item.stargatetech2.circuit_crystal.name=Kristall Schlateinheit
+item.stargatetech2.coil_naquadah.name=Magnetische Inductionsspule
+item.stargatetech2.coil_ender.name=Matterie Leiterspule
+item.stargatetech2.personal_shield.name=Personen Schild
 
 
 
