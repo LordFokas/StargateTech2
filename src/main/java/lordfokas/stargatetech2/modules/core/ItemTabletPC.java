@@ -19,7 +19,7 @@ public class ItemTabletPC extends BaseItem {
 
 	public ItemTabletPC() {
 		super(ItemReference.TABLET_PC);
-		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation("StargateTech2:tablet_pc"));
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation("stargatetech2:tablet_pc", "inventory"));
 	}
 	
 	@Override

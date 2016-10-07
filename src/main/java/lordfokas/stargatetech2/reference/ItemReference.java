@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class ItemReference {
 	public static final ArrayList<String> ALL_ITEMS = new ArrayList<String>(10);
 	
-	public static final String TABLET_PC = "tabletPC";
-	public static final String PERSONAL_SHIELD = "personalShield";
+	public static final String TABLET_PC = "tablet_pc";
+	public static final String PERSONAL_SHIELD = "personal_shield";
 	public static final String NAQUADAH = "naquadah";
 	
 	static{

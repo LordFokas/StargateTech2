@@ -42,7 +42,7 @@ block.lanteanWall_black.name=Black Lantean Wall
 ###################################################################################################
 # ITEMS
 
-item.tabletPC.name=TabletPC
+item.tablet_pc.name=Tablet PC
 item.naquadahIngot.name=Naquadah Ingot
 item.naquadahDust.name=Pulverized Naquadah
 item.naquadahPlate.name=Naquadah Plate

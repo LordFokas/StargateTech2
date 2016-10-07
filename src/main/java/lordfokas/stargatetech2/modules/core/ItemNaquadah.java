@@ -31,12 +31,12 @@ public class ItemNaquadah extends BaseItem{
 	public ItemNaquadah() {
 		super(ItemReference.NAQUADAH);
 		setHasSubtypes(true);
-		ModelLoader.setCustomModelResourceLocation(this, Type.INGOT.ordinal(), new ModelResourceLocation("StargateTech2:naquadah_ingot"));
-		ModelLoader.setCustomModelResourceLocation(this, Type.DUST.ordinal(), new ModelResourceLocation("StargateTech2:naquadah_dust"));
-		ModelLoader.setCustomModelResourceLocation(this, Type.PLATE.ordinal(), new ModelResourceLocation("StargateTech2:naquadah_plate"));
-		ModelLoader.setCustomModelResourceLocation(this, Type.CIRCUIT.ordinal(), new ModelResourceLocation("StargateTech2:naquadah_circuit"));
-		ModelLoader.setCustomModelResourceLocation(this, Type.COIL_NAQ.ordinal(), new ModelResourceLocation("StargateTech2:naquadah_coil"));
-		ModelLoader.setCustomModelResourceLocation(this, Type.COIL_END.ordinal(), new ModelResourceLocation("StargateTech2:naquadah_coil_end"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.INGOT.ordinal(), new ModelResourceLocation("stargatetech2:naquadah_ingot"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.DUST.ordinal(), new ModelResourceLocation("stargatetech2:naquadah_dust"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.PLATE.ordinal(), new ModelResourceLocation("stargatetech2:naquadah_plate"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.CIRCUIT.ordinal(), new ModelResourceLocation("stargatetech2:naquadah_circuit"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.COIL_NAQ.ordinal(), new ModelResourceLocation("stargatetech2:naquadah_coil"));
+		ModelLoader.setCustomModelResourceLocation(this, Type.COIL_END.ordinal(), new ModelResourceLocation("stargatetech2:naquadah_coil_end"));
 	}
 	
 	@Override
