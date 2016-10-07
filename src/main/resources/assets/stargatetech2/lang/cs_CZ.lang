@@ -42,14 +42,14 @@ block.lanteanWall_black.name=Černá zeď předků
 ###################################################################################################
 # ITEMS
 
-item.tabletPC.name=TabletPC
-item.naquadahIngot.name=Naquadahový ingot
-item.naquadahDust.name=Prášek naquadahu
-item.naquadahPlate.name=Plát naquadahu
-item.circuitCrystal.name=Obvodový krystal
-item.coilNaquadah.name=Magnetická indukční cívka
-item.coilEnder.name=Hmotnostní kondukční cívka
-item.personalShield.name=Osobní štít
+item.stargatetech2.tablet_pc.name=TabletPC
+item.stargatetech2.naquadah_ingot.name=Naquadahový ingot
+item.stargatetech2.naquadah_dust.name=Prášek naquadahu
+item.stargatetech2.naquadah_plate.name=Plát naquadahu
+item.stargatetech2.circuit_crystal.name=Obvodový krystal
+item.stargatetech2.coil_naquadah.name=Magnetická indukční cívka
+item.stargatetech2.coil_ender.name=Hmotnostní kondukční cívka
+item.stargatetech2.personal_shield.name=Osobní štít
 
 
 

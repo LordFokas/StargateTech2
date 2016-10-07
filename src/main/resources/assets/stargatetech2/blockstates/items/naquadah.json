@@ -1,0 +1,41 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "naquadah_ingot": {
+        "textures": {
+          "layer0": "stargatetech2:items/naquadahIngot"
+        }
+      },
+      "naquadah_dust": {
+        "textures": {
+          "layer0": "stargatetech2:items/naquadahDust"
+        }
+      },
+      "naquadah_plate": {
+        "textures": {
+          "layer0": "stargatetech2:items/naquadahPlate"
+        }
+      },
+      "circuit_crystal": {
+        "textures": {
+          "layer0": "stargatetech2:items/circuitCrystal"
+        }
+      },
+      "coil_naquadah": {
+        "textures": {
+          "layer0": "stargatetech2:items/coilNaquadah"
+        }
+      },
+      "coil_ender": {
+        "textures": {
+          "layer0": "stargatetech2:items/coilEnder"
+        }
+      }
+    }
+  }
+}

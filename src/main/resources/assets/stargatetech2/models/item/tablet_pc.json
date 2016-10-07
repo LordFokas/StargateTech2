@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "StargateTech2:items/tablet_pc"
+        "layer0": "stargatetech2:items/tablet_pc"
     }
 }

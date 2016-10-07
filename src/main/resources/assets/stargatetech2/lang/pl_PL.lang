@@ -36,14 +36,14 @@ block.transportRing.name=Pierścienie Transportowe
 ###################################################################################################
 # ITEMS
 
-item.tabletPC.name=Tablet
-item.naquadahIngot.name=Sztabka Naquadah
-item.naquadahDust.name=Proszek z Naquadah
-item.naquadahPlate.name=Płytka z Naquadah
-item.circuitCrystal.name=Krystaliczne Obwody
-item.coilNaquadah.name=Cewka Ruhmkorffa
-item.coilEnder.name=Cewka Anihilacyjna
-item.personalShield.name=Tarcza Osobista
+item.stargatetech2.tablet_pc.name=Tablet
+item.stargatetech2.naquadah_ingot.name=Sztabka Naquadah
+item.stargatetech2.naquadah_dust.name=Proszek z Naquadah
+item.stargatetech2.naquadah_plate.name=Płytka z Naquadah
+item.stargatetech2.circuit_crystal.name=Krystaliczne Obwody
+item.stargatetech2.coil_naquadah.name=Cewka Ruhmkorffa
+item.stargatetech2.coil_ender.name=Cewka Anihilacyjna
+item.stargatetech2.personal_shield.name=Tarcza Osobista
 
 
 
