@@ -3,7 +3,7 @@ package lordfokas.stargatetech2.util;
 import lordfokas.stargatetech2.modules.ModuleAutomation;
 import lordfokas.stargatetech2.modules.ModuleCore;
 import lordfokas.stargatetech2.modules.core.BlockNaquadah;
-import lordfokas.stargatetech2.modules.core.ItemNaquadah;
+import lordfokas.stargatetech2.modules.core.NaquadahItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -48,12 +48,12 @@ public class Stacks {
 		// STARGATETECH 2
 		naqOre		= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.Type.ORE.ordinal());
 		naqBlock	= new ItemStack(ModuleCore.naquadahBlock, 1, BlockNaquadah.Type.BLOCK.ordinal());
-		naqIngot	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.INGOT.ordinal());
-		naqDust		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.DUST.ordinal());
-		naqPlate	= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.PLATE.ordinal());
-		circuit		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.CIRCUIT.ordinal());
-		coilNaq		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.COIL_NAQ.ordinal());
-		coilEnd		= new ItemStack(ModuleCore.naquadahItem, 1, ItemNaquadah.Type.COIL_END.ordinal());
+		naqIngot	= new ItemStack(ModuleCore.naquadahItem, 1, NaquadahItems.NAQUADAH_INGOT.ordinal());
+		naqDust		= new ItemStack(ModuleCore.naquadahItem, 1, NaquadahItems.NAQUADAH_DUST.ordinal());
+		naqPlate	= new ItemStack(ModuleCore.naquadahItem, 1, NaquadahItems.NAQUADAH_PLATE.ordinal());
+		circuit		= new ItemStack(ModuleCore.naquadahItem, 1, NaquadahItems.CIRCUIT_CRYSTAL.ordinal());
+		coilNaq		= new ItemStack(ModuleCore.naquadahItem, 1, NaquadahItems.COIL_NAQUADAH.ordinal());
+		coilEnd		= new ItemStack(ModuleCore.naquadahItem, 1, NaquadahItems.COIL_ENDER.ordinal());
 		busCable	= new ItemStack(ModuleAutomation.busCable);
 	}
 	
