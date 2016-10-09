@@ -1,11 +1,11 @@
 package lordfokas.stargatetech2.modules.transport;
 
-import lordfokas.naquadria.render.BaseISBRH;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseISBRH_THRASH;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 
-public class RenderStargateBlock extends BaseISBRH {
+public class RenderStargateBlock extends BaseISBRH_THRASH {
 	private static final RenderStargateBlock INSTANCE = new RenderStargateBlock();
 	
 	public static RenderStargateBlock instance(){

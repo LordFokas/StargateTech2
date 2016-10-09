@@ -1,7 +1,7 @@
-package lordfokas.naquadria.render;
+package lordfokas.stargatetech2.ZZ_THRASH;
 
 @Deprecated
-public class RenderMachine extends BaseISBRH{
+public class RenderMachine_THRASH extends BaseISBRH_THRASH{
 	/*private static final RenderMachine INSTANCE = new RenderMachine();
 	private static final int[] PASSES = new int[]{0, 1};
 	

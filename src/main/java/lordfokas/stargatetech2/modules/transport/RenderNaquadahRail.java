@@ -1,12 +1,12 @@
 package lordfokas.stargatetech2.modules.transport;
 
-import lordfokas.naquadria.render.BaseISBRH;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseISBRH_THRASH;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 
-public class RenderNaquadahRail extends BaseISBRH {
+public class RenderNaquadahRail extends BaseISBRH_THRASH {
 	private static final RenderNaquadahRail INSTANCE = new RenderNaquadahRail();
 	
 	public static RenderNaquadahRail instance(){

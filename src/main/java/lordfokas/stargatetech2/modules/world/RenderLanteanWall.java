@@ -1,13 +1,13 @@
 package lordfokas.stargatetech2.modules.world;
 
-import lordfokas.naquadria.render.BaseISBRH;
 import lordfokas.naquadria.render.Color;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseISBRH_THRASH;
 import lordfokas.stargatetech2.modules.ModuleWorld;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 
-public class RenderLanteanWall extends BaseISBRH {
+public class RenderLanteanWall extends BaseISBRH_THRASH {
 	private static final RenderLanteanWall INSTANCE = new RenderLanteanWall();
 	
 	public static RenderLanteanWall instance(){

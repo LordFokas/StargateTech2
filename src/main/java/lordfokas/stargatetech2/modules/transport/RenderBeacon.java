@@ -1,13 +1,13 @@
 package lordfokas.stargatetech2.modules.transport;
 
-import lordfokas.naquadria.render.BaseISBRH;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseISBRH_THRASH;
 import lordfokas.stargatetech2.modules.ModuleTransport;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-public class RenderBeacon extends BaseISBRH{
+public class RenderBeacon extends BaseISBRH_THRASH{
 	private static final RenderBeacon INSTANCE = new RenderBeacon();
 	
 	public static RenderBeacon instance(){

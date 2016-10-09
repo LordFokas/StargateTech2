@@ -1,7 +1,7 @@
-package lordfokas.naquadria.render;
+package lordfokas.stargatetech2.ZZ_THRASH;
 
 @Deprecated
-public abstract class BaseISBRH /*implements ISimpleBlockRenderingHandler*/ {
+public abstract class BaseISBRH_THRASH {
 	/*protected static final float F01 = 0.0625F;
 	protected static final float F02 = F01 *  2F;
 	protected static final float F03 = F01 *  3F;

@@ -1,8 +1,8 @@
 package lordfokas.stargatetech2.modules.automation;
 
-import lordfokas.naquadria.render.BaseISBRH;
+import lordfokas.stargatetech2.ZZ_THRASH.BaseISBRH_THRASH;
 
-public class RenderBusCable extends BaseISBRH {
+public class RenderBusCable extends BaseISBRH_THRASH {
 	private static final RenderBusCable INSTANCE = new RenderBusCable();
 	
 	public static RenderBusCable instance(){
