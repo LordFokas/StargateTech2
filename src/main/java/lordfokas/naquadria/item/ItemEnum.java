@@ -2,6 +2,7 @@ package lordfokas.naquadria.item;
 
 import lordfokas.naquadria.render.IVariantProvider;
 import lordfokas.stargatetech2.reference.ModReference;
+import lordfokas.stargatetech2.util.StargateTab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -33,6 +34,7 @@ public class ItemEnum<T extends Enum<T> & IEnumItem> extends Item implements IVa
 
         setHasSubtypes(types.length > 1);
         setUnlocalizedName(ModReference.MOD_ID);
+        setCreativeTab(StargateTab.instance());
     }
 
     public ItemEnum(Class<T> enumClass) {
