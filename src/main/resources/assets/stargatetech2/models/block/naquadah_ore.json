@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "StargateTech2:naquadahOre"
+        "all": "StargateTech2:blocks/naquadahOre"
     }
 }

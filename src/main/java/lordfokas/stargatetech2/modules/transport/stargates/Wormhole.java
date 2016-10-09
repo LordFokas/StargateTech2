@@ -4,20 +4,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.List;
 
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
+import lordfokas.stargatetech2.ZZ_THRASH.Vec4Int_THRASH;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.modules.transport.Teleporter;
 import lordfokas.stargatetech2.modules.transport.TileStargate;
 import lordfokas.stargatetech2.util.ChunkLoader;
 import lordfokas.stargatetech2.util.StargateLogger;
-import lordfokas.stargatetech2.util.Vec3Int;
-import lordfokas.stargatetech2.util.Vec4Int;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public final class Wormhole {
-	private Vec4Int tmpSrc, tmpDst;
+	private Vec4Int_THRASH tmpSrc, tmpDst;
 	private TileStargate source, destination;
 	private boolean isWormholeActive = true;
 	private long lastWormholeTime = 0;
@@ -73,7 +73,7 @@ public final class Wormhole {
 		}else{
 			aabb = AxisAlignedBB.getBoundingBox(source.xCoord+0.375, source.yCoord+1, source.zCoord-1, source.xCoord+0.625, source.yCoord+4, source.zCoord+2);
 		}
-		Vec3Int position = new Vec3Int(destination.xCoord, destination.yCoord+1, destination.zCoord);
+		Vec3Int_THRASH position = new Vec3Int_THRASH(destination.xCoord, destination.yCoord+1, destination.zCoord);
 		float yaw = (90 * destination.getBlockMetadata());
 		List<Entity> entities = source.getWorldObj().getEntitiesWithinAABB(Entity.class, aabb);
 		for(Entity entity : entities){
@@ -109,12 +109,12 @@ public final class Wormhole {
 		x = dis.readInt();
 		y = dis.readInt();
 		z = dis.readInt();
-		wh.tmpSrc = new Vec4Int(w, x, y, z);
+		wh.tmpSrc = new Vec4Int_THRASH(w, x, y, z);
 		w = dis.readInt();
 		x = dis.readInt();
 		y = dis.readInt();
 		z = dis.readInt();
-		wh.tmpDst = new Vec4Int(w, x, y, z);
+		wh.tmpDst = new Vec4Int_THRASH(w, x, y, z);
 		return wh;
 	}
 	

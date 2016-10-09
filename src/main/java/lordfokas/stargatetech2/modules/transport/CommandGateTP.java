@@ -3,10 +3,10 @@ package lordfokas.stargatetech2.modules.transport;
 import java.util.Arrays;
 import java.util.List;
 
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.api.stargate.Address;
 import lordfokas.stargatetech2.modules.transport.stargates.AddressMapping;
 import lordfokas.stargatetech2.modules.transport.stargates.StargateNetwork;
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -52,7 +52,7 @@ public class CommandGateTP extends CommandBase {
 		AddressMapping amap = StargateNetwork.instance().getAddressMapping(address);
 		if (amap == null) throw new CommandException("commands.tpgate.nogate");
 		
-		Teleporter.teleport(epl.worldObj, epl, MinecraftServer.getServer().worldServerForDimension(amap.getDimension()), new Vec3Int(amap.getXCoord(), amap.getYCoord()+1, amap.getZCoord()), epl.cameraYaw);
+		Teleporter.teleport(epl.worldObj, epl, MinecraftServer.getServer().worldServerForDimension(amap.getDimension()), new Vec3Int_THRASH(amap.getXCoord(), amap.getYCoord()+1, amap.getZCoord()), epl.cameraYaw);
 	}
 
 }

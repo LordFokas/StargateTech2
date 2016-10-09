@@ -2,6 +2,7 @@ package lordfokas.naquadria.item;
 
 import lordfokas.naquadria.render.IVariantProvider;
 import lordfokas.stargatetech2.reference.ModReference;
+import lordfokas.stargatetech2.util.Helper;
 import lordfokas.stargatetech2.util.StargateTab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,24 +22,22 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.List;
 import java.util.Locale;
 
-public class ItemEnum<T extends Enum<T> & IEnumItem> extends Item implements IVariantProvider {
+public class ItemEnum<T extends Enum<T> & IEnumItem> extends BaseItem implements IVariantProvider {
 
     private final T[] types;
     private final String variantBase;
 
-    public ItemEnum(Class<T> enumClass, String variantBase) {
-        super();
+    public ItemEnum(Class<T> enumClass, String variantBase, String registryName) {
+        super(registryName);
 
         this.types = enumClass.getEnumConstants();
         this.variantBase = variantBase;
 
         setHasSubtypes(types.length > 1);
-        setUnlocalizedName(ModReference.MOD_ID);
-        setCreativeTab(StargateTab.instance());
     }
 
-    public ItemEnum(Class<T> enumClass) {
-        this(enumClass, "type");
+    public ItemEnum(Class<T> enumClass, String registryName) {
+        this(enumClass, "type", registryName);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ItemEnum<T extends Enum<T> & IEnumItem> extends Item implements IVa
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + "." + getItemType(stack).toString().toLowerCase(Locale.ENGLISH);
+        return Helper.unlocalize("item", getItemType(stack).toString().toLowerCase(Locale.ENGLISH));
     }
 
     @Override

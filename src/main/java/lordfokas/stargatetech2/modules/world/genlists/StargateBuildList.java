@@ -1,9 +1,9 @@
 package lordfokas.stargatetech2.modules.world.genlists;
 
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.modules.ModuleTransport;
 import lordfokas.stargatetech2.modules.transport.BlockStargate;
 import lordfokas.stargatetech2.modules.transport.TileStargateRing;
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -31,12 +31,12 @@ public class StargateBuildList extends BuildList {
 	}
 	
 	public void buildStargate(World w, int x, int y, int z){
-		build(w, x, y, z, MATERIAL, new Vec3Int(x, y, z));
+		build(w, x, y, z, MATERIAL, new Vec3Int_THRASH(x, y, z));
 	}
 	
 	@Override
 	protected void afterBlock(World w, int x, int y, int z, Object o){
-		Vec3Int sg = (Vec3Int) o;
+		Vec3Int_THRASH sg = (Vec3Int_THRASH) o;
 		TileEntity te = w.getTileEntity(x, y, z);
 		if(te instanceof TileStargateRing){
 			((TileStargateRing)te).setSGPosition(sg.x, sg.y, sg.z);

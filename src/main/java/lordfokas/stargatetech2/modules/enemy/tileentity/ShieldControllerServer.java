@@ -7,13 +7,13 @@ import java.util.List;
 import lordfokas.naquadria.tileentity.IRedstoneAware;
 import lordfokas.naquadria.tileentity.ITile;
 import lordfokas.naquadria.tileentity.ITileContext;
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
 import lordfokas.stargatetech2.modules.enemy.BlockShield;
 import lordfokas.stargatetech2.modules.enemy.IShieldControllerProvider;
 import lordfokas.stargatetech2.modules.enemy.TileShieldEmitter;
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -23,8 +23,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class ShieldControllerServer extends ShieldControllerCommon
 implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	private static final int ION_DRAIN = 10;
-	private ArrayList<Vec3Int> emitters = new ArrayList();
-	private LinkedList<Vec3Int> shields = new LinkedList();
+	private ArrayList<Vec3Int_THRASH> emitters = new ArrayList();
+	private LinkedList<Vec3Int_THRASH> shields = new LinkedList();
 	private ITile.Server tile;
 	private boolean redstone = false;
 	
@@ -65,7 +65,7 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	
 	private void raiseShields(){
 		shields.clear();
-		for(Vec3Int pos : emitters){ // TODO: fix this shit
+		for(Vec3Int_THRASH pos : emitters){ // TODO: fix this shit
 			TileEntity te = tile.getWorld().getTileEntity(pos.x, pos.y, pos.z);
 			if(te instanceof TileShieldEmitter){
 				shields.addAll(((TileShieldEmitter)te).createShields());
@@ -75,7 +75,7 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	}
 	
 	private void lowerShields(){
-		for(Vec3Int pos : shields){ // TODO: fix this shit
+		for(Vec3Int_THRASH pos : shields){ // TODO: fix this shit
 			Block b = tile.getWorld().getBlock(pos.x, pos.y, pos.z);
 			if(b instanceof BlockShield){
 				tile.getWorld().setBlockToAir(pos.x, pos.y, pos.z);
@@ -98,8 +98,8 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	}
 	
 	@Override
-	public Vec3Int getShieldControllerCoords() {
-		return new Vec3Int(tile.x(), tile.y(), tile.z());
+	public Vec3Int_THRASH getShieldControllerCoords() {
+		return new Vec3Int_THRASH(tile.x(), tile.y(), tile.z());
 	}
 	
 	@Override
@@ -112,13 +112,13 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 	}
 	
 	public void addEmitter(TileShieldEmitter emitter){
-		emitters.add(new Vec3Int(emitter.xCoord, emitter.yCoord, emitter.zCoord));
+		emitters.add(new Vec3Int_THRASH(emitter.xCoord, emitter.yCoord, emitter.zCoord));
 	}
 	
 	public void removeEmitter(TileShieldEmitter emitter){
-		emitters.remove(new Vec3Int(emitter.xCoord, emitter.yCoord, emitter.zCoord));
-		ArrayList<Vec3Int> unreachableDependencies = emitters;
-		LinkedList<Vec3Int> memory = new LinkedList();
+		emitters.remove(new Vec3Int_THRASH(emitter.xCoord, emitter.yCoord, emitter.zCoord));
+		ArrayList<Vec3Int_THRASH> unreachableDependencies = emitters;
+		LinkedList<Vec3Int_THRASH> memory = new LinkedList();
 		memory.add(getShieldControllerCoords());
 		emitters = new ArrayList();
 		recursiveRemap(tile.getWorld(), tile.x(), tile.y(), tile.z(), emitters, memory);
@@ -126,22 +126,22 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 		dropAll(unreachableDependencies);
 	}
 	
-	private void dropAll(List<Vec3Int> unreachable){
+	private void dropAll(List<Vec3Int_THRASH> unreachable){
 		boolean shieldsUp = active;
 		if(shieldsUp) lowerShields();
-		for(Vec3Int e : unreachable){
+		for(Vec3Int_THRASH e : unreachable){
 			ModuleEnemy.shieldEmitter.dropSelf(tile.getWorld(), e.x, e.y, e.z);
 		}
 		if(shieldsUp) raiseShields();
 	}
 	
-	private void recursiveRemap(World w, int x, int y, int z, ArrayList<Vec3Int> found, LinkedList<Vec3Int> memory){
+	private void recursiveRemap(World w, int x, int y, int z, ArrayList<Vec3Int_THRASH> found, LinkedList<Vec3Int_THRASH> memory){
 		for(ForgeDirection fd : ForgeDirection.VALID_DIRECTIONS){
 			int nx = x + fd.offsetX;
 			int ny = y + fd.offsetY;
 			int nz = z + fd.offsetZ;
 			if(ny >= 0 && ny < w.getActualHeight()){
-				Vec3Int pos = new Vec3Int(nx, ny, nz);
+				Vec3Int_THRASH pos = new Vec3Int_THRASH(nx, ny, nz);
 				if(!memory.contains(pos)){
 					memory.add(pos);
 					TileEntity te = w.getTileEntity(nx, ny, nz);
@@ -182,12 +182,12 @@ implements ITileContext.Server, IShieldControllerProvider, IRedstoneAware{
 		int num_emitters = nbt.getInteger("emitters");
 		emitters = new ArrayList(num_emitters);
 		for(int i = 0; i < num_emitters; i++){
-			emitters.add(Vec3Int.fromNBT(nbt.getCompoundTag("emitter_" + i)));
+			emitters.add(Vec3Int_THRASH.fromNBT(nbt.getCompoundTag("emitter_" + i)));
 		}
 		int num_shields = nbt.getInteger("shields");
 		shields.clear();
 		for(int i = 0; i < num_shields; i++){
-			shields.add(Vec3Int.fromNBT(nbt.getCompoundTag("shield_" + i)));
+			shields.add(Vec3Int_THRASH.fromNBT(nbt.getCompoundTag("shield_" + i)));
 		}
 		redstone = nbt.getBoolean("redstone");
 	}

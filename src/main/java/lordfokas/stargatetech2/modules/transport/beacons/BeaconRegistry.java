@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.modules.transport.TileBeaconTransceiver;
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
@@ -55,7 +55,7 @@ public class BeaconRegistry{
 		BeaconNetwork beaconNetwork = getNetwork(network);
 		LinkedList<BeaconData> datum = new LinkedList();
 		WorldServer w = MinecraftServer.getServer().worldServerForDimension(dimension);
-		for(Vec3Int pos : beaconNetwork.beacons){
+		for(Vec3Int_THRASH pos : beaconNetwork.beacons){
 			TileEntity te = w.getTileEntity(pos.x, pos.y, pos.z);
 			if(te instanceof TileBeaconTransceiver){
 				TileBeaconTransceiver transceiver = (TileBeaconTransceiver)te;
@@ -69,7 +69,7 @@ public class BeaconRegistry{
 	
 	public void addToNetwork(String network, TileBeaconTransceiver beacon){
 		BeaconNetwork beaconNetwork = getNetwork(network);
-		Vec3Int pos = new Vec3Int(beacon.xCoord, beacon.yCoord, beacon.zCoord);
+		Vec3Int_THRASH pos = new Vec3Int_THRASH(beacon.xCoord, beacon.yCoord, beacon.zCoord);
 		if(!beaconNetwork.beacons.contains(pos)){
 			beaconNetwork.beacons.add(pos);
 		}
@@ -77,7 +77,7 @@ public class BeaconRegistry{
 	
 	public void removeFromNetwork(String network, TileBeaconTransceiver beacon){
 		BeaconNetwork beaconNetwork = getNetwork(network);
-		Vec3Int pos = new Vec3Int(beacon.xCoord, beacon.yCoord, beacon.zCoord);
+		Vec3Int_THRASH pos = new Vec3Int_THRASH(beacon.xCoord, beacon.yCoord, beacon.zCoord);
 		beaconNetwork.beacons.remove(pos);
 	}
 	
@@ -129,7 +129,7 @@ public class BeaconRegistry{
 	// BEACON NETWORK // ####################################
 	private static class BeaconNetwork{
 		private final String networkName;
-		private LinkedList<Vec3Int> beacons = new LinkedList();
+		private LinkedList<Vec3Int_THRASH> beacons = new LinkedList();
 		
 		private BeaconNetwork(String name){
 			this.networkName = name;
@@ -139,7 +139,7 @@ public class BeaconRegistry{
 			beacons = new LinkedList();
 			int size = nbt.getInteger("size");
 			for(int i = 0; i < size; i++){
-				beacons.add(Vec3Int.fromNBT(nbt.getCompoundTag("b" + i)));
+				beacons.add(Vec3Int_THRASH.fromNBT(nbt.getCompoundTag("b" + i)));
 			}
 		}
 		

@@ -34,7 +34,7 @@ public final class APIImplementation extends StargateTechAPI {
 	
 	@Override
 	public CreativeTabs getStargateTab() {
-		return StargateTab.INSTANCE;
+		return StargateTab.instance();
 	}
 	
 	@Override

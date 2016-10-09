@@ -65,4 +65,8 @@ public class Helper {
 		time.append(cent);
 		return time.toString();
 	}
+	
+	public static String unlocalize(String thing, String registry){
+		return thing + ".stargatetech2." + registry;
+	}
 }

@@ -1,11 +1,11 @@
 package lordfokas.stargatetech2.modules.transport;
 
 import lordfokas.naquadria.render.BaseTESR;
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.modules.transport.TileStargate.RenderData;
 import lordfokas.stargatetech2.modules.transport.TileStargate.RenderData.ChevronData;
 import lordfokas.stargatetech2.modules.transport.stargates.SymbolCoordinates;
 import lordfokas.stargatetech2.reference.TextureReference;
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.tileentity.TileEntity;
@@ -89,7 +89,7 @@ public class RenderStargateTile extends BaseTESR {
 	}
 	
 	@Override
-	public void render(TileEntity te, Block block, World w, Vec3Int pos, float partialTicks) {
+	public void render(TileEntity te, Block block, World w, Vec3Int_THRASH pos, float partialTicks) {
 		TileStargate stargate = (TileStargate) te;
 		RenderData data = stargate.getRenderData();
 		bindTexture(TextureReference.TESR_STARGATE);

@@ -1,14 +1,14 @@
 package lordfokas.stargatetech2.modules.enemy;
 
 import lordfokas.stargatetech2.ZZ_THRASH.BaseTileEntity__OLD_AND_FLAWED;
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerCommon;
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileShield extends BaseTileEntity__OLD_AND_FLAWED {
-	private Vec3Int controller;
+	private Vec3Int_THRASH controller;
 	
 	@Override
 	public boolean canUpdate(){
@@ -18,7 +18,7 @@ public class TileShield extends BaseTileEntity__OLD_AND_FLAWED {
 	@Override
 	protected void readNBT(NBTTagCompound nbt) {
 		if(nbt.hasKey("master"))
-			controller = Vec3Int.fromNBT(nbt.getCompoundTag("master"));
+			controller = Vec3Int_THRASH.fromNBT(nbt.getCompoundTag("master"));
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class TileShield extends BaseTileEntity__OLD_AND_FLAWED {
 			nbt.setTag("master", controller.toNBT());
 	}
 	
-	public void setController(Vec3Int controller){
+	public void setController(Vec3Int_THRASH controller){
 		this.controller = controller;
 	}
 	

@@ -2,7 +2,6 @@ package lordfokas.stargatetech2.modules.transport;
 
 import java.util.Iterator;
 
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,12 +15,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import cpw.mods.fml.common.FMLCommonHandler;
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 
 public class Teleporter{
 	private static final int X = 0, Y = 1, Z = 2;
 	private static MinecraftServer mcServer = null;
 	
-	public static void teleport(World worldFrom, Entity entity, World worldTo, Vec3Int position, float yaw){
+	public static void teleport(World worldFrom, Entity entity, World worldTo, Vec3Int_THRASH position, float yaw){
 		teleport(worldFrom, entity, worldTo, new double[]{((double)position.x) + 0.5D, position.y, ((double)position.z) + 0.5D}, yaw);
 	}
 	

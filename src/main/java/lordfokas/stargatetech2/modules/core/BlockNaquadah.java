@@ -50,11 +50,6 @@ public class BlockNaquadah extends BaseBlock {
 		list.add(new ItemStack(this, 1, Type.BLOCK.ordinal()));
 	}
 	
-	/*@Override // TODO: create model. Avoid logic loss.
-	public IIcon getBaseIcon(int side, int meta){
-		return meta != 0 ? blockIcon : IconRegistry.blockIcons.get(TextureReference.NAQUADAH_ORE);
-	}*/
-	
 	@Override
 	public int damageDropped(IBlockState state){
 		return getMetaFromState(state);
@@ -74,10 +69,5 @@ public class BlockNaquadah extends BaseBlock {
 	public IBlockState getStateFromMeta(int meta) {
 		IBlockState state = blockState.getBaseState();
 		return state.withProperty(TYPE, Type.values()[meta]);
-	}
-	
-	@Override
-	protected void registerBlock(){
-		GameRegistry.registerBlock(this, ItemBlockNaquadah.class, getUnlocalizedName());
 	}
 }

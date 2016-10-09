@@ -1,10 +1,10 @@
 package lordfokas.stargatetech2.modules.enemy;
 
 import lordfokas.stargatetech2.ZZ_THRASH.BlockMachine__THRASH;
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.reference.TextureReference;
 import lordfokas.stargatetech2.util.IconRegistry;
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -21,14 +21,14 @@ public class BlockShieldEmitter extends BlockMachine__THRASH{
 	@Override // TODO: SO MUCH SHIT TO CLEAN DUDE!
 	public boolean canPlaceBlockAt(World w, int x, int y, int z){
 		if(!super.canPlaceBlockAt(w, x, y, z)) return false;
-		Vec3Int controller = null;
+		Vec3Int_THRASH controller = null;
 		for(ForgeDirection fd : ForgeDirection.VALID_DIRECTIONS){
 			int sx = x + fd.offsetX;
 			int sy = y + fd.offsetY;
 			int sz = z + fd.offsetZ;
 			if(sy >= 0 && sy < w.getActualHeight()){ // make sure we're within vertical world bounds;
 				TileEntity te = w.getTileEntity(sx, sy, sz);
-				Vec3Int c = null;
+				Vec3Int_THRASH c = null;
 				boolean wasNull = false;
 				if(te instanceof IShieldControllerProvider){
 					c = ((IShieldControllerProvider)te).getShieldControllerCoords();
@@ -37,7 +37,7 @@ public class BlockShieldEmitter extends BlockMachine__THRASH{
 						wasNull = true;
 					}
 				}else if(te instanceof TileShieldController){
-					c = new Vec3Int(sx, sy, sz);
+					c = new Vec3Int_THRASH(sx, sy, sz);
 					if(controller == null){
 						controller = c; // make sure we always have a controller;
 						wasNull = true;
@@ -60,13 +60,13 @@ public class BlockShieldEmitter extends BlockMachine__THRASH{
 				if(sy >= 0 && sy < w.getActualHeight()){ // make sure we're within vertical world bounds;
 					TileEntity prvdr = w.getTileEntity(sx, sy, sz);
 					if(prvdr instanceof IShieldControllerProvider){
-						Vec3Int controller = ((IShieldControllerProvider)prvdr).getShieldControllerCoords();
+						Vec3Int_THRASH controller = ((IShieldControllerProvider)prvdr).getShieldControllerCoords();
 						if(controller != null){
 							((TileShieldEmitter)te).setController(controller);
 							return;
 						}
 					}else if(prvdr instanceof TileShieldController){
-						((TileShieldEmitter)te).setController(new Vec3Int(prvdr.xCoord, prvdr.yCoord, prvdr.zCoord));
+						((TileShieldEmitter)te).setController(new Vec3Int_THRASH(prvdr.xCoord, prvdr.yCoord, prvdr.zCoord));
 						return;
 					}
 				}

@@ -12,6 +12,8 @@ import lordfokas.stargatetech2.util.Stacks;
 import lordfokas.stargatetech2.util.StargateLogger;
 import lordfokas.stargatetech2.util.StargateTab;
 import lordfokas.stargatetech2.util.api.APIImplementation;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -23,6 +25,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 @Mod(modid=ModReference.MOD_ID, name=ModReference.MOD_NAME, version=ModReference.MOD_VERSION, dependencies=ModReference.DEPENDENCIES)
@@ -122,9 +125,15 @@ public class StargateTech2 {
 		}
 	}
 	
-	/*@SubscribeEvent // XXX not gonna happen
-	@SideOnly(Side.CLIENT)
-	public void beforeTextureStitch(TextureStitchEvent.Pre event){
-		IconRegistry.load(event.map);
-	}*/
+	public static Item register(Item item) {
+	    GameRegistry.register(item);
+        proxy.handleItemModel(item, item.getRegistryName().getResourcePath());
+        return item;
+    }
+	
+	public static Block register(Block block) {
+	    GameRegistry.register(block);
+        proxy.handleBlockModel(block, block.getRegistryName().getResourcePath());
+        return block;
+    }
 }

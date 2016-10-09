@@ -1,41 +1,41 @@
 ###################################################################################################
 # BLOCKS
 
-block.beacon.transceiver.name=Transport Beacon Transceiver
-block.beacon.antenna.name=Transport Beacon Antenna
-block.beacon.console.name=Transport Beacon Console
-block.beacon.mattergrid.name=Transport Beacon Matter Grid
-block.busAdapter.name=Abstract Bus Adapter
-block.busCable.name=Abstract Bus Cable
-block.naquadah.ore.name=Naquadah Ore
-block.naquadah.block.name=Naquadah Block
-block.naquadahRail.name=Naquadah Rail
-block.particleIonizer.name=Particle Ionizer
-block.shieldController.name=Shield Controller
-block.shieldEmitter.name=Shield Emitter
-block.stargate.name=Stargate
-block.shield.name=Shield
-block.transportRing.name=Transport Ring Platform
+block.stargatetech2.beacon_transceiver.name=Transport Beacon Transceiver
+block.stargatetech2.beacon_antenna.name=Transport Beacon Antenna
+block.stargatetech2.beacon_console.name=Transport Beacon Console
+block.stargatetech2.beacon_mattergrid.name=Transport Beacon Matter Grid
+block.stargatetech2.bus_adapter.name=Abstract Bus Adapter
+block.stargatetech2.bus_cable.name=Abstract Bus Cable
+block.stargatetech2.naquadah_ore.name=Naquadah Ore
+block.stargatetech2.naquadah_block.name=Naquadah Block
+block.stargatetech2.naquadah_rail.name=Naquadah Rail
+block.stargatetech2.particle_ionizer.name=Particle Ionizer
+block.stargatetech2.shield_controller.name=Shield Controller
+block.stargatetech2.shield_emitter.name=Shield Emitter
+block.stargatetech2.stargate.name=Stargate
+block.stargatetech2.shield.name=Shield
+block.stargatetech2.transport_ring.name=Transport Ring Platform
 
 # this one is temporary:
-block.invisible.name=Transport Rings
+block.stargatetech2.invisible.name=Transport Rings
 
-block.lanteanWall_white.name=White Lantean Wall
-block.lanteanWall_orange.name=Orange Lantean Wall
-block.lanteanWall_magenta.name=Magenta Lantean Wall
-block.lanteanWall_light_blue.name=Light Blue Lantean Wall
-block.lanteanWall_yellow.name=Yellow Lantean Wall
-block.lanteanWall_lime.name=Lime Lantean Wall
-block.lanteanWall_pink.name=Pink Lantean Wall
-block.lanteanWall_dark_gray.name=Dark Gray Lantean Wall
-block.lanteanWall_light_gray.name=Light Gray Lantean Wall
-block.lanteanWall_cyan.name=Cyan Lantean Wall
-block.lanteanWall_purple.name=Purple Lantean Wall
-block.lanteanWall_blue.name=Blue Lantean Wall
-block.lanteanWall_brown.name=Brown Lantean Wall
-block.lanteanWall_green.name=Green Lantean Wall
-block.lanteanWall_red.name=Red Lantean Wall
-block.lanteanWall_black.name=Black Lantean Wall
+block.stargatetech2.lantean_wall_white.name=White Lantean Wall
+block.stargatetech2.lantean_wall_orange.name=Orange Lantean Wall
+block.stargatetech2.lantean_wall_magenta.name=Magenta Lantean Wall
+block.stargatetech2.lantean_wall_light_blue.name=Light Blue Lantean Wall
+block.stargatetech2.lantean_wall_yellow.name=Yellow Lantean Wall
+block.stargatetech2.lantean_wall_lime.name=Lime Lantean Wall
+block.stargatetech2.lantean_wall_pink.name=Pink Lantean Wall
+block.stargatetech2.lantean_wall_dark_gray.name=Dark Gray Lantean Wall
+block.stargatetech2.lantean_wall_light_gray.name=Light Gray Lantean Wall
+block.stargatetech2.lantean_wall_cyan.name=Cyan Lantean Wall
+block.stargatetech2.lantean_wall_purple.name=Purple Lantean Wall
+block.stargatetech2.lantean_wall_blue.name=Blue Lantean Wall
+block.stargatetech2.lantean_wall_brown.name=Brown Lantean Wall
+block.stargatetech2.lantean_wall_green.name=Green Lantean Wall
+block.stargatetech2.lantean_wall_red.name=Red Lantean Wall
+block.stargatetech2.lantean_wall_black.name=Black Lantean Wall
 
 
 
@@ -56,11 +56,8 @@ item.stargatetech2.personal_shield.name=Personal Shield
 ###################################################################################################
 # MISC
 
-fluid.ionizedParticles=Ionized Particles
-fluid.moltenNaquadah=Molten Naquadah
-
-# Dirty workaround for Tinker's Construct bad code. Why, mDiyo, why!?
-fluid.molten_naquadah=Molten Naquadah
+fluid.stargatetech2.ionized_particles.name=Ionized Particles
+fluid.stargatetech2.molten_naquadah.name=Molten Naquadah
 
 # COMMANDS
 commands.tpgate.usage=/tpgate [player] <address>

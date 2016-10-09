@@ -1,6 +1,7 @@
 package lordfokas.naquadria.block;
 
 import lordfokas.stargatetech2.api.bus.BusEvent;
+import lordfokas.stargatetech2.util.Helper;
 import lordfokas.stargatetech2.util.MaterialNaquadah;
 import lordfokas.stargatetech2.util.StargateTab;
 import net.minecraft.block.Block;
@@ -29,15 +30,15 @@ public class BaseBlock extends Block{
 		this(uName, breakable, requiresTool ? MaterialNaquadah.unbreakable : MaterialNaquadah.breakable);
 	}
 	
-	public BaseBlock(String uName, boolean breakable, Material material){
+	public BaseBlock(String registryName, boolean breakable, Material material){
 		super(material);
-		unlocalized = uName;
+		setRegistryName(registryName);
+		unlocalized = Helper.unlocalize("block", registryName);
 		if(!breakable){
 			setBlockUnbreakable();
 			setResistance(20000000F);
 		}
 		setCreativeTab(StargateTab.instance());
-		registerBlock();
 	}
 	
 	public final void setRenderType(EnumBlockRenderType renderType){
@@ -62,10 +63,6 @@ public class BaseBlock extends Block{
 	
 	protected void setIsAbstractBusBlock(){
 		isAbstractBus = true;
-	}
-	
-	protected void registerBlock(){
-		GameRegistry.registerBlock(this, getUnlocalizedName());
 	}
 	
 	@Override

@@ -2,6 +2,7 @@ package lordfokas.stargatetech2.modules.transport;
 
 import java.util.List;
 
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.modules.enemy.TileShield;
@@ -10,7 +11,6 @@ import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerCommon;
 import lordfokas.stargatetech2.reference.BlockReference;
 import lordfokas.stargatetech2.reference.ModReference;
 import lordfokas.stargatetech2.util.StargateTab;
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
@@ -106,7 +106,7 @@ public class BlockNaquadahRail extends BlockRailBase implements IShieldable, ITi
 	public void onShield(World world, int x, int y, int z, int px, int py, int pz) {
 		TileEntity te = world.getTileEntity(x, y, z);
 		if(te instanceof TileShield){
-			((TileShield)te).setController(new Vec3Int(px, py, pz));
+			((TileShield)te).setController(new Vec3Int_THRASH(px, py, pz));
 			int meta = world.getBlockMetadata(x, y, z);
 			world.setBlockMetadataWithNotify(x, y, z, meta | 8, 2);
 		}

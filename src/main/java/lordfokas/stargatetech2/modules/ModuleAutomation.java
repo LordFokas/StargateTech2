@@ -17,6 +17,8 @@ public class ModuleAutomation implements IContentModule {
 	@Override
 	public void preInit(){
 		busCable = new BlockBusCable();
+		
+		StargateTech2.register(busCable);
 	}
 
 	@Override public void init(){

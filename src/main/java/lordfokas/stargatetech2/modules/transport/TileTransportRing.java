@@ -6,12 +6,12 @@ import java.util.List;
 
 import lordfokas.stargatetech2.StargateTech2;
 import lordfokas.stargatetech2.ZZ_THRASH.BaseTileEntity__OLD_AND_FLAWED;
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.api.StargateTechAPI;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.modules.ModuleTransport;
 import lordfokas.stargatetech2.modules.transport.bus.BusDriverTransportRing;
-import lordfokas.stargatetech2.util.Vec3Int;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements IBusDevice{
-	@ClientLogic private static Vec3Int LAST_IN_RANGE;
+	@ClientLogic private static Vec3Int_THRASH LAST_IN_RANGE;
 	@ClientLogic public final static int RING_MOV = 5;
 	@ClientLogic public final static int PAUSE = 30;
 	@ClientLogic public final static int HLF_PAUSE = PAUSE / 2;
@@ -29,9 +29,9 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 	@ClientLogic public final static int HLF_TIME = SEQ_TIME / 2;
 	@ClientLogic public final RingRenderData renderData = new RingRenderData();
 	@ServerLogic public static final int TP_COOLDOWN = 100;
-	@ServerLogic private static final ArrayList<Vec3Int> RING_BLOCKS = new ArrayList<Vec3Int>(36);
-	@ServerLogic private Vec3Int pairUp;
-	@ServerLogic private Vec3Int pairDn;
+	@ServerLogic private static final ArrayList<Vec3Int_THRASH> RING_BLOCKS = new ArrayList<Vec3Int_THRASH>(36);
+	@ServerLogic private Vec3Int_THRASH pairUp;
+	@ServerLogic private Vec3Int_THRASH pairDn;
 	@ServerLogic private int yOffset;
 	@ServerLogic private List<Entity> targets;
 	private AxisAlignedBB myAABB;
@@ -87,7 +87,7 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 	}
 	
 	@ServerLogic
-	private TileTransportRing getPair(Vec3Int pair){
+	private TileTransportRing getPair(Vec3Int_THRASH pair){
 		if(pair != null){
 			TileEntity te = worldObj.getTileEntity(pair.x, pair.y, pair.z);
 			if(te instanceof TileTransportRing){
@@ -135,7 +135,7 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 		if(canActivate()){
 			TileTransportRing dest = this;
 			for(int i = 0; i < leap; i++){
-				Vec3Int pair = up ? dest.pairUp : dest.pairDn;
+				Vec3Int_THRASH pair = up ? dest.pairUp : dest.pairDn;
 				if(pair == null) return;
 				TileEntity te = worldObj.getTileEntity(pair.x, pair.y, pair.z);
 				if(te instanceof TileTransportRing){
@@ -158,7 +158,7 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 		isTeleporting = true;
 		teleportCountdown = SEQ_TIME;
 		updateClients();
-		for(Vec3Int b : RING_BLOCKS){
+		for(Vec3Int_THRASH b : RING_BLOCKS){
 			if(worldObj.isAirBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z)){
 				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, ModuleTransport.invisible, 14, 3);
 			}
@@ -194,7 +194,7 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 		isTeleporting = false;
 		teleportCooldown = TP_COOLDOWN;
 		updateClients();
-		for(Vec3Int b : RING_BLOCKS){
+		for(Vec3Int_THRASH b : RING_BLOCKS){
 			if(worldObj.getBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z) == ModuleTransport.invisible){
 				worldObj.setBlock(xCoord + b.x, yCoord + b.y, zCoord + b.z, Blocks.air);
 			}
@@ -203,8 +203,8 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 	
 	@ServerLogic
 	public void link(){
-		Vec3Int me0 = new Vec3Int(xCoord, yCoord, zCoord);
-		Vec3Int me1 = me0.offset(ForgeDirection.UNKNOWN);
+		Vec3Int_THRASH me0 = new Vec3Int_THRASH(xCoord, yCoord, zCoord);
+		Vec3Int_THRASH me1 = me0.offset(ForgeDirection.UNKNOWN);
 		for(int y = yCoord - 5; y > 0; y--){
 			if(findPair(me0, y, false)){
 				y = 0;
@@ -219,15 +219,15 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 	}
 	
 	@ServerLogic
-	private boolean findPair(Vec3Int me, int y, boolean dirUp){
+	private boolean findPair(Vec3Int_THRASH me, int y, boolean dirUp){
 		TileEntity te = worldObj.getTileEntity(xCoord, y, zCoord);
 		if(te instanceof TileTransportRing){
 			if(dirUp){
 				((TileTransportRing)te).pairDn = me;
-				pairUp = new Vec3Int(xCoord, y, zCoord);
+				pairUp = new Vec3Int_THRASH(xCoord, y, zCoord);
 			}else{
 				((TileTransportRing)te).pairUp = me;
-				pairDn = new Vec3Int(xCoord, y, zCoord);
+				pairDn = new Vec3Int_THRASH(xCoord, y, zCoord);
 			}
 			((TileTransportRing) te).updateClients();
 			this.updateClients();
@@ -254,7 +254,7 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 			}
 		}
 		if(isLocalPlayerInRange()){
-			LAST_IN_RANGE = new Vec3Int(xCoord, yCoord, zCoord);
+			LAST_IN_RANGE = new Vec3Int_THRASH(xCoord, yCoord, zCoord);
 		}
 	}
 	
@@ -284,12 +284,12 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 		teleportCooldown = nbt.getInteger("teleportCooldown");
 		yOffset = nbt.getInteger("yOffset");
 		if(nbt.hasKey("pairUp")){
-			pairUp = Vec3Int.fromNBT(nbt.getCompoundTag("pairUp"));
+			pairUp = Vec3Int_THRASH.fromNBT(nbt.getCompoundTag("pairUp"));
 		}else{
 			pairUp = null;
 		}
 		if(nbt.hasKey("pairDn")){
-			pairDn = Vec3Int.fromNBT(nbt.getCompoundTag("pairDn"));
+			pairDn = Vec3Int_THRASH.fromNBT(nbt.getCompoundTag("pairDn"));
 		}else{
 			pairDn = null;
 		}
@@ -323,42 +323,42 @@ public class TileTransportRing extends BaseTileEntity__OLD_AND_FLAWED implements
 	}
 	
 	static{
-		RING_BLOCKS.add(new Vec3Int(-2, 2, -1));
-		RING_BLOCKS.add(new Vec3Int(-2, 2,  0));
-		RING_BLOCKS.add(new Vec3Int(-2, 2,  1));
-		RING_BLOCKS.add(new Vec3Int( 2, 2, -1));
-		RING_BLOCKS.add(new Vec3Int( 2, 2,  0));
-		RING_BLOCKS.add(new Vec3Int( 2, 2,  1));
-		RING_BLOCKS.add(new Vec3Int(-1, 2, -2));
-		RING_BLOCKS.add(new Vec3Int( 0, 2, -2));
-		RING_BLOCKS.add(new Vec3Int( 1, 2, -2));
-		RING_BLOCKS.add(new Vec3Int(-1, 2,  2));
-		RING_BLOCKS.add(new Vec3Int( 0, 2,  2));
-		RING_BLOCKS.add(new Vec3Int( 1, 2,  2));
-		RING_BLOCKS.add(new Vec3Int(-2, 3, -1));
-		RING_BLOCKS.add(new Vec3Int(-2, 3,  0));
-		RING_BLOCKS.add(new Vec3Int(-2, 3,  1));
-		RING_BLOCKS.add(new Vec3Int( 2, 3, -1));
-		RING_BLOCKS.add(new Vec3Int( 2, 3,  0));
-		RING_BLOCKS.add(new Vec3Int( 2, 3,  1));
-		RING_BLOCKS.add(new Vec3Int(-1, 3, -2));
-		RING_BLOCKS.add(new Vec3Int( 0, 3, -2));
-		RING_BLOCKS.add(new Vec3Int( 1, 3, -2));
-		RING_BLOCKS.add(new Vec3Int(-1, 3,  2));
-		RING_BLOCKS.add(new Vec3Int( 0, 3,  2));
-		RING_BLOCKS.add(new Vec3Int( 1, 3,  2));
-		RING_BLOCKS.add(new Vec3Int(-2, 4, -1));
-		RING_BLOCKS.add(new Vec3Int(-2, 4,  0));
-		RING_BLOCKS.add(new Vec3Int(-2, 4,  1));
-		RING_BLOCKS.add(new Vec3Int( 2, 4, -1));
-		RING_BLOCKS.add(new Vec3Int( 2, 4,  0));
-		RING_BLOCKS.add(new Vec3Int( 2, 4,  1));
-		RING_BLOCKS.add(new Vec3Int(-1, 4, -2));
-		RING_BLOCKS.add(new Vec3Int( 0, 4, -2));
-		RING_BLOCKS.add(new Vec3Int( 1, 4, -2));
-		RING_BLOCKS.add(new Vec3Int(-1, 4,  2));
-		RING_BLOCKS.add(new Vec3Int( 0, 4,  2));
-		RING_BLOCKS.add(new Vec3Int( 1, 4,  2));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-2, 2, -1));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-2, 2,  0));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-2, 2,  1));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 2, 2, -1));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 2, 2,  0));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 2, 2,  1));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-1, 2, -2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 0, 2, -2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 1, 2, -2));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-1, 2,  2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 0, 2,  2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 1, 2,  2));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-2, 3, -1));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-2, 3,  0));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-2, 3,  1));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 2, 3, -1));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 2, 3,  0));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 2, 3,  1));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-1, 3, -2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 0, 3, -2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 1, 3, -2));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-1, 3,  2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 0, 3,  2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 1, 3,  2));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-2, 4, -1));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-2, 4,  0));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-2, 4,  1));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 2, 4, -1));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 2, 4,  0));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 2, 4,  1));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-1, 4, -2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 0, 4, -2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 1, 4, -2));
+		RING_BLOCKS.add(new Vec3Int_THRASH(-1, 4,  2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 0, 4,  2));
+		RING_BLOCKS.add(new Vec3Int_THRASH( 1, 4,  2));
 	}
 
 	@Override

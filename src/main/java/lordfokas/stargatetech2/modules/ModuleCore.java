@@ -22,11 +22,15 @@ public final class ModuleCore implements IContentModule{
 	@Override
 	public void preInit(){
 		naquadahBlock = new BlockNaquadah();
-		naquadahItem = new ItemEnum<NaquadahItems>(NaquadahItems.class);
+		
+		naquadahItem = new ItemEnum(NaquadahItems.class, ItemReference.NAQUADAH);
 		tabletPC = new ItemTabletPC();
-
-        registerItem(naquadahItem.setRegistryName(ItemReference.NAQUADAH));
-        registerItem(tabletPC.setRegistryName(ItemReference.TABLET_PC));
+		
+		StargateTech2.register(naquadahBlock);
+		StargateTech2.register(new ItemBlockNaquadah(naquadahBlock));
+		
+        StargateTech2.register(naquadahItem);
+        StargateTech2.register(tabletPC);
 	}
 
 	@Override
@@ -49,11 +53,13 @@ public final class ModuleCore implements IContentModule{
 		GameRegistry.addShapelessRecipe(naquadahItem.asStack(NaquadahItems.NAQUADAH_INGOT, 9), Stacks.naqBlock);
 	}
 
-	@Override public void onServerStart(){
+	@Override
+	public void onServerStart(){
 		ChunkLoader.load();
 	}
 	
-	@Override public void onServerStop(){
+	@Override
+	public void onServerStop(){
 		ChunkLoader.unload();
 	}
 
@@ -61,10 +67,4 @@ public final class ModuleCore implements IContentModule{
 	public String getModuleName() {
 		return "Core";
 	}
-
-	private static Item registerItem(Item item) {
-	    GameRegistry.register(item);
-        StargateTech2.proxy.handleItemModel(item, item.getRegistryName().getResourcePath());
-        return item;
-    }
 }

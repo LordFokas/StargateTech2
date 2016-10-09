@@ -2,13 +2,13 @@ package lordfokas.stargatetech2.modules.world.genlists;
 
 import java.util.ArrayList;
 
-import lordfokas.stargatetech2.util.Vec3Int;
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.util.api.WeakBlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 public abstract class BuildList {
-	protected static class BuildBlock extends Vec3Int{
+	protected static class BuildBlock extends Vec3Int_THRASH{
 		public final int id;
 		
 		public BuildBlock(int x, int y, int z, int id) {

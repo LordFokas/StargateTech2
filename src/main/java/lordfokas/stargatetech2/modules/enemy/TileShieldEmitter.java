@@ -4,10 +4,10 @@ import java.util.LinkedList;
 
 import lordfokas.naquadria.tileentity.facing.FaceColor;
 import lordfokas.stargatetech2.ZZ_THRASH.TileMachine__THRASH;
+import lordfokas.stargatetech2.ZZ_THRASH.Vec3Int_THRASH;
 import lordfokas.stargatetech2.api.shields.IShieldable;
 import lordfokas.stargatetech2.modules.ModuleEnemy;
 import lordfokas.stargatetech2.util.ConfigServer;
-import lordfokas.stargatetech2.util.Vec3Int;
 import lordfokas.stargatetech2.util.api.WeakBlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,9 +15,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileShieldEmitter extends TileMachine__THRASH implements IShieldControllerProvider{
-	private Vec3Int controller;
+	private Vec3Int_THRASH controller;
 	
-	public void setController(Vec3Int controller){
+	public void setController(Vec3Int_THRASH controller){
 		this.controller = controller;
 		TileEntity te = worldObj.getTileEntity(controller.x, controller.y, controller.z);
 		if(!worldObj.isRemote){
@@ -35,10 +35,10 @@ public class TileShieldEmitter extends TileMachine__THRASH implements IShieldCon
 		}
 	}
 	
-	public LinkedList<Vec3Int> createShields(){
+	public LinkedList<Vec3Int_THRASH> createShields(){
 		ForgeDirection fd = ForgeDirection.values()[getBlockMetadata()];
-		LinkedList<Vec3Int> list = new LinkedList();
-		Vec3Int pos = new Vec3Int(xCoord, yCoord, zCoord);
+		LinkedList<Vec3Int_THRASH> list = new LinkedList();
+		Vec3Int_THRASH pos = new Vec3Int_THRASH(xCoord, yCoord, zCoord);
 		for(int i = 0; i < ConfigServer.shieldEmitterRange; i++){
 			pos = pos.offset(fd);
 			Block b = worldObj.getBlock(pos.x, pos.y, pos.z);
@@ -61,7 +61,7 @@ public class TileShieldEmitter extends TileMachine__THRASH implements IShieldCon
 
 	@Override
 	protected void readNBT(NBTTagCompound nbt){
-		controller = Vec3Int.fromNBT(nbt.getCompoundTag("controller"));
+		controller = Vec3Int_THRASH.fromNBT(nbt.getCompoundTag("controller"));
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class TileShieldEmitter extends TileMachine__THRASH implements IShieldCon
 	}
 	
 	@Override
-	public Vec3Int getShieldControllerCoords(){
+	public Vec3Int_THRASH getShieldControllerCoords(){
 		return controller;
 	}
 }
