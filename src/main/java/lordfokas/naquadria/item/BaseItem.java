@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 public abstract class BaseItem extends Item {
 	public BaseItem(String registryName) {
 		this.setRegistryName(registryName);
-		this.setUnlocalizedName(Helper.unlocalize("item", registryName));
+		this.setUnlocalizedName("stargatetech2." + registryName);
 		this.setCreativeTab(StargateTab.instance());
 	}
 }

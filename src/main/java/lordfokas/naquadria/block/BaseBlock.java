@@ -50,10 +50,9 @@ public class BaseBlock extends Block{
 		return renderType;
 	}
 	
-	// MEH
-	@Override
+	@Override // Because tile.* is stupid
 	public String getUnlocalizedName(){
-		return "block." + unlocalized;
+		return unlocalized;
 	}
 	
 	@Override
