@@ -2,7 +2,10 @@ package lordfokas.stargatetech2.modules.core;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import lordfokas.naquadria.block.BaseBlock;
+import lordfokas.naquadria.render.IVariantProvider;
 import lordfokas.stargatetech2.reference.BlockReference;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -18,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockNaquadah extends BaseBlock {
+public class BlockNaquadah extends BaseBlock implements IVariantProvider{
 	public static final IProperty<Type> TYPE = PropertyEnum.create("subtype", Type.class);
 	
 	public static enum Type implements IStringSerializable{
@@ -69,5 +72,11 @@ public class BlockNaquadah extends BaseBlock {
 	public IBlockState getStateFromMeta(int meta) {
 		IBlockState state = blockState.getBaseState();
 		return state.withProperty(TYPE, Type.values()[meta]);
+	}
+
+	@Override
+	public void addVariants(List<Pair<Integer, String>> variants) {
+		for(Type t : Type.values())
+			variants.add(Pair.of(t.ordinal(), "subtype=" + t.getName()));
 	}
 }
