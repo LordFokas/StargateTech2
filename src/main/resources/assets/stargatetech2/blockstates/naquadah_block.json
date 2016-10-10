@@ -1,6 +1,24 @@
 {
-	"variants": {
-		"subtype=ore": { "model": "StargateTech2:naquadah_ore" },
-		"subtype=block": { "model": "StargateTech2:naquadah_block" }
-	}
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "stargatetech2:blocks/naquadahBlock"
+    },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "subtype": {
+      "ore": {
+        "textures": {
+          "all": "stargatetech2:blocks/naquadahOre"
+        }
+      },
+      "block": {
+        "textures": {
+          "all": "stargatetech2:blocks/naquadahBlock"
+        }
+      }
+    }
+  }
 }

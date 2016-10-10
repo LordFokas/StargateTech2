@@ -14,6 +14,7 @@ import lordfokas.stargatetech2.util.StargateTab;
 import lordfokas.stargatetech2.util.api.APIImplementation;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -130,10 +131,15 @@ public class StargateTech2 {
         proxy.handleItemModel(item, item.getRegistryName().getResourcePath());
         return item;
     }
-	
-	public static Block register(Block block) {
-	    GameRegistry.register(block);
+
+    public static Block register(Block block, ItemBlock itemBlock) {
+        GameRegistry.register(block);
+        GameRegistry.register(itemBlock);
         proxy.handleBlockModel(block, block.getRegistryName().getResourcePath());
         return block;
+    }
+
+	public static Block register(Block block) {
+	    return register(block, (ItemBlock) new ItemBlock(block).setRegistryName(block.getRegistryName()));
     }
 }

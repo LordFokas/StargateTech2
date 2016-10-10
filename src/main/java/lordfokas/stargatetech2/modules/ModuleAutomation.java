@@ -5,6 +5,7 @@ import lordfokas.stargatetech2.modules.automation.AutomationEventHandler;
 import lordfokas.stargatetech2.modules.automation.BlockBusCable;
 import lordfokas.stargatetech2.util.Stacks;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -18,7 +19,7 @@ public class ModuleAutomation implements IContentModule {
 	public void preInit(){
 		busCable = new BlockBusCable();
 		
-		StargateTech2.register(busCable);
+		StargateTech2.register(busCable, (ItemBlock) new ItemBlock(busCable).setRegistryName(busCable.getRegistryName()));
 	}
 
 	@Override public void init(){
