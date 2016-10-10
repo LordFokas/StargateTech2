@@ -6,12 +6,10 @@ import lordfokas.stargatetech2.modules.core.*;
 import lordfokas.stargatetech2.reference.ItemReference;
 import lordfokas.stargatetech2.util.ChunkLoader;
 import lordfokas.stargatetech2.util.Stacks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
 public final class ModuleCore implements IContentModule{
 	public static BlockNaquadah naquadahBlock;
@@ -23,11 +21,10 @@ public final class ModuleCore implements IContentModule{
 	public void preInit(){
 		naquadahBlock = new BlockNaquadah();
 		
-		naquadahItem = new ItemEnum(NaquadahItems.class, ItemReference.NAQUADAH);
+		naquadahItem = new ItemEnum<NaquadahItems>(NaquadahItems.class, ItemReference.NAQUADAH);
 		tabletPC = new ItemTabletPC();
 		
-		StargateTech2.register(naquadahBlock);
-		StargateTech2.register(new ItemBlockNaquadah(naquadahBlock));
+		StargateTech2.register(naquadahBlock, new ItemBlockNaquadah(naquadahBlock));
 		
         StargateTech2.register(naquadahItem);
         StargateTech2.register(tabletPC);

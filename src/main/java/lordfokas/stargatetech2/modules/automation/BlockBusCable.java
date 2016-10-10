@@ -1,6 +1,7 @@
 package lordfokas.stargatetech2.modules.automation;
 
 import lordfokas.naquadria.block.BaseBlock;
+import lordfokas.naquadria.render.IVariantProvider;
 import lordfokas.stargatetech2.api.bus.IBusDevice;
 import lordfokas.stargatetech2.api.bus.IBusInterface;
 import lordfokas.stargatetech2.reference.BlockReference;
@@ -11,8 +12,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class BlockBusCable extends BaseBlock {
+import java.util.List;
+
+public class BlockBusCable extends BaseBlock implements IVariantProvider {
 	
 	public BlockBusCable() {
 		super(BlockReference.BUS_CABLE, true, false);
@@ -41,7 +45,12 @@ public class BlockBusCable extends BaseBlock {
 		}
 		return ConnectionType.DISCONNECTED;
 	}
-	
+
+    @Override
+    public void addVariants(List<Pair<Integer, String>> variants) {
+        variants.add(Pair.of(0, "normal"));
+    }
+
 	/*@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int s, float hx, float hy, float hz){
 		ItemStack stack = p.inventory.getCurrentItem();
