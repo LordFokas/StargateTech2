@@ -5,20 +5,20 @@ import lordfokas.naquadria.tileentity.ITile;
 import lordfokas.naquadria.tileentity.ITileContext;
 import lordfokas.naquadria.tileentity.component.IComponentProvider;
 import lordfokas.naquadria.tileentity.component.IComponentRegistrar;
+import lordfokas.naquadria.tileentity.component.IFilter;
 import lordfokas.naquadria.tileentity.component.tank.FluidFilter;
-import lordfokas.naquadria.tileentity.component.tank.BusComponent;
-import lordfokas.naquadria.tileentity.component.tank.TankComponentFiltered;
+import lordfokas.naquadria.tileentity.component.tank.Tank;
+import lordfokas.naquadria.tileentity.component.tank.TankComponent;
 import lordfokas.naquadria.tileentity.facing.FaceColor;
 import lordfokas.naquadria.tileentity.facing.FaceColorFilter;
 import lordfokas.stargatetech2.api.shields.ShieldPermissions;
+import lordfokas.stargatetech2.modules.enemy.IonizedParticles;
 import lordfokas.stargatetech2.modules.enemy.ShieldControllerBusDriver;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidTank;
 
 public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IComponentProvider{
 	private static final int[] KEYS = new int[]{0, 1};
-	protected FluidTank tank = new FluidTank(16000);
+	protected Tank tank = new Tank.Filtered(16000, new FluidFilter(IonizedParticles.fluid));
 	protected ShieldPermissions permissions = ShieldPermissions.getDefault();
 	protected ShieldControllerBusDriver driver = new ShieldControllerBusDriver(this);
 	protected boolean active;
@@ -26,10 +26,10 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	
 	@Override
 	public void registerComponents(IComponentRegistrar registrar) {
-		TankComponentFiltered tankComponent = new TankComponentFiltered(tank, false, new FluidFilter(FluidRegistry.WATER));
+		TankComponent tankComponent = new TankComponent.Advanced(tank, new FaceColorFilter.MatchColors(FaceColor.BLUE), IFilter.NONE);
 		BusComponent busComponent = new BusComponent(driver);
 		
-		registrar.registerComponent(tankComponent.setInputFilter(new FaceColorFilter.MatchColors(FaceColor.BLUE)));
+		registrar.registerComponent(tankComponent);
 		registrar.registerComponent(busComponent.setGenericAccessFilter(new FaceColorFilter.MatchColors(FaceColor.BLUE)));
 	}
 	
@@ -49,6 +49,7 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 	public int[] getKeyArray() {
 		return KEYS;
 	}
+	
 	@Override
 	public int getValue(int key) {
 		switch(key){
@@ -57,6 +58,7 @@ public class ShieldControllerCommon implements ITileContext, ISyncedGUI.Flow, IC
 		}
 		return -1;
 	}
+	
 	@Override
 	public void setValue(int key, int val) {
 		switch(key){

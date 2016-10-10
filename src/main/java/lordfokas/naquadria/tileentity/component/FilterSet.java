@@ -2,7 +2,7 @@ package lordfokas.naquadria.tileentity.component;
 
 import java.util.ArrayList;
 
-public abstract class MetaFilter<C extends MetaFilter<C, T>, T> implements IFilter<T>{
+public abstract class FilterSet<C extends FilterSet<C, T>, T> implements IFilter<T>{
 	protected ArrayList<IFilter<T>> filters = new ArrayList();
 	
 	public C with(IFilter<T> ... filters){
@@ -11,7 +11,7 @@ public abstract class MetaFilter<C extends MetaFilter<C, T>, T> implements IFilt
 		return (C) this;
 	}
 	
-	public static class Any<T> extends MetaFilter<Any<T>, T>{
+	public static class Any<T> extends FilterSet<Any<T>, T>{
 		@Override
 		public boolean matches(T object) {
 			for(IFilter<T> filter : filters)
@@ -21,7 +21,7 @@ public abstract class MetaFilter<C extends MetaFilter<C, T>, T> implements IFilt
 		}
 	}
 	
-	public static class All<T> extends MetaFilter<All<T>, T>{
+	public static class All<T> extends FilterSet<All<T>, T>{
 		@Override
 		public boolean matches(T object) {
 			for(IFilter<T> filter : filters)

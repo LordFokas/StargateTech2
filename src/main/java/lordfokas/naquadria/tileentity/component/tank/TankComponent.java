@@ -3,15 +3,13 @@ package lordfokas.naquadria.tileentity.component.tank;
 import lordfokas.naquadria.tileentity.component.CapabilityComponent;
 import lordfokas.naquadria.tileentity.component.IFilter;
 import lordfokas.naquadria.tileentity.facing.FaceColor;
-import lordfokas.naquadria.tileentity.facing.FaceColorFilter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TankComponent extends CapabilityComponent<IFluidHandler> /*implements ISyncedGUI.Flow*/{
 	private static final int[] KEYS = new int[]{0, 1};
@@ -20,12 +18,12 @@ public class TankComponent extends CapabilityComponent<IFluidHandler> /*implemen
 	protected final IFilter<FaceColor> filter;
 	protected Tank tank;
 	
-	public TankComponent(int size){
-		this(size, FaceColorFilter.ANY);
+	public TankComponent(Tank tank){
+		this(tank, IFilter.ANY);
 	}
 	
-	public TankComponent(int size, IFilter<FaceColor> filter){
-		this.tank = new Tank(size);
+	public TankComponent(Tank tank, IFilter<FaceColor> filter){
+		this.tank = tank;
 		this.filter = filter;
 	}
 	
@@ -53,14 +51,14 @@ public class TankComponent extends CapabilityComponent<IFluidHandler> /*implemen
 		tank.deserializeNBT(nbt);
 	}
 	
-	/*@Override // FIXME redo GUI Sync
+	/*@Override // FIXME redo GUI Sync ... shit. Fluid ids are now strings.
 	public int[] getKeyArray(){
 		return KEYS;
 	}
 
 	@Override
 	public int getValue(int key){
-		return key == 0 ? tank.getFluidAmount() : (tank.getFluid() == null ? -1 : tank.getFluid().getFluid().getID());
+		return key == 0 ? tank.getFluidAmount() : (tank.getFluid() == null ? -1 : tank.getFluid().getID());
 	}
 	
 	@Override
@@ -70,23 +68,23 @@ public class TankComponent extends CapabilityComponent<IFluidHandler> /*implemen
 	}
 	
 	private void set(int f, int a){
-		Fluid fluid = f == -1 ? (tank.getFluid() == null ? null : tank.getFluid().getFluid()) : FluidRegistry.getFluid(f);
+		Fluid fluid = f == -1 ? (tank.getFluid() == null ? null : tank.getFluid()) : FluidRegistry.getFluid(f);
 		int amount = a == -1 ? tank.getFluidAmount() : a;
-		tank.setFluid(fluid == null ? null : new FluidStack(fluid, amount));
+		tank.setContent(fluid == null ? null : new FluidStack(fluid, amount));
 	}*/
 	
 	public static class Advanced extends TankComponent{
 		private final IFluidHandler input, output;
 		private final IFilter<FaceColor> outFilter;
 		
-		public Advanced(int size, IFilter<FaceColor> input, IFilter<FaceColor> output){
-			super(size, input);
+		public Advanced(Tank tank, IFilter<FaceColor> input, IFilter<FaceColor> output){
+			super(tank, input);
 			this.outFilter = output;
 			this.input = new Handler(tank, true);
 			this.output = new Handler(tank, false);
 		}
 
-		@Override
+		@Override // FIXME: add handler for I+O
 		public IFluidHandler getCapability(EnumFacing side){
 			FaceColor color = getColor(side);
 			if(filter.matches(color)) return input;
@@ -105,22 +103,20 @@ public class TankComponent extends CapabilityComponent<IFluidHandler> /*implemen
 		}
 		
 		@Override
-		public int fill(EnumFacing _, FluidStack resource, boolean doFill){
-			return isInput ? tank.fill(_, resource, doFill) : 0;
+		public int fill(FluidStack resource, boolean doFill){
+			return isInput ? tank.fill(resource, doFill) : 0;
 		}
 		
 		@Override
-		public FluidStack drain(EnumFacing _, FluidStack resource, boolean doDrain){
-			return isInput ? null : tank.drain(_, resource, doDrain);
+		public FluidStack drain(FluidStack resource, boolean doDrain){
+			return isInput ? null : tank.drain(resource, doDrain);
 		}
 		
 		@Override
-		public FluidStack drain(EnumFacing _, int maxDrain, boolean doDrain){
-			return isInput ? null : tank.drain(_, maxDrain, doDrain);
+		public FluidStack drain(int maxDrain, boolean doDrain){
+			return isInput ? null : tank.drain(maxDrain, doDrain);
 		}
 		
-		@Override public boolean canFill(EnumFacing _, Fluid fluid){ return isInput; }
-		@Override public boolean canDrain(EnumFacing _, Fluid fluid){ return !isInput; }
-		@Override public FluidTankInfo[] getTankInfo(EnumFacing _){ return tank.getTankInfo(_); }
+		@Override public IFluidTankProperties[] getTankProperties(){ return tank.getTankProperties(); }
 	}
 }

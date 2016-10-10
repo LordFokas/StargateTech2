@@ -6,9 +6,10 @@ import lordfokas.stargatetech2.api.shields.ShieldPermissions;
 import lordfokas.stargatetech2.modules.enemy.tileentity.ShieldControllerCommon;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 
 public class TileShield extends BaseTileEntity__OLD_AND_FLAWED {
-	private Vec3Int_THRASH controller;
+	private BlockPos controller;
 	
 	@Override
 	public boolean canUpdate(){
@@ -24,10 +25,10 @@ public class TileShield extends BaseTileEntity__OLD_AND_FLAWED {
 	@Override
 	protected void writeNBT(NBTTagCompound nbt) {
 		if(controller != null)
-			nbt.setTag("master", controller.toNBT());
+			nbt.setTag("master", controller);
 	}
 	
-	public void setController(Vec3Int_THRASH controller){
+	public void setController(BlockPos controller){
 		this.controller = controller;
 	}
 	

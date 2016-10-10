@@ -51,18 +51,6 @@ public abstract class FaceColorFilter implements IFilter<FaceColor>{
 		}
 	};
 	
-	public static final FaceColorFilter ANY = new FaceColorFilter(){
-		@Override public boolean matches(FaceColor color) {
-			return true;
-		}
-	};
-	
-	public static final FaceColorFilter NONE = new FaceColorFilter(){
-		@Override public boolean matches(FaceColor color) {
-			return false;
-		}
-	};
-	
 	public static class MatchColors extends FaceColorFilter{
 		private FaceColor[] colors;
 		
